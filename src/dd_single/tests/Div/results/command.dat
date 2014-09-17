@@ -1,0 +1,1 @@
+/home/mweigand/inst/pip_installs/bin/dd_single.py -f frequencies.dat -d data.dat -c 1 --plot -o results

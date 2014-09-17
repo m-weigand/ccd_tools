@@ -1,0 +1,104 @@
+2013-08-26 09:36:54,522 - dd.debye decomposition - INFO - ----------------------------------
+2013-08-26 09:36:54,523 - dd.debye decomposition - INFO -        Debye Decomposition
+2013-08-26 09:36:54,523 - dd.debye decomposition - INFO - ----------------------------------
+2013-08-26 09:36:54,523 - dd.debye decomposition - INFO - Frequency file: frequencies.dat
+2013-08-26 09:36:54,523 - dd.debye decomposition - INFO - Data file: data.dat
+2013-08-26 09:36:54,525 - dd.dd_res - INFO - Reducing index_min by one
+2013-08-26 09:36:54,525 - dd.dd_res - INFO - Increasing index_max by one
+2013-08-26 09:36:54,535 - dd.debye decomposition - INFO - Fitting spectrum 1 from 1
+2013-08-26 09:36:54,616 - dd.dd_res_inv - INFO - Using 45 chargeability values
+2013-08-26 09:36:54,616 - dd.dd_res_inv - INFO - =====================================
+2013-08-26 09:36:54,616 - dd.dd_res_inv - INFO - Using damping regularization: False
+2013-08-26 09:36:54,616 - dd.dd_res_inv - INFO - Using Tikhonov regularization: True
+2013-08-26 09:36:54,617 - dd.dd_res_inv - INFO - Lambda 0
+2013-08-26 09:36:54,617 - dd.dd_res_inv - INFO - Method: jacobian
+2013-08-26 09:36:54,617 - dd.dd_res_inv - INFO - Lambda selection during inversion:
+2013-08-26 09:36:54,617 - dd.dd_res_inv - INFO - Use fixed lambda: False
+2013-08-26 09:36:54,617 - dd.dd_res_inv - INFO - Use l-curve lambda: False
+2013-08-26 09:36:54,617 - dd.dd_res_inv - INFO - Use factor/quotient search for lambda: True
+2013-08-26 09:36:54,618 - dd.dd_res_inv - INFO - =====================================
+2013-08-26 09:36:58,866 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-08-26 09:36:58,867 - dd.dd_res_inv - INFO - Iteration 1
+2013-08-26 09:36:58,883 - dd.dd_res_inv - INFO - Initial lambda value: 9805797.81292
+2013-08-26 09:36:58,884 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:36:58,884 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-08-26 09:36:58,884 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:36:59,104 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-08-26 09:36:59,104 - dd.dd_res_inv - DEBUG - [ 4.52209477  3.87267137  3.43231184  2.88100047  2.77425485  2.51743816
+  2.50712378  2.77657934]
+2013-08-26 09:36:59,105 - dd.dd_res_inv - DEBUG - [ 0.01525641  0.01218518  0.01016578  0.00779281  0.00739248  0.00784896
+  0.00813736  0.00925863]
+2013-08-26 09:36:59,106 - dd.dd_res_inv - DEBUG - Lambdas
+2013-08-26 09:36:59,106 - dd.dd_res_inv - DEBUG - (49028.989064577763, 98057.978129155526, 196115.95625831105, 980579.78129155526, 1961159.5625831105, 49028989.064577758, 98057978.129155517, 980579781.29155529, 9805797.8129155524)
+2013-08-26 09:36:59,107 - dd.dd_res_inv - DEBUG - New lambda: 1961159.56258
+2013-08-26 09:36:59,107 - dd.dd_res_inv - DEBUG - ######################################
+2013-08-26 09:36:59,133 - dd.dd_res_inv - INFO - Old rms_no_err: 1.60686432833
+2013-08-26 09:36:59,133 - dd.dd_res_inv - INFO - New rms_no_err: 1.16739052306
+2013-08-26 09:36:59,133 - dd.dd_res_inv - INFO - Old rms_im_no_err: 1.32566882377
+2013-08-26 09:36:59,133 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.557437226319
+2013-08-26 09:36:59,139 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-08-26 09:36:59,139 - dd.dd_res_inv - INFO - 1.09883342553 1.16739052306
+2013-08-26 09:37:02,949 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-08-26 09:37:02,949 - dd.dd_res_inv - INFO - Iteration 2
+2013-08-26 09:37:02,950 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:37:02,950 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-08-26 09:37:02,950 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:37:03,167 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-08-26 09:37:03,168 - dd.dd_res_inv - DEBUG - [ 2.82356865  2.38083617  2.06857234  1.65971593  1.58138853  1.71752966
+  1.84477097  2.44231449]
+2013-08-26 09:37:03,169 - dd.dd_res_inv - DEBUG - [ 0.00864139  0.0066227   0.00522511  0.00342601  0.00312828  0.00389494
+  0.00432272  0.00604183]
+2013-08-26 09:37:03,170 - dd.dd_res_inv - DEBUG - Lambdas
+2013-08-26 09:37:03,170 - dd.dd_res_inv - DEBUG - (9805.7978129155526, 19611.595625831105, 39223.191251662211, 196115.95625831105, 392231.91251662211, 9805797.8129155524, 19611595.625831105, 196115956.25831106, 1961159.5625831105)
+2013-08-26 09:37:03,170 - dd.dd_res_inv - DEBUG - New lambda: 392231.912517
+2013-08-26 09:37:03,170 - dd.dd_res_inv - DEBUG - ######################################
+2013-08-26 09:37:03,232 - dd.dd_res_inv - INFO - Old rms_no_err: 1.16739052306
+2013-08-26 09:37:03,232 - dd.dd_res_inv - INFO - New rms_no_err: 0.413998002387
+2013-08-26 09:37:03,232 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.557437226319
+2013-08-26 09:37:03,232 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.239438581835
+2013-08-26 09:37:03,238 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-08-26 09:37:03,238 - dd.dd_res_inv - INFO - 0.377795408266 0.413998002387
+2013-08-26 09:37:07,022 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-08-26 09:37:07,023 - dd.dd_res_inv - INFO - Iteration 3
+2013-08-26 09:37:07,023 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:37:07,024 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-08-26 09:37:07,024 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:37:07,244 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-08-26 09:37:07,244 - dd.dd_res_inv - DEBUG - [ 2.63248515  1.93847286  1.46630605  0.86350146  0.75662949  0.85098695
+  0.96331364  1.66204978]
+2013-08-26 09:37:07,245 - dd.dd_res_inv - DEBUG - [ 0.01003787  0.00693788  0.00484039  0.00217189  0.00166408  0.00207304
+  0.00243059  0.0044814 ]
+2013-08-26 09:37:07,246 - dd.dd_res_inv - DEBUG - Lambdas
+2013-08-26 09:37:07,246 - dd.dd_res_inv - DEBUG - (1961.1595625831105, 3922.3191251662211, 7844.6382503324421, 39223.191251662211, 78446.382503324421, 1961159.5625831105, 3922319.1251662211, 39223191.25166221, 392231.91251662211)
+2013-08-26 09:37:07,246 - dd.dd_res_inv - DEBUG - New lambda: 78446.3825033
+2013-08-26 09:37:07,246 - dd.dd_res_inv - DEBUG - ######################################
+2013-08-26 09:37:07,272 - dd.dd_res_inv - INFO - Old rms_no_err: 0.413998002387
+2013-08-26 09:37:07,273 - dd.dd_res_inv - INFO - New rms_no_err: 0.342631485774
+2013-08-26 09:37:07,273 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.239438581835
+2013-08-26 09:37:07,273 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.184457838385
+2013-08-26 09:37:07,279 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-08-26 09:37:07,279 - dd.dd_res_inv - INFO - 0.316834736337 0.342631485774
+2013-08-26 09:37:10,849 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-08-26 09:37:10,849 - dd.dd_res_inv - INFO - Iteration 4
+2013-08-26 09:37:10,850 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:37:10,850 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-08-26 09:37:10,851 - dd.dd_res_inv - INFO - ######################################
+2013-08-26 09:37:11,067 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-08-26 09:37:11,068 - dd.dd_res_inv - DEBUG - [ 3.59422759  2.55774797  1.82689456  0.8718375   0.69269676  0.73768096
+  0.86309317  1.45835282]
+2013-08-26 09:37:11,069 - dd.dd_res_inv - DEBUG - [ 0.01409417  0.00961027  0.00647498  0.00239957  0.00156048  0.00162698
+  0.00204689  0.00393116]
+2013-08-26 09:37:11,070 - dd.dd_res_inv - DEBUG - Lambdas
+2013-08-26 09:37:11,070 - dd.dd_res_inv - DEBUG - (392.23191251662212, 784.46382503324423, 1568.9276500664885, 7844.6382503324421, 15689.276500664884, 392231.91251662211, 784463.82503324421, 7844638.2503324421, 78446.382503324421)
+2013-08-26 09:37:11,070 - dd.dd_res_inv - DEBUG - New lambda: 15689.2765007
+2013-08-26 09:37:11,070 - dd.dd_res_inv - DEBUG - ######################################
+2013-08-26 09:37:11,096 - dd.dd_res_inv - INFO - Old rms_no_err: 0.342631485774
+2013-08-26 09:37:11,096 - dd.dd_res_inv - INFO - New rms_no_err: 0.350065271836
+2013-08-26 09:37:11,096 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.184457838385
+2013-08-26 09:37:11,097 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.213047305463
+2013-08-26 09:37:11,097 - dd.dd_res_inv - INFO - Imag RMS increase
+2013-08-26 09:37:11,097 - dd.dd_res_inv - INFO - Breaking before applying update
+2013-08-26 09:37:11,097 - dd.dd_res_inv - INFO - Finished
+2013-08-26 09:37:14,668 - dd.debye decomposition - INFO - =======================================
+2013-08-26 09:37:14,668 - dd.debye decomposition - INFO -      Debye Decomposition finished!     
+2013-08-26 09:37:14,669 - dd.debye decomposition - INFO - =======================================

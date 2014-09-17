@@ -1,0 +1,1 @@
+{"prep_output_dir": "test_results/01/results", "prep_data_format": "rmag_rpha", "Nd": 4, "prep_plot_lambda": null, "prep_lambda": 10.0, "prep_plot_it_spectra": false, "prep_plot": false, "tausel": "data_ext", "prep_nr_cores": 1, "max_iterations": 20}

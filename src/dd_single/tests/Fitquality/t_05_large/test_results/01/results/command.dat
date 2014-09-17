@@ -1,0 +1,1 @@
+/home/mweigand/inst/pip_installs/bin/dd_single.py -f frequencies.dat -d data.dat -o test_results/01/results -n 20 -c 1 --silent --lambda 300
