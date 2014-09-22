@@ -25,7 +25,8 @@ sphinx
 Under Debian-related linux systems, these packages can be installed using the
 command:
 
-    sudo apt-get install python2.7-numpy python2.7-matplotlib python2.7-scipy
+    sudo apt-get install python2.7-numpy python-matplotlib python2.7-scipy\
+        python-setuptools python-nose python-tornado
     sudo apt-get install python-sphinx
 
 GeccoInv has to bo installed according to its own documentation.
