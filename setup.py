@@ -11,7 +11,7 @@ version_short = '0.5'
 version_long = '0.5.5'
 
 if __name__ == '__main__':
-    setup(name='DD_Interface',
+    setup(name='dd_interface',
           version=version_long,
           description='Time-lapse Debye decomposition routines',
           author='Maximilian Weigand',
