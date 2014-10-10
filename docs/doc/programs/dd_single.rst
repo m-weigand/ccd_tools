@@ -223,9 +223,9 @@ place:
   loadings* provide frequency (or relaxation time) dependent chargeabilities.
 * The total, normalized chargeability :math:`m_{tot}^n =
   \frac{m_{tot}}{\rho_0}` is obtained by normalizing the total chargeability
-  with the DC resistivity (:raw-tex:`\citet{scott2003phd},
-  \citet{weller2010g_a}`). It gives an indication of the total polarization of
-  the measured system without any influence of any occuring resistivity contrasts.
+  with the DC resistivity (Scott2003phd, Weller2010g_a). It gives an indication
+  of the total polarization of the measured system without any influence of any
+  occuring resistivity contrasts.
 
 **Relaxation time parameters:**
 
@@ -249,7 +249,7 @@ RTD were proposed:
       m_i}}\\
       \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}
 
-* :raw-tex:`\citet{nordsiek2008seg}` introduced the logarithmic average
+* Nordsiek2008seg introduced the logarithmic average
   relaxation time :math:`\tau_{mean}`
 
   .. math::
@@ -263,7 +263,7 @@ certain polarisation peaks. This approach has conceptual similarities to the
 use of (multi-)Cole-Cole models as the produced relaxation times can be
 directly related to polarization peaks. The relaxation time with the larges
 corresponding chargeability is called :math:`\tau_{max}`
-:raw-tex:`\citet{attwa2013hess}`, and the in the generalized form the
+(Attwa2013hess), and the in the generalized form the
 relaxation time :math:`\tau_{peak}^i`, refers to the *i*-th local maximum of
 the RTD, starting with the low frequencies (i.e. high :math:`\tau` values).
 This approach can recover multiple peaks without any knowlegdge of the exact

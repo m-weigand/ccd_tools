@@ -3,13 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. toctree::
-    :hidden:
-
-    tutorial_dd_ndiminv
-    design_overview
-    inversion
-
 =============
 DD_Interfaces
 =============
@@ -20,7 +13,7 @@ Introduction
 This project is a collection of Python libraries and scripts which facilitate
 the analysis of spectral induced polarisation (SIP) spectra using a Debye decomposition
 scheme (see :doc:`dd_general` for general notes on the Debye decomposition
-scheme). The basis of all scripts is formed by the *NDimInv* library which
+scheme). The basis of all programs is formed by the *GeccoInv* library which
 implements a somewhat general multi-dimensional inversion scheme which supports
 an arbitrary number of regularizations between various dimensions. Building
 upon these, three front-ends for the Debye Decompositions are provided:
