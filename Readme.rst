@@ -23,13 +23,15 @@ In order to build the documentation, the additional packages are required:
 sphinx
 
 Under Debian-related linux systems, these packages can be installed using the
-command:
+commands:
 
+    sudo apt-get install texlive-latex-base texlive-latex-extra\
+        texlive-fonts-recommended texlive-fonts-extra dvipng
     sudo apt-get install python2.7-numpy python-matplotlib python2.7-scipy\
         python-setuptools python-nose python-tornado
     sudo apt-get install python-sphinx
 
-GeccoInv has to bo installed according to its own documentation.
+GeccoInv has to be installed according to its own documentation.
 
 Under Windows, the program was tested using the 'pythonxy' distribution
 (https://code.google.com/p/pythonxy/).
