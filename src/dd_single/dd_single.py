@@ -35,9 +35,10 @@ import NDimInv.version as VV
 import NDimInv.regs as RegFuncs
 import NDimInv.reg_pars as LamFuncs
 from NDimInv.plot_helper import *
-import NDimInv.lib_dd_interface as lDDi
+import lib_dd.interface as lDDi
 import gc
 import lib_dd.plot as lDDp
+import lib_dd.main
 
 
 def add_base_options(parser):
@@ -165,7 +166,8 @@ def split_options_single(options):
 
 
 def _prepare_ND_object(fit_data):
-    ND = NDimInv.Inversion('dd_log10rho0log10m', fit_data['inv_opts'])
+    model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
+    ND = NDimInv.Inversion(model, fit_data['inv_opts'])
     ND.finalize_dimensions()
 
     # Read in data

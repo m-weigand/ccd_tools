@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 Input files
 """
-from memory_profiler import *
+# from memory_profiler import *
 import os
 # import json
 import logging
@@ -32,6 +32,7 @@ import NDimInv.reg_pars as LamFuncs
 import sip_formats.convert as SC
 import NDimInv.lib_dd_interface as lDDi
 import lib_dd.plot as lDDp
+import lib_dd.main
 
 
 def handle_cmd_options():
@@ -169,7 +170,7 @@ def split_options(options):
     return prep_opts, inv_opts
 
 
-@profile
+# @profile
 def fit_data(data, prep_opts, inv_opts):
     """
     Call the fit routine for each pixel
@@ -268,7 +269,8 @@ def save_fit_results(final_iteration, data):
 
 def fit_one_time_series(fit_data):
     # init the object
-    ND = NDimInv.Inversion('dd_log10rho0log10m', inv_opts)
+    model = lib_dd.main.get('log10rho0log10m', inv_opts)
+    ND = NDimInv.Inversion(model, inv_opts)
 
     # add extra dimensions
     nr_timesteps = fit_data['data'].shape[0]

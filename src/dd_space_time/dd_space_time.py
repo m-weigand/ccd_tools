@@ -38,6 +38,7 @@ import NDimInv.reg_pars as LamFuncs
 import dd_time
 import dd_single
 import lib_dd.plot as lDDp
+import lib_dd.main
 
 
 def handle_cmd_options():
@@ -284,7 +285,8 @@ def fit_data(data, prep_opts, inv_opts):
 
 def fit_one_pixel(fit_data):
     # init the object
-    ND = NDimInv.Inversion('dd_log10rho0log10m', fit_data['inv_opts'])
+    model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
+    ND = NDimInv.Inversion(model, fit_data['inv_opts'])
 
     # add extra dimensions
     nr_timesteps = fit_data['data'].shape[0]
