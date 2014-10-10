@@ -30,7 +30,7 @@ import NDimInv
 import NDimInv.regs as RegFuncs
 import NDimInv.reg_pars as LamFuncs
 import sip_formats.convert as SC
-import NDimInv.lib_dd_interface as lDDi
+import lib_dd.interface as lDDi
 import lib_dd.plot as lDDp
 import lib_dd.main
 
