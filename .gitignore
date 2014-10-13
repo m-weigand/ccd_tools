@@ -2,7 +2,5 @@
 build/
 dist/
 MANIFEST
-DebyeDecomposition.egg-info
-../lib/GeccoInv.egg-info/
-lib/DD_Interface.egg-info/
+lib/dd_interface.egg-info/
 .ropeproject

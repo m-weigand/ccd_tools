@@ -35,17 +35,13 @@ applied on inversion results. This includes filtering and plotting routines.
 (TODO: Link). As soon as the underlying API is stabilized, the low level
 functions will be explain here: :ref:`ref_build_your_own_inversion`
 
-We are always interested in your feedback and recommendations. Please use the
-bug tracker (see next paragraph) or contact us directly under
-mweigand@geo.uni-bonn.de.
-
-Bugs and feature requests are managed by the bug tracker found here:
-http://testing.geo.uni-bonn.de/trac . Before you report a bug make sure to look
-through the existing bugs; perhaps your problem was already reported. Also make
-sure to include all necessary information to reproduce the bug. A small example
-data set and the command line options to trigger the bug are always helpfull!
-Please note that the bug tracker is password protected to prevent vandalism.
-Please contact mweigand@geo.uni-bonn.de for your personal access information.
+Feedback, bug reports, and general advice is always welcome. Please use the
+issue tracker on the github page for communication
+(https://github.com/m-weigand/dd_interfaces).  Before you report a bug make sure to
+look through the existing bugs; perhaps your problem was already reported. Also
+make sure to include all necessary information to reproduce the bug. A small
+example data set and the command line options to trigger the bug are always
+helpfull!
 
 Copyright
 =========
