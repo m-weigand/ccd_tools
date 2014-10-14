@@ -346,8 +346,21 @@ class dd_resistivity_skeleton(
         # set the data format we work with.
         self.data_format = 'rre_rmim'
         self.set_settings(settings)
+        self._check_settings()
         self.D_base_dims = None
         self.D_dims_flat = None  # size of the flattened base dimensions
+
+    def _check_settings(self):
+        """
+        Check if all required settings were made
+        """
+        required_settings = ('Nd',
+                             'frequencies',
+                             'tausel')
+        for requirement in required_settings:
+            if(requirement not in self.settings):
+                print('Missing required setting {0}'.format(requirement))
+                exit()
 
     def set_settings(self, settings):
         """

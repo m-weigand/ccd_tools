@@ -30,6 +30,7 @@ import NDimInv
 import NDimInv.regs as RegFuncs
 import NDimInv.reg_pars as LamFuncs
 import sip_formats.convert as SC
+import sip_formats.convert as sip_converter
 import lib_dd.interface as lDDi
 import lib_dd.plot as lDDp
 import lib_dd.main
@@ -270,12 +271,13 @@ def save_fit_results(final_iteration, data):
 def fit_one_time_series(fit_data):
     # init the object
     model = lib_dd.main.get('log10rho0log10m', inv_opts)
-    ND = NDimInv.Inversion(model, inv_opts)
+    ND = NDimInv.NDimInv(model, inv_opts)
 
     # add extra dimensions
     nr_timesteps = fit_data['data'].shape[0]
     ND.add_new_dimension('time', nr_timesteps)
     ND.finalize_dimensions()
+    ND.Data.data_converter = sip_converter.convert
 
     # register data
     for index, subdata in enumerate(fit_data['data']):
@@ -345,6 +347,31 @@ def fit_one_time_series(fit_data):
                                 LamFuncs.FixedLambda(
                                     fit_data['prep_opts']['t_m_i_lambda'])
                                 )
+
+    """
+    # debug start
+    ND.start_inversion()
+    print ND.iterations[-1].compute_rms()
+    print ND.iterations[-1].rms_values
+    exit()
+    m = ND.iterations[-1].m
+    M = ND.Model.convert_to_M(m)
+    D = ND.Data.D
+
+    f = ND.Model.f(m)
+    print 'f', f.shape
+    print 'M', M.shape
+    print 'D', D.shape
+    m1 = M[:, 0]
+    f1 = ND.Model.obj.forward(m1)
+    print 'f1', f1.shape
+
+    print ND.Model.F(M)
+
+    exit()
+    # # debug end
+    """
+
     ND.run_inversion()
     return ND
 

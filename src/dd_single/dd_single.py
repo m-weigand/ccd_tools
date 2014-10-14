@@ -39,6 +39,7 @@ import lib_dd.interface as lDDi
 import gc
 import lib_dd.plot as lDDp
 import lib_dd.main
+import sip_formats.convert as sip_converter
 
 
 def add_base_options(parser):
@@ -152,7 +153,8 @@ def split_options_single(options):
     """
     Extract options for two groups:
     1) prep_opts : these options are used to prepare the actual inversion, i.e.
-                   which regularization objects to use
+                   which regularization objects to use. Those options do not
+                   enter the NDimInv objects
     2) inv_opts : these options are directly passed through to the NDimInv
                   object
     """
@@ -167,10 +169,11 @@ def split_options_single(options):
 
 def _prepare_ND_object(fit_data):
     model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
-    ND = NDimInv.Inversion(model, fit_data['inv_opts'])
+    ND = NDimInv.NDimInv(model, fit_data['inv_opts'])
     ND.finalize_dimensions()
+    ND.Data.data_converter = sip_converter.convert
 
-    # Read in data
+    # read in data
     ND.Data.add_data(fit_data['data'], fit_data['prep_opts']['data_format'],
                      extra=[])
 
@@ -178,20 +181,19 @@ def _prepare_ND_object(fit_data):
     # for the model side
     ND.update_model()
 
+    # add an rms type
+    ND.rms_types['rms_re_im'] = [True, False]
     ND.set_custom_plot_func(lDDp.plot_iteration())
 
-    # here you can change the rms value we optimize for
-    # rms_part2_no_err yields good results
-    # optimize_for = 'rms_both_no_err'
-    # optimize_for = 'rms_part1_no_err'
-    # optimize_for = 'rms_part1_err'
-    optimize_for = 'rms_part2_no_err'
-    # optimize_for = 'rms_part2_err'
+    # rms value to optimize
+    optimize_rms_key = 'rms_re_im'
+    optimize_rms_index = 1  # imaginary part
 
     # add a frequency regularization for the DD model
     if(fit_data['prep_opts']['lambda'] is None):
         lam_obj = LamFuncs.SearchLambda(LamFuncs.Lam0_Easylam())
-        lam_obj.rms_key = optimize_for
+        lam_obj.rms_key = optimize_rms_key
+        lam_obj.rms_index = optimize_rms_index
     else:
         lam_obj = LamFuncs.FixedLambda(fit_data['prep_opts']['lambda'])
 
@@ -201,29 +203,9 @@ def _prepare_ND_object(fit_data):
                                 lam_obj
                                 )
 
-    # if we use an extended tau range, we want to minimize the m-values in
-    # those extra ranges
-    # if(fit_data['inv_opts']['tausel'] == 'data_ext'):
-    #    print('Extra taus')
-    #   # we only want to regularize the extra values, i.e. Nd values on the
-    #   # left and to the right
-    #   Nd = fit_data['inv_opts']['Nd']
-    #   nr_taus = len(ND.Data.obj.tau)
-    #   # note: +1 for rho0
-    #   # lower tau range
-    #   decouple = range(Nd + 1, nr_taus - Nd + 2)
-    #   decouple = range(Nd + 1, nr_taus + 1)
-
-    #   ND.Model.add_regularization(0,
-    #                               RegFuncs.Damping(
-    #                                   decouple=decouple),
-    #                          #LamFuncs.SearchLambda(LamFuncs.Lam0_Easylam())
-    #                               LamFuncs.FixedLambda(1e5)
-    #                               )
-
     # choose from a fixed set of step lengths
     ND.Model.steplength_selector = NDimInv.main.SearchSteplengthParFit(
-        optimize_for)
+        optimize_rms_key, optimize_rms_index)
     return ND
 
 

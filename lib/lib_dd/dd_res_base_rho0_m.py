@@ -16,9 +16,10 @@ class dd_res_base():
 
     def forward(self, pars):
         """
+        Return the forward response as in base dimensions
         """
         real, mimag = self.forward_re_mim(pars)
-        rre_rmim = np.hstack((real, mimag))
+        rre_rmim = np.vstack((real, mimag)).T
         return rre_rmim
 
     def forward_re_mim(self, pars):

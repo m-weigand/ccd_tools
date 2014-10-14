@@ -29,5 +29,5 @@ if __name__ == '__main__':
                    'src/ddps/ddps.py',
                    'src/ddpt/ddpt.py',
                    'src/ddpst/ddpst.py'],
-          install_requires=['numpy', 'scipy>=0.12', 'matplotlib', 'GeccoInv']
+          install_requires=['numpy', 'scipy>=0.12', 'matplotlib', 'geccoinv']
           )
