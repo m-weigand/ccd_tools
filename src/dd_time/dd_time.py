@@ -348,14 +348,16 @@ def fit_one_time_series(fit_data):
                                     fit_data['prep_opts']['t_m_i_lambda'])
                                 )
 
-    """
     # debug start
+    """
     ND.start_inversion()
-    print ND.iterations[-1].compute_rms()
-    print ND.iterations[-1].rms_values
-    exit()
     m = ND.iterations[-1].m
     M = ND.Model.convert_to_M(m)
+    f1 = ND.Model.F(M)
+    f2 = ND.Model.F_ng(M)
+    print f1 - f2
+    exit()
+
     D = ND.Data.D
 
     f = ND.Model.f(m)

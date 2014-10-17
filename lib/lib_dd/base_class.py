@@ -738,7 +738,7 @@ class dd_resistivity_skeleton(
         plt.close(fig)
         del(fig)
 
-    def check_data(self, rre, mrim):
+    def check_data_do_we_use_this(self, rre, mrim):
         """
         We restrict the fit to positive m values. This implies also positive
         imaginary parts!  Reject a data set if the data mean is negative
