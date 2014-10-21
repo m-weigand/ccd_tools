@@ -170,7 +170,7 @@ filename                       stored values per line
 *m_tot_n_results.dat*          :math:`log_{10}(m_{tot}^n)`
 *m_tot_results.dat*            :math:`log_{10}(m_{tot}^n)`
 *rho0_results.dat*             :math:`log_{10}(\rho_0)`
-*tau_50_results.dat*           :math:`log_{10}(\tau_50)`
+*tau_50_results.dat*           :math:`log_{10}(\tau_{50})`
 *tau_mean_results.dat*         :math:`log_{10}(\tau_{mean})`
 *tau_arithmetic_results.dat*   :math:`log_{10}(\tau_{arithmetic})`
 *tau_geometric_results.dat*    :math:`log_{10}(\tau_{geometric})`
@@ -189,17 +189,18 @@ filename                       stored values per line
 *covm_results.dat*
 =============================  ===============================
 
-**:math:`\tau_x`** Arbitrary cumulative relaxation times can be computed by setting
+*:math:`\tau_x`* Arbitrary cumulative relaxation times can be computed by setting
 the environment variable **DD_TAU_X**. The string separates the requested
 percentages as fractions with ';' characters.
 
-Example:
+For example, the following call to **dd_single** computes the 20%, 35%, and 60%
+percentiles of the RTD:
 
 ::
 
     DD_TAU_X="0.2;0.35;0.6" dd_single.py
 
-*Integrated parameters* extracted from the RTD fall into two categories:
+*Integral parameters* extracted from the RTD fall into two categories:
 chargeability related values and relaxation time related values.  The first
 category extracts information regarding the total or partial polarization
 strength of the system, while the second extracts information regarding

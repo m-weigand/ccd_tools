@@ -619,7 +619,10 @@ class dd_resistivity_skeleton(
         parameters = self.convert_parameters(parameters)
         return parameters
 
-    def estimate_starting_parameters(self, re, mim):
+    def estimate_starting_parameters(self, spectrum):
+        re = spectrum[:, 0]
+        mim = spectrum[:, 1]
+
         if('DD_STARTING_MODEL' in os.environ):
             starting_model = os.environ['DD_STARTING_MODEL']
             starting_model = int(starting_model)

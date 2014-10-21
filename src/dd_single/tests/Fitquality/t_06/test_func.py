@@ -2,7 +2,7 @@
 """
 Test functions
 """
-from lib_dd.dd_test_functions import *
+from lib_dd.test_functions import *
 
 
 def test_regressions(old_result, new_result):

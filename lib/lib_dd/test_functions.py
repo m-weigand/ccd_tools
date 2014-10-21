@@ -14,6 +14,18 @@ class tcolors:
     GRAY = '\033[37m'
 
 
+# some files got renamed during refactoring
+# this dict collects the various names for those files
+equivalent_rms_files = {
+    'both_no_err': ['rms_both_no_err.dat', 'rms_all_no_err.dat'],
+    're_no_err': ['rms_part1_no_err.dat', 'rms_real_parts.dat'],
+    'im_no_err': ['rms_part2_no_err.dat', 'rms_imag_parts.dat']  # ,
+    # 'both_err': ['rms_both_err.dat', ],
+    # 're_err': ['rms_part1_err.dat', ],
+    # 'im_err': ['rms_part2_err.dat', ]
+}
+
+
 def t_rms_pos_change(old_result, new_result, allowed_percentage):
     """
     Test for positive rms changes
@@ -28,18 +40,33 @@ def t_rms_pos_change(old_result, new_result, allowed_percentage):
                         thresholds
 
     """
+
+    """
     rms_files = ('rms_both_err.dat', 'rms_both_no_err.dat', 'rms_part1_err.dat',
                  'rms_part1_no_err.dat', 'rms_part2_err.dat',
                  'rms_part2_no_err.dat')
+    """
 
-    for rms_file in rms_files:
-        print('Testing {0}'.format(rms_file))
-        filename_old = old_result + os.sep + 'results/stats_and_rms/'
-        filename_old += os.sep + rms_file
-        rms_old_result = np.atleast_1d(np.loadtxt(filename_old))
+    for rms_key, rms_files in equivalent_rms_files.iteritems():
+        print('Testing key {0}'.format(rms_key))
+        base_old = old_result + os.sep + 'results/stats_and_rms/'
+        filename_old = [base_old + x for x in rms_files if
+                        os.path.isfile(base_old + x)]
+        if filename_old:
+            rms_old_result = np.atleast_1d(np.loadtxt(filename_old[0]))
+        else:
+            raise IOError('No RMS file found for old RMS (key {0}) {1}'.format(
+                rms_key, base_old))
 
-        filename_new = new_result + os.sep + '/stats_and_rms/' + rms_file
-        rms_new_result = np.atleast_1d(np.loadtxt(filename_new))
+        base_new = new_result + os.sep + 'stats_and_rms/'
+        filename_new = [base_new + x for x in rms_files if
+                        os.path.isfile(base_new + x)]
+        if filename_new:
+            rms_new_result = np.atleast_1d(np.loadtxt(filename_new[0]))
+        else:
+            raise IOError(
+                'No RMS file found for new RMS (key {0}) {1} {2}'.format(
+                    rms_key, base_new, os.getcwd()))
 
         for spec_id in range(0, rms_old_result.size):
             print('Spectrum {0}'.format(spec_id + 1))

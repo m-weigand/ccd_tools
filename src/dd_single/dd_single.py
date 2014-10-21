@@ -181,8 +181,15 @@ def _prepare_ND_object(fit_data):
     # for the model side
     ND.update_model()
 
-    # add an rms type
-    ND.rms_types['rms_re_im'] = [True, False]
+    # add rms types
+    ND.RMS.add_rms('rms_re_im',
+                   [True, False],
+                   ['rms_real_parts', 'rms_imag_parts'])
+
+    # use imaginary part for stopping criteria
+    ND.stop_rms_key = 'rms_re_im'
+    ND.stop_rms_index = 1
+
     ND.set_custom_plot_func(lDDp.plot_iteration())
 
     # rms value to optimize
@@ -362,6 +369,8 @@ def save_base_results(final_iterations, data):
     with open('command.dat', 'w') as fid:
         fid.write(' '.join(sys.argv) + '\n')
 
+    final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
+
     # save tau/s
     np.savetxt('tau.dat', final_iterations[0][0].Data.obj.tau)
     np.savetxt('s.dat', final_iterations[0][0].Data.obj.s)
@@ -398,7 +407,7 @@ def save_fit_results(final_iterations, data):
     Save results of all DD fits to files
     """
     save_base_results(final_iterations, data)
-    if(not os.path.isdir('stats_and_rms')):
+    if not os.path.isdir('stats_and_rms'):
         os.makedirs('stats_and_rms')
     os.chdir('stats_and_rms')
     stats_for_all_its = lDDi.aggregate_dicts(final_iterations, 'stat_pars')
@@ -409,7 +418,7 @@ def save_fit_results(final_iterations, data):
     lDDi.save_stat_pars(stats_for_all_its, norm_factors)
 
     rms_for_all_its = lDDi.aggregate_dicts(final_iterations, 'rms_values')
-    lDDi.save_rms_values(rms_for_all_its)
+    lDDi.save_rms_values(rms_for_all_its, final_iterations[0][0].RMS.rms_names)
     os.chdir('..')
 
     # save data
@@ -417,7 +426,7 @@ def save_fit_results(final_iterations, data):
         for nr, itd in enumerate(final_iterations):
             data = itd[0].Data.Df.flatten()[np.newaxis, :]
             # if necessary, apply renormalization
-            if(norm_factors is not None):
+            if norm_factors is not None:
                 data[0:data.size/2] /= norm_factors[nr]
 
             np.savetxt(fid, data)

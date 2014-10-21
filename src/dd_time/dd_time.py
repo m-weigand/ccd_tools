@@ -243,7 +243,9 @@ def save_fit_results(final_iteration, data):
         norm_factors = None
 
     lDDi.save_stat_pars(final_iteration.stat_pars, norm_factors)
-    lDDi.save_rms_values(final_iteration.rms_values)
+    lDDi.save_rms_values(final_iteration.rms_values,
+                         final_iteration.RMS.rms_names)
+
     os.chdir('..')
 
     # save data
@@ -287,6 +289,20 @@ def fit_one_time_series(fit_data):
                          extra=(index, ))
 
     ND.update_model()
+
+    # add rms types
+    ND.RMS.add_rms('rms_re_im',
+                   [True, False],
+                   ['rms_real_parts', 'rms_imag_parts'])
+
+    ND.RMS.add_rms('rms_times',
+                   [True, True, False],
+                   ['rms_time_', ])
+
+    # use imaginary part for stopping criteria
+    ND.stop_rms_key = 'rms_re_im'
+    ND.stop_rms_index = 1
+
     ND.set_custom_plot_func(lDDp.plot_iteration())
     # ND.Model.steplength_selector = NDimInv.main.SearchSteplength()
     ND.Model.steplength_selector = NDimInv.main.SearchSteplengthParFit()
