@@ -17,12 +17,12 @@ class tcolors:
 # some files got renamed during refactoring
 # this dict collects the various names for those files
 equivalent_rms_files = {
-    'both_no_err': ['rms_both_no_err.dat', 'rms_all_no_err.dat'],
-    're_no_err': ['rms_part1_no_err.dat', 'rms_real_parts.dat'],
-    'im_no_err': ['rms_part2_no_err.dat', 'rms_imag_parts.dat']  # ,
-    # 'both_err': ['rms_both_err.dat', ],
-    # 're_err': ['rms_part1_err.dat', ],
-    # 'im_err': ['rms_part2_err.dat', ]
+    'both_no_err': ['rms_both_no_err.dat', 'rms_all_noerr.dat'],
+    're_no_err': ['rms_part1_no_err.dat', 'rms_real_parts_noerr.dat'],
+    'im_no_err': ['rms_part2_no_err.dat', 'rms_imag_parts_noerr.dat'],
+    'both_err': ['rms_both_err.dat', 'rms_all_error.dat'],
+    're_err': ['rms_part1_err.dat', 'rms_real_parts_error.dat'],
+    'im_err': ['rms_part2_err.dat', 'rms_imag_parts_error.dat']
 }
 
 

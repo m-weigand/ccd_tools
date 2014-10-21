@@ -18,12 +18,12 @@ implements a somewhat general multi-dimensional inversion scheme which supports
 an arbitrary number of regularizations between various dimensions. Building
 upon these, three front-ends for the Debye Decompositions are provided:
 
-* *dd_single.py* fits an arbitrary number of CR spectra without any
+* *dd_single.py* fits an arbitrary number of SIP spectra without any
   kind of regularization between the spectra.
-* *dd_time.py* fits an arbitrary number of time-lapse CR spectra with a
+* *dd_time.py* fits an arbitrary number of time-lapse SIP spectra with a
   regularization on the time axis (separate regularization parameters for
   :math:`\rho_0` and the chargeabilities :math:`m_i`)
-* *dd_space_time.py* fits and arbitrary number of time-lapse CR spectra
+* *dd_space_time.py* fits and arbitrary number of time-lapse SIP spectra
   recovered from imaging results with the same time regularization as applied
   by *dd_time.py*. No spatial regularization is applied.
 
@@ -32,8 +32,7 @@ See :ref:`ref_fit_routines` for detailed information on each of the front-ends.
 Each front-end is accompanied by a post processing tool (*ddps.py*, *ddpt.py*,
 and *ddpst.py*) which allows various analysis and postprocessing steps to be
 applied on inversion results. This includes filtering and plotting routines.
-(TODO: Link). As soon as the underlying API is stabilized, the low level
-functions will be explain here: :ref:`ref_build_your_own_inversion`
+(TODO: Link).
 
 Feedback, bug reports, and general advice is always welcome. Please use the
 issue tracker on the github page for communication
@@ -42,6 +41,27 @@ look through the existing bugs; perhaps your problem was already reported. Also
 make sure to include all necessary information to reproduce the bug. A small
 example data set and the command line options to trigger the bug are always
 helpfull!
+
+.. _ref_fit_routines:
+
+Fit Routines
+============
+
+Three fit routines are provided with specialized input/output configurations:
+
+.. toctree::
+    :maxdepth: 1
+    :hidden:
+
+    programs/dd_single
+    programs/dd_time
+    programs/dd_space_time
+
+
+* Fiting of separate sepctra (1D) :doc:`programs/dd_single`
+* Fitting of time-regularized spectra (2D) :doc:`programs/dd_time`
+* Fitting of spatially distributed time-regularized spectra (3D, but no spatial
+  regularization) :doc:`programs/dd_space_time`
 
 Copyright
 =========
@@ -109,32 +129,6 @@ Debye Decomposition
 .. toctree::
 
     dd_general
-
-Fit Routines
-============
-
-Three fit routines are provided with specialized input/output configurations:
-
-.. toctree::
-    :maxdepth: 1
-    :hidden:
-
-    programs/dd_single
-    programs/dd_time
-    programs/dd_space_time
-
-
-* Fiting of separate sepctra (1D) :doc:`programs/dd_single`
-* Fitting of time-regularized spectra (2D) :doc:`programs/dd_time`
-* Fitting of spatially distributed time-regularized spectra (3D, but no spatial
-  regularization) :doc:`programs/dd_space_time`
-
-.. _ref_build_your_own_inversion:
-
-Build you own inversion
-=======================
-
-:doc:`tutorial_dd_ndiminv`
 
 Long-term Todo
 ==============

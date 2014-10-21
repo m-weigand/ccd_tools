@@ -187,13 +187,13 @@ def _prepare_ND_object(fit_data):
                    ['rms_real_parts', 'rms_imag_parts'])
 
     # use imaginary part for stopping criteria
-    ND.stop_rms_key = 'rms_re_im'
+    ND.stop_rms_key = 'rms_re_im_noerr'
     ND.stop_rms_index = 1
 
     ND.set_custom_plot_func(lDDp.plot_iteration())
 
     # rms value to optimize
-    optimize_rms_key = 'rms_re_im'
+    optimize_rms_key = 'rms_re_im_noerr'
     optimize_rms_index = 1  # imaginary part
 
     # add a frequency regularization for the DD model

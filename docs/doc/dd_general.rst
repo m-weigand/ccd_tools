@@ -46,15 +46,17 @@ log-normal distributions to the :math:`g_i` distribution.
    import scipy
    from scipy import stats
    import sys
-   import lib_dd.main as dd_res
+   import lib_dd
 
    f = np.logspace(-3, 4, 100)
    tau = np.logspace(-5, 2, 100) # create tau distribution
    s = np.log10(tau) # natural logarithm
-   settings = {'tau_values': tau,
-               'frequencies': f
+   settings = {'Nd': x,
+               'tau_values': tau,
+               'frequencies': f,
+               'tausel': 'data_ext'
                }
-   dd_res = dd_res.get('log10rho0log10m', settings)
+   model = lib_dd.main.get('log10rho0log10m', settings)
    # tau-distribtution, mean, std
    m = stats.norm.pdf(s, 0, 1.5) / 100 + \
        stats.norm.pdf(s, -4.5, 1.5) / 50
@@ -72,7 +74,7 @@ log-normal distributions to the :math:`g_i` distribution.
    pars = np.hstack((100, g))
    omega = f * 2 * np.pi
 
-   re, im = dd_res.forward_re_mim(pars)
+   re, im = model.forward_re_mim(pars)
    ax.semilogx(f, re)
    ax.set_xlabel('Frequencies (Hz)')
    ax.set_ylabel(r'$Re(\rho) (\Omega m)$')
@@ -96,15 +98,17 @@ Normally distributed noise can then be added to this spectrum:
    import numpy as np
    import scipy
    from scipy import stats
-   import lib_dd.main as dd_res
+   import lib_dd
 
    f = np.logspace(-3, 4, 100)
    tau = np.logspace(-5,2,100) # create tau distribution
    s = np.log10(tau) # natural logarithm
-   settings = {'tau_values': tau,
-               'frequencies': f
+   settings = {'Nd': x,
+               'tau_values': tau,
+               'frequencies': f,
+               'tausel': 'data_ext'
                }
-   dd_res = dd_res.get('log10rho0log10m', settings)
+   model = lib_dd.main.get('log10rho0log10m', settings)
    # tau-distribtution, mean, std
    m = stats.norm.pdf(s, 0, 1.5) / 100 + \
        stats.norm.pdf(s, -4.5, 1.5) / 50
@@ -121,11 +125,7 @@ Normally distributed noise can then be added to this spectrum:
    pars = np.hstack((100, g))
    omega = f * 2 * np.pi
 
-   dd_res.frequencies = f
-   dd_res.omega = omega
-   dd_res.tau = tau
-   dd_res.s = np.log10(tau)
-   re, im = dd_res.forward_re_mim(pars)
+   re, im = model.forward_re_mim(pars)
    np.random.rand(5)
    # add 5% noise
    re_noised = re + np.random.rand(re.shape[0]) * 0.05  * re
@@ -229,14 +229,17 @@ independently from the minimum and maximum data frequencies. However, the
     from NDimInv.plot_helper import *
     import numpy as np
     import sys
-    import lib_dd.main as dd_res
+    import lib_dd
 
     f = np.logspace(-3, 6, 100)
     tau = np.array((1.5915e-06,))
-    settings = {'tau_values': tau,
-               'frequencies': f
-               }
-    dd_res = dd_res.get('log10rho0log10m', settings)
+
+    settings = {'Nd': x,
+                'tau_values': tau,
+                'frequencies': f,
+                'tausel': 'data_ext'
+                }
+    model = lib_dd.main.get('log10rho0log10m', settings)
     m = np.array((np.log10(0.01),))
     s = np.log10(tau) # natural logarithm
 
@@ -245,11 +248,7 @@ independently from the minimum and maximum data frequencies. However, the
     pars = np.hstack((100, m))
     omega = f * 2 * np.pi
 
-    dd_res.frequencies = f
-    dd_res.omega = omega
-    dd_res.tau = tau
-    dd_res.s = np.log10(tau)
-    re, im = dd_res.forward_re_mim(pars)
+    re, im = model.forward_re_mim(pars)
 
     fig = plt.figure()
     fig.suptitle(r'Minimum frequency $\tau$ selection')
@@ -284,7 +283,7 @@ independently from the minimum and maximum data frequencies. However, the
 
    from NDimInv.plot_helper import *
    import numpy as np
-   import lib_dd.main as dd_res
+   import lib_dd
 
    tau = np.array((159.15,))
    f_max = 1 / (2 * np.pi * tau[0])
@@ -292,19 +291,17 @@ independently from the minimum and maximum data frequencies. However, the
 
    m = np.array((np.log10(0.01),))
    f = np.logspace(-5, 6, 100)
-   settings = {'tau_values': tau,
-              'frequencies': f
-              }
-   dd_res = dd_res.get('log10rho0log10m', settings)
+
+   settings = {'Nd': x,
+               'tau_values': tau,
+               'frequencies': f,
+               'tausel': 'data_ext'
+               }
+   model = lib_dd.main.get('log10rho0log10m', settings)
    pars = np.hstack((100, m))
    omega = f * 2 * np.pi
 
-   dd_res.frequencies = f
-   dd_res.omega = omega
-   dd_res.tau = tau
-   dd_res.s = np.log10(tau)
-
-   re, im = dd_res.forward_re_mim(pars)
+   re, im = model.forward_re_mim(pars)
 
    fig = plt.figure()
    fig.suptitle('Minimum frequency $\tau$ selection')

@@ -130,20 +130,20 @@ Primary fit results
 * The forward response of the final iteration is stored in *f.dat*
 
 * RMS values are stored in the subdirectory *stats_and_rms*, using the
-  following files (final RMS of each spectrum per line). *part1/part2* here
+  following files (final RMS of each spectrum per line). *real/imag* here
   correspond to real part and imaginary part of resistivity, respectively. The
-  *_err* suffix denotes RMS values computed with data weighting.
+  *_error* suffix denotes RMS values computed with data weighting.
 
-  ======================  ==========================================================
-  filename                description
-  ======================  ==========================================================
-  *rms_both_err.dat*      RMS of real and imaginary parts, including error weighting
-  *rms_both_no_err.dat*
-  *rms_part1_err.dat*
-  *rms_part1_no_err.dat*
-  *rms_part2_err.dat*
-  *rms_part2_no_err.dat*
-  ======================  ==========================================================
+  ==========================  ==========================================================
+  filename                    description
+  ==========================  ==========================================================
+  *rms_all_error.dat*         RMS of real and imaginary parts, including error weighting
+  *rms_all_noerr.dat*         RMS of real and imaginary parts, without error weighting
+  *rms_imag_parts_error.dat*  Error weighted RMS of imaginary parts
+  *rms_imag_parts_noerr.dat*  Non-error weighted RMS of imaginary parts
+  *rms_real_parts_error.dat*  Error weighted RMS of real parts
+  *rms_real_parts_noerr.dat*  Non-error weighted RMS of real parts
+  ==========================  ==========================================================
 
     .. math::
 
@@ -155,9 +155,8 @@ Primary fit results
 * Data weighting errors are stored in *errors.dat*
 
 
-
-Integrated parameters
----------------------
+Integral parameters
+-------------------
 
 Statistical parameters are stored in the subdirectory *stats_and_rms*, and all
 output files have the same file format. Each line contains the value of one

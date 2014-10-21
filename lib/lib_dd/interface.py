@@ -171,11 +171,14 @@ def save_rms_values(rms_list, rms_names):
     Save the RMS values to the corresponding filenames
     """
     for key in rms_list.keys():
-        names = rms_names[key]
+        # split key
+        key_base = key[:-6]
+        key_type = key[-6:]
+        names = rms_names[key_base]
         rms_all = np.array(rms_list[key]).T
         if len(names) != rms_all.shape[0]:
             names = [
                 names[0] + '{0}'.format(x) for x in xrange(0, rms_all.shape[0])]
         for name, rms in zip(names, rms_all):
-            filename = name + '.dat'
+            filename = name + key_type + '.dat'
             np.savetxt(filename, np.atleast_1d(rms))

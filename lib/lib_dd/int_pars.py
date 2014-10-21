@@ -138,8 +138,8 @@ def tau_50(pars, tau, s):
 
 
 def U_tau(pars, tau, s):
-    """compute uniformity parameter similar to Nordsiek and Weller, 2008:
-        :math:`U_{\tau} = \frac{\tau_{10}}{\tau_{60}}
+    r"""compute uniformity parameter similar to Nordsiek and Weller, 2008:
+        :math:`U_{\tau} = \frac{\tau_{10}}{\tau_{60}}`
     """
     tau_10, f_10 = _tau_x(0.1, pars, tau, s)
     tau_60, f_60 = _tau_x(0.6, pars, tau, s)
