@@ -492,6 +492,12 @@ def filter_result_dir(options):
             indices_to_delete.append(index)
         index += 1
 
+        _delete_indices(final_iterations, indices_to_delete, remaining_indices)
+
+    save_filter_results(options, remaining_indices, final_iterations)
+
+
+def _delete_indices(final_iterations, indices_to_delete, remaining_indices):
     # delete all marked indices
     old_nr_iterations = len(final_iterations)
     for i in reversed(sorted(indices_to_delete)):
@@ -504,7 +510,10 @@ def filter_result_dir(options):
     if(len(final_iterations) == 0):
         print('Filter process would remove all spectra! Stopping process.')
         exit()
+    return final_iterations, remaining_indices
 
+
+def save_filter_results(options, remaining_indices, final_iterations):
     # # save
     if(not os.path.isdir(options.output_dir)):
         os.makedirs(options.output_dir)
@@ -532,6 +541,7 @@ def compute_statistics(options):
     statistics = {}
     for filename in stat_files:
         key = os.path.basename(filename)[:-12]
+        # skip rms output files
         if(key.startswith('rms_')):
             continue
         # load data
@@ -556,14 +566,14 @@ def compute_statistics(options):
 if __name__ == '__main__':
     options, args = handle_cmd_options()
     # call one or more processing steps
-    if(options.plot_to_grid):
+    if options.plot_to_grid:
         plot_to_grid(options)
 
-    if(options.plot_specs or options.plot_reg_strength):
+    if options.plot_specs or options.plot_reg_strength:
         plot_iterations(options)
 
-    if(options.apply_filters):
+    if options.apply_filters:
         filter_result_dir(options)
 
-    if(options.compute_statistics):
+    if options.compute_statistics:
         compute_statistics(options)
