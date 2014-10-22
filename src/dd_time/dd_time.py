@@ -300,12 +300,13 @@ def fit_one_time_series(fit_data):
                    ['rms_time_', ])
 
     # use imaginary part for stopping criteria
-    ND.stop_rms_key = 'rms_re_im'
+    ND.stop_rms_key = 'rms_re_im_noerr'
     ND.stop_rms_index = 1
 
     ND.set_custom_plot_func(lDDp.plot_iteration())
     # ND.Model.steplength_selector = NDimInv.main.SearchSteplength()
-    ND.Model.steplength_selector = NDimInv.main.SearchSteplengthParFit()
+    ND.Model.steplength_selector = NDimInv.main.SearchSteplengthParFit(
+        optimize='rms_re_im_noerr', optimize_index=1)
 
     # get number of tau values
     nr_tau_values = ND.Model.obj.tau.size
@@ -322,6 +323,11 @@ def fit_one_time_series(fit_data):
             lam_obj = LamFuncs.SearchLambdaIndividual(lam0_obj)
         else:
             lam_obj = LamFuncs.SearchLambda(lam0_obj)
+        # rms value to optimize
+        optimize_rms_key = 'rms_re_im_noerr'
+        optimize_rms_index = 1  # imaginary part
+        lam_obj.rms_key = optimize_rms_key
+        lam_obj.rms_index = optimize_rms_index
     else:
         lam_obj = LamFuncs.FixedLambda(fit_data['prep_opts']['f_lambda'])
 

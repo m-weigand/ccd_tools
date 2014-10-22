@@ -276,7 +276,7 @@ def _get_ND(subdata):
     ND = dd_single._prepare_ND_object(fit_data)
 
     # recreate the last iteration
-    it = NDimInv.main.Iteration(1, ND.Data, ND.Model)
+    it = NDimInv.main.Iteration(1, ND.Data, ND.Model, ND.RMS)
 
     # number of iterations
     it.nr = 1
@@ -531,29 +531,49 @@ def save_filter_results(options, remaining_indices, final_iterations):
     os.chdir(pwd)
 
 
+def _is_log10(filename):
+    """Return True if this result file contains log10 data, False otherwise
+    """
+    # frequencies are usually stored in linear
+    if filename.startswith('f_'):
+        return False
+
+    files_in_linear_scale = ['decade_loadings_results.dat', ]
+
+    if filename in files_in_linear_scale:
+        return False
+    return True
+
+
 def compute_statistics(options):
     """
     Compute various statistics of the stats and store in
     result_dir/statistics.dat
     """
+    skip_files = ['decade_bins_results.dat', ]
     stat_files = sorted(glob.glob(options.result_dir + '/stats_and_rms/*.dat'))
 
     statistics = {}
     for filename in stat_files:
-        key = os.path.basename(filename)[:-12]
+        base_file = os.path.basename(filename)
+        key = base_file[:-12]
         # skip rms output files
         if(key.startswith('rms_')):
             continue
+        if base_file in skip_files:
+            continue
+
         # load data
         data = np.loadtxt(filename)
-        # integrated parameters are usually stores as log10 values
-        data = 10 ** data
+        if _is_log10(base_file):
+            # integrated parameters are usually stored as log10 values
+            data = 10 ** data
 
         # remove nan-values
         nan_indices = np.where(np.isnan(data))
         data_nonnan = np.delete(data, nan_indices)
         statistics['mean_' + key] = np.mean(data_nonnan)
-        statistics['std_' + key] = np.std(data_nonnan)
+        statistics['std_' + key] = np.std(np.atleast_1d(data_nonnan))
 
     # write to json file
     outfile = options.result_dir + '/statistics.json'

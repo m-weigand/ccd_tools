@@ -54,8 +54,8 @@ class plot_iteration():
                         markeredgewidth=3.0)
             ax.semilogx(frequencies, resp[i], '-', c='r',
                         alpha=0.7)
-            ax.set_xlabel('Frequency (Hz)')
-            ax.set_ylabel(r"$\rho'~(\Omega m)$")
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel(r"$\rho'~[\Omega m]$")
 
             # part 2
             ax = axes[nr, 1]
@@ -63,8 +63,8 @@ class plot_iteration():
                         markeredgewidth=3.0, label='data')
             ax.semilogx(frequencies, resp[i + 1], '-', c='r',
                         alpha=0.7, label='fit')
-            ax.set_xlabel('Frequency (Hz)')
-            ax.set_ylabel(r"$-\rho''~(\Omega m)$")
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel(r"$-\rho''~[\Omega m]$")
 
             # mark relaxation time parameters
             # mark tau_peak
@@ -79,7 +79,7 @@ class plot_iteration():
                        label=r'$\tau_{mean}$')
 
             # legend is created from first plot
-            if(nr == 0):
+            if nr == 0:
                 ax.legend(loc="upper center", ncol=5,
                           # bbox_to_anchor=(0, 0, 1, 0.95),
                           bbox_to_anchor=(0, 0, 1, 1),
@@ -96,14 +96,14 @@ class plot_iteration():
             rmag, rpha = sip_convert.split_data(rmag_rpha)
 
             ax.semilogx(it.Data.obj.frequencies, rmag.flatten(), '.')
-            ax.set_xlabel('Frequency (Hz)')
-            ax.set_ylabel(r'$|\rho|~(\Omega m)$')
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel(r'$|\rho|~[\Omega m]$')
 
             # rpha
             ax = axes[nr, 3]
             ax.semilogx(it.Data.obj.frequencies, -rpha.flatten(), '.')
-            ax.set_xlabel('Frequency (Hz)')
-            ax.set_ylabel(r'$-\phi~(mrad)$')
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel(r'$-\phi~[mrad]$')
 
             # RTD (m distribution)
             ax = axes[nr, 4]
@@ -122,7 +122,7 @@ class plot_iteration():
             m_distribution = it.m[m_indices[nr]: m_indices[nr] + step_size][1:]
             ax.semilogx(it.Model.obj.tau, m_distribution, '.-')
             ax.xaxis.set_major_locator(mpl.ticker.LogLocator(5))
-            ax.set_xlabel(r'$\tau$')
+            ax.set_xlabel(r'$\tau [s]$')
             ax.set_ylabel(r'$m(\tau)$')
             tau_min = np.min(it.Model.obj.tau)
             tau_max = np.max(it.Model.obj.tau)
@@ -139,7 +139,7 @@ class plot_iteration():
             ax.axvspan(tau_min, t_fmax, hatch='/', color='gray', alpha=0.5)
             ax.axvspan(t_fmin, tau_max, hatch='/', color='gray', alpha=0.5)
 
-            # mark relaxation time paramters
+            # mark relaxation time parameters
             for index in range(1, 3):
                 tpeak = it.stat_pars['tau_peak{0}'.format(index)][nr]
                 if(not np.isnan(tpeak)):
@@ -149,11 +149,16 @@ class plot_iteration():
             for label in ax.get_xticklabels() + ax.get_yticklabels():
                 label.set_fontsize(7)
 
-        fig.suptitle('Debye Decomposition, iteration {0}'.format(it.nr))
+        ax = axes[0, 0]
+        title = 'Debye Decomposition, iteration {0}'.format(it.nr)
+        ax.annotate(title, xy=(0.0, 1.00), xytext=(15, -30),
+                    textcoords='offset points', xycoords='figure fraction')
         fig.tight_layout()
         fig.subplots_adjust(top=top_margin)
         fig.savefig(filename, dpi=150)
+        # clean up
         fig.clf()
+        plt.close(fig)
         del(fig)
 
         # import pdb

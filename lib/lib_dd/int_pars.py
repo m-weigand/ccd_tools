@@ -189,7 +189,8 @@ def _get_peaks(pars, s):
 
 
 def decade_loadings(pars, tau, s):
-    r"""Compute the chargeability sum for each frequency decade.
+    r"""Compute the chargeability sum for each frequency decade. Store in linear
+    scale.
     """
     f_tau = 1 / (2 * np.pi * tau)
 
