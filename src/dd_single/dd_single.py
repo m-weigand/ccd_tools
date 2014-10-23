@@ -129,6 +129,24 @@ def handle_cmd_options():
     return options
 
 
+def check_input_files(options, additional_files=[]):
+    """Check the input files for existance. In addition to the base files for
+    data and frequency, also test for all filenames stored in the corresponding
+    attributes as provided by the extra list.
+    """
+    none_missing = True
+    base_files = ['frequency_file', 'data_file']
+    for attr in base_files + additional_files:
+        filename = getattr(options, attr)
+        if not os.path.isfile(filename):
+            print('Filename not found for attribute {0}: {1}'.format(
+                attr, filename))
+            none_missing = False
+    else:
+        if not none_missing:
+            exit()
+
+
 def split_options_base(options):
     """
     Prepare dicts containing preparation and inversion settings common to all
@@ -471,6 +489,7 @@ def get_output_dir(options):
 def main():
     print('Debye Decomposition')
     options = handle_cmd_options()
+    check_input_files(options)
     outdir = get_output_dir(options)
 
     # DD_RES_INV.inversion.setup_logger('dd', outdir, options.silent)

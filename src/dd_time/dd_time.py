@@ -402,6 +402,7 @@ def fit_one_time_series(fit_data):
 
 if __name__ == '__main__':
     options = handle_cmd_options()
+    dd.check_input_files(options, ['times', ])
     outdir = dd.get_output_dir(options)
     data, options = get_data_dd_time(options)
     prep_opts, inv_opts = split_options(options)
