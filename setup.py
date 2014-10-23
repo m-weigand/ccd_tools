@@ -8,7 +8,7 @@ from setuptools import setup
 # to create a windows installer
 
 version_short = '0.5'
-version_long = '0.5.5'
+version_long = '0.5.6'
 
 if __name__ == '__main__':
     setup(name='dd_interface',
