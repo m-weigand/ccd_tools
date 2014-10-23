@@ -488,11 +488,11 @@ def filter_result_dir(options):
             it_value = it.stat_pars[settings['key']][0]
             if(it_value <= filter_value):
                 delete = True
-        if(delete):
+        if delete:
             indices_to_delete.append(index)
         index += 1
 
-        _delete_indices(final_iterations, indices_to_delete, remaining_indices)
+    _delete_indices(final_iterations, indices_to_delete, remaining_indices)
 
     save_filter_results(options, remaining_indices, final_iterations)
 
