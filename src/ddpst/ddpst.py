@@ -64,15 +64,17 @@ def aggregate_results(options):
                     glob.glob(ts_dirs[0] + '/stats_and_rms/*.dat')]
 
     for filename in result_files:
+        ignore = False
         data_list = []
         for ts in ts_dirs:
             # open data file
             data = np.loadtxt(ts + '/stats_and_rms/' + filename)
+            if data.size == 0:
+                ignore = True
             data_list.append(data)
         data_all = np.array(data_list)
-        print filename, data_all.shape
         # for now, save only 1D or 2D results
-        if len(data_all.shape) <= 2:
+        if len(data_all.shape) <= 2 and not ignore:
             np.savetxt(outdir + os.sep + filename, data_all)
 
 
@@ -115,8 +117,11 @@ def plot_to_grid(options):
     # we use the result definitions from ddps
     for key in ddps.dd_stats.keys():
         print('Plotting {0}'.format(key))
-        data = np.loadtxt(result_dir_abs + '/stats_and_rms_agg/' +
-                          ddps.dd_stats[key]['filename'])
+        data_file = result_dir_abs + '/stats_and_rms_agg/' + \
+            ddps.dd_stats[key]['filename']
+        if not os.path.isfile(data_file):
+            continue
+        data = np.loadtxt(data_file)
 
         plot_to_grids(data, key, options)
 
