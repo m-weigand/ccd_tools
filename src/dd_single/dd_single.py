@@ -53,7 +53,7 @@ def add_base_options(parser):
                       default=None, dest="ignore_frequencies")
 
     parser.add_option("-d", "--data_file", dest="data_file", type='string',
-                      help="Extract file (default: data.dat)", metavar="FILE",
+                      help="Data file (default: data.dat)", metavar="FILE",
                       default='data.dat')
     parser.add_option('--data_format', dest='data_format', type='string',
                       help='Input data format, possible values are: ' +

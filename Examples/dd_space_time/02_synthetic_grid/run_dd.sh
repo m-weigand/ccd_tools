@@ -1,5 +1,5 @@
 #!/bin/bash
-test -d results && rm -r results
+# test -d results && rm -r results
 # for i in `seq 0 4`;
 # do
 #    mkdir -p results/tmp_ts_`printf %.4i $i`

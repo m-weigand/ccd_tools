@@ -172,7 +172,7 @@ def split_options(options):
 
 
 # @profile
-def fit_data(data, prep_opts, inv_opts):
+def fit_sip_data(data, prep_opts, inv_opts):
     """
     Call the fit routine for each pixel
     """
@@ -272,8 +272,8 @@ def save_fit_results(final_iteration, data):
 
 def fit_one_time_series(fit_data):
     # init the object
-    model = lib_dd.main.get('log10rho0log10m', inv_opts)
-    ND = NDimInv.NDimInv(model, inv_opts)
+    model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
+    ND = NDimInv.NDimInv(model, fit_data['inv_opts'])
 
     # add extra dimensions
     nr_timesteps = fit_data['data'].shape[0]
@@ -312,14 +312,14 @@ def fit_one_time_series(fit_data):
     nr_tau_values = ND.Model.obj.tau.size
 
     # add a frequency regularization for the DD model
-    if(prep_opts['f_lambda'] is None):
+    if fit_data['prep_opts']['f_lambda'] is None:
         print('Frequency lambda search')
-        if(prep_opts['f_lam0'] is None):
+        if fit_data['prep_opts']['f_lam0'] is None:
             lam0_obj = LamFuncs.Lam0_Easylam()
         else:
             lam0_obj = LamFuncs.Lam0_Fixed(prep_opts['f_lam0'])
 
-        if(prep_opts['individual_lambdas']):
+        if(fit_data['prep_opts']['individual_lambdas']):
             lam_obj = LamFuncs.SearchLambdaIndividual(lam0_obj)
         else:
             lam_obj = LamFuncs.SearchLambda(lam0_obj)
@@ -410,6 +410,6 @@ if __name__ == '__main__':
     # for the fitting process, change to the output_directory
     pwd = os.getcwd()
     os.chdir(outdir)
-    fit_data(data, prep_opts, inv_opts)
+    fit_sip_data(data, prep_opts, inv_opts)
     # go back to initial working directory
     os.chdir(pwd)

@@ -90,16 +90,6 @@ def handle_cmd_options():
                       help="dd_time result directory default=results",
                       default="results", dest="result_dir")
 
-    parser.add_option("--plot_to_grid", action="store_true",
-                      dest="plot_to_grid",
-                      help="Plot results to grid",
-                      default=False)
-    parser.add_option("--elem", dest="elem_file", type="string",
-                      help="elem.dat file (default: elem.dat)",
-                      default="elem.dat")
-    parser.add_option("--elec", dest="elec_file", type="string",
-                      help="elec.dat file (default: elec.dat)",
-                      default="elec.dat")
     parser.add_option("--log10mtot", type='float', metavar='FLOAT',
                       help="Remove all spectra with log10(mtot) below " +
                       "threshold for filter-enabled plots", default=None,
@@ -126,14 +116,7 @@ def handle_cmd_options():
                       "\"5-\" (default: -1 (all))",
                       default=None)
 
-    # add options for the various DD parameters
-    for name in dd_stats.keys():
-        opt_name = name + "_min"
-        parser.add_option("--" + opt_name, default=None, type="float",
-                          dest=opt_name, help="Min value for " + name)
-        opt_name = name + "_max"
-        parser.add_option("--" + opt_name, default=None, type="float",
-                          dest=opt_name, help="Max value for " + name)
+    parser = _add_dd_grid_plot_opts(parser)
 
     parser.add_option("--filter", action="store_true",
                       dest="apply_filters", default=False,
@@ -151,6 +134,29 @@ def handle_cmd_options():
 
     (options, args) = parser.parse_args()
     return options, args
+
+
+def _add_dd_grid_plot_opts(parser):
+    parser.add_option("--plot_to_grid", action="store_true",
+                      dest="plot_to_grid",
+                      help="Plot results to grid",
+                      default=False)
+    parser.add_option("--elem", dest="elem_file", type="string",
+                      help="elem.dat file (default: elem.dat)",
+                      default="elem.dat")
+    parser.add_option("--elec", dest="elec_file", type="string",
+                      help="elec.dat file (default: elec.dat)",
+                      default="elec.dat")
+    # add options for the various DD parameters
+    for name in dd_stats.keys():
+        opt_name = name + "_min"
+        parser.add_option("--" + opt_name, default=None, type="float",
+                          dest=opt_name, help="Min value for " + name)
+        opt_name = name + "_max"
+        parser.add_option("--" + opt_name, default=None, type="float",
+                          dest=opt_name, help="Max value for " + name)
+
+    return parser
 
 
 def load_data(options):
