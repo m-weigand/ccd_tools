@@ -3,7 +3,8 @@
 """
 Execute to run single Cole-Cole term characterization
 """
-from crlab_py.mpl import *
+from NDimInv.plot_helper import *
+mpl.rcParams['font.size'] = 8.0
 import sys
 sys.path.append('..')
 from nose.tools import *
@@ -126,12 +127,13 @@ def run_cases(test_cases):
 
 
 def run_case(directory, data_file, frequency_file):
-    for Nd in (2, 4, 6, 10, 16, 20):
+    # for Nd in (2, 4, 6, 10, 16, 20):
+    for Nd in (20, ):
         print('Running ', directory)
         pwd = os.getcwd()
         os.chdir(directory)
         output_dir = 'dd_output_Nd_{0}'.format(Nd)
-        cmd = 'dd_single.py -o "{0}" -c 1 -f '.format(output_dir)
+        cmd = 'dd_single.py -o "{0}" --lambda 30 -c 2 -f '.format(output_dir)
         cmd += '"{0}" -d "{1}" -n {2}'.format(frequency_file, data_file,
                                               Nd)
         result = subprocess.call(cmd, shell=True)
@@ -151,31 +153,37 @@ def plot_results_small(test_cases):
             print outdir
             prefix = outdir + os.sep
             rho0 = np.loadtxt(prefix + 'stats_and_rms/rho0_results.dat')
-            mtot = np.loadtxt(prefix + 'stats_and_rms/m_tot_results.dat')
-            mtotn = mtot / (10 ** rho0)
+            mtotn = np.loadtxt(prefix + 'stats_and_rms/m_tot_n_results.dat')
             # mtotn = np.loadtxt(prefix + 'stats_and_rms/m_tot_n_results.dat')
-            # tau50 = np.loadtxt(prefix + 'stats_and_rms/tau_50_results.dat')
+            tau50 = np.loadtxt(prefix + 'stats_and_rms/tau_50_results.dat')
             taumean = np.loadtxt(prefix + 'stats_and_rms/tau_mean_results.dat')
-            # rms_values = np.loadtxt(prefix + 'stats_and_rms/rms_no_err_results.dat')
+            taua = np.loadtxt(
+                prefix + 'stats_and_rms/tau_arithmetic_results.dat')
+            taug = np.loadtxt(
+                prefix + 'stats_and_rms/tau_geometric_results.dat')
 
-            fig, axes = plt.subplots(1, 3, figsize=(7, 2))
+            # rms_values = np.loadtxt(
+            # prefix + 'stats_and_rms/rms_no_err_results.dat')
+
+            fig, axes = plt.subplots(1, 6, figsize=(10, 2))
 
             # rho0_cc vs rho0_dd
-            axes[0].plot(np.exp(cc_orig[:, 0]), 10 ** rho0, '.-', alpha=0.8)
+            axes[0].plot(np.exp(cc_orig[:, 0]), 10 ** rho0, '.-', alpha=0.8,
+                         label='fit')
             axes[0].scatter(np.exp(cc_orig[:, 0]), np.exp(cc_orig[:, 0]),
-                            color='gray', alpha=0.7, s=30)
-            axes[0].set_xlabel(r'Cole-Cole $\rho_0 (\Omega m)$')
-            axes[0].set_ylabel(r'DD $\rho_0 (\Omega m)$')
+                            color='gray', alpha=0.7, s=30, label='1-1')
+            axes[0].set_xlabel(r'CC $\rho_0~[\Omega m]$')
+            axes[0].set_ylabel(r'DD $\rho_0~[\Omega m]$')
             axes[0].get_xaxis().set_major_locator(mpl.ticker.MaxNLocator(5))
             axes[0].get_xaxis().set_major_formatter(
                 mpl.ticker.FormatStrFormatter('%.1f'))
 
             # m_tot_n^DD vs m_tot_n^CC
-            mn = cc_orig[:, 1] / (np.exp(cc_orig[:, 0]))
-            axes[1].plot(cc_orig[:, 1], mtotn, '.-', alpha=0.8)
-            axes[1].scatter(cc_orig[:, 1], mn, color='gray',
+            mn = cc_orig[:, 1] / np.exp(cc_orig[:, 0])
+            axes[1].plot(mn, 10 ** mtotn, '.-', alpha=0.8)
+            axes[1].scatter(mn, mn, color='gray',
                             alpha=0.7, s=30)
-            axes[1].set_xlabel(r'Cole-Cole $m_n$')
+            axes[1].set_xlabel(r'CC $m / \rho_0$')
             axes[1].set_ylabel(r'DD $m_{tot}^n$')
             axes[1].get_xaxis().set_major_locator(mpl.ticker.MaxNLocator(5))
             axes[1].get_xaxis().set_major_formatter(
@@ -186,88 +194,74 @@ def plot_results_small(test_cases):
             axes[2].scatter(np.log10(np.exp(cc_orig[:, 2])),
                             np.log10(np.exp(cc_orig[:, 2])), color='gray',
                             s=30, alpha=0.7)
-            axes[2].set_xlabel(r'Cole-Cole $log_{10}(\tau)$')
-            axes[2].set_ylabel(r'DD $log_{10}(\tau_{mean})$')
-            axes[2].get_xaxis().set_major_locator(mpl.ticker.MaxNLocator(5))
+
+            axes[2].set_title(r'$\tau_{mean}$')
+            axes[2].set_xlabel(r'CC $log_{10}(\tau)$')
+            axes[2].set_ylabel(
+                r'DD $\left(\frac{\sum_i m_i \cdot log(\tau_i)}' +
+                r'{\sum m_i}\right)$')
+            axes[2].get_xaxis().set_major_locator(mpl.ticker.MaxNLocator(3))
             axes[2].get_xaxis().set_major_formatter(
                 mpl.ticker.FormatStrFormatter('%.2f'))
+
+            axes[3].plot(np.log10(np.exp(cc_orig[:, 2])), tau50, '.-',
+                         alpha=0.8)
+            axes[3].plot(np.log10(np.exp(cc_orig[:, 2])),
+                         np.log10(np.exp(cc_orig[:, 2])), '-', color='gray',
+                         alpha=0.7)
+
+            axes[3].set_xlabel(r'CC $log_{10}(\tau)$')
+            axes[3].set_ylabel(r'DD $log_{10}(\tau_{50})$')
+            axes[3].get_xaxis().set_major_locator(mpl.ticker.MaxNLocator(3))
+            axes[3].get_xaxis().set_major_formatter(
+                mpl.ticker.FormatStrFormatter('%.2f'))
+
+            for ax, taud, label, title in zip(
+                    (axes[4], axes[5]), (taug, taua),
+                    (r'DD $log_{10}\left[\left(\prod \tau_i^{m_i}\right)^' +
+                     r'{\frac{1}{\sum m_i}}\right]$',
+                     r'DD $log_{10}\left(\frac{\sum m_i \cdot \tau_i}' +
+                     r'{\sum m_i}\right)$'),
+                    (r'geometrical $\tau$', r'arithmetic $\tau$')):
+                ax.plot(np.log10(np.exp(cc_orig[:, 2])), taud, '.-',
+                        alpha=0.8)
+                ax.set_title(title)
+
+                ax.scatter(np.log10(np.exp(cc_orig[:, 2])),
+                           np.log10(np.exp(cc_orig[:, 2])), color='gray',
+                           s=30, alpha=0.7)
+                ax.set_ylabel(label)
+                ax.set_xlabel(r'CC $log_{10}(\tau)$')
+                ax.get_xaxis().set_major_locator(mpl.ticker.MaxNLocator(3))
+
+            ax = axes[0]
+            ax.legend(loc="lower center", ncol=2, bbox_to_anchor=(0, 0, 1, 1),
+                      bbox_transform=fig.transFigure)
+
+            for ax in axes.flatten()[2:]:
+                xlim = ax.get_xlim()
+                ylim = ax.get_ylim()
+                xylim = (np.min((xlim[0], ylim[0])), np.max((xlim[1], ylim[1])))
+                ax.set_xlim(xylim)
+                ax.set_ylim(xylim)
+                ax.set_aspect('equal')
 
             for ax in list(axes.flatten()):
                 labels = ax.get_xticklabels()
                 for label in labels:
                     label.set_rotation(30)
 
-            fig.subplots_adjust(wspace=0.9, hspace=0.8, bottom=0.3)
             fig.tight_layout()
+            fig.subplots_adjust(bottom=0.45, top=0.85)
             outfile = case[0] + os.sep
             dd_dir = os.path.basename(outdir)
             if(len(dd_dir) > 10):
                 outfile += dd_dir[10:]
 
             outfile += '_dd_comparison_small.png'
-            fig.savefig(outfile, dpi=300)
+            fig.savefig(outfile, dpi=350)
             fig.clf()
             plt.close(fig)
-
-
-def plot_results(test_cases):
-    for case in test_cases:
-        # read in original cc parmaters
-        cc_orig = np.loadtxt(case[0] + os.sep + 'colecole.pars')
-        # read in dd results
-        prefix = case[0] + os.sep + 'dd_output' + os.sep
-        rho0 = np.loadtxt(prefix + 'stats_and_rms/rho0_results.dat')
-        mtot = np.loadtxt(prefix + 'stats_and_rms/m_tot_results.dat')
-        mtotn = np.loadtxt(prefix + 'stats_and_rms/m_tot_n_results.dat')
-        tau50 = np.loadtxt(prefix + 'stats_and_rms/tau_50_results.dat')
-        taumean = np.loadtxt(prefix + 'stats_and_rms/tau_mean_results.dat')
-        rms_values = np.loadtxt(prefix + 'rms_part2_err.dat')
-
-        fig, axes = plt.subplots(2, 3, figsize=(7, 4))
-
-        # rho0_cc vs rho0_dd
-        axes[0, 0].plot(np.exp(cc_orig[:, 0]), 10 ** rho0, '.-')
-        axes[0, 0].plot(np.exp(cc_orig[:, 0]), np.exp(cc_orig[:, 0]),
-                        '.', color='gray')
-        axes[0, 0].set_xlabel(r'Cole-Cole $\rho_0 (\Omega m)$')
-        axes[0, 0].set_ylabel(r'Debye Decomp. $\rho_0 (\Omega m)$')
-
-        axes[0, 1].plot(cc_orig[:, 1], mtot, '.-')
-        axes[0, 1].plot(cc_orig[:, 1], cc_orig[:, 1], '.', color='gray')
-        axes[0, 1].set_xlabel(r'Cole-Cole $m$')
-        axes[0, 1].set_ylabel(r'Debye Decomposition $m_{tot}$')
-
-        axes[0, 2].plot(cc_orig[:, 1] / np.exp(cc_orig[:, 0]),
-                        mtotn, '.-')
-        axes[0, 2].plot(cc_orig[:, 1] / np.exp(cc_orig[:, 0]),
-                        cc_orig[:, 1] / np.exp(cc_orig[:, 0]), '.',
-                        color='gray')
-        axes[0, 2].set_xlabel(r'Cole-Cole $m/\rho_0$')
-        axes[0, 2].set_ylabel(r'Debye Decomposition $m_{tot}^n$')
-
-        axes[1, 0].plot(np.log10(np.exp(cc_orig[:, 2])), tau50, '.-')
-        axes[1, 0].plot(np.log10(np.exp(cc_orig[:, 2])),
-                        np.log10(np.exp(cc_orig[:, 2])), '.', color='gray')
-        axes[1, 0].set_xlabel(r'Cole-Cole $log_{10}(\tau)$')
-        axes[1, 0].set_ylabel(r'Debye Decomposition $log_{10}(\tau_{50})$')
-
-        axes[1, 1].plot(np.log10(np.exp(cc_orig[:, 2])), taumean, '.-')
-        axes[1, 1].plot(np.log10(np.exp(cc_orig[:, 2])),
-                        np.log10(np.exp(cc_orig[:, 2])), '.', color='gray')
-        axes[1, 1].set_xlabel(r'Cole-Cole $log_{10}(\tau)$')
-        axes[1, 1].set_ylabel(r'Debye Decomposition $log_{10}(\tau_{mean})$')
-
-        axes[1, 2].plot(rms_values)
-        axes[1, 2].set_ylabel('Im no err RMS')
-
-        for ax in list(axes.flatten()):
-            labels = ax.get_xticklabels()
-            for label in labels:
-                label.set_rotation(30)
-
-        fig.subplots_adjust(wspace=0.9, hspace=0.8, bottom=0.15)
-        fig.tight_layout()
-        fig.savefig(case[0] + os.sep + 'dd_comparison.png', dpi=300)
 
 
 def generate_all_spectra():
@@ -297,5 +291,4 @@ if __name__ == '__main__':
     generate_all_spectra()
     test_cases = get_test_cases()
     run_cases(test_cases)
-    # plot_results(test_cases)
     plot_results_small(test_cases)

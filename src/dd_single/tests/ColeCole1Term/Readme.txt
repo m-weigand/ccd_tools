@@ -1,4 +1,9 @@
-Generate various CR spectra from 1-term Cole-Cole models and fit them with the Debye model.
+Generate various CR spectra from 1-term Cole-Cole models and fit them with the
+Debye model.
+
+run test_cases.py to generate the results:
+
+python test_cases.py
 
 Structure of generated CR spectra
 ---------------------------------
@@ -9,7 +14,7 @@ rho0_variation/
         + data.dat
         + frequencies.dat
         + DD_results/
-            + [output from debyedecomposition.py]
+            + [output from dd_single.py]
     + set2/
         + [...]
 m_variation/
