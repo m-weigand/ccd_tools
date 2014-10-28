@@ -54,6 +54,7 @@ def tau_arithmetic(pars, tau, s):
     try:
         tau_arithmetic = np.nansum(tau * pars[1:]) / (
             _m_tot_linear(pars, tau, s))
+        tau_arithmetic = np.log10(tau_arithmetic)
         f_arithmetic = 1 / (2 * np.pi * 10**tau_arithmetic)
     except Exception:
         tau_arithmetic = np.nan
@@ -66,6 +67,7 @@ def tau_geometric(pars, tau, s):
         tau_geometric = np.prod(tau**pars[1:])**(
             1 / _m_tot_linear(pars, tau, s))
         np.nansum(tau * pars[1:]) / (_m_tot_linear(pars, tau, s))
+        tau_geometric = np.log10(tau_geometric)
         f_geometric = 1 / (2 * np.pi * 10**tau_geometric)
     except Exception:
         tau_geometric = np.nan
