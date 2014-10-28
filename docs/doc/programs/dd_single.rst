@@ -178,7 +178,7 @@ filename                       stored values per line
 *tau_peaks_all_results.dat*    :math:`log_{10}(\tau_{peak}^i)`
 *tau_x_\*.dat*                 :math:`log_{10}(\tau_x)`; see description below
 *tau_max.dat*                  :math:`\tau` corresponding to max. chargeability. First occurence.
-*U_tau_results.dat*            Uniformity parameter :math:`U_{\tau}`
+*U_tau_results.dat*            Uniformity parameter :math:`U_{\tau} = \frac{\tau_{60}}{\tau_{10}}`
 *f_50_results.dat*
 *f_mean_results.dat*
 *f_peak1_results.dat*

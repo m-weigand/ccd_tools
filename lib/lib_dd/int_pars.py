@@ -76,39 +76,55 @@ def tau_geometric(pars, tau, s):
 
 
 def _cumulative_tau(pars, tau, s):
+    """Compute the cumulative chargeabilites, normalized to the total
+    chargeability sum
+    """
     g_tau = pars[1:] / _m_tot_linear(pars, tau, s)
     cums_gtau = np.cumsum(g_tau)
-
-    # remove extra ranges
-    # g_tau = g_tau[~np.isnan(g_tau)]
-    # cums_gtau = np.repeat(np.nan, s.size)
     return cums_gtau
 
 
 def _tau_x(x, pars, tau, s):
-    """
+    r"""
     Compute the relaxation time corresponding to a certain percentage of the
     cumulative chargeabilities
 
+    Parameters
+    ----------
+
     x: fraction between 0.0 - 1.0
+    pars: linear parameters (:math:`(\rho_0, m_1, \cdots, m_{N_\tau})`)
+    tau: :math:`\tau` values (linear)
+    s: log10 of tau
+
+    Returns
+    -------
+
+    tau_x: math:`log_{10}(\tau_x)` value corresponding to the cumulative
+           fraction x
+    f_x: frequency corresponding to :math:`\tau_x`
+    index: index of the chargeability vector corresponding to :math:`\tau_x`
+
     """
+    if x < 0.0 or x > 1.0:
+        raise IOError('x must lie in the range (0, 1)')
+
     try:
         cums_gtau = _cumulative_tau(pars, tau, s)
 
-        # 0.5 ?
-        index_median = np.argmin(np.abs(cums_gtau - x))
-        if(np.isnan(index_median)):
+        index = np.argmin(np.abs(cums_gtau - x))
+        if(np.isnan(index)):
             tau_x = np.nan
             f_x = np.nan
         else:
-            tau_x = s[index_median]
+            tau_x = s[index]
             f_x = 1 / (2 * np.pi * 10**tau_x)
     except Exception:
         # cums_gtau = np.repeat(np.nan, s.size)
         tau_x = np.nan
         f_x = np.nan
 
-    return tau_x, f_x
+    return tau_x, f_x, index
 
 
 def tau_x(pars, tau, s):
@@ -127,25 +143,27 @@ def tau_x(pars, tau, s):
         results = {}
         items = os.environ['DD_TAU_X'].split(';')
         for x in items:
-            tau_x, f_x = _tau_x(float(x), pars, tau, s)
+            tau_x, f_x, index = _tau_x(float(x), pars, tau, s)
             results['tau_x_{0}'.format(float(x)*100)] = tau_x
             results['f_x_{0}'.format(float(x)*100)] = f_x
     return results
 
 
 def tau_50(pars, tau, s):
-    tau_50, f_50 = _tau_x(0.5, pars, tau, s)
+    tau_50, f_50, index_50 = _tau_x(0.5, pars, tau, s)
     results = {'tau_50': tau_50, 'f_50': f_50}
     return results
 
 
 def U_tau(pars, tau, s):
     r"""compute uniformity parameter similar to Nordsiek and Weller, 2008:
-        :math:`U_{\tau} = \frac{\tau_{10}}{\tau_{60}}`
+        :math:`U_{\tau} = \frac{\tau_{60}}{\tau_{10}}`
     """
-    tau_10, f_10 = _tau_x(0.1, pars, tau, s)
-    tau_60, f_60 = _tau_x(0.6, pars, tau, s)
-    u_tau = tau_10 / tau_60
+    tau_10, f_10, index_10 = _tau_x(0.1, pars, tau, s)
+    tau_60, f_60, index_60 = _tau_x(0.6, pars, tau, s)
+    # m_10 = pars[index_10 + 1]
+    # m_60 = pars[index_60 + 1]
+    u_tau = 10**tau_60 / 10**tau_10
     return u_tau
 
 

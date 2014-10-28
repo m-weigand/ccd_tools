@@ -34,7 +34,7 @@ def Jacobian(omega, pars, s, partials):
 
     Jacobian = np.zeros((K * 2, P))
 
-    ### Real part ####
+    # ## Real part ####
 
     # first column d Re/d rho0; d Im / d rho
     Jacobian[0:K, 0] = partials[0](pars)[:, 0]
@@ -42,7 +42,7 @@ def Jacobian(omega, pars, s, partials):
     # second to last column d Re/ d g_i where m = chargeability values
     Jacobian[0:K, 1:] = partials[1](pars)
 
-    ### Imaginary part ###
+    # ## Imaginary part ###
 
     # first column d -Im/ d rho0
     Jacobian[K:, 0] = partials[2](pars)[:, 0]
