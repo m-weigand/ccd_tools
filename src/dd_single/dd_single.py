@@ -115,8 +115,8 @@ def handle_cmd_options():
     parser = add_base_options(parser)
     # add options specific to dd_single
     parser.add_option("-c", "--nr_cores", dest="nr_cores", type='int',
-                      help="Number of CPU cores to use (default: 2)",
-                      metavar="INT", default=2)
+                      help="Number of CPU cores to use (default: 1)",
+                      metavar="INT", default=1)
     parser.add_option("--lambda", type='float', metavar='FLOAT',
                       help="Use a fixed lambda (integer), default=None",
                       default=None, dest="fixed_lambda")
