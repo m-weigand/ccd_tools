@@ -84,6 +84,8 @@ def plot_to_grids(data, key, options):
     nr_y = int(np.ceil(nr_total / nr_x))
     fig, axes = plt.subplots(nr_y, nr_x, figsize=(nr_x * 2, nr_y * 2))
 
+    data[np.isinf(data)] = np.nan
+    data[np.isneginf(data)] = np.nan
     global_min = np.nanmin(data)
     global_max = np.nanmax(data)
     elem.plt_opt.cbmin = getattr(options, key + '_min')
@@ -93,7 +95,7 @@ def plot_to_grids(data, key, options):
     if elem.plt_opt.cbmax is None:
         elem.plt_opt.cbmax = global_max
 
-    for ax, time in zip(axes, xrange(0, nr_total)):
+    for ax, time in zip(axes.flatten(), xrange(0, nr_total)):
         scale = ddps.dd_stats[key]['scale']
         elem.plt_opt.reverse = ddps.dd_stats[key]['reverse']
         # print 'min/max', elem.plt_opt.cbmin, elem.plt_opt.cbmax
@@ -115,7 +117,7 @@ def plot_to_grid(options):
     result_dir_abs = os.path.abspath(options.result_dir)
     os.chdir(options.result_dir)
     # we use the result definitions from ddps
-    for key in ddps.dd_stats.keys():
+    for key in reversed(ddps.dd_stats.keys()):
         print('Plotting {0}'.format(key))
         data_file = result_dir_abs + '/stats_and_rms_agg/' + \
             ddps.dd_stats[key]['filename']
