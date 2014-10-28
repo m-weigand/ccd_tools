@@ -93,9 +93,9 @@ These files are described below, sorted by category.
 Input data
 ----------
 
-* *data.dat* contains the input data, converted to :math:`\sigma';\sigma''~(S/m)`.
+* *data.dat* contains the input data saved as :math:`\rho';\rho''~[\Omega m]`.
 * *data_format.dat* contains the data format in the format usable with the
-  ``--data_format`` command line option.
+  ``--data_format`` command line option (usually **cre_cim**).
 * Frequencies and corresponding angular frequencies (
    :math:`\omega = 2 \cdot \pi \cdot f`) are stored in the files
    *frequencies.dat* and *omega.dat*.
@@ -188,7 +188,7 @@ filename                       stored values per line
 *covm_results.dat*
 =============================  ===============================
 
-*:math:`\tau_x`* Arbitrary cumulative relaxation times can be computed by setting
+:math:`\tau_x`: Arbitrary cumulative relaxation times can be computed by setting
 the environment variable **DD_TAU_X**. The string separates the requested
 percentages as fractions with ';' characters.
 
