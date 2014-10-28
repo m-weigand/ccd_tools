@@ -46,33 +46,39 @@ dd_stats = {}
 dd_stats['tau_peak1'] = {'filename': 'tau_peak1_results.dat',
                          'apply_filter': True,
                          'scale': 'linear',
-                         'reverse': True
+                         'reverse': True,
+                         'label': r'$\tau_{peak}^1~[s]$'
                          }
 dd_stats['tau_mean'] = {'filename': 'tau_mean_results.dat',
                         'apply_filter': True,
                         'scale': 'linear',
-                        'reverse': True
+                        'reverse': True,
+                        'label': r'$\tau_{mean}~[s]$'
                         }
 dd_stats['tau_50'] = {'filename': 'tau_50_results.dat',
                       'apply_filter': True,
                       'scale': 'linear',
-                      'reverse': True
+                      'reverse': True,
+                      'label': r'$\tau_{50}~[s]$'
                       }
-dd_stats['tau_mean'] = {'filename': 'tau_mean_results.dat',
-                        'apply_filter': True,
-                        'scale': 'linear',
-                        'reverse': True
-                        }
 dd_stats['rho0'] = {'filename': 'rho0_results.dat',
                     'apply_filter': False,
                     'scale': 'linear',
-                    'reverse': False
+                    'reverse': False,
+                    'label': r'$\rho_0~[\Omega m]$'
                     }
 dd_stats['m_tot_n'] = {'filename': 'm_tot_n_results.dat',
                        'apply_filter': False,
                        'scale': 'linear',
-                       'reverse': True
+                       'reverse': True,
+                       'label': r'$m_{tot}^n$'
                        }
+dd_stats['u_tau'] = {'filename': 'U_tau_results.dat',
+                     'apply_filter': False,
+                     'scale': 'linear',
+                     'reverse': True,
+                     'label': r'$U_{10/60}$'
+                     }
 
 # available filters
 filters = {'filter_log10mtot': {'key': 'm_tot',

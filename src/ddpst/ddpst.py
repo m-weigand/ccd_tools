@@ -44,6 +44,19 @@ def handle_cmd_options():
                       dest="aggregate",
                       help="Aggregate plot results (default: False)",
                       default=False)
+
+    parser.add_option("--xmin", type='float', metavar='Depth',
+                      help="xmin", default=None, dest="xmin")
+    parser.add_option("--xmax", type='float', metavar='Depth',
+                      help="xmax", default=None, dest="xmax")
+    parser.add_option("--zmin", type='float', metavar='Depth',
+                      help="zmin", default=None, dest="zmin")
+    parser.add_option("--pixel_mask", type='string', metavar='FILE',
+                      help="Pixel mask",
+                      default=None, dest="pixel_mask")
+    parser.add_option("--mtotn_tau_filter", type='int', metavar='INT',
+                      help="Element depth for mtotn filter",
+                      default=None, dest="mtotn_filter_depth")
     parser = ddps._add_dd_grid_plot_opts(parser)
     (options, args) = parser.parse_args()
     return options, args
@@ -78,11 +91,18 @@ def aggregate_results(options):
             np.savetxt(outdir + os.sep + filename, data_all)
 
 
-def plot_to_grids(data, key, options):
+def plot_to_grids(data_list, key, options):
+    data = data_list[key]
     nr_total = data.shape[1]
     nr_x = min(5, nr_total)
     nr_y = int(np.ceil(nr_total / nr_x))
     fig, axes = plt.subplots(nr_y, nr_x, figsize=(nr_x * 2, nr_y * 2))
+
+    # filter thresholds?
+    if options.mtotn_filter_depth is not None:
+        # apply thresholds
+        for timestep in xrange(0, data.shape[1]):
+            data[data_list['mtotn_filter'][timestep], timestep] = np.nan
 
     data[np.isinf(data)] = np.nan
     data[np.isneginf(data)] = np.nan
@@ -94,6 +114,12 @@ def plot_to_grids(data, key, options):
         elem.plt_opt.cbmin = global_min
     if elem.plt_opt.cbmax is None:
         elem.plt_opt.cbmax = global_max
+    if options.zmin is not None:
+        elem.plt_opt.zmin = options.zmin
+    if options.xmin is not None:
+        elem.plt_opt.xmin = options.xmin
+    if options.xmax is not None:
+        elem.plt_opt.xmax = options.xmax
 
     for ax, time in zip(axes.flatten(), xrange(0, nr_total)):
         scale = ddps.dd_stats[key]['scale']
@@ -105,17 +131,27 @@ def plot_to_grids(data, key, options):
 
         ax.set_xlabel('')
         ax.set_ylabel('')
+        ax.set_title(ddps.dd_stats[key]['label'])
+        ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(3))
+        ax.yaxis.set_major_locator(mpl.ticker.MaxNLocator(3))
 
     fig.tight_layout()
     fig.savefig(key + '.png', dpi=200)
 
 
 def plot_to_grid(options):
+    if options.pixel_mask is not None:
+        pixel_mask = np.loadtxt(options.pixel_mask, dtype=int)
+    else:
+        pixel_mask = None
+
     elem.load_elem_file(options.elem_file)
     elem.load_elec_file(options.elec_file)
 
     result_dir_abs = os.path.abspath(options.result_dir)
     os.chdir(options.result_dir)
+
+    data_list = {}
     # we use the result definitions from ddps
     for key in reversed(ddps.dd_stats.keys()):
         print('Plotting {0}'.format(key))
@@ -124,8 +160,30 @@ def plot_to_grid(options):
         if not os.path.isfile(data_file):
             continue
         data = np.loadtxt(data_file)
+        if pixel_mask is not None:
+            tmp = np.ones_like(data) * np.nan
+            tmp[pixel_mask] = data[pixel_mask]
+            data = tmp
 
-        plot_to_grids(data, key, options)
+        data_list[key] = data
+
+    if options.mtotn_filter_depth is not None:
+        # determine depth thresholds
+        threshold_elements = options.mtotn_filter_depth
+        grid_x = 60
+        start_index = grid_x * threshold_elements
+        thresholds = data_list['m_tot_n'][start_index:, :].max(axis=0)
+
+        # apply thresholds
+        mtotn_filter = []
+        for timestep in xrange(0, data.shape[1]):
+            indices = np.where(data_list['m_tot_n'][:, timestep] <
+                               thresholds[timestep])
+            mtotn_filter.append(indices)
+        data_list['mtotn_filter'] = mtotn_filter
+
+    for key in reversed(ddps.dd_stats.keys()):
+        plot_to_grids(data_list, key, options)
 
 if __name__ == '__main__':
     options, args = handle_cmd_options()
