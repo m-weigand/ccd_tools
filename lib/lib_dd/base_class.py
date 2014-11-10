@@ -190,19 +190,27 @@ class starting_pars_3():
         # select three values
         # indices = [0, min_index, len(scales) - 1]
         indices = [min_index - 1, min_index, min_index + 1]
-        # fit parabola to rms-values
-        # fit parabola
-        x = np.array(scales)[indices]
-        y = np.array(rms_list)[indices]
 
-        A = np.zeros((3, 3), dtype=np.float)
-        A[:, 0] = x ** 2
-        A[:, 1] = x
-        A[:, 2] = 1
-        a, b, c = np.linalg.solve(A, y)
+        # if min_index is the largest scaling factor, use this
+        if indices[-1] == len(scales):
+            x_min = scales[-1]
+        else:
+            # fit parabola to rms-values
+            # fit parabola
+            x = np.array(scales)[indices]
+            y = np.array(rms_list)[indices]
 
-        # compute minum minmum
-        x_min = -b / (2 * a)
+            A = np.zeros((3, 3), dtype=np.float)
+            A[:, 0] = x ** 2
+            A[:, 1] = x
+            A[:, 2] = 1
+            a, b, c = np.linalg.solve(A, y)
+
+            # compute minum minmum
+            x_min = -b / (2 * a)
+
+        pars_linear = np.hstack((self.rho0, chargeabilities * x_min))
+        pars = obj.convert_parameters(pars_linear)
 
         plot_starting_model = False
         if(plot_starting_model):
