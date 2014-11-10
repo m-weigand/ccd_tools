@@ -268,7 +268,15 @@ class integrated_parameters():
         statistical values such das :math:`m_{tot}`, :math:`m_{tot}^n`,
         :math:`\tau_{50}`, :math:`\tau_{mean}`, :math:`\tau_{peak}`
 
-        Store in self.stat_pars = dict()
+        Parameters
+        ----------
+
+
+        Returns
+        -------
+        stat_pars : dict containing the computed parameters
+
+        Also store stat_pars in self.stat_pars
         """
         # integrated parameters are computed from the tau/chargeability values
         # corresponding to the data frequency ranges. Therefore we first create
@@ -603,7 +611,6 @@ class dd_resistivity_skeleton(
             tre = tre_tmim[:, 0]
             tmim = tre_tmim[:, 1]
 
-            print tmim.shape, mim.shape
             diff_im = np.sum(np.abs(tmim - mim))
             if(best_diff is None or best_diff > diff_im):
                 best_diff = diff_im
