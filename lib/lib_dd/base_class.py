@@ -174,7 +174,8 @@ class starting_pars_3():
             pars_linear = np.hstack((self.rho0, chargeabilities * scale))
             pars = obj.convert_parameters(pars_linear)
             # print pars
-            re_f, mim_f = obj.forward_re_mim(pars)
+            re_mim = obj.forward(pars)
+            mim_f = re_mim[:, 1]
             # print re_f, mim_f
             mim_list.append(mim_f)
             # compute rms_mim
@@ -212,7 +213,8 @@ class starting_pars_3():
             pars_linear = np.hstack((self.rho0, chargeabilities * x_min))
             # print 'pars_linear', pars_linear
             pars = obj.convert_parameters(pars_linear)
-            re_f, mim_f = obj.forward_re_mim(pars)
+            re_mim = obj.forward(pars)
+            mim_f = re_mim[:, 1]
             ax = axes[0]
             for key in sec_data.keys():
                 ax.scatter(10 ** np.array(sec_data[key][0]), sec_data[key][1],
@@ -589,8 +591,11 @@ class dd_resistivity_skeleton(
             pars[0] = parameters[0]
             pars[1:] = i
             pars = self.convert_parameters(pars)
-            tre, tmim = self.forward_re_mim(pars)
+            tre_tmim = self.forward(pars)
+            tre = tre_tmim[:, 0]
+            tmim = tre_tmim[:, 1]
 
+            print tmim.shape, mim.shape
             diff_im = np.sum(np.abs(tmim - mim))
             if(best_diff is None or best_diff > diff_im):
                 best_diff = diff_im
@@ -665,7 +670,9 @@ class dd_resistivity_skeleton(
         # apply conversion
         pars = np.hstack((rho0, m))
         pars_converted = self.convert_parameters(pars)
-        re, mim = self.forward_re_mim(omega, pars_converted, s)
+        re_mim = self.forward(pars_converted)
+        re = re_mim[:, 0]
+        mim = re_mim[:, 1]
 
         if(noise != 0):
             # add noise
@@ -695,7 +702,9 @@ class dd_resistivity_skeleton(
         fig, axes = plt.subplots(2, 2, figsize=(5, 4))
         # plot data/fig
         pars = np.hstack((self.stat_pars['rho0'], self.stat_pars['m_i']))
-        rre, rmim = self.forward_re_mim(pars)
+        rre_rmim = self.forward(pars)
+        rre = rre_rmim[:, 0]
+        rmim = rre_rmim[:, 1]
 
         ax = axes[0, 0]
         try:
