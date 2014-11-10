@@ -13,14 +13,14 @@ def Jacobian(omega, pars, s, partials):
 
     Parameters
     ----------
-    omega: Angular frequencies :math:`2 \cdot \pi \cdot f`
-    pars: :math:`\rho_0` and :math:`m_i` values in the parmeterisation
+    omega : Angular frequencies :math:`2 \cdot \pi \cdot f`
+    pars : :math:`\rho_0` and :math:`m_i` values in the parmeterisation
           (linear,log10) of the provided partials
-    s: :math:`\tau` values in log10
-    partials: List of the four partial derivative functions
-            :math:`\frac{\partial Re}{\partial \rho0}, \frac{\partial
-            Re}{\partial m_i}, \frac{\partial -Im}{\partial \rho0},
-            \frac{\partial -Im}{\partial m_i}`
+    s:  :math:`\tau` values in log10
+    partials : List of the four partial derivative functions
+               :math:`\frac{\partial Re}{\partial \rho0}, \frac{\partial
+               Re}{\partial m_i}, \frac{\partial -Im}{\partial \rho0},
+               \frac{\partial -Im}{\partial m_i}`
 
     Returns
     -------
