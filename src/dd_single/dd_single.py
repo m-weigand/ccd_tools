@@ -40,6 +40,7 @@ import gc
 import lib_dd.plot as lDDp
 import lib_dd.main
 import sip_formats.convert as sip_converter
+import lib_dd.conductivity.model as cond_model
 
 
 def add_base_options(parser):
@@ -186,12 +187,17 @@ def split_options_single(options):
 
 
 def _prepare_ND_object(fit_data):
-    model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
+    # use conductivity or resistivity model?
+    if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+        model = cond_model.dd_conductivity(fit_data['inv_opts'])
+    else:
+        model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
     ND = NDimInv.NDimInv(model, fit_data['inv_opts'])
     ND.finalize_dimensions()
     ND.Data.data_converter = sip_converter.convert
 
     # read in data
+    # print fit_data['data'], fit_data['prep_opts']['data_format']
     ND.Data.add_data(fit_data['data'], fit_data['prep_opts']['data_format'],
                      extra=[])
 
@@ -444,6 +450,8 @@ def save_fit_results(final_iterations, data):
         for nr, itd in enumerate(final_iterations):
             data = itd[0].Data.Df.flatten()[np.newaxis, :]
             # if necessary, apply renormalization
+            # normalization is always done using a rmag_rpha representation
+
             if norm_factors is not None:
                 data[0:data.size/2] /= norm_factors[nr]
 
