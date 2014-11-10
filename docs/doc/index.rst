@@ -130,6 +130,14 @@ Debye Decomposition
 
     dd_general
 
+DD in conductivities
+====================
+
+.. toctree::
+    dd_conductivity
+
+:doc:`dd_conductivity`
+
 Long-term Todo
 ==============
 
@@ -214,6 +222,7 @@ Notes
   computationally expensive. When the CG solver is used most of the time this
   product can be prevented by performing the matrix-vector product from right
   to left.
+
 
 API
 ===
