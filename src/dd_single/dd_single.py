@@ -71,6 +71,11 @@ def add_base_options(parser):
     parser.add_option('-p', "--plot", action="store_true", dest="plot_spectra",
                       help="Plot final iterations (default: False)",
                       default=False)
+    parser.add_option("--plot_reg_strength", action="store_true",
+                      dest="plot_reg_strength",
+                      help="Plot regularization strengths of final " +
+                      "iterations (default: False)",
+                      default=False)
     parser.add_option('-i', "--plot_its", action="store_true",
                       dest="plot_it_spectra", default=False,
                       help="Plot spectra of each iteration (default: False)")
@@ -156,6 +161,7 @@ def split_options_base(options):
     prep_opts = {}
     prep_opts['plot_it_spectra'] = options.plot_it_spectra
     prep_opts['plot'] = options.plot_spectra
+    prep_opts['plot_reg_strength'] = options.plot_reg_strength
     prep_opts['output_dir'] = options.output_dir
     prep_opts['data_format'] = options.data_format
     prep_opts['plot_lambda'] = options.plot_lambda
@@ -270,6 +276,8 @@ def fit_one_spectrum(fit_data):
     if(fit_data['prep_opts']['plot']):
         print('Plotting final iteration')
         ND.iterations[-1].plot()
+
+    if(fit_data['prep_opts']['plot_reg_strength']):
         ND.iterations[-1].plot_reg_strengths()
 
     if(fit_data['prep_opts']['plot_it_spectra']):
