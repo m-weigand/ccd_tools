@@ -13,6 +13,7 @@ import subprocess
 import shutil
 import numpy as np
 import lib_cc.main as cc
+import sip_formats.convert as sip_converter
 
 
 def generate_data(directory, settings):
@@ -27,14 +28,18 @@ def generate_data(directory, settings):
                     {'frequencies': settings['frequencies']}
                     )
     pars = [np.log(100), 0.1, np.log(0.04), 0.6]
-    response = cc_obj.cc_rmag_rpha(pars)
+    response = cc_obj.cc_rmag_rpha(pars).T.reshape(
+        1, settings['frequencies'].size * 2)
+
+    response_converted = sip_converter.convert('rmag_rpha',
+                                               settings['data_format'],
+                                               response)
 
     if not os.path.isdir(directory):
         os.makedirs(directory)
 
     np.savetxt(directory + os.sep + 'frequencies.dat', settings['frequencies'])
-    np.savetxt(directory + os.sep + 'data.dat',
-               np.reshape(response.T, (1, settings['frequencies'].size * 2)))
+    np.savetxt(directory + os.sep + 'data.dat', response_converted)
 
 
 def generate_dd(directory, settings):
@@ -55,7 +60,7 @@ def generate_dd(directory, settings):
         fid.write('dd_single.py -c 1')
         fid.write(' -n {0}'.format(settings['Nd']))
         fid.write(' --lambda {0}'.format(settings['lam']))
-        fid.write(' --norm_mag {0}'.format(settings['norm_mag']))
+        fid.write(' --norm {0}'.format(settings['norm']))
         fid.write(' --data_format "{0}"'.format(settings['data_format']))
         fid.write(' -o "results"')
         fid.write('\n')
@@ -102,34 +107,41 @@ def run_batch(directory):
     os.chdir(pwd)
 
 
+def case(model, norm, data_format):
+    directory = 'case_{0}_{1}_{2}'.format(model, norm,
+                                          data_format)
+    if os.path.isdir(directory):
+        shutil.rmtree(directory)
+    settings_data = {'data_format': data_format,
+                     'rho0': 100,
+                     'frequencies': np.logspace(-3, 3, 20)
+                     }
+    generate_data(directory, settings_data)
+
+    settings_dd = {'Nd': 20,
+                   'lam': 10,
+                   'data_format': data_format,
+                   'model': model,
+                   'norm': norm
+                   }
+    generate_dd(directory, settings_dd)
+    run_batch(directory)
+    apply_checks(directory, settings_data, settings_dd)
+
+
 def test_generator():
     """Generate the various test cases
     """
     for model in ('res', 'cond'):
-        for norm_mag in (0.1, 1, 10):
+        for norm in (0.1, 1, 10):
             for data_format in ('rmag_rpha', 'rre_rmim', 'cmag_cpha',
                                 'cre_cim'):
-
-                directory = 'case_{0}_{1}_{2}'.format(model, norm_mag,
-                                                      data_format)
-                if os.path.isdir(directory):
-                    shutil.rmtree(directory)
-                settings_data = {'data_format': data_format,
-                                 'rho0': 100,
-                                 'frequencies': np.logspace(-3, 3, 20)
-                                 }
-                generate_data(directory, settings_data)
-
-                settings_dd = {'Nd': 20,
-                               'lam': 10,
-                               'data_format': data_format,
-                               'model': model,
-                               'norm_mag': norm_mag
-                               }
-                generate_dd(directory, settings_dd)
-                run_batch(directory)
-                # apply_checks(directory, settings_data, settings_dd)
-                yield apply_checks, directory, settings_data, settings_dd
+                def fn(x, y, z):
+                    case(x, y, z)
+                fn.description =\
+                    'model: {0} norm: {1} data_format {2}'.format(
+                        model, norm, data_format)
+                yield fn, model, norm, data_format
 
 if __name__ == '__main__':
     test_generator()
