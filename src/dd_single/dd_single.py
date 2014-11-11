@@ -88,10 +88,10 @@ def add_base_options(parser):
                       "(default): Extend tau ranges by one frequency decade " +
                       "compared to the 'data' strategy", default="data_ext",
                       dest="tausel")
-    parser.add_option("--norm_mag", type='float', metavar='FLOAT',
+    parser.add_option("--norm", type='float', metavar='FLOAT',
                       help="Normalize magnitudes to the linear " +
                       "resistivity/resistance value (default: None)",
-                      default=None, dest="norm_mag")
+                      default=None, dest="norm")
     parser.add_option("--plot_lcurve", type='int', metavar='ITERATION',
                       help="Plot the l-curve for a selected iteration. " +
                       "WARNING: This only plots the lcurve and does not " +
@@ -252,11 +252,13 @@ def fit_one_spectrum(fit_data):
     # run the inversion
     ND.run_inversion()
 
+    # extract the (only) iteration
     final_iteration = ND.iterations[-1]
 
     # renormalize data (we deal only with one spectrum here)
-    if(fit_data['inv_opts']['norm_factors'] is not None):
+    if(False and fit_data['inv_opts']['norm_factors'] is not None):
         norm_fac = fit_data['inv_opts']['norm_factors']
+
         # add normalization factor to the parameters
         final_iteration.m[0] -= np.log10(norm_fac)
         final_iteration.f = final_iteration.Model.f(final_iteration.m)
@@ -370,7 +372,7 @@ def fit_data(data, prep_opts, inv_opts):
         results = p.map(fit_one_spectrum, fit_datas)
 
     final_iterations = [(x.iterations[-1], nr) for nr, x in enumerate(results)]
-    save_fit_results(final_iterations, data)
+    save_fit_results(final_iterations, data, prep_opts)
 
     # plot some stats
     if(prep_opts['plot']):
@@ -423,10 +425,10 @@ def save_base_results(final_iterations, data):
 
     # save normalization factors
     if('norm_factors' in data):
-        np.savetxt('rho_normalizations.dat', data['norm_factors'])
+        np.savetxt('normalization_factors.dat', data['norm_factors'])
 
 
-def save_fit_results(final_iterations, data):
+def save_fit_results(final_iterations, data, prep_opts):
     """
     Save results of all DD fits to files
     """
@@ -448,14 +450,22 @@ def save_fit_results(final_iterations, data):
     # save data
     with open('data.dat', 'w') as fid:
         for nr, itd in enumerate(final_iterations):
-            data = itd[0].Data.Df.flatten()[np.newaxis, :]
+            iteration_data = itd[0].Data.Df.flatten()[np.newaxis, :]
+            # we store in the same data format as the input data format
+            data_converted = sip_converter.convert(itd[0].Data.obj.data_format,
+                                                   data['raw_format'],
+                                                   iteration_data)
+
             # if necessary, apply renormalization
             # normalization is always done using a rmag_rpha representation
 
-            if norm_factors is not None:
-                data[0:data.size/2] /= norm_factors[nr]
+            # if norm_factors is not None:
+            #    data[0:data.size/2] /= norm_factors[nr]
 
-            np.savetxt(fid, data)
+            np.savetxt(fid, data_converted)
+    # (re)save the data format
+    # open('data_format.dat', 'w').write(prep_opts['data_format'])
+    open('data_format.dat', 'w').write(data['raw_format'])
 
     # save model response
     with open('f.dat', 'w') as fid:
@@ -532,6 +542,10 @@ def main():
 
     # move temp directory to output directory
     if(options.use_tmp):
+        if os.path.isdir(options.output_dir):
+            print('WARNING: Output directory already exists')
+            print('The new inversion can be found here:')
+            print(options.output_dir + os.sep + os.path.basename(outdir))
         shutil.move(outdir, options.output_dir)
 
 
