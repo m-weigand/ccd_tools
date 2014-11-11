@@ -2,6 +2,7 @@
 Functions common to the Debye implementations dd_single, dd_time,
 dd_space_time.
 """
+import os
 import numpy as np
 import sip_formats.convert as SC
 # ## general helper functions ###
@@ -83,22 +84,35 @@ def load_frequencies_and_data(options):
         # rebuild raw_data
         raw_data = np.hstack((part1, part2))
 
-    # # apply normalization if necessary
-    if(options.norm_mag is not None):
-        # data must me in format 'rmag_rpha'
-        if(options.data_format != "rmag_rpha"):
-            raw_data = SC.convert(options.data_format, 'rmag_rpha', raw_data)
-            options.data_format = 'rmag_rpha'
+    data['raw_format'] = options.data_format
 
-        # apply normalization
-        index_end = raw_data.shape[1] / 2
-        norm_factors = options.norm_mag / raw_data[:, 0]
-        norm_factors = np.resize(norm_factors.T,
-                                 (index_end, norm_factors.size)).T
-        raw_data[:, 0:index_end] *= norm_factors
+    # # apply normalization if necessary
+    if(options.norm is not None):
+        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+            # data must me in format 'cre_cim'
+            if(options.data_format != "cre_cim"):
+                raw_data = SC.convert(options.data_format, 'cre_cim', raw_data)
+                options.data_format = 'cre_cim'
+            norm_factors = options.norm / raw_data[:, 0]
+            norm_factors = norm_factors[:, np.newaxis]
+            raw_data *= norm_factors
+        else:
+            # data must me in format 'rmag_rpha'
+            if(options.data_format != "rmag_rpha"):
+                raw_data = SC.convert(options.data_format, 'rmag_rpha',
+                                      raw_data)
+                options.data_format = 'rmag_rpha'
+
+            # apply normalization
+            index_end = raw_data.shape[1] / 2
+            norm_factors = options.norm / raw_data[:, 0]
+            norm_factors = np.resize(norm_factors.T,
+                                     (index_end, norm_factors.size)).T
+            raw_data[:, 0:index_end] *= norm_factors
         data['norm_factors'] = np.atleast_1d(norm_factors[:, 0].squeeze())
 
     data['raw_data'] = raw_data
+
     return data
 
 
