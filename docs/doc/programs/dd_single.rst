@@ -154,6 +154,7 @@ Primary fit results
 
 * Data weighting errors are stored in *errors.dat*
 
+* Normalization factors are stored in *normalization_factors.dat*
 
 Integral parameters
 -------------------

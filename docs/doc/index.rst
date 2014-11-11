@@ -3,6 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. toctree::
+    :maxdepth: 1
+    :hidden:
+
+    programs/dd_single
+    programs/dd_time
+    programs/dd_space_time
+    starting_models
+
 =============
 DD_Interfaces
 =============
@@ -18,12 +27,12 @@ implements a somewhat general multi-dimensional inversion scheme which supports
 an arbitrary number of regularizations between various dimensions. Building
 upon these, three front-ends for the Debye Decompositions are provided:
 
-* *dd_single.py* fits an arbitrary number of SIP spectra without any
+* :doc:`programs/dd_single` fits an arbitrary number of SIP spectra without any
   kind of regularization between the spectra.
-* *dd_time.py* fits an arbitrary number of time-lapse SIP spectra with a
+* doc:`programs/dd_time.py` fits an arbitrary number of time-lapse SIP spectra with a
   regularization on the time axis (separate regularization parameters for
   :math:`\rho_0` and the chargeabilities :math:`m_i`)
-* *dd_space_time.py* fits and arbitrary number of time-lapse SIP spectra
+* doc:`programs/dd_space_time.py` fits and arbitrary number of time-lapse SIP spectra
   recovered from imaging results with the same time regularization as applied
   by *dd_time.py*. No spatial regularization is applied.
 
@@ -49,19 +58,12 @@ Fit Routines
 
 Three fit routines are provided with specialized input/output configurations:
 
-.. toctree::
-    :maxdepth: 1
-    :hidden:
-
-    programs/dd_single
-    programs/dd_time
-    programs/dd_space_time
-
-
 * Fiting of separate sepctra (1D) :doc:`programs/dd_single`
 * Fitting of time-regularized spectra (2D) :doc:`programs/dd_time`
 * Fitting of spatially distributed time-regularized spectra (3D, but no spatial
   regularization) :doc:`programs/dd_space_time`
+
+:doc:`starting_models`
 
 Copyright
 =========
