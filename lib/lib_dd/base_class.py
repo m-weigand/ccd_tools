@@ -15,6 +15,7 @@ class starting_pars_3():
         self.re = re
         self.mim = mim
         self.frequencies = frequencies
+        self.omega = 2 * np.pi * frequencies
         self.tau = taus
 
         # rho0 can be approximated by the low-frequency magnitude
@@ -209,6 +210,14 @@ class starting_pars_3():
             # compute minum minmum
             x_min = -b / (2 * a)
 
+        # alternative: normalize chargeabilities to 1
+        chargeabilities /= np.sum(chargeabilities)
+
+        # test for conductivity
+        term = np.abs(1 -
+                      np.sum(chargeabilities * x_min /
+                             (1 + 1j * self.omega[0] * self.tau)))
+        self.rho0 = self.re[0] / term
         pars_linear = np.hstack((self.rho0, chargeabilities * x_min))
         pars = obj.convert_parameters(pars_linear)
 
@@ -235,6 +244,8 @@ class starting_pars_3():
             # plot RTD
             ax = axes[1]
             ax.loglog(self.tau, chargeabilities, '.-')
+            ax.set_xlabel(r'$\tau~[s]$')
+            ax.set_ylabel(r'$m_i$')
 
             ax.set_xlim([self.tau.min(), self.tau.max()])
             ax.invert_xaxis()
@@ -248,11 +259,12 @@ class starting_pars_3():
                 ax.loglog(scales, a * (scales ** 2) + b * scales + c, '-',
                           color='r')
                 ax.scatter(scales[indices], rms_list[indices], color='c', s=30)
+                ax.set_xlabel('scaling factor')
+                ax.set_ylabel('RMS')
             fig.savefig('starting_pars3.png', dpi=300)
             plt.close(fig)
             del(fig)
         # print('End determining initial parameters')
-
         return pars
 
 
