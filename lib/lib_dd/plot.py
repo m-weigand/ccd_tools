@@ -71,6 +71,7 @@ class plot_iteration():
         ax.semilogx(it.Data.obj.tau, m[1:], '.-', color='k')
         ax.set_xlim(it.Data.obj.tau.min(), it.Data.obj.tau.max())
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=5))
+        ax.yaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
         self._mark_tau_parameters_tau(nr, ax, it)
         ax.invert_xaxis()
         # mark limits of data frequencies, converted into the tau space
@@ -83,10 +84,14 @@ class plot_iteration():
         ax.axvline(t_fmin, c='y', alpha=0.7)
         ax.axvline(t_fmax, c='y', alpha=0.7)
         ax.axvspan(tau_min, t_fmax, hatch='/', color='gray', alpha=0.5)
-        ax.axvspan(t_fmin, tau_max, hatch='/', color='gray', alpha=0.5)
+        ax.axvspan(t_fmin, tau_max, hatch='/', color='gray', alpha=0.5,
+                   label='area outside data range')
+
+        ax.set_xlabel(r'$\tau~[s]$')
+        ax.set_ylabel(r'$log_{10}(m)$')
 
         # print lambda value in title
-        title_string = ''
+        title_string = r'$\lambda:$ '
         for lam in it.lams:
             if(type(lam) == list):
                 lam = lam[0]
@@ -115,6 +120,7 @@ class plot_iteration():
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r'$|\rho|~[\Omega m]$')
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
+        ax.yaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
 
         ax = axes[1]
         ax.semilogx(frequencies, -rmag_rpha_orig[:, 1], '.', color='k')
@@ -122,6 +128,7 @@ class plot_iteration():
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r'$-\phi~[mrad]$')
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
+        ax.yaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
         self._mark_tau_parameters_f(nr, ax, it)
 
     def _plot_rre_rim(self, nr, axes, orig_data, fit_data, it):
@@ -138,19 +145,20 @@ class plot_iteration():
         ax.semilogx(frequencies, rre_rim_fit[:, 0], '-', color='k')
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r"$-\rho'~[\Omega m]$")
-        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=5))
+        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
         ax = axes[1]
-        ax.semilogx(frequencies, -rre_rim_orig[:, 1], '.', color='k')
-        ax.semilogx(frequencies, -rre_rim_fit[:, 1], '-', color='k')
+        ax.semilogx(frequencies, -rre_rim_orig[:, 1], '.', color='k',
+                    label='data')
+        ax.semilogx(frequencies, -rre_rim_fit[:, 1], '-', color='k',
+                    label='fit')
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r"$-\rho''~[\Omega m]$")
-        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=5))
+        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
         self._mark_tau_parameters_f(nr, ax, it)
 
         # legend is created from first plot
-
         if nr == 0:
             ax.legend(loc="upper center", ncol=5,
                       bbox_to_anchor=(0, 0, 1, 1),
@@ -166,8 +174,9 @@ class plot_iteration():
             try:
                 tpeak = it.stat_pars['tau_peak{0}'.format(index)][nr]
                 if(not np.isnan(tpeak)):
-                    ax.axvline(x=10**tpeak, color='k', label=r'$\tau_{peak} ' +
-                               '{0}'.format(index) + '$')
+                    ax.axvline(x=10**tpeak, color='k', label=r'$\tau_{peak}^' +
+                               '{0}'.format(index) + '$',
+                               linestyle='dashed')
             except:
                 pass
 
@@ -190,8 +199,9 @@ class plot_iteration():
             try:
                 fpeak = it.stat_pars['f_peak{0}'.format(index)][nr]
                 if(not np.isnan(fpeak)):
-                    ax.axvline(x=fpeak, color='k', label=r'$\tau_{peak} ' +
-                               '{0}'.format(index) + '$')
+                    ax.axvline(x=fpeak, color='k', label=r'$\tau_{peak}^' +
+                               '{0}'.format(index) + '$',
+                               linestyle='dashed')
             except:
                 pass
 
@@ -305,7 +315,7 @@ class plot_iteration():
 
             # RTD (m distribution)
             ax = axes[nr, 4]
-            title_string = ''
+            title_string = r'$\lambda: $'
             for lam in it.lams:
                 if(type(lam) == list):
                     lam = lam[0]
