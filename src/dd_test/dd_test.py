@@ -129,9 +129,11 @@ def get_cmd(testcfg_file):
         add_to_cmd = False
         # find initial call to dd
         for line in fid.readlines():
-            if(add_to_cmd):
+            if add_to_cmd:
                 cmd.append(line.strip())
-            if(line.startswith('dd_single.py')):
+            expression = re.compile('dd_single.py')
+            if(not line.startswith('#') and
+               re.search(expression, line) is not None):
                 cmd.append(line.strip())
                 add_to_cmd = True
     return cmd
