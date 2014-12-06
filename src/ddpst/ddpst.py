@@ -31,7 +31,7 @@ import os
 import glob
 import shutil
 import ddps
-import crlab_py.elem as elem
+import NDimInv.elem as elem
 
 
 def handle_cmd_options():

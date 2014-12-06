@@ -2,7 +2,7 @@
 """
 
 """
-from crlab_py.mpl import *
+from NDimInv.plot_helper import *
 import numpy as np
 import os
 import lib_cc.main as CC

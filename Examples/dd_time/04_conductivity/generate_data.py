@@ -4,7 +4,7 @@ Generate sample SIP-Spectra for 5 time steps
 """
 import os
 import numpy as np
-import crlab_py.colecole as CC
+import NDimInv.colecole as CC
 import sip_formats.convert as SC
 
 frequencies = np.logspace(-2, 4, 20)

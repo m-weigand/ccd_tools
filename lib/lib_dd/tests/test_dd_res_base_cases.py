@@ -12,7 +12,7 @@ nosetests test_cc_res_base_cases.py -s -v
 """
 import numpy as np
 from nose.tools import *
-import crlab_py.colecole as colecole
+import NDimInv.colecole as colecole
 import lib_dd.dd_res_base_rho0_m as dd_res_base_rho0_m
 import lib_dd.dd_res_base_rho0_log10m as dd_res_base_rho0_log10m
 import lib_dd.dd_res_base_log10rho0_log10m as dd_res_base_log10rho0_log10m

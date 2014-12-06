@@ -4,3 +4,4 @@ dist/
 MANIFEST
 lib/dd_interface.egg-info/
 .ropeproject
+.ipynb_checkpoints

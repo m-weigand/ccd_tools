@@ -30,10 +30,10 @@ from multiprocessing import Pool
 import shutil
 from optparse import OptionParser
 import os
+import glob
 import numpy as np
 from NDimInv.plot_helper import *
-import glob
-import crlab_py.elem as elem
+import NDimInv.elem as elem
 import dd_single
 import NDimInv
 import lib_dd.plot as lDDp

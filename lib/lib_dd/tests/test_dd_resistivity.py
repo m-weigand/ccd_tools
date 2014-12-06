@@ -15,12 +15,11 @@ TODO:
     - check log10Re-Jacobian
     - We can not only check against the numerical approximation but also
       against parts of the Cole-Cole Jacobian as implemented in
-      crlab_py.colecole
+      NDimInv.colecole
 """
 import numpy as np
 from nose.tools import *
 import numdifftools as nd
-#import crlab_py.colecole as colecole
 import lib_dd.dd_resistivity
 
 class test_dd_resistivity():

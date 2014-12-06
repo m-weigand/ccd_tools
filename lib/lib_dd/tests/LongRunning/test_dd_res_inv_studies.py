@@ -16,14 +16,13 @@ nosetests -s -v test_dd_res_inv_studies.py:test_dd_res_inv_studies.test_tau_rho0
 import sys
 sys.path.append('..')
 
-from crlab_py.mpl import *
+from NDimInv.plot_helper import *
 import numpy as np
 import scipy.stats as stats
 from nose.tools import *
 import lib_dd.dd_res_inversion as DD_RES_INV
 import numdifftools as nd
-from crlab_py.mpl import *
-import crlab_py.colecole as colecole
+import NDimInv.colecole as colecole
 
 class test_dd_res_inv_studies():
     @classmethod

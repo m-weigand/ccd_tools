@@ -3,9 +3,8 @@
 """
 
 """
-from crlab_py.mpl import *
+from NDimInv.plot_helper import *
 import numpy as np
-import scipy
 from scipy import stats
 import sys
 sys.path.append('../../../')

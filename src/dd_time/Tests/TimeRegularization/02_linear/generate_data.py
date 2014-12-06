@@ -4,7 +4,7 @@ Generate sample SIP-Spectra
 """
 import os
 import numpy as np
-import crlab_py.colecole as CC
+import NDimInv.colecole as CC
 
 frequencies = np.logspace(-2, 4, 20)
 fin = np.hstack((frequencies, frequencies))

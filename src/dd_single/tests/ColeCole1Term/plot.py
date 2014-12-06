@@ -2,7 +2,7 @@
 """
 Create 3D plots for each variation
 """
-from crlab_py.mpl import *
+from NDimInv.plot_helper import *
 from mpl_toolkits.mplot3d import Axes3D
 Axes3D
 import os

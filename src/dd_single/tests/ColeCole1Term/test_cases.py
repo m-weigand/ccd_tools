@@ -11,7 +11,7 @@ from nose.tools import *
 import subprocess
 import os
 import numpy as np
-import crlab_py.colecole as colecole
+import NDimInv.colecole as colecole
 import glob
 import shutil
 shutil
