@@ -1,3 +1,4 @@
+import os
 from NDimInv.plot_helper import *
 import numpy as np
 import sip_formats.convert as sip_convert
@@ -40,6 +41,13 @@ class plot_iteration():
             title = 'Debye Decomposition, iteration {0}'.format(self.it.nr)
             ax.annotate(title, xy=(0.0, 1.00), xytext=(15, -30),
                         textcoords='offset points', xycoords='figure fraction')
+            if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+                model_title = 'conductivity model'
+            else:
+                model_title = 'resistivity model'
+            ax.annotate(model_title, xy=(1.0, 1.0), xytext=(-110, -30),
+                        textcoords='offset points', xycoords='figure fraction')
+
             self.fig.tight_layout()
             self.fig.subplots_adjust(top=self.top_margin)
             self.fig.savefig(self.filename, dpi=150)
@@ -52,7 +60,6 @@ class plot_iteration():
     def _plot(self, it, filename, keep_plot):
         """Reimplementation of plot routines
         """
-        # import pdb; pdb.set_trace()
         D = it.Data.D
         F = it.Model.F(it.m)
         M = it.Model.convert_to_M(it.m)
@@ -65,6 +72,9 @@ class plot_iteration():
                 self._plot_rre_rim(nr, axes[nr, 0:2], D[d], F[d], it)
                 self._plot_rmag_rpha(nr, axes[nr, 2:4], D[d], F[d], it)
                 self._plot_rtd(nr, axes[nr, 4], M[m], it)
+                ax1 = axes[nr, 0].twinx()
+                ax2 = axes[nr, 1].twinx()
+                self._plot_cre_cim(nr, [ax1, ax2], D[d], F[d], it)
 
     def _plot_rtd(self, nr,  ax, m, it):
         ax.semilogx(it.Data.obj.tau, m[1:], '.-', color='k')
@@ -129,6 +139,31 @@ class plot_iteration():
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
         ax.yaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
         self._mark_tau_parameters_f(nr, ax, it)
+
+    def _plot_cre_cim(self, nr, axes, orig_data, fit_data, it):
+        cre_cim_orig = sip_convert.convert(it.Data.obj.data_format,
+                                           'cre_cim',
+                                           orig_data)
+
+        cre_cim_fit = sip_convert.convert(it.Data.obj.data_format,
+                                          'cre_cim',
+                                          fit_data)
+        frequencies = it.Data.obj.frequencies
+        ax = axes[0]
+        ax.semilogx(frequencies, cre_cim_orig[:, 0], '.', color='gray')
+        ax.semilogx(frequencies, cre_cim_fit[:, 0], '-', color='gray')
+        # ax.set_xlabel('frequency [Hz]')
+        ax.set_ylabel(r"$-\sigma'~[S/m]$", color='gray')
+        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
+
+        ax = axes[1]
+        ax.semilogx(frequencies, cre_cim_orig[:, 1], '.', color='gray',
+                    label='data')
+        ax.semilogx(frequencies, cre_cim_fit[:, 1], '-', color='gray',
+                    label='fit')
+        # ax.set_xlabel('frequency [Hz]')
+        ax.set_ylabel(r"$-\sigma''~[S/m]$", color='gray')
+        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
     def _plot_rre_rim(self, nr, axes, orig_data, fit_data, it):
         rre_rim_orig = sip_convert.convert(it.Data.obj.data_format,
