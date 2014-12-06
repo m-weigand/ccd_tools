@@ -174,8 +174,6 @@ def run_test(test_dir):
             test_cmd.append(option)
 
     test_cmd = ' '.join(test_cmd)
-    print('Executing command:')
-    print(test_cmd)
     # subprocess.call(test_cmd, shell=True, stdin=PIPE)
     p = subprocess.Popen(test_cmd, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
