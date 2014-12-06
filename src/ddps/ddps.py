@@ -77,7 +77,7 @@ dd_stats['u_tau'] = {'filename': 'U_tau_results.dat',
                      'apply_filter': False,
                      'scale': 'linear',
                      'reverse': True,
-                     'label': r'$U_{10/60}$'
+                     'label': r'$U_{60/10}$'
                      }
 
 # available filters
