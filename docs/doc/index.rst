@@ -29,10 +29,10 @@ upon these, three front-ends for the Debye Decompositions are provided:
 
 * :doc:`programs/dd_single` fits an arbitrary number of SIP spectra without any
   kind of regularization between the spectra.
-* doc:`programs/dd_time.py` fits an arbitrary number of time-lapse SIP spectra with a
+* :doc:`programs/dd_time` fits an arbitrary number of time-lapse SIP spectra with a
   regularization on the time axis (separate regularization parameters for
   :math:`\rho_0` and the chargeabilities :math:`m_i`)
-* doc:`programs/dd_space_time.py` fits and arbitrary number of time-lapse SIP spectra
+* :doc:`programs/dd_space_time` fits and arbitrary number of time-lapse SIP spectra
   recovered from imaging results with the same time regularization as applied
   by *dd_time.py*. No spatial regularization is applied.
 
