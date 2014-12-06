@@ -144,7 +144,7 @@ class starting_pars_3():
         # select chargeabilities for the frequency decades
         chargeabilities = np.empty_like(self.tau) * np.nan
         ersatz = 0
-        for key in sec_data.keys():
+        for key in ('inside', ):  # sec_data.keys():
             # select tau values corresponding to bins
             tau_bins = 1 / (2 * np.pi * sec_data[key][2])
             tau_digi = np.digitize(self.tau, tau_bins)
@@ -152,23 +152,38 @@ class starting_pars_3():
                 # print 'check for bin nr', bin_nr
                 tau_indices = np.where(tau_digi == bin_nr)[0]
                 # compute the chargeability for this tau span
-                m_dec = (- sec_data[key][1][nr] / self.rho0)
+                # we work wiht mim, therefore no minus sign
+                m_dec = (sec_data[key][1][nr] / self.rho0)
                 term = 1
                 for i in tau_indices:
-                    w = 2 * np.pi * sec_data[key][1][nr]
+                    w = 2 * np.pi * sec_data[key][2][nr]
                     term += 1 / (w * self.tau[i] /
                                  (1 + (w * self.tau[i]) ** 2))
                 m_dec *= term
                 # print 'm_dec', m_dec
 
-                chargeabilities[tau_indices] = sec_data[key][1][nr]
+                chargeabilities[tau_indices] = m_dec  # sec_data[key][1][nr]
                 ersatz += 1
+
+        where_are_numbers = np.where(~np.isnan(chargeabilities))[0]
+        chargeabilities[0:where_are_numbers[0]] = chargeabilities[
+            where_are_numbers[0]]
+        chargeabilities[where_are_numbers[-1]:] = chargeabilities[
+            where_are_numbers[-1]]
+        """
+        chargeabilities[0:where_are_numbers[0]] = 1e-6
+        chargeabilities[where_are_numbers[-1]:] = 1e-6
+        """
+        # assign the nearest data chargeabilities to the outside regions
+        # normalize chargeabilities to 1
+        chargeabilities /= np.sum(chargeabilities)
 
         # test various scaling factors
         mim_list = []
         rms_list = []
         m_list = []
         scales = np.logspace(-5, 0, 10)
+        # scales = np.array((1e-3, 0.5, 1))
         for scale in scales:
             # test forward modelling
             m_list.append(chargeabilities * scale)
@@ -195,6 +210,8 @@ class starting_pars_3():
         # if min_index is the largest scaling factor, use this
         if indices[-1] == len(scales):
             x_min = scales[-1]
+        elif indices[-1] == 0:
+            x_min = scales[0]
         else:
             # fit parabola to rms-values
             # fit parabola
@@ -210,39 +227,62 @@ class starting_pars_3():
             # compute minum minmum
             x_min = -b / (2 * a)
 
-        # alternative: normalize chargeabilities to 1
-        chargeabilities /= np.sum(chargeabilities)
+            if x_min < 0:
+                x_min = 0.01
+        # """
 
         # test for conductivity
+        # x_min = 1
+        # rms_list = []
         term = np.abs(1 -
                       np.sum(chargeabilities * x_min /
                              (1 + 1j * self.omega[0] * self.tau)))
-        self.rho0 = self.re[0] / term
+        # self.rho0 = self.re[0] / term
         pars_linear = np.hstack((self.rho0, chargeabilities * x_min))
         pars = obj.convert_parameters(pars_linear)
 
         plot_starting_model = False
         if(plot_starting_model):
             # # plot
-            fig, axes = plt.subplots(3, 1, figsize=(6, 6))
+            fig, axes = plt.subplots(4, 1, figsize=(6, 7))
             # plot spectrum
-            # pars_linear = np.hstack((rho0, chargeabilities * x_min))
             pars_linear = np.hstack((self.rho0, chargeabilities * x_min))
-            # print 'pars_linear', pars_linear
             pars = obj.convert_parameters(pars_linear)
             re_mim = obj.forward(pars)
+            re_f = re_mim[:, 0]
             mim_f = re_mim[:, 1]
+
+            # real part
             ax = axes[0]
+            ax.loglog(self.frequencies, self.re, '.-', color='k', alpha=0.5)
+            ax.loglog(self.frequencies, re_f, '-', color='green')
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel(r"$-\sigma'~[\Omega m]$")
+
+            # imaginary part
+            ax = axes[1]
             for key in sec_data.keys():
                 ax.scatter(10 ** np.array(sec_data[key][0]), sec_data[key][1],
                            s=30, color='blue')
             ax.loglog(self.frequencies, self.mim, '.-', color='k', alpha=0.5)
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel(r"$-\sigma''~[\Omega m]$")
             # for scaled_mim in mim_list:
             # print('mimf', mim_f)
             ax.loglog(self.frequencies, mim_f, '-', color='green')
             ax.set_xlim([self.f_tau_min, self.f_tau_max])
+
+            for scale in (0.1, 0.5, 1.0):
+                pars_linear_plot = np.hstack(
+                    (self.rho0, chargeabilities * scale))
+                pars_plot = obj.convert_parameters(pars_linear_plot)
+                re_mim = obj.forward(pars_plot)
+                re_f = re_mim[:, 0]
+                mim_f = re_mim[:, 1]
+                ax.loglog(self.frequencies, mim_f, '-', color='red')
+
             # plot RTD
-            ax = axes[1]
+            ax = axes[2]
             ax.loglog(self.tau, chargeabilities, '.-')
             ax.set_xlabel(r'$\tau~[s]$')
             ax.set_ylabel(r'$m_i$')
@@ -251,20 +291,25 @@ class starting_pars_3():
             ax.invert_xaxis()
 
             # scales vs. rms_mim
-            ax = axes[2]
+            ax = axes[3]
             # print 'scales', scales
             if(not np.all(np.isnan(rms_list))):
                 # print 'rms_list', rms_list
                 ax.loglog(scales, rms_list, '.-')
-                ax.loglog(scales, a * (scales ** 2) + b * scales + c, '-',
+
+                scale_range = np.linspace(0, 1, 30)
+                ax.loglog(scale_range, a * (scale_range ** 2) +
+                          b * scale_range + c, '-',
                           color='r')
                 ax.scatter(scales[indices], rms_list[indices], color='c', s=30)
                 ax.set_xlabel('scaling factor')
                 ax.set_ylabel('RMS')
+            fig.tight_layout()
             fig.savefig('starting_pars3.png', dpi=300)
             plt.close(fig)
             del(fig)
         # print('End determining initial parameters')
+        # exit()
         return pars
 
 
