@@ -58,12 +58,14 @@ class plot_iteration():
                 del(self.fig)
 
     def _plot(self, it, filename, keep_plot):
-        """Reimplementation of plot routines
+        """Plot one or more spectra
         """
         D = it.Data.D
-        F = it.Model.F(it.m)
         M = it.Model.convert_to_M(it.m)
-        nr_spectra = max(1, len(it.Data.extra_dims))
+        F = it.Model.F(M)
+        extra_size = int(
+            np.sum([x[1][1] for x in it.Data.extra_dims.iteritems()]))
+        nr_spectra = max(1, extra_size)
 
         with self.figure_environment(it, filename, keep_plot, nr_spectra) as\
                 (fig, axes):
