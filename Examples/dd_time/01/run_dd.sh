@@ -9,6 +9,7 @@ dd_time.py -f data/frequencies.dat --times data/times.dat\
     -c 1\
     --plot
 
+exit
 # fit with time regularization in rho0
 outdir="results_time_rho0"
 test -d ${outdir} && rm -r ${outdir}
