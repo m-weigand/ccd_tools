@@ -21,7 +21,8 @@ if __name__ == '__main__':
           # msi # installer
           # packages=find_packages(),
           package_dir={'': 'lib'},
-          packages=['lib_dd', ],
+          packages=['lib_dd',
+                    'lib_dd.conductivity'],
           scripts=['src/dd_single/dd_single.py',
                    'src/dd_time/dd_time.py',
                    'src/dd_space_time/dd_space_time.py',
