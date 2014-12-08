@@ -91,7 +91,9 @@ def add_base_options(parser):
                       help="Tau selection strategy:\ndata: Use " +
                       "data frequency limits for tau selection\ndata_ext " +
                       "(default): Extend tau ranges by one frequency decade " +
-                      "compared to the 'data' strategy", default="data_ext",
+                      "compared to the 'data' strategy. Factors can be set " +
+                      "for the low and high frequency by separating with a " +
+                      "',': LEFT,RIGHT, e.g. '10,100'", default="data_ext",
                       dest="tausel")
     parser.add_option("--norm", type='float', metavar='FLOAT',
                       help="Normalize magnitudes to the linear " +
