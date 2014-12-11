@@ -16,7 +16,7 @@ routines:
 numpy
 scipy
 matplotlib
-GeccoInv
+geccoinv
 
 In order to build the documentation, the additional packages are required:
 
@@ -29,9 +29,16 @@ commands:
         texlive-fonts-recommended texlive-fonts-extra dvipng
     sudo apt-get install python2.7-numpy python-matplotlib python2.7-scipy\
         python-setuptools python-nose python-tornado
-    sudo apt-get install python-sphinx
 
-GeccoInv has to be installed according to its own documentation.
+In order to build the documentation, the following sphinx-related packages must
+be installed:
+
+    sudo apt-get install python-sphinx
+    sudo apt-get install python-sphinx python-sphinxcontrib.blockdiag
+    pip install sphinxcontrib-programoutput
+
+
+geccoinv has to be installed according to its own documentation.
 
 Under Windows, the program was tested using the 'pythonxy' distribution
 (https://code.google.com/p/pythonxy/).

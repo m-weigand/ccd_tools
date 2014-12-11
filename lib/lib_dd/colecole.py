@@ -15,11 +15,11 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-===============================================================================
+
+
 This is a really old and naive implementation of the Cole-Cole model. Do not
 change or work with it! It's only here until we can adapt lib_cc and/or lib_cc2
 as replacements.
-===============================================================================
 """
 import numpy as np
 
@@ -73,21 +73,24 @@ def cole_log(inputdata, params):
     """
     compute impedance values (amplitude and phase) from a given set of
     Cole-Cole parameters at different frequencies.
-    ---
-    Parameters:
-    inputdata   - array containing the frequency values at which the impedance
+
+    Parameters
+    ----------
+    inputdata : array containing the frequency values at which the impedance
                   values will be computed twice: [frequencies  frequencies].
-    params      - array containg the rho0 and an arbitrary number of (m,tau,c)
-    tuples of the parameters: ln(rho0), m, ln(tau), c. The natural logarithm is
-    used here! rho0 and tau are always positive (in a physical sense).  Thus
-    the length of this vector is L = 1 + 3 * N, where N is the number of
-    Cole-Cole terms.  m and c are both limited to the range [0,1]
-    ----
-    Returns:
-    fitdata     - array containing amplitude and phase values for the given
-                  frequencies. The first half of the vector contains the
-                  amplitudes (in natural logarithm), the second one the phases,
-                  in mRad
+    params : array containg the rho0 and an arbitrary number of (m,tau,c)
+             tuples of the parameters: ln(rho0), m, ln(tau), c. The natural
+             logarithm is used here! rho0 and tau are always positive (in a
+             physical sense).  Thus the length of this vector is L = 1 + 3 * N,
+             where N is the number of Cole-Cole terms.  m and c are both limited
+             to the range [0,1]
+
+    Returns
+    -------
+    fitdata : array containing amplitude and phase values for the given
+              frequencies. The first half of the vector contains the
+              amplitudes (in natural logarithm), the second one the phases,
+              in mRad
     """
     # determine number of Cole-Cole terms
     nr_cc_terms = (len(params) - 1) / 3
@@ -154,8 +157,8 @@ def cc_jac(f, par):
 
 
 def cc_jac_real(f_red, par):
-    """
-    d rho^hat/d |R|
+    r"""
+    :math:`\frac{d \hat{rho}}{d |R|}`
     """
     ret = np.vstack((cc_der_lnR(f_red, par), cc_der_phi(f_red, par)))
     return ret
