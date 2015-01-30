@@ -18,7 +18,7 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from memory_profiler import *
+# from memory_profiler import *
 import logging
 logging.basicConfig(level=logging.INFO)
 import json
@@ -248,7 +248,7 @@ def _prepare_ND_object(fit_data):
     return ND
 
 
-@profile
+# @profile
 def fit_one_spectrum(fit_data):
     """
     Fit one spectrum

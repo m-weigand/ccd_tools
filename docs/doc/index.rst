@@ -20,12 +20,13 @@ Introduction
 ============
 
 This project is a collection of Python libraries and scripts which facilitate
-the analysis of spectral induced polarisation (SIP) spectra using a Debye decomposition
-scheme (see :doc:`dd_general` for general notes on the Debye decomposition
-scheme). The basis of all programs is formed by the *GeccoInv* library which
-implements a somewhat general multi-dimensional inversion scheme which supports
-an arbitrary number of regularizations between various dimensions. Building
-upon these, three front-ends for the Debye Decompositions are provided:
+the analysis of spectral induced polarisation (SIP) spectra using a Debye
+decomposition scheme (see :doc:`dd_general` for general notes on the Debye
+decomposition scheme). The basis of all programs is formed by the *GeccoInv*
+library which implements a somewhat general multi-dimensional inversion scheme
+which supports an arbitrary number of regularizations between various
+dimensions. Building upon these, three front-ends for the Debye Decompositions
+are provided:
 
 * :doc:`programs/dd_single` fits an arbitrary number of SIP spectra without any
   kind of regularization between the spectra.
@@ -171,11 +172,20 @@ Long-term:
 Profiling and Debugging
 -----------------------
 
-At least in *dd_singly.py* we import the `memory_profiler` module. Just add the
-decorator `@profile` in front of a function and during execution a line-by-line
-memory usage profile will be printed to STDOUT.
+Things go wrong. If something goes wrong with memory usage, use the
+`memory_profiler` module (https://github.com/fabianp/memory_profiler):
 
-https://github.com/fabianp/memory_profiler
+::
+
+    pip install memory_profiler
+
+
+At least in *dd_singly.py* there is a commented import line: ::
+
+    import memory_profiler
+    
+Just add the decorator `@profile` in front of any function to get a
+line-by-line memory usage profile printed to STDOUT.
 
 To profile the memory increase between subsequent spectra in **dd_single.py**,
 add the decorator to the `fit_one_spectrum` function:
@@ -185,7 +195,8 @@ add the decorator to the `fit_one_spectrum` function:
     @profile
     def fit_one_spectrum(opts):
 
-Then run the dd_single command as usual, but pipe to a logfile:
+Then run the `dd_single.py` command as usual, but redirect the output to a
+logfile:
 
 ::
 
@@ -211,7 +222,8 @@ As a side note, it would be nice to get `pycallgraph` to run:
 
 http://pycallgraph.slowchop.com/en/master/guide/command_line_usage.html
 
-We could also use Travis (https://travis-ci.org/) von continous integration.
+Sidenote: We could also use Travis (https://travis-ci.org/) von continous
+integration.
 
 Notes
 -----
