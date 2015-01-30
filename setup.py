@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup
+import subprocess
+import os
 # from setuptools import find_packages
 # find_packages
 
@@ -9,6 +11,14 @@ from setuptools import setup
 
 version_short = '0.5'
 version_long = '0.5.7'
+# if we are in a git directory, use the last git commit as the version
+cmd = 'git log -1 --format=%H'
+try:
+    if os.path.isdir('.git'):
+        git_output = subprocess.check_output(cmd, shell=True).strip()
+        version_long += '+' + git_output
+except:
+    pass
 
 if __name__ == '__main__':
     setup(name='dd_interface',
