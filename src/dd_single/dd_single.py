@@ -115,6 +115,18 @@ def add_base_options(parser):
     return parser
 
 
+def _get_version_numbers():
+    """Return a string containing the version numbers of geccoinv and
+    dd_interface. The string is meant to be human readable.
+    """
+    versions = ''.join(('geccoinv version: ',
+                        pkg_resources.require('geccoinv')[0].version,
+                        '\n',
+                        'dd_interface version: ',
+                        pkg_resources.require('dd_interface')[0].version))
+    return versions
+
+
 def handle_cmd_options():
     """
     Handle command line options
@@ -132,11 +144,7 @@ def handle_cmd_options():
 
     # print version information if requested
     if(options.version):
-        print('geccoinv version: ' +
-              pkg_resources.require('geccoinv')[0].version)
-
-        print('dd_interface version: ' +
-              pkg_resources.require('dd_interface')[0].version)
+        print _get_version_numbers()
         exit()
     return options
 
@@ -400,7 +408,7 @@ def save_base_results(final_iterations, data):
     dd_single.py/dd_time.py/dd_space_time.py
     """
     with open('version.dat', 'w') as fid:
-        fid.write(VV.version + '\n')
+        fid.write(_get_version_numbers() + '\n')
 
     with open('data_format.dat', 'w') as fid:
         fid.write(final_iterations[0][0].Data.obj.data_format + '\n')
