@@ -29,9 +29,9 @@ import numpy as np
 from multiprocessing import Pool
 import tempfile
 import shutil
+import pkg_resources
 
 import NDimInv
-import NDimInv.version as VV
 import NDimInv.regs as RegFuncs
 import NDimInv.reg_pars as LamFuncs
 from NDimInv.plot_helper import *
@@ -132,7 +132,11 @@ def handle_cmd_options():
 
     # print version information if requested
     if(options.version):
-        print(VV.version)
+        print('geccoinv version: ' +
+              pkg_resources.require('geccoinv')[0].version)
+
+        print('dd_interface version: ' +
+              pkg_resources.require('dd_interface')[0].version)
         exit()
     return options
 

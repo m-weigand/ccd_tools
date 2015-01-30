@@ -20,6 +20,7 @@ Input files
 """
 # from memory_profiler import *
 import os
+import pkg_resources
 # import json
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -86,7 +87,11 @@ def handle_cmd_options():
 
     # print version information if requested
     if(options.version):
-        print(dd.VV.version)
+        print('geccoinv version: ' +
+              pkg_resources.require('geccoinv')[0].version)
+
+        print('dd_interface version: ' +
+              pkg_resources.require('dd_interface')[0].version)
         exit()
 
     return options
