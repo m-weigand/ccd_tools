@@ -288,7 +288,7 @@ def _get_ND(subdata):
     ND = dd_single._prepare_ND_object(fit_data)
 
     # recreate the last iteration
-    it = NDimInv.main.Iteration(1, ND.Data, ND.Model, ND.RMS)
+    it = NDimInv.main.Iteration(1, ND.Data, ND.Model, ND.RMS, ND.settings)
 
     # number of iterations
     it.nr = 1
@@ -465,7 +465,8 @@ def filter_result_dir(options):
     else:
         filter_mask = None
 
-    ND_list = recreate_ND_obj_list(options.result_dir, filter_mask,
+    ND_list = recreate_ND_obj_list(options.result_dir,
+                                   filter_mask,
                                    options.nr_cpus)
 
     final_iterations = [(y.iterations[-1], x) for x, y in enumerate(ND_list)]
@@ -539,7 +540,9 @@ def save_filter_results(options, remaining_indices, final_iterations):
     np.savetxt('deleted_indices.dat', remaining_indices, fmt='%i')
 
     # save fit results
-    dd_single.save_fit_results(final_iterations, {})
+    # the data format is kept
+    data_options = {'raw_format': final_iterations[0][0].Data.obj.data_format}
+    dd_single.save_fit_results(final_iterations, data_options, {})
     os.chdir(pwd)
 
 
