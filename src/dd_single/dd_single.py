@@ -453,6 +453,14 @@ def save_base_results(final_iterations, data):
 def save_fit_results(final_iterations, data, prep_opts):
     """
     Save results of all DD fits to files
+
+    Parameters
+    ----------
+    final_iterations: list containing the nr and instances of the final
+                      iterations of all spectra: [(Iteration, nr), (...)]
+    data:
+    prep_opts: setting dict used to prepare the inversion (i.e. all settings
+               that are not provided to NDimInv
     """
     save_base_results(final_iterations, data)
     if not os.path.isdir('stats_and_rms'):
@@ -500,8 +508,16 @@ def get_data_dd_single(options):
     """
     Load frequencies and data and return a data dict
 
-    options is also returned in case we change some settings, e.g. the data
-    format
+    Parameters
+    ----------
+
+    options: is also returned in case we change some settings, e.g. the data
+             format
+
+
+    Returns
+    -------
+    data: dict with entries "raw_data", "cr_data"
     """
     data = lDDi.load_frequencies_and_data(options)
 
