@@ -502,6 +502,7 @@ def save_fit_results(final_iterations, data, prep_opts):
         for itd in final_iterations:
             np.savetxt(fid,
                        itd[0].Model.f(itd[0].m)[np.newaxis, :])
+    open('f_format.dat', 'w').write(itd[0].Data.obj.data_format)
 
 
 def get_data_dd_single(options):
