@@ -153,7 +153,16 @@ class starting_pars_3():
         self.get_bins()
 
         # the value which will be assigned to tau-range outside the data range
-        self.data_mean_tau = self.mim[np.where(self.mim > 0)].min()
+
+        # if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+        # select only the "valid" polarisations, i.e. capactive effects
+        capacitive_values = np.where(self.mim > 0)[0]
+        if len(capacitive_values) > 0:
+            self.data_mean_tau = self.mim[capacitive_values].min()
+        else:
+            # no valid value was found. we can assume this spectrum can not
+            # be fitted using the DD. Use a really small m value here
+            self.data_mean_tau = 1e-7
 
         sec_data = self.get_sec_data()
 
