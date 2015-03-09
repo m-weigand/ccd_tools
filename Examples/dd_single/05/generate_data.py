@@ -18,7 +18,5 @@ cc_pars = [np.log(rho0), m, np.log(tau), c, 0.1, np.log(0.00004), 1]
 magpha = CC.cole_log(fin, cc_pars).flatten()[np.newaxis, :]
 magpha[0, 0:magpha.size / 2] = np.exp(magpha[0, 0:magpha.size / 2])
 
-print magpha
-
 np.savetxt('data.dat', magpha)
 np.savetxt('frequencies.dat', frequencies)
