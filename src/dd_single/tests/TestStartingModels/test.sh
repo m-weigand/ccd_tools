@@ -12,4 +12,5 @@ DD_STARTING_MODEL=3 dd_single.py -o results_starting_model3\
 	-c 1\
 	--plot\
 	--plot_its\
+	--norm 100\
 	--lambda 300
