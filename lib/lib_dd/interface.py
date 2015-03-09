@@ -184,14 +184,25 @@ def prepare_stat_values(raw_values, key, norm_factors):
         values = values.squeeze()
 
     # renormalize all parameters containing rho0
+    # Note: When the conductivity model is used, the normalisation factors
+    # refer to the data in conductivities, and correspondingly, sigma_0. As we
+    # apply the normalisation to a resistivity (rho_0) parameter, we have to
+    # invert the normalisations, which manifests as a sign change in the log
+    # operations
     if(key == 'rho0' and norm_factors is not None):
         # rho0 is log10
         # renormalize
-        values -= np.log10(norm_factors).squeeze()
+        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+            values += np.log10(norm_factors).squeeze()
+        else:
+            values -= np.log10(norm_factors).squeeze()
+
     if(key == 'm_tot_n' and norm_factors is not None):
         # renormalize
-        values += np.log10(norm_factors).squeeze()
-        print 'm_tot_n', values
+        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+            values -= np.log10(norm_factors).squeeze()
+        else:
+            values += np.log10(norm_factors).squeeze()
 
     return values
 
