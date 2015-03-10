@@ -174,11 +174,12 @@ class dd_conductivity(base_class.dd_resistivity_skeleton):
         base_class.dd_resistivity_skeleton.compute_par_stats(self, pars)
 
         # self.stat_pars = {}
-        # the statistical parameters as computed above relatve to the
-        # resistivity formulation. We must change and add a few parameters.
-        self.stat_pars['sigma_infty'] = self.stat_pars['rho0']
+        # the statistical parameters as computed above relate to the
+        # resistivity formulation. We must correct some of them and add a few
+        # parameters.
+        self.stat_pars['sigma_infty'] = self.stat_pars['rho0'].copy()
 
-        def sigma0(pars, tau, s, stat_pars):
+        def sigma0_linear(pars, tau, s, stat_pars):
             """Compute :math:`sigma0` using math:`\sigma_\infty` and
             :math:`m_{tot}`:
 
@@ -187,11 +188,18 @@ class dd_conductivity(base_class.dd_resistivity_skeleton):
                 \sigma_0 = \sigma_\infty \cdot (1 - m_{tot})
 
             """
-            sigma0 = stat_pars['sigma_infty'] * (1 - 10**stat_pars['m_tot'])
+            sigma0 = 10 ** stat_pars['sigma_infty'] *\
+                (1 - 10 ** stat_pars['m_tot'])
             return sigma0
+
+        def sigma0(pars, tau, s, stat_pars):
+            return np.log10(sigma0_linear(pars, tau, s, stat_pars))
 
         self.stat_pars['sigma0'] = sigma0(pars, self.tau, self.s,
                                           self.stat_pars)
+
+        # rho0 is stored in log10, change sign for 1/rho0
+        self.stat_pars['rho0'] = self.stat_pars['sigma0'] * -1
 
         def mtotn(pars, tau, s, stat_pars):
             """
@@ -202,7 +210,7 @@ class dd_conductivity(base_class.dd_resistivity_skeleton):
                 m_{tot}^n = \frac{m_{tot}}{\sigma_0}
 
             """
-            mtotn = stat_pars['m_tot'] / stat_pars['sigma0']
+            mtotn = stat_pars['m_tot'] - stat_pars['rho0']
             return mtotn
 
         self.stat_pars['m_tot_n'] = mtotn(pars, self.tau, self.s,

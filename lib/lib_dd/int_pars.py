@@ -22,20 +22,11 @@ import os
 import numpy as np
 import scipy.signal as sp
 
-# integral parameters are slightly dependent on the model used
-if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-    conductivity_model = True
-else:
-    conductivity_model = False
-
 
 def _rho0_linear(pars, tau, s):
     # we assume that :math:`\rho_0 = 1 / \sigma_0` for the conductivity
     # formulation. This should be tested first...
-    if conductivity_model:
-        return 1.0 / pars[0]
-    else:
-        return pars[0]
+    return pars[0]
 
 
 def rho0(pars, tau, s):
