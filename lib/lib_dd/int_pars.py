@@ -95,8 +95,11 @@ def tau_geometric(pars, tau, s):
 def _cumulative_tau(pars, tau, s):
     """Compute the cumulative chargeabilites, normalized to the total
     chargeability sum
+
+    NOTE: Corresponding to the frequencies, we compute the cumulative sum down
+    from large tau values to small ones!
     """
-    g_tau = pars[1:] / _m_tot_linear(pars, tau, s)
+    g_tau = pars[1:][::-1] / _m_tot_linear(pars, tau, s)
     cums_gtau = np.cumsum(g_tau)
     return cums_gtau
 
@@ -104,7 +107,8 @@ def _cumulative_tau(pars, tau, s):
 def _tau_x(x, pars, tau, s):
     r"""
     Compute the relaxation time corresponding to a certain percentage of the
-    cumulative chargeabilities
+    cumulative chargeabilities. The cumulative chargeabilities are counted down
+    from large to small tau values, corresponding to the frequency domain.
 
     Parameters
     ----------
@@ -128,14 +132,16 @@ def _tau_x(x, pars, tau, s):
 
     try:
         cums_gtau = _cumulative_tau(pars, tau, s)
+        # norm to one
+        cums_gtau_normed = cums_gtau / np.abs(cums_gtau).max()
 
-        index = np.argmin(np.abs(cums_gtau - x))
+        index = np.argmin(np.abs(cums_gtau_normed[::-1] - x))
         if(np.isnan(index)):
             tau_x = np.nan
             f_x = np.nan
         else:
             tau_x = s[index]
-            f_x = 1 / (2 * np.pi * 10**tau_x)
+            f_x = 1 / (2 * np.pi * 10 ** tau_x)
     except Exception:
         # cums_gtau = np.repeat(np.nan, s.size)
         tau_x = np.nan
