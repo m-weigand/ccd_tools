@@ -240,7 +240,8 @@ def save_fit_results(final_iteration, data):
     # incorporate times into the inversion..just save it
     final_iterations = ((final_iteration, ), )
     dd.save_base_results(final_iterations, data)
-    os.makedirs('stats_and_rms')
+    if not os.path.isdir('stats_and_rms'):
+        os.makedirs('stats_and_rms')
     os.chdir('stats_and_rms')
     if('norm_factors' in data):
         norm_factors = data['norm_factors']
