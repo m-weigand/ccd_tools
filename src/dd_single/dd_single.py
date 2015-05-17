@@ -423,7 +423,7 @@ def save_base_results(final_iterations, data):
                     'DD_TAU_X',
                     'DD_DEBUG_STARTING_PARS'):
             if key in os.environ:
-                fid.write('{0}="{1}"\n'.format(key, os.environ[key]))
+                fid.write('export {0}="{1}"\n'.format(key, os.environ[key]))
 
         # dd_single command
         fid.write(' '.join(sys.argv) + '\n')
