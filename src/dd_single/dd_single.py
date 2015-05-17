@@ -209,8 +209,10 @@ def split_options_single(options):
 def _prepare_ND_object(fit_data):
     # use conductivity or resistivity model?
     if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+        # there is only one parameterisation: log10(sigma_i), log10(m)
         model = cond_model.dd_conductivity(fit_data['inv_opts'])
     else:
+        # there are multiple parameterisations available, use the log10 one
         model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
     ND = NDimInv.NDimInv(model, fit_data['inv_opts'])
     ND.finalize_dimensions()
