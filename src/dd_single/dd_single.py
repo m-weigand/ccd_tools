@@ -412,8 +412,8 @@ def save_base_results(final_iterations, data):
     with open('version.dat', 'w') as fid:
         fid.write(_get_version_numbers() + '\n')
 
-    with open('data_format.dat', 'w') as fid:
-        fid.write(final_iterations[0][0].Data.obj.data_format + '\n')
+    # with open('data_format.dat', 'w') as fid:
+    #     fid.write(final_iterations[0][0].Data.obj.data_format + '\n')
 
     # save call to debye_decomposition.py
     with open('command.dat', 'w') as fid:
