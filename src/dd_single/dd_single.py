@@ -529,7 +529,7 @@ def get_data_dd_single(options):
     -------
     data: dict with entries "raw_data", "cr_data"
     """
-    data = lDDi.load_frequencies_and_data(options)
+    data, options = lDDi.load_frequencies_and_data(options)
 
     # we need list of spectra
     size_y = data['raw_data'].shape[1] / 2

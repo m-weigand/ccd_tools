@@ -135,7 +135,7 @@ def get_data_dd_time(options):
 
     options is also returned in case we change some settings, e.g. the data
     """
-    data = lDDi.load_frequencies_and_data(options)
+    data, options = lDDi.load_frequencies_and_data(options)
     data['times'] = _get_times(options)
     data['cr_data'] = data['raw_data']
 

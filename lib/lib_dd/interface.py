@@ -76,6 +76,12 @@ def load_frequencies_and_data(options):
     ----------
     options: object as created by optparse (e.g. provided by dd_single.py or
              dd_time.py)
+
+    Returns
+    -------
+    data: data dict
+    options: the options object can be changed by this function, e.g. when the
+             data type is changed.
     """
     data = {}
 
@@ -100,7 +106,6 @@ def load_frequencies_and_data(options):
         # rebuild raw_data
         raw_data = np.hstack((part1, part2))
 
-    data['raw_format'] = options.data_format
 
     # # apply normalization if necessary
     if(options.norm is not None):
@@ -127,9 +132,10 @@ def load_frequencies_and_data(options):
             raw_data[:, 0:index_end] *= norm_factors
         data['norm_factors'] = np.atleast_1d(norm_factors[:, 0].squeeze())
 
+    data['raw_format'] = options.data_format
     data['raw_data'] = raw_data
 
-    return data
+    return data, options
 
 
 # ## save functions ###
