@@ -51,10 +51,22 @@ class dd_conductivity(base_class.dd_resistivity_skeleton):
 
     def forward(self, pars):
         """Return the forward response in base dimensions
+
+        Parameters
+        ----------
+        pars: [log10(sigma_infty), log10(m_i)]
+
+        Returns
+        -------
+        response: Nx2 array, first axis denotes frequencies, seconds real and
+                  imaginary parts
         """
         # pars = log10(sigma_0), log10(m_i)
         # sigma0 = 10**pars[0]
         m = 10**pars[1:]
+        nan_indices = np.where(np.isnan(m))
+        m[nan_indices] = 0
+
         # mtot = np.sum(m)
         # sigmai = sigma0 / (1 - mtot)
         sigmai = 10**pars[0]
@@ -157,7 +169,7 @@ class dd_conductivity(base_class.dd_resistivity_skeleton):
         this case we have one dimension: the DD parameters (rho0, mi) where m_i
         denotes all chargeability values corresponding to the relaxation times.
         """
-        M_base_dims = {0: ['sig0_mi', self.tau.size + 1]}
+        M_base_dims = {0: ['sigi_mi', self.tau.size + 1]}
         return M_base_dims
 
     def compute_par_stats(self, pars):
