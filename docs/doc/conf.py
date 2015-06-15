@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'DD_Interfaces - time lapse Debye decomposition routines'
-copyright = u'2014, Maximilian Weigand'
+copyright = u'2014, 2015, Maximilian Weigand'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -179,7 +179,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'GeccoInv_'
+htmlhelp_basename = 'dd_interfaces_'
 
 
 # -- Options for LaTeX output -------------------------------------------------
