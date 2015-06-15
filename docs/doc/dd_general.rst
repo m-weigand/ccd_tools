@@ -4,10 +4,20 @@ Best practices
 The following procedure is recommended for new data sets and focuses on
 inversions using *dd_single.py* and *dd_time.py*:
 
-* Invert with variable :math:`\lambda` values for the frequency regularization
+* Initially invert with variable :math:`\lambda` values for the frequency
+  regularization
 * Fine-tune with a fixed lambda (this in general yields more robust results and
   makes results comparable)
-* for time regularization: here only a fixed lambda can be used. Start with a
+* Usually the third starting model yields the most robust results: ::
+
+    DD_STARTING_MODEL=3 dd_single.py ...
+
+* Normalisation can help... : ::
+
+    dd_single.py --norm 10
+
+
+* For time regularization: here only a fixed lambda can be used. Start with a
   small value and take a look at the maximum regularization strength for the
   time-regularization. The regularization strength is automatically plotted
   when the ``--plot`` option is enabled.
@@ -20,6 +30,79 @@ Formulation in resistivities
 
     dd_formulations_res
 
+Jacobian
+========
+
+The Jacobian of :math:`\underline{f}(\underline{m})` is defined as:
+
+.. math::
+
+  \underline{\underline{J}}_{ij} = \begin{pmatrix}\underline{\frac{\partial
+  Re(\hat{\rho}(\omega_i))}{\partial p_j}}\\\underline{\frac{\partial
+  -Im(\hat{\rho}(\omega_i))}{\partial p_j}}\end{pmatrix}
+
+As such it is a (2 F x M) matrix, with F the number of frequencies and M the
+number of patameters.
+
+.. math::
+
+  \underline{\underline{J}}^{Re}_{linear} &= \begin{bmatrix} \frac{\partial
+  Re(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial
+  Re(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial
+  Re(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\
+  \frac{\partial Re(\hat{\rho}(\omega_m))}{\partial \rho_0} & \frac{\partial
+  Re(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots & \frac{\partial
+  Re(\hat{\rho}(\omega_m))}{\partial g_P} \end{bmatrix}\\
+  \underline{\underline{J}}^{-Im}_{linear} &= \begin{bmatrix} \frac{\partial
+  -Im(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial
+  -Im(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial
+  -Im(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\
+  \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial \rho_0} & \frac{\partial
+  -Im(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots & \frac{\partial
+  -Im(\hat{\rho}(\omega_m))}{\partial g_P} \end{bmatrix}\\
+  \Rightarrow \underline{\underline{J}}^{linear} &=
+  \begin{bmatrix}\underline{\underline{J}}^{Re}_{linear}\\\underline{\underline{J}}^{-Im}_{linear}\end{bmatrix}
+
+The Jacobian of :math:`\underline{f}^{log}` can now be computed using the chain
+rule:
+
+.. math::
+
+  \frac{\partial log_{10}(Z(Y))}{\partial Y} &= \frac{\partial
+  log_{10}(Z)}{\partial Z} \cdot \frac{\partial Z}{\partial Y} = \frac{1}{Z
+  \cdot log_e{10}} \cdot \frac{\partial Z}{\partial Y}\\
+  \Rightarrow \underline{\underline{J}} &= \begin{bmatrix} \frac{\partial
+  log_{10}(Re)(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial
+  log_{10}(Re)(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial
+  log_{10}(Re)(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & &
+  \vdots\\ \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_m))}{\partial \rho_0}
+  & \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots &
+  \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_m))}{\partial g_P} \\
+  \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial
+  -Im(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial
+  -Im(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\
+  \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial \rho_0} & \frac{\partial
+  -Im(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots & \frac{\partial
+  -Im(\hat{\rho}(\omega_m))}{\partial g_P} \end{bmatrix}\\
+  &= \begin{bmatrix} \frac{1}{Re(\hat{\rho}(\omega_1)) log_e(10)} \cdot
+  \frac{\partial Re(\hat{\rho})(\omega_1)}{\partial \rho_0} &
+  \frac{1}{Re(\hat{\rho}(\omega_1)) log_e(10)} \cdot \frac{\partial
+  Re(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots &
+  \frac{1}{Re(\hat{\rho}(\omega_1)) log_e(10)} \cdot\frac{\partial
+  Re(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\
+  \frac{1}{Re(\hat{\rho}(\omega_K)) log_e(10)} \cdot \frac{\partial
+  Re(\hat{\rho})(\omega_K)}{\partial \rho_0} &
+  \frac{1}{Re(\hat{\rho}(\omega_K)) log_e(10)} \cdot \frac{\partial
+  Re(\hat{\rho}(\omega_K))}{\partial g_1} & \cdots &
+  \frac{1}{Re(\hat{\rho}(\omega_K)) log_e(10)} \cdot\frac{\partial
+  Re(\hat{\rho}(\omega_K))}{\partial g_P}\\ \frac{\partial
+  -Im(\hat{\rho})(\omega_1)}{\partial \rho_0} &  \frac{\partial
+  -Im(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots &  \frac{\partial
+  -Im(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\
+  \frac{\partial -Im(\hat{\rho})(\omega_K)}{\partial \rho_0} & \frac{\partial
+  -Im(\hat{\rho}(\omega_K))}{\partial g_1} & \cdots & \frac{\partial
+  -Im(\hat{\rho}(\omega_K))}{\partial g_P}\end{bmatrix}\\
+
 Statistical parameters
 ----------------------
 
@@ -28,8 +111,8 @@ Statistical parameters
 * :math:`tau_{50}`
 * :math:`\tau_{mean} = \frac{exp(\sum_i m_{sel}^i \cdot log(\tau_{sel}^i))}{\sum m_{sel}^i}`
 
-Creating synthetic :math:`g_i` distributions
---------------------------------------------
+Creating synthetic relaxation time distributions
+------------------------------------------------
 
 The :math:`\tau_i` distribution is determined by the frequencies of the data
 and number of values per frequency decade set by the user. For synthetic
@@ -149,8 +232,8 @@ Normally distributed noise can then be added to this spectrum:
    fig.subplots_adjust(hspace=0.3, wspace=0.4)
    fig.show()
 
-:math:`f_{max}` for imaginary part
-----------------------------------
+Relating peak frequency of imaginary part to relaxation time
+------------------------------------------------------------
 
 Notes:
 
@@ -164,24 +247,36 @@ first derivation:
 
 .. math::
 
-    Im(\hat{\rho}(\omega)) &= -  \rho_0 \sum_{i=1}^N m_i \frac{(\omega \tau_k)}{1 + (\omega \tau_k)^2}\\
-    \frac{\partial Im}{\partial \omega} &= \frac{\partial_\omega (-\rho_0 m \omega \tau) [1 + (\omega \tau)^2] - (-\rho_0 m \omega \tau) \partial_\omega (1 + (\omega \tau)^2)}{[1 + (\omega \tau)^2]^2}\\
-    &= \frac{(-\rho_0 m \tau) [1 + (\omega \tau)^2] + \rho_0 m \omega \tau \cdot 2 \omega \tau \tau}{[1 + (\omega \tau)^2]^2}\\
+    Im(\hat{\rho}(\omega)) &= -  \rho_0 \sum_{i=1}^N m_i \frac{(\omega
+    \tau_k)}{1 + (\omega \tau_k)^2}\\
+    \frac{\partial Im}{\partial \omega} &= \frac{\partial \omega (-\rho_0 m
+    \omega \tau) [1 + (\omega \tau)^2] - (-\rho_0 m \omega \tau)
+    \partial \omega (1 + (\omega \tau)^2)}{[1 + (\omega \tau)^2]^2}\\
+
+
+.. math::
+    &= \frac{(-\rho_0 m \tau) [1 + (\omega \tau)^2] + \rho_0 m \omega \tau
+    \cdot 2 \omega \tau \tau}{[1 + (\omega \tau)^2]^2}\\
     \Rightarrow \frac{\partial -Im}{\partial \omega} &= 0\\
-    &\Leftrightarrow - \rho_0 m \tau - \rho_0 m \tau (\omega \tau)^2 + 2 \omega^2 \tau^3 m \rho_0 = 0\\
+    &\Leftrightarrow - \rho_0 m \tau - \rho_0 m \tau (\omega \tau)^2 + 2
+    \omega^2 \tau^3 m \rho_0 = 0\\
     & / \tau / \rho_0 / m\\
-    &\Rightarrow -1 - \omega^2 \tau2 + 2 \omega^2 \tau^2 = 0\\
+
+.. math::
+    &\Rightarrow -1 - \omega^2 \tau^2 + 2 \omega^2 \tau^2 = 0\\
     &\Rightarrow \omega^2 \cdot (2 - 1) \tau^2 = 1\\
     &\Rightarrow \omega^2 = \frac{1}{(2-1) \tau^2}\\
     &\Rightarrow \omega = \pm \frac{1}{\tau}
     \text{Negative } \omega \text{ not possible}\\
+
+.. math::
     &\Rightarrow \omega_{max} = \frac{1}{\tau_{max}}\\
     &\Leftrightarrow f_{max} = \frac{1}{2 \pi \tau_{max}}\\
-    &\Leftrightarrow \tau_{max} = \frac{1}{2 \pi f_{max}}
+    &\Leftrightarrow \tau_{max} = \frac{1}{2 \pi f_{max}}\\
 
 
-:math:`\tau` ranges to consider
--------------------------------
+Determining relaxation time ranges
+----------------------------------
 
 The following approach to select :math:`\tau` values is called 'data'
 
@@ -338,6 +433,29 @@ The following approach to selecting :math:`\tau` values is called 'data_ext'.
 
 This approach adds one frequency decade to each of the frequency limits of the
 data prior to converting those limits to :math:`\tau` values.
+
+Normalisation
+-------------
+
+The DD is linear in :math:`\rho_0/\sigma_\infty`, as as such data can be
+normalized both in magnitude/phase, or real and imaginary parts:
+
+.. math::
+
+    \rho'_{norm} &= A \cdot \rho'\\
+    \rho''_{norm} &= A \cdot \rho''\\
+    \rho'(\omega)_{norm} &= A \cdot \left(\rho_0 -  \rho_0 \sum_{i=1}^N m_i
+ \frac{(\omega \tau_i)^2}{1 + (\omega \tau_i)^2}\right)\\
+    \rho''(\omega)_{norm} &= A \cdot \left(- \rho_0 \sum_{i=1}^N m_i \frac{(\omega
+ \tau_k)}{1 + (\omega \tau_k)^2} \right)
+
+The factor A is determined by norming the lowest frequency
+:math:`\rho'|\sigma'` value to the target value B given by the `--norm` switch:
+
+.. math ::
+
+    A = \frac{B}{\rho'/\sigma'}
+
 
 Literature
 ----------

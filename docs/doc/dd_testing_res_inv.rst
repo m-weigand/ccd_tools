@@ -1,5 +1,5 @@
 Testing and characterization
-#############################
+=============================
 
 Testing aims at ensuring the correct execution of all program parts. This
 includes testing for required results, e.g. specifig sample data sets where
@@ -20,10 +20,10 @@ When the interface is working properly the Python API will be stabilized and
 the (end-user) usage of this API will be tested.
 
 Interface
-*********
+---------
 
 No crash tests
-==============
+^^^^^^^^^^^^^^
 
 These tests do not concern themselves with the results of certain fits. The
 only goal of these tests is to not crash during the exection.
@@ -36,7 +36,7 @@ The test can be executed in the CMD by the commands:
     nosetests -s -v test_cases.py
 
 Characterization: Synthetic spectra one-on-one
-==============================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. note:
 
@@ -48,7 +48,8 @@ The test/characterization matrix consists of the following values:
 * :math:`\rho_0^{orig} - \rho_0^{fit}`
 * :math:`g_i^{orig} - g_i^{fit}`
 
-Those criteria are tested for the following scenarios (based upon the synthetic specutrum described above):
+Those criteria are tested for the following scenarios (based upon the synthetic
+specutrum described above):
 
 * Vary the number of :math:`\tau` from 1 to 1000 (in logarithmic spacing)
 * Vary :math:`\rho_0` between 1 and 10000 :math:`\Omega m` (in logarithmic spacing)
@@ -59,7 +60,7 @@ Those criteria are tested for the following scenarios (based upon the synthetic 
     * (-1, -4.5), (-2, -4.5), (-3, -4.5)
 
 Multi-term Debye tests
-======================
+^^^^^^^^^^^^^^^^^^^^^^
 
 The fit routines can be tested against external Cole-Cole/Debye implementations (c=1).
 

@@ -1,5 +1,5 @@
-Formulation using the dielectric constant :math:`\epsilon`
-==========================================================
+Formulation using the dielectric constant
+=========================================
 
 Böttcher and Bordewijk, page 40:
 

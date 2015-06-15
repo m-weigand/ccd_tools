@@ -1,10 +1,5 @@
 dd_single.py
-============
-
-.. toctree::
-    :hidden:
-
-    dd_testing_res_inv
+------------
 
 This program is used to fit one or multiple
 SIP-spectra in one go. There is no regularization between the spectra.
@@ -13,12 +8,12 @@ For detailed information on command line options and usage please refer to the
 sections below. Also note the :ref:`ref_dd_single_best_pract` section.
 
 Command line options
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 .. program-output:: dd_single.py -h
 
 Usage Examples
---------------
+^^^^^^^^^^^^^^
 
 .. note::
 
@@ -30,7 +25,7 @@ Usage Examples
 .. _ref_dd_single_best_pract:
 
 Best practices
-~~~~~~~~~~~~~~
+""""""""""""""
 
 * while the structure of the input files is fixed, the data format can be
   changed using the ``--data_format`` option. Thus a conversion from
@@ -41,8 +36,8 @@ Best practices
   drives (for SSDs there shouldn't be any improvement)
 
 
-Usage exmaple 1
-~~~~~~~~~~~~~~~
+Usage example 1
+"""""""""""""""
 
 You need a frequency file which contains the frequencies, each in a seperate
 line, in ascending order:
@@ -85,13 +80,13 @@ Results will be written to the subdirectory **dd_results/**
 .. _ref_dd_single_output_format:
 
 Output Files
-============
+^^^^^^^^^^^^
 
 The following output files will be created in the selected output directory.
 These files are described below, sorted by category.
 
 Input data
-----------
+""""""""""
 
 * *data.dat* contains the input data saved as :math:`\rho';\rho''~[\Omega m]`.
 * *data_format.dat* contains the data format in the format usable with the
@@ -105,13 +100,13 @@ Input data
   inversion objects from fit results.
 
 Filter results
---------------
+""""""""""""""
 
 * *filter_mask.dat* contains the remaining indices after a filter operation
   with `ddps.py`
 
 Primary fit results
--------------------
+"""""""""""""""""""
 
 * :math:`\tau` and :math:`s = log_{10}(\tau)` values are stored in the files
   *tau.dat* and *s.dat*, respectively.
@@ -157,7 +152,7 @@ Primary fit results
 * Normalization factors are stored in *normalization_factors.dat*
 
 Integral parameters
--------------------
+"""""""""""""""""""
 
 Statistical parameters are stored in the subdirectory *stats_and_rms*, and all
 output files have the same file format. Each line contains the value of one
@@ -250,8 +245,8 @@ RTD were proposed:
       m_i}}\\
       \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}
 
-* Nordsiek2008seg introduced the logarithmic average
-  relaxation time :math:`\tau_{mean}`
+* Nordsiek et al., 2008 introduced the logarithmic average relaxation time
+  :math:`\tau_{mean}`
 
   .. math::
 
@@ -274,7 +269,7 @@ enough. In these cases the corresponding smoothing parameters of the DD should
 be increased.
 
 Starting model
-==============
+^^^^^^^^^^^^^^
 
 The following methods can be used to determine starting models. A specific
 method can be selected by setting the environment variable
@@ -290,42 +285,12 @@ method can be selected by setting the environment variable
 
 
 Testing
-=======
+^^^^^^^
 
-See :doc:`dd_testing_res_inv`
-
-Formulation in resistivities
-============================
-
-:doc:`../dd_formulations_res`
-
-Jacobian
-========
-
-The Jacobian of :math:`\underline{f}(\underline{m})` is defined as:
-
-.. math::
-
-  \underline{\underline{J}}_{ij} = \begin{pmatrix}\underline{\frac{\partial Re(\hat{\rho}(\omega_i))}{\partial p_j}}\\\underline{\frac{\partial -Im(\hat{\rho}(\omega_i))}{\partial p_j}}\end{pmatrix}
-
-As such it is a (2 F x M) matrix, with F the number of frequencies and M the number of patameters.
-
-.. math::
-
-  \underline{\underline{J}}^{Re}_{linear} &= \begin{bmatrix} \frac{\partial Re(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial Re(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial Re(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\ \frac{\partial Re(\hat{\rho}(\omega_m))}{\partial \rho_0} & \frac{\partial Re(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots & \frac{\partial Re(\hat{\rho}(\omega_m))}{\partial g_P} \end{bmatrix}\\
-  \underline{\underline{J}}^{-Im}_{linear} &= \begin{bmatrix} \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\ \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial \rho_0} & \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots & \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial g_P} \end{bmatrix}\\
-  \Rightarrow \underline{\underline{J}}^{linear} &= \begin{bmatrix}\underline{\underline{J}}^{Re}_{linear}\\\underline{\underline{J}}^{-Im}_{linear}\end{bmatrix}
-
-The Jacobian of :math:`\underline{f}^{log}` can now be computed using the chain rule:
-
-.. math::
-
-  \frac{\partial log_{10}(Z(Y))}{\partial Y} &= \frac{\partial log_{10}(Z)}{\partial Z} \cdot \frac{\partial Z}{\partial Y} = \frac{1}{Z \cdot log_e{10}} \cdot \frac{\partial Z}{\partial Y}\\
-  \Rightarrow \underline{\underline{J}} &= \begin{bmatrix} \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\ \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_m))}{\partial \rho_0} & \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots & \frac{\partial log_{10}(Re)(\hat{\rho}(\omega_m))}{\partial g_P} \\  \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial \rho_0} & \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\ \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial \rho_0} & \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial g_1} & \cdots & \frac{\partial -Im(\hat{\rho}(\omega_m))}{\partial g_P} \end{bmatrix}\\
-  &= \begin{bmatrix} \frac{1}{Re(\hat{\rho}(\omega_1)) log_e(10)} \cdot \frac{\partial Re(\hat{\rho})(\omega_1)}{\partial \rho_0} & \frac{1}{Re(\hat{\rho}(\omega_1)) log_e(10)} \cdot \frac{\partial Re(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots & \frac{1}{Re(\hat{\rho}(\omega_1)) log_e(10)} \cdot\frac{\partial Re(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\  \frac{1}{Re(\hat{\rho}(\omega_K)) log_e(10)} \cdot \frac{\partial Re(\hat{\rho})(\omega_K)}{\partial \rho_0} & \frac{1}{Re(\hat{\rho}(\omega_K)) log_e(10)} \cdot \frac{\partial Re(\hat{\rho}(\omega_K))}{\partial g_1} & \cdots & \frac{1}{Re(\hat{\rho}(\omega_K)) log_e(10)} \cdot\frac{\partial Re(\hat{\rho}(\omega_K))}{\partial g_P}\\ \frac{\partial -Im(\hat{\rho})(\omega_1)}{\partial \rho_0} &  \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial g_1} & \cdots &  \frac{\partial -Im(\hat{\rho}(\omega_1))}{\partial g_P}\\ \vdots & \ddots & & \vdots\\  \frac{\partial -Im(\hat{\rho})(\omega_K)}{\partial \rho_0} & \frac{\partial -Im(\hat{\rho}(\omega_K))}{\partial g_1} & \cdots & \frac{\partial -Im(\hat{\rho}(\omega_K))}{\partial g_P}\end{bmatrix}\\
+See :doc:`../dd_testing_res_inv`
 
 Debugging notes
-===============
+^^^^^^^^^^^^^^^
 
 Random collection of notes:
 
@@ -340,12 +305,3 @@ Random collection of notes:
  * Cumulative sensitivities
  * Data covariance matrix
  * Model covariance matrix
-
-
-See also
-========
-
-.. toctree::
-
-    dd_theory_eps
-    dd_sensitivities
