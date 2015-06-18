@@ -479,19 +479,10 @@ class dd_resistivity_skeleton(
         self.tau, self.s, self.tau_f_values = self.determine_tau_range(settings)
 
     def determine_tau_range(self, settings):
-        """
-        Return the tau values depending on the settings 'Nd', 'tau_values' and
-        'tau_sel' in the dict 'settings'
-        """
-        # check which selection strategy to use
-        if('tau_values' in settings):
-            # we got custom tau values
-            tau = settings['tau_values']
-            s = np.log10(tau)
-            tau_f_values = 1 / (2 * np.pi * tau)
-        else:
-            """
-            Tau values can be set by using one of the following strings in
+        """Return the tau values depending on the settings 'Nd', 'tau_values'
+        and 'tau_sel' in the dict 'settings'
+
+        Tau values can be set by using one of the following strings in
             self.settings['tausel']:
 
                 data
@@ -500,9 +491,16 @@ class dd_resistivity_skeleton(
                 ,factor_right
                 factor_left,
 
-            Missing values are replaced by one (i.e. the data frequency limits
-            are used).
-            """
+        Missing values are replaced by one (i.e. the data frequency limits are
+                                            used).
+        """
+        # check which selection strategy to use
+        if('tau_values' in settings):
+            # we got custom tau values
+            tau = settings['tau_values']
+            s = np.log10(tau)
+            tau_f_values = 1 / (2 * np.pi * tau)
+        else:
             # determine range
             if(self.settings['tausel'] == 'data'):
                     factor_left = 1
