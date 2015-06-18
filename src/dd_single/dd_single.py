@@ -492,6 +492,11 @@ def save_fit_results(final_iterations, data, prep_opts):
     with open('data.dat', 'w') as fid:
         for nr, itd in enumerate(final_iterations):
             iteration_data = itd[0].Data.Df.flatten()[np.newaxis, :]
+            # norm factors are computed in the model data format
+            # if norm_factors is not None:
+            #     iteration_data /= norm_factors[nr]
+                # data[0:data.size/2] /= norm_factors[nr]
+
             # we store in the same data format as the input data format
             data_converted = sip_converter.convert(itd[0].Data.obj.data_format,
                                                    data['raw_format'],
@@ -500,8 +505,6 @@ def save_fit_results(final_iterations, data, prep_opts):
             # if necessary, apply renormalization
             # normalization is always done using a rmag_rpha representation
 
-            # if norm_factors is not None:
-            #    data[0:data.size/2] /= norm_factors[nr]
 
             np.savetxt(fid, data_converted)
     # (re)save the data format
