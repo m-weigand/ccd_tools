@@ -524,7 +524,8 @@ class dd_resistivity_skeleton(
                 else:
                     factor_right = int(items[1])
 
-            logger.debug('Tau range factors', factor_left, factor_right)
+            logger.debug('Tau range factors: {0} {1}'.format(
+                factor_left, factor_right))
             # determine tau values for one data set
             tau, s, tau_f_values = self.get_tau_values_for_data(
                 self.settings['Nd'], factor_left=factor_left,
