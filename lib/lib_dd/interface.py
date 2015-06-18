@@ -110,26 +110,21 @@ def load_frequencies_and_data(options):
     # # apply normalization if necessary
     if(options.norm is not None):
         if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-            # data must me in format 'cre_cim'
-            if(options.data_format != "cre_cim"):
-                raw_data = SC.convert(options.data_format, 'cre_cim', raw_data)
-                options.data_format = 'cre_cim'
-            norm_factors = options.norm / raw_data[:, 0]
-            norm_factors = norm_factors[:, np.newaxis]
-            raw_data *= norm_factors
+            target_format = "cre_cim"
         else:
-            # data must me in format 'rmag_rpha'
-            if(options.data_format != "rmag_rpha"):
-                raw_data = SC.convert(options.data_format, 'rmag_rpha',
-                                      raw_data)
-                options.data_format = 'rmag_rpha'
+            target_format = "rre_rim"
 
-            # apply normalization
-            index_end = raw_data.shape[1] / 2
-            norm_factors = options.norm / raw_data[:, 0]
-            norm_factors = np.resize(norm_factors.T,
-                                     (index_end, norm_factors.size)).T
-            raw_data[:, 0:index_end] *= norm_factors
+        print raw_data.shape
+        print raw_data
+        raw_data = SC.convert(options.data_format, target_format, raw_data)
+        print raw_data.shape
+        print raw_data
+        norm_factors = options.norm / raw_data[:, 0]
+        norm_factors = norm_factors[:, np.newaxis]
+
+        # apply factors
+        raw_data *= norm_factors
+        print raw_data
         data['norm_factors'] = np.atleast_1d(norm_factors[:, 0].squeeze())
 
     data['raw_format'] = options.data_format

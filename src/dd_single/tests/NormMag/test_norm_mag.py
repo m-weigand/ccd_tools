@@ -95,6 +95,7 @@ def apply_checks(directory, settings_data, settings_dd):
     dd_dir = directory + os.sep + 'results'
 
     _check_io_datafiles(directory, dd_dir, settings_data['data_format'])
+    # TODO: more checks
 
 
 def run_batch(directory):
