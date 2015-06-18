@@ -512,7 +512,7 @@ class dd_resistivity_skeleton(
                 # try to parse
                 items = self.settings['tausel'].split(',')
                 if(len(items) != 2):
-                    raise IOError('Wrong format for tausel')
+                    raise Exception('Wrong format for tausel')
 
                 if(not items[0]):
                     factor_left = 1
