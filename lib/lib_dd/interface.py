@@ -106,25 +106,24 @@ def load_frequencies_and_data(options):
         # rebuild raw_data
         raw_data = np.hstack((part1, part2))
 
+    # we always work with the native model data format
+    if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+        target_format = "cre_cim"
+    else:
+        target_format = "rre_rim"
 
-    # # apply normalization if necessary
+    raw_data = SC.convert(options.data_format, target_format, raw_data)
+    options.data_format = target_format
+
+    # apply normalization if necessary
+    # note, because the previous format transformations, the normalisation can
+    # directly be applied (it is always given in the model data format)
     if(options.norm is not None):
-        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-            target_format = "cre_cim"
-        else:
-            target_format = "rre_rim"
-
-        print raw_data.shape
-        print raw_data
-        raw_data = SC.convert(options.data_format, target_format, raw_data)
-        print raw_data.shape
-        print raw_data
         norm_factors = options.norm / raw_data[:, 0]
         norm_factors = norm_factors[:, np.newaxis]
 
         # apply factors
         raw_data *= norm_factors
-        print raw_data
         data['norm_factors'] = np.atleast_1d(norm_factors[:, 0].squeeze())
 
     data['raw_format'] = options.data_format
