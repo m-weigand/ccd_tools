@@ -488,34 +488,24 @@ def save_fit_results(final_iterations, data, prep_opts):
     lDDi.save_rms_values(rms_for_all_its, final_iterations[0][0].RMS.rms_names)
     os.chdir('..')
 
-    # save data
+    # save original data
     with open('data.dat', 'w') as fid:
-        for nr, itd in enumerate(final_iterations):
-            iteration_data = itd[0].Data.Df.flatten()[np.newaxis, :]
-            # norm factors are computed in the model data format
-            # if norm_factors is not None:
-            #     iteration_data /= norm_factors[nr]
-                # data[0:data.size/2] /= norm_factors[nr]
+        orig_data = data['raw_data']
+        if norm_factors is not None:
+            orig_data = orig_data / norm_factors
+        np.savetxt(fid, orig_data)
 
-            # we store in the same data format as the input data format
-            data_converted = sip_converter.convert(itd[0].Data.obj.data_format,
-                                                   data['raw_format'],
-                                                   iteration_data)
-
-            # if necessary, apply renormalization
-            # normalization is always done using a rmag_rpha representation
-
-
-            np.savetxt(fid, data_converted)
     # (re)save the data format
     # open('data_format.dat', 'w').write(prep_opts['data_format'])
     open('data_format.dat', 'w').write(data['raw_format'])
 
     # save model response
     with open('f.dat', 'w') as fid:
-        for itd in final_iterations:
-            np.savetxt(fid,
-                       itd[0].Model.f(itd[0].m)[np.newaxis, :])
+        for index, itd in enumerate(final_iterations):
+            f_data = itd[0].Model.f(itd[0].m)[np.newaxis, :]
+            if norm_factors is not None:
+                f_data /= norm_factors[index]
+            np.savetxt(fid, f_data)
     open('f_format.dat', 'w').write(itd[0].Data.obj.data_format)
 
 
