@@ -26,10 +26,10 @@ def run_case(test_case):
     print('Running', test_case)
     pwd = os.getcwd()
     os.chdir(test_case)
-    test_dir = dd_test.get_test_dir([])
+    test_dir = dd_test.get_test_dir([], last=True)
     print('TEST_DIR', test_dir)
 
-    # due to some strange issue with the nose-importer we have to readd the
+    # due to some strange issue with the nose-importer we have to read the
     # current directory entry
     if(not '.' in sys.path):
         sys.path.append('.')
