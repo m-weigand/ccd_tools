@@ -292,6 +292,7 @@ def fit_one_spectrum(fit_data):
     if(fit_data['prep_opts']['plot']):
         print('Plotting final iteration')
         ND.iterations[-1].plot()
+        ND.iterations[-1].Model.obj.plot_stats('{0}'.format(fit_data['nr']))
 
     if(fit_data['prep_opts']['plot_reg_strength']):
         ND.iterations[-1].plot_reg_strengths()
@@ -372,17 +373,10 @@ def _get_fit_datas(data):
 
 
 def fit_data(data):
-    """
-
+    """This is the central fit function, which prepares the data, fits each
+    spectrum, plots (if requested), and then saves the results.
     """
     fit_datas = _get_fit_datas(data)
-
-    # before the inversion is started, save the dict
-    # note: we should save inv_opts_i
-    # delete frequencies and data
-    # del(opts['frequencies'])
-    with open('inversion_options.json', 'w') as fid:
-        json.dump(data['inv_opts'], fid)
 
     # fit
     if(prep_opts['nr_cores'] == 1):
@@ -398,17 +392,15 @@ def fit_data(data):
     final_iterations = [(x.iterations[-1], nr) for nr, x in enumerate(results)]
     save_fit_results(final_iterations, data, data['prep_opts'])
 
-    # plot some stats
-    if(prep_opts['plot']):
-        for it, nr in final_iterations:
-            it.Model.obj.plot_stats('{0}'.format(nr))
-
 
 def save_base_results(final_iterations, data):
     """
     Save data files that are shared between
     dd_single.py/dd_time.py/dd_space_time.py
     """
+    with open('inversion_options.json', 'w') as fid:
+        json.dump(data['inv_opts'], fid)
+
     with open('version.dat', 'w') as fid:
         fid.write(_get_version_numbers() + '\n')
 
