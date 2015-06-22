@@ -387,7 +387,7 @@ def fit_data(data):
     else:
         # multi processing
         print('multi processing')
-        p = Pool(prep_opts['nr_cores'])
+        p = Pool(data['prep_opts']['nr_cores'])
         results = p.map(fit_one_spectrum, fit_datas)
 
     final_iterations = [(x.iterations[-1], nr) for nr, x in enumerate(results)]
