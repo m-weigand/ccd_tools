@@ -380,7 +380,7 @@ def fit_data(data):
     fit_datas = _get_fit_datas(data)
 
     # fit
-    if(prep_opts['nr_cores'] == 1):
+    if(data['prep_opts']['nr_cores'] == 1):
         print('single processing')
         # single processing
         results = map(fit_one_spectrum, fit_datas)
@@ -534,7 +534,7 @@ def get_data_dd_single(options):
     data['options'] = options
     data['prep_opts'] = prep_opts
     data['inv_opts'] = inv_opts
-    return data,
+    return data
 
 
 def get_output_dir(options):
@@ -565,7 +565,7 @@ def main():
     # logger.info('Frequency file: {0}'.format(options.frequency_file))
     # logger.info('Data file: {0}'.format(options.data_file))
     # frequencies, data_list = get_frequencies_and_data(options)
-    data, options = get_data_dd_single(options)
+    data = get_data_dd_single(options)
 
     # for the fitting process, change to the output_directory
     pwd = os.getcwd()
