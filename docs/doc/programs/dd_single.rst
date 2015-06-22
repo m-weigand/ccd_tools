@@ -24,18 +24,6 @@ Usage Examples
 
 .. _ref_dd_single_best_pract:
 
-Best practices
-""""""""""""""
-
-* while the structure of the input files is fixed, the data format can be
-  changed using the ``--data_format`` option. Thus a conversion from
-  conductivities to resistivities and vice versa is not necessary, as well as a
-  conversion between real/imaginary part and magnitude/phase format.
-
-* the ``--tmp`` option can improve execution speed on conventional hard
-  drives (for SSDs there shouldn't be any improvement)
-
-
 Usage example 1
 """""""""""""""
 
@@ -268,40 +256,3 @@ maxima if the smoothing between adjacent chargeabilitiy values is not strong
 enough. In these cases the corresponding smoothing parameters of the DD should
 be increased.
 
-Starting model
-^^^^^^^^^^^^^^
-
-The following methods can be used to determine starting models. A specific
-method can be selected by setting the environment variable
-**DD_STARTING_MODEL** to the corresponding integer number, i.e.:
-
-::
-
-    DD_STARTING_MODEL=3 dd_single.py ...
-
-* (`DD_STARTING_MODEL = 1`): Flat starting model
-* (`DD_STARTING_MODEL = 2`): [TODO] (Gaussian, center at peak of imaginary part)
-* (`DD_STARTING_MODEL = 3`): [TODO] (Frequency decade wise approximation)
-
-
-Testing
-^^^^^^^
-
-See :doc:`../dd_testing_res_inv`
-
-Debugging notes
-^^^^^^^^^^^^^^^
-
-Random collection of notes:
-
-* We have to save all inputs from the dicts in order to recreate an inversion
-  (we need to reconstruct the whole inversion object for that). Therefore we
-  should simplify the various dicts involved.
-
-* For each iteration we want:
-
- * Sensitivities
- * Resolution matrix (covariance matrix)
- * Cumulative sensitivities
- * Data covariance matrix
- * Model covariance matrix

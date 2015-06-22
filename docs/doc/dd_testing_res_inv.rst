@@ -1,5 +1,6 @@
+============================
 Testing and characterization
-=============================
+============================
 
 Testing aims at ensuring the correct execution of all program parts. This
 includes testing for required results, e.g. specifig sample data sets where
@@ -21,6 +22,12 @@ the (end-user) usage of this API will be tested.
 
 Interface
 ---------
+
+Fit quality
+^^^^^^^^^^^
+
+relevant directory *src/dd_single/test/Fitquality*
+
 
 No crash tests
 ^^^^^^^^^^^^^^
