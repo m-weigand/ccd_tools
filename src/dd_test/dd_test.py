@@ -22,6 +22,7 @@ import os
 from optparse import OptionParser
 import subprocess
 import shutil
+import sys
 
 all_tests_directory = 'test_results'
 
@@ -77,16 +78,7 @@ def get_test_dir_name(directory, last=False):
     return directory + os.sep + new_test_dir
 
 
-def initialize_new_test_dir():
-    """
-    Create all necessary directories and files for a new test
-    """
-    if(not os.path.isdir(all_tests_directory)):
-        os.makedirs(all_tests_directory)
-
-    test_dir = get_test_dir_name(all_tests_directory, last=False)
-    os.makedirs(test_dir)
-
+def write_pc_infos(fid):
     # get git commit and branch
     git_commit = subprocess.check_output('git log -1 | grep commit',
                                          shell=True)
@@ -95,31 +87,48 @@ def initialize_new_test_dir():
     cpu = subprocess.check_output(
         'cat /proc/cpuinfo  | grep "model name" | head -1', shell=True)
     hostname = subprocess.check_output('hostname', shell=True)
-
-    # write git status and default line
-    test_cfg_file = test_dir + os.sep + 'test.cfg'
-    fid = open(test_cfg_file, 'w')
     fid.write(git_commit)
     fid.write(git_branch)
     fid.write(uname)
     fid.write(cpu)
     fid.write(hostname)
-    fid.write('# edit the following line to your needs\n')
-    fid.write('# all lines below the initial dd_single.py call\n')
-    fid.write('# will be joined to one CMD line\n')
-    # now write default debye_deocomposition call
-    default_N = 20
-    default_nr_cores = 1
-    fid.write('dd_single.py -f frequencies.dat -d data.dat\n')
-    fid.write('-o {2}/results\n-n {0}\n-c {1}\n--silent\n'.format(
-        default_N, default_nr_cores, test_dir))
-    fid.close()
+
+
+def initialize_new_test_dir():
+    """
+    Create all necessary directories and files for a new test
+    """
+    if(not os.path.isfile('data.dat') or
+       not os.path.isfile('frequencies.dat') or
+       not os.path.isfile('test_func.py')):
+        raise Exception('data.dat or frequencies.dat files not found')
+
+    if(not os.path.isdir(all_tests_directory)):
+        os.makedirs(all_tests_directory)
+
+    # test_dir = get_test_dir_name(all_tests_directory, last=False)
+    # os.makedirs(test_dir)
+
+    # write git status and default line
+    test_cfg_file = 'test.cfg'
+    with open(test_cfg_file, 'w') as fid:
+        fid.write('# edit the following line to your needs\n')
+        fid.write('# all lines below the initial dd_single.py call\n')
+        fid.write('# will be joined to one CMD line\n')
+        fid.write('# do not use the -f and -d options. They will be added\n')
+        fid.write('# automatically.\n')
+        # now write default dd_single.py call
+        default_N = 20
+        default_nr_cores = 1
+        fid.write('dd_single.py\n')
+        fid.write('-n {0}\n-c {1}\n--silent\n'.format(
+            default_N, default_nr_cores))
 
     # call vim in order to give the user the opportunity to change to dd call
     subprocess.call('vim {0}'.format(test_cfg_file), shell=True)
 
-    print('Test sucessfully initialized. Record the test by calling:')
-    print('dd_test.py --record {0}'.format(os.path.basename(test_dir)))
+    print('Test sucessfully initialized. Record a new test by calling:')
+    print('dd_test.py --record')
 
 
 def get_cmd(testcfg_file):
@@ -144,11 +153,20 @@ def record_test(test_dir):
     Run a test
     """
     print('Recording test {0}'.format(test_dir))
-    cmd = get_cmd(test_dir + os.sep + 'test.cfg')
+    if not os.path.isdir(test_dir):
+        os.makedirs(test_dir)
 
+    cmd = get_cmd('test.cfg')
+    cmd += [' -f ../../frequencies.dat ',
+            ' --data_file ../../data.dat'
+            ]
     cmd = ' '.join(cmd)
-    print cmd
+    pwd = os.getcwd()
+    os.chdir(test_dir)
     subprocess.call(cmd, shell=True)
+    with open('test_infos.dat', 'w') as fid:
+        write_pc_infos(fid)
+    os.chdir(pwd)
 
 
 def run_test(test_dir):
@@ -163,34 +181,33 @@ def run_test(test_dir):
     if(os.path.isdir('active_run')):
         shutil.rmtree('active_run')
 
-    cmd = get_cmd(test_dir + os.sep + 'test.cfg')
+    cmd = get_cmd('test.cfg')
+    cmd += ['-f frequencies.dat ',
+            '--data_file data.dat',
+            '-o active_run'
+            ]
+    cmd = ' '.join(cmd)
 
-    # find the -o option and replace it
-    test_cmd = []
-    for option in cmd:
-        if(option.startswith('-o')):
-            test_cmd.append('-o active_run')
-        else:
-            test_cmd.append(option)
-
-    test_cmd = ' '.join(test_cmd)
     # subprocess.call(test_cmd, shell=True, stdin=PIPE)
-    p = subprocess.Popen(test_cmd, shell=True, stdout=subprocess.PIPE,
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     p.wait()
 
+    sys.path.append(os.getcwd())
     # run the test
     import test_func
     test_func.test_regressions(old_result=test_dir, new_result='active_run')
 
 
-def get_test_dir(args):
+def get_test_dir(args, last=False):
     if(len(args) == 0):
-        print('Using last test directory')
-        test_dir = get_test_dir_name(all_tests_directory, last=True)
+        test_dir = get_test_dir_name(all_tests_directory, last=last)
     else:
         print('Using user defined test directory')
         test_dir = all_tests_directory + os.sep + args[0]
+        if not os.path.isdir(test_dir):
+            raise Exception(
+                'User supplied directory not found: {0}'.format(test_dir))
     return test_dir
 
 if __name__ == '__main__':
@@ -201,10 +218,15 @@ if __name__ == '__main__':
 
     # we use the last test directory if no test dir was give
     if(options.record is True):
+        # run checks
+        if(not os.path.isfile('test.cfg') or
+           not os.path.isdir(all_tests_directory)):
+            raise Exception(
+                'Test directory not initialised! Use the --init option first.')
         test_dir = get_test_dir(args)
         record_test(test_dir)
 
     if(options.test is True):
-        test_dir = get_test_dir(args)
+        test_dir = get_test_dir(args, last=True)
         print('Testing ', test_dir)
         run_test(test_dir)
