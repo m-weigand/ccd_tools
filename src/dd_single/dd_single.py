@@ -325,7 +325,7 @@ def _filter_nan_values(frequencies, cr_spectrum):
     return frequencies_cropped, cr_spectrum_cropped
 
 
-def _get_fit_datas(data, prep_opts, inv_opts):
+def _get_fit_datas(data):
     """
     Prepare data for fitting. Prepare a set of variables/objects for each
     spectrum. Also filter nan values
@@ -333,8 +333,6 @@ def _get_fit_datas(data, prep_opts, inv_opts):
     Parameters
     ----------
     data : dict containing the keys 'frequencies', 'cr_data'
-    prep_opts
-    inv_opts
     """
     fit_datas = []
 
@@ -350,13 +348,15 @@ def _get_fit_datas(data, prep_opts, inv_opts):
         frequencies_cropped, cr_data = _filter_nan_values(
             data['frequencies'], data['cr_data'][i])
 
-        fit_data['prep_opts'] = prep_opts
+        fit_data['prep_opts'] = data['prep_opts']
         fit_data['data'] = cr_data
         fit_data['nr'] = i + 1
         fit_data['nr_of_spectra'] = nr_of_spectra
         fit_data['frequencies'] = frequencies_cropped
 
-        inv_opts_i = inv_opts.copy()
+        # inversion options are changed for each spectrum, so we have to copy
+        # it each time
+        inv_opts_i = data['inv_opts'].copy()
         inv_opts_i['frequencies'] = frequencies_cropped
         inv_opts_i['global_prefix'] = 'spec_{0:03}_'.format(i)
         if('norm_factors' in data):
@@ -371,18 +371,18 @@ def _get_fit_datas(data, prep_opts, inv_opts):
     return fit_datas
 
 
-def fit_data(data, prep_opts, inv_opts):
+def fit_data(data):
     """
 
     """
-    fit_datas = _get_fit_datas(data, prep_opts, inv_opts)
+    fit_datas = _get_fit_datas(data)
 
     # before the inversion is started, save the dict
     # note: we should save inv_opts_i
     # delete frequencies and data
     # del(opts['frequencies'])
     with open('inversion_options.json', 'w') as fid:
-        json.dump(inv_opts, fid)
+        json.dump(data['inv_opts'], fid)
 
     # fit
     if(prep_opts['nr_cores'] == 1):
@@ -396,7 +396,7 @@ def fit_data(data, prep_opts, inv_opts):
         results = p.map(fit_one_spectrum, fit_datas)
 
     final_iterations = [(x.iterations[-1], nr) for nr, x in enumerate(results)]
-    save_fit_results(final_iterations, data, prep_opts)
+    save_fit_results(final_iterations, data, data['prep_opts'])
 
     # plot some stats
     if(prep_opts['plot']):
@@ -516,13 +516,13 @@ def get_data_dd_single(options):
     Parameters
     ----------
 
-    options: is also returned in case we change some settings, e.g. the data
-             format
+    options: cmd options
 
 
     Returns
     -------
-    data: dict with entries "raw_data", "cr_data"
+    data: dict with entries "raw_data", "cr_data", "options", "inv_opts",
+          "prep_opts"
     """
     data, options = lDDi.load_frequencies_and_data(options)
 
@@ -531,7 +531,17 @@ def get_data_dd_single(options):
     cr_data = [x.reshape((size_y, 2), order='F') for x in data['raw_data']]
 
     data['cr_data'] = cr_data
-    return data, options
+
+    # we distinguish two sets of options:
+    # prep_opts : all settings we need to prepare the inversion (i.e. set
+    #             regularization objects)
+    # inv_opts : options that are directly looped through to the NDimInv object
+    prep_opts, inv_opts = split_options_single(options)
+
+    data['options'] = options
+    data['prep_opts'] = prep_opts
+    data['inv_opts'] = inv_opts
+    return data,
 
 
 def get_output_dir(options):
@@ -564,17 +574,11 @@ def main():
     # frequencies, data_list = get_frequencies_and_data(options)
     data, options = get_data_dd_single(options)
 
-    # we distinguish two sets of options:
-    # prep_opts : all settings we need to prepare the inversion (i.e. set
-    #             regularization objects)
-    # inv_opts : options that are directly looped through to the NDimInv object
-    prep_opts, inv_opts = split_options_single(options)
-
     # for the fitting process, change to the output_directory
     pwd = os.getcwd()
     os.chdir(outdir)
 
-    fit_data(data, prep_opts, inv_opts)
+    fit_data(data)
 
     # logger.info('=======================================')
     # logger.info('     Debye Decomposition finished!     ')
