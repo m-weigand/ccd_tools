@@ -26,6 +26,8 @@ class plot_iteration():
     This class defines an override function for the default plot function of
     the Iteration class. The new plot function is aware of the Debye
     Decomposition approach and will plot more information (i.e. the RTD)
+
+    In addition, it will renormalise data if necessary.
     """
     def plot(self, it, filename, keep_plot=False):
         try:
@@ -79,6 +81,7 @@ class plot_iteration():
         """
         D = it.Data.D
         M = it.Model.convert_to_M(it.m)
+        # renormalize here? why do we compuate the forward solution again?
         F = it.Model.F(M)
         extra_size = int(
             np.sum([x[1][1] for x in it.Data.extra_dims.iteritems()]))
