@@ -67,7 +67,8 @@ def add_base_options(parser):
                       help="Number of Debye terms per frequency decade " +
                       "(default: 10)", metavar="INT", default=10)
     parser.add_option("-o", "--output", type='string', metavar='DIR',
-                      help="Output directory", default=".", dest="output_dir")
+                      help="Output directory (default: results)",
+                      default="results", dest="output_dir")
     parser.add_option('-p', "--plot", action="store_true", dest="plot_spectra",
                       help="Plot final iterations (default: False)",
                       default=False)
