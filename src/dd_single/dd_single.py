@@ -39,8 +39,10 @@ import lib_dd.interface as lDDi
 import gc
 import lib_dd.plot as lDDp
 import lib_dd.main
+import lib_dd.version as version
 import sip_formats.convert as sip_converter
 import lib_dd.conductivity.model as cond_model
+import lib_dd.io.ascii as ioascii
 
 
 def add_base_options(parser):
@@ -116,18 +118,6 @@ def add_base_options(parser):
     return parser
 
 
-def _get_version_numbers():
-    """Return a string containing the version numbers of geccoinv and
-    dd_interface. The string is meant to be human readable.
-    """
-    versions = ''.join(('geccoinv version: ',
-                        pkg_resources.require('geccoinv')[0].version,
-                        '\n',
-                        'dd_interface version: ',
-                        pkg_resources.require('dd_interface')[0].version))
-    return versions
-
-
 def handle_cmd_options():
     """
     Handle command line options
@@ -145,7 +135,7 @@ def handle_cmd_options():
 
     # print version information if requested
     if(options.version):
-        print _get_version_numbers()
+        print version._get_version_numbers()
         exit()
     return options
 
@@ -290,6 +280,14 @@ def fit_one_spectrum(fit_data):
         # magnitude, or to both real and imaginary parts!
         final_iteration.Data.D /= norm_fac
 
+    call_fit_functions(fit_data, ND)
+
+    # invoke the garbage collection just to be sure
+    gc.collect()
+    return ND
+
+
+def call_fit_functions(fit_data, ND):
     if(fit_data['prep_opts']['plot']):
         print('Plotting final iteration')
         ND.iterations[-1].plot()
@@ -304,10 +302,6 @@ def fit_one_spectrum(fit_data):
 
     if(fit_data['prep_opts']['plot_lambda'] is not None):
         ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve()
-
-    # invoke the garbage collection just to be sure
-    gc.collect()
-    return ND
 
 
 def _filter_nan_values(frequencies, cr_spectrum):
@@ -390,116 +384,31 @@ def fit_data(data):
         p = Pool(data['prep_opts']['nr_cores'])
         results = p.map(fit_one_spectrum, fit_datas)
 
-    final_iterations = [(x.iterations[-1], nr) for nr, x in enumerate(results)]
-    save_fit_results(final_iterations, data, data['prep_opts'])
+    # results now contains one or more ND objects
+    save_fit_results(data, results)
 
 
-def save_base_results(final_iterations, data):
+def _make_list(obj):
+    """make sure the provided object is a list, if not, enclose it in one
     """
-    Save data files that are shared between
-    dd_single.py/dd_time.py/dd_space_time.py
-    """
-    with open('inversion_options.json', 'w') as fid:
-        json.dump(data['inv_opts'], fid)
-
-    with open('version.dat', 'w') as fid:
-        fid.write(_get_version_numbers() + '\n')
-
-    # with open('data_format.dat', 'w') as fid:
-    #     fid.write(final_iterations[0][0].Data.obj.data_format + '\n')
-
-    # save call to debye_decomposition.py
-    with open('command.dat', 'w') as fid:
-        # environment variables
-        for key in ('DD_COND',
-                    'DD_STARTING_MODEL',
-                    'DD_TAU_X',
-                    'DD_DEBUG_STARTING_PARS'):
-            if key in os.environ:
-                fid.write('export {0}="{1}"\n'.format(key, os.environ[key]))
-
-        # dd_single command
-        fid.write(' '.join(sys.argv) + '\n')
-
-    final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
-
-    # save tau/s
-    np.savetxt('tau.dat', final_iterations[0][0].Data.obj.tau)
-    np.savetxt('s.dat', final_iterations[0][0].Data.obj.s)
-
-    # save frequencies/omega
-    np.savetxt('frequencies.dat', final_iterations[0][0].Data.obj.frequencies)
-    np.savetxt('omega.dat', final_iterations[0][0].Data.obj.omega)
-
-    # save weighting factors
-    Wd_diag = final_iterations[0][0].Data.Wd.diagonal()
-    np.savetxt('errors.dat', Wd_diag)
-
-    # save lambdas
-    # TODO: We want all lambdas, not only from the last iteration
-    try:
-        lambdas = [x[0].lams for x in final_iterations]
-        np.savetxt('lambdas.dat', lambdas)
-    except Exception, e:
-        print('There was an error saving the lambda values')
-        print(e)
-        pass
-
-    # save number of iterations
-    nr_of_iterations = [x[0].nr for x in final_iterations]
-    np.savetxt('nr_iterations.dat', nr_of_iterations, fmt='%i')
-
-    # save normalization factors
-    if('norm_factors' in data):
-        np.savetxt('normalization_factors.dat', data['norm_factors'])
+    if not isinstance(obj, list):
+        return [obj, ]
+    else:
+        return obj
 
 
-def save_fit_results(final_iterations, data, prep_opts):
+def save_fit_results(data, NDobj):
     """
     Save results of all DD fits to files
 
     Parameters
     ----------
-    final_iterations: list containing the nr and instances of the final
-                      iterations of all spectra: [(Iteration, nr), (...)]
     data:
-    prep_opts: setting dict used to prepare the inversion (i.e. all settings
-               that are not provided to NDimInv
+    NDobj: one or more ND objects. This is either a ND object, or list of ND
+           objects
     """
-    save_base_results(final_iterations, data)
-    if not os.path.isdir('stats_and_rms'):
-        os.makedirs('stats_and_rms')
-    os.chdir('stats_and_rms')
-    stats_for_all_its = lDDi.aggregate_dicts(final_iterations, 'stat_pars')
-    if('norm_factors' in data):
-        norm_factors = data['norm_factors']
-    else:
-        norm_factors = None
-    lDDi.save_stat_pars(stats_for_all_its, norm_factors)
-
-    rms_for_all_its = lDDi.aggregate_dicts(final_iterations, 'rms_values')
-    lDDi.save_rms_values(rms_for_all_its, final_iterations[0][0].RMS.rms_names)
-    os.chdir('..')
-
-    # save original data
-    with open('data.dat', 'w') as fid:
-        orig_data = data['raw_data']
-        if norm_factors is not None:
-            orig_data = orig_data / norm_factors
-        np.savetxt(fid, orig_data)
-
-    # (re)save the data format
-    # open('data_format.dat', 'w').write(prep_opts['data_format'])
-    open('data_format.dat', 'w').write(data['raw_format'])
-
-    # save model response
-    with open('f.dat', 'w') as fid:
-        for index, itd in enumerate(final_iterations):
-            f_data = itd[0].Model.f(itd[0].m)[np.newaxis, :]
-            if norm_factors is not None:
-                f_data /= norm_factors[index]
-            np.savetxt(fid, f_data)
-    open('f_format.dat', 'w').write(itd[0].Data.obj.data_format)
+    NDlist = _make_list(NDobj)
+    ioascii.save_data(data, NDlist)
 
 
 def get_data_dd_single(options):
@@ -571,6 +480,7 @@ def main():
     pwd = os.getcwd()
     os.chdir(outdir)
 
+    # fit the data
     fit_data(data)
 
     # logger.info('=======================================')
