@@ -26,7 +26,7 @@ def save_base_results(final_iterations, data):
 
     # save call to debye_decomposition.py
     with open('command.dat', 'w') as fid:
-        cmd = lddi.get_command()
+        cmd = lDDi.get_command()
         fid.write(cmd)
 
     final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
