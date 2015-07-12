@@ -183,6 +183,12 @@ def prepare_stat_values(raw_values, key, norm_factors):
 
     Divide the statistical parameter rho0 by norm_factors and multiply m_tot_n
     by them.
+
+    Returns
+    -------
+    values: NxM array, with N the number of spectra, and M the number of
+            parameters
+
     """
     # pad variable length parameters with nan so that we can save them to disc
     # using np.savetxt
@@ -199,11 +205,11 @@ def prepare_stat_values(raw_values, key, norm_factors):
             vector[-pad_width[1]:] = np.nan
             return vector
 
-        values = [np.pad(i, (0, max_len - i.size), padwithnans) for i
-                  in raw_values]
+        values = np.array([np.pad(i, (0, max_len - i.size), padwithnans) for i
+                  in raw_values])
     else:
         values = np.array(raw_values)
-        values = values.squeeze()
+        # values = values.squeeze()
 
     # renormalize all parameters containing rho0
     # Note: When the conductivity model is used, the normalisation factors
@@ -226,6 +232,8 @@ def prepare_stat_values(raw_values, key, norm_factors):
         else:
             values += np.log10(norm_factors).squeeze()
 
+    # make sure values is a list
+    values = np.atleast_2d(values.T).T
     return values
 
 

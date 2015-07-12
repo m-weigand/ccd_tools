@@ -416,7 +416,7 @@ def save_fit_results(data, NDobj):
     if output_format == 'ascii':
         ioascii.save_data(data, NDlist)
     elif output_format == 'ascii_audit':
-        ioascii_audit.save_data(data, NDlist)
+        ioascii_audit.save_results(data, NDlist)
     else:
         raise Exception('Output format "{0}" not recognized!'.format(
             output_format))
