@@ -43,6 +43,7 @@ import lib_dd.version as version
 import sip_formats.convert as sip_converter
 import lib_dd.conductivity.model as cond_model
 import lib_dd.io.ascii as ioascii
+import lib_dd.io.ascii_audit as ioascii_audit
 
 
 def add_base_options(parser):
@@ -114,6 +115,9 @@ def add_base_options(parser):
     parser.add_option('-v', "--version", action="store_true",
                       dest="version", default=False,
                       help="Print version information")
+    parser.add_option("--output_format", type='string', metavar='TYPE',
+                      help="Output format (ascii, simple)",
+                      default='ascii', dest="output_format")
 
     return parser
 
@@ -408,7 +412,14 @@ def save_fit_results(data, NDobj):
            objects
     """
     NDlist = _make_list(NDobj)
-    ioascii.save_data(data, NDlist)
+    output_format = data['options'].output_format
+    if output_format == 'ascii':
+        ioascii.save_data(data, NDlist)
+    elif output_format == 'ascii_audit':
+        ioascii_audit.save_data(data, NDlist)
+    else:
+        raise Exception('Output format "{0}" not recognized!'.format(
+            output_format))
 
 
 def get_data_dd_single(options):

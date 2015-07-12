@@ -26,16 +26,8 @@ def save_base_results(final_iterations, data):
 
     # save call to debye_decomposition.py
     with open('command.dat', 'w') as fid:
-        # environment variables
-        for key in ('DD_COND',
-                    'DD_STARTING_MODEL',
-                    'DD_TAU_X',
-                    'DD_DEBUG_STARTING_PARS'):
-            if key in os.environ:
-                fid.write('export {0}="{1}"\n'.format(key, os.environ[key]))
-
-        # dd_single command
-        fid.write(' '.join(sys.argv) + '\n')
+        cmd = lddi.get_command()
+        fid.write(cmd)
 
     final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
 

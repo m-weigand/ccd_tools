@@ -18,10 +18,32 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 Functions common to the Debye implementations dd_single, dd_time,
 dd_space_time.
 """
+import sys
 import os
 import numpy as np
 import sip_formats.convert as SC
 # ## general helper functions ###
+
+
+def get_command():
+    """Return a string with the full command call, including environment
+    variables.
+
+    Environment variables are exported in separate lines
+    """
+    cmd = ''
+    # environment variables
+    for key in ('DD_COND',
+                'DD_STARTING_MODEL',
+                'DD_TAU_X',
+                'DD_DEBUG_STARTING_PARS',
+                'DD_USE_LATEX'):
+        if key in os.environ:
+            cmd += 'export {0}="{1}"\n'.format(key, os.environ[key])
+
+    # executeable command
+    cmd += ' '.join(sys.argv)
+    return cmd
 
 
 def aggregate_dicts(iteration_list, dict_name):
