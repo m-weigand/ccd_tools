@@ -7,12 +7,12 @@ def _get_version_numbers():
     """
     try:
         geccoinv_version = pkg_resources.require('geccoinv')[0].version
-    except DistributionNotFound:
+    except pkg_resources.DistributionNotFound:
         geccoinv_version = pkg_resources.require('dd-tools')[0].version
 
     try:
         dd_interfaces_version = pkg_resources.require('dd_interfaces')[0].version
-    except DistributionNotFound:
+    except pkg_resources.DistributionNotFound:
         dd_interfaces_version = pkg_resources.require('dd-tools')[0].version
 
     versions = ''.join(('geccoinv version: ',
