@@ -12,6 +12,7 @@ DD_Interfaces
 
     introduction
     installation
+    getting_started
     fit_routines
     theory
     implementation
