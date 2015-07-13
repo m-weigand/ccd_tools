@@ -3,6 +3,7 @@ import datetime
 import numpy as np
 import uuid
 import lib_dd.interface as lDDi
+import lib_dd.version as version
 
 
 def _get_header():
@@ -19,6 +20,7 @@ def _get_header():
     header = '\n'.join(('# id:' + uuidstr,
                         '# ' + datetimestr,
                         '# ' + command))
+    header += '\n'
     return header
 
 
@@ -32,6 +34,39 @@ def save_results(data, NDlist):
     save_integrated_parameters(final_iterations, data, header)
     save_frequency_data(final_iterations, data, header)
     save_data(data, norm_factors, final_iterations)
+    np.savetxt('frequencies.dat', final_iterations[0][0].Data.obj.frequencies)
+    np.savetxt('tau.dat', final_iterations[0][0].Data.obj.tau)
+    final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
+
+    # save lambdas
+    # TODO: We want all lambdas, not only from the last iteration
+    try:
+        lambdas = [x[0].lams[0] for x in final_iterations]
+        nr_of_iterations = [x[0].nr for x in final_iterations]
+        nr_its_and_lambdas = np.vstack((nr_of_iterations, lambdas)).T
+
+        with open('lams_and_nr_its.dat', 'w') as fid:
+            fid.write(header)
+            fid.write('nr-its lambda\n')
+            np.savetxt(fid, nr_its_and_lambdas)  # , fmt='%i %f')
+    except Exception, e:
+        print('There was an error saving the lambda and nr its values')
+        print(e)
+        pass
+
+    # save normalization factors
+    if('norm_factors' in data):
+        np.savetxt('normalization_factors.dat', data['norm_factors'])
+
+    # save weighting factors
+    Wd_diag = final_iterations[0][0].Data.Wd.diagonal()
+    np.savetxt('errors.dat', Wd_diag)
+
+    with open('version.dat', 'w') as fid:
+        fid.write(version._get_version_numbers() + '\n')
+
+    with open('inversion_options.json', 'w') as fid:
+        json.dump(data['inv_opts'], fid)
 
 
 def save_data(data, norm_factors, final_iterations):
@@ -86,7 +121,7 @@ def save_integrated_parameters(final_iterations, data, header):
             # save to its own file
             with open(key + '.dat', 'w') as fid:
                 fid.write(header)
-                fid.write('#' + key)
+                fid.write('#' + key + '\n')
                 np.savetxt(fid, values)
 
 
