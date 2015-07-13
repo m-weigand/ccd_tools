@@ -118,11 +118,12 @@ def save_integrated_parameters(final_iterations, data, header):
                 pars_labels.append(key + postfix)
                 pars_list.append(value)
         else:
-            # save to its own file
-            with open(key + '.dat', 'w') as fid:
-                fid.write(header)
-                fid.write('#' + key + '\n')
-                np.savetxt(fid, values)
+            if key not in ('m_data', ):
+                # save to its own file
+                with open(key + '.dat', 'w') as fid:
+                    fid.write(header)
+                    fid.write('#' + key + '\n')
+                    np.savetxt(fid, values)
 
 
     all_data = np.vstack(pars_list).T
