@@ -44,6 +44,7 @@ import sip_formats.convert as sip_converter
 import lib_dd.conductivity.model as cond_model
 import lib_dd.io.ascii as ioascii
 import lib_dd.io.ascii_audit as ioascii_audit
+import lib_cc2
 
 
 def add_base_options(parser):
@@ -208,7 +209,12 @@ def _prepare_ND_object(fit_data):
         model = cond_model.dd_conductivity(fit_data['inv_opts'])
     else:
         # there are multiple parameterisations available, use the log10 one
-        model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
+        # model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
+        if 'DD_C' in os.environ:
+            fit_data['inv_opts']['c'] = float(os.environ['c'])
+        else:
+            fit_data['inv_opts']['c'] = 1.0
+        model = lib_cc2.decomposition_resistivity(fit_data['inv_opts'])
     ND = NDimInv.NDimInv(model, fit_data['inv_opts'])
     ND.finalize_dimensions()
     ND.Data.data_converter = sip_converter.convert
