@@ -35,6 +35,7 @@ import sip_formats.convert as sip_converter
 import lib_dd.interface as lDDi
 import lib_dd.plot as lDDp
 import lib_dd.main
+import lib_dd.version as version
 
 
 def handle_cmd_options():
@@ -87,11 +88,7 @@ def handle_cmd_options():
 
     # print version information if requested
     if(options.version):
-        print('geccoinv version: ' +
-              pkg_resources.require('geccoinv')[0].version)
-
-        print('dd_interface version: ' +
-              pkg_resources.require('dd_interface')[0].version)
+        print version._get_version_numbers()
         exit()
 
     return options
@@ -131,15 +128,28 @@ def _get_cr_data(options, data):
 
 def get_data_dd_time(options):
     """
-    Read frequencies and data, and apply frequency filters
+    Load frequencies and data and return a data dict
 
-    options is also returned in case we change some settings, e.g. the data
+    Parameters
+    ----------
+
+    options: cmd options
+
+
+    Returns
+    -------
+    data: dict with entries "raw_data", "cr_data", "options", "inv_opts",
+          "prep_opts"
     """
     data, options = lDDi.load_frequencies_and_data(options)
     data['times'] = _get_times(options)
     data['cr_data'] = data['raw_data']
 
-    return data, options
+    prep_opts, inv_opts = split_options(options)
+    data['options'] = options
+    data['prep_opts'] = prep_opts
+    data['inv_opts'] = inv_opts
+    return data
 
 
 def split_options(options):
@@ -176,123 +186,104 @@ def split_options(options):
     return prep_opts, inv_opts
 
 
-# @profile
-def fit_sip_data(data, prep_opts, inv_opts):
-    """
-    Call the fit routine for each pixel
-    """
+def _get_fit_datas(data):
+
     # add frequencies to inv_opts
-    inv_opts['frequencies'] = data['frequencies']
-    inv_opts['global_prefix'] = 'times_'
+    data['inv_opts']['frequencies'] = data['frequencies'].copy()
+    data['inv_opts']['global_prefix'] = 'times_'
     if('norm_factors' in data):
-        inv_opts['norm_factors'] = data['norm_factors']
+        data['inv_opts']['norm_factors'] = data['norm_factors']
     else:
-        inv_opts['norm_factors'] = None
+        data['inv_opts']['norm_factors'] = None
 
     fit_data = {'data': data['cr_data'],
                 'times': data['times'],
                 'frequencies': data['frequencies'],
-                'prep_opts': prep_opts,
-                'inv_opts': inv_opts
+                'prep_opts': data['prep_opts'],
+                'inv_opts': data['inv_opts']
                 }
 
-    # save inversion options
-    # with open('inversion_options.json', 'w') as fid:
-    # json.dump(inv_opts, fid)
+    return fit_data
+
+
+# @profile
+def fit_data(data):
+    """
+    Call the fit routine for each pixel
+    """
+    data_struct = _get_fit_datas(data)
 
     # fit the time-lapse data
-    ND = fit_one_time_series(fit_data)
+    ND = fit_one_time_series(data_struct)
 
-    final_iteration = ND.iterations[-1]
-
-    # renormalize data
-    if('norm_factors' in data):
-        parsize = final_iteration.Model.M_base_dims[0][1]
-        spectrum_nr = 0
-        for index, norm_fac in zip(range(0, final_iteration.m.size, parsize),
-                                   data['norm_factors']):
-            # add normalization factor to the parameters
-            final_iteration.m[index] -= np.log10(norm_fac)
-            final_iteration.f = final_iteration.Model.f(final_iteration.m)
-            # data
-            # note: the normalization factor can be applied either to the
-            # magnitude, or to both real and imaginary parts!
-            final_iteration.Data.D[:, :, spectrum_nr] /= norm_fac
-            spectrum_nr += 1
-
-    if(fit_data['prep_opts']['plot']):
-        print('Plotting final iteration')
-        final_iteration.plot()
-        final_iteration.plot_reg_strengths()
-
-    if(fit_data['prep_opts']['plot_it_spectra']):
-        for it in ND.iterations:
-            it.plot()
-
-    if(fit_data['prep_opts']['plot_lambda'] is not None):
-        ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve()
-
-    save_fit_results(final_iteration, data)
+    # results now contains one or more ND objects
+    save_fit_results(data, ND)
 
 
-def save_fit_results(final_iteration, data):
+def save_fit_results(data, NDobj):
+    dd.save_fit_results(data, NDobj)
+
     # note: we don't want to provide the data parameter, but until we really
     # incorporate times into the inversion..just save it
-    final_iterations = ((final_iteration, ), )
-    dd.save_base_results(final_iterations, data)
-    if not os.path.isdir('stats_and_rms'):
-        os.makedirs('stats_and_rms')
-    os.chdir('stats_and_rms')
-    if('norm_factors' in data):
-        norm_factors = data['norm_factors']
-    else:
-        norm_factors = None
+    # final_iteration = (NDobj.iterations[-1], )
 
-    lDDi.save_stat_pars(final_iteration.stat_pars, norm_factors)
-    lDDi.save_rms_values(final_iteration.rms_values,
-                         final_iteration.RMS.rms_names)
+    # dd.save_base_results(final_iterations, data)
+    # if not os.path.isdir('stats_and_rms'):
+    #     os.makedirs('stats_and_rms')
+    # os.chdir('stats_and_rms')
+    # if('norm_factors' in data):
+    #     norm_factors = data['norm_factors']
+    # else:
+    #     norm_factors = None
 
-    os.chdir('..')
+    # lDDi.save_stat_pars(final_iteration.stat_pars, norm_factors)
+    # lDDi.save_rms_values(final_iteration.rms_values,
+    #                      final_iteration.RMS.rms_names)
 
-    # save data
-    # we know that the Data array is only 2D
-    with open('data.dat', 'w') as fid:
-        D = final_iteration.Data.D
-        # times to the front
-        D = np.swapaxes(D, 0, 2)
-        # reshape
-        D = D.reshape((D.shape[0], np.prod(D.shape[1:])))
-        np.savetxt(fid, D)
+    # os.chdir('..')
 
-    # save model response
-    Dsize = np.prod(final_iteration.Data.D_base_size)
-    f = final_iteration.Model.f(final_iteration.m)
-    f_reshaped = np.reshape(f, (Dsize, f.size / Dsize), order='F').T
-    np.savetxt('f.dat', f_reshaped)
+    # # save data
+    # # we know that the Data array is only 2D
+    # with open('data.dat', 'w') as fid:
+    #     D = final_iteration.Data.D
+    #     # times to the front
+    #     D = np.swapaxes(D, 0, 2)
+    #     # reshape
+    #     D = D.reshape((D.shape[0], np.prod(D.shape[1:])))
+    #     np.savetxt(fid, D)
 
-    # save times
-    with open('times.dat', 'w') as fid:
-        for item in data['times']:
-            fid.write('{0}'.format(item) + '\n')
+    # # save model response
+    # Dsize = np.prod(final_iteration.Data.D_base_size)
+    # f = final_iteration.Model.f(final_iteration.m)
+    # f_reshaped = np.reshape(f, (Dsize, f.size / Dsize), order='F').T
+    # np.savetxt('f.dat', f_reshaped)
+
+    # # save times
+    # with open('times.dat', 'w') as fid:
+    #     for item in data['times']:
+    #         fid.write('{0}'.format(item) + '\n')
 
 
-def fit_one_time_series(fit_data):
+def _prepare_ND_object(data):
     # init the object
-    model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
-    ND = NDimInv.NDimInv(model, fit_data['inv_opts'])
+    model = lib_dd.main.get(
+        'log10rho0log10m',
+        data['inv_opts'])
+    ND = NDimInv.NDimInv(model, data['inv_opts'])
 
     # add extra dimensions
-    nr_timesteps = fit_data['data'].shape[0]
+    nr_timesteps = data['data'].shape[0]
     ND.add_new_dimension('time', nr_timesteps)
     ND.finalize_dimensions()
     ND.Data.data_converter = sip_converter.convert
 
     # register data
-    for index, subdata in enumerate(fit_data['data']):
+    for index, subdata in enumerate(data['data']):
         print('Importing time step {0}'.format(index))
         subdata = subdata.reshape((2, subdata.size / 2)).T
-        ND.Data.add_data(subdata, fit_data['prep_opts']['data_format'],
-                         extra=(index, ))
+        ND.Data.add_data(
+            subdata, data['prep_opts']['data_format'],
+            extra=(index, ))
 
     ND.update_model()
 
@@ -318,14 +309,14 @@ def fit_one_time_series(fit_data):
     nr_tau_values = ND.Model.obj.tau.size
 
     # add a frequency regularization for the DD model
-    if fit_data['prep_opts']['f_lambda'] is None:
+    if data['prep_opts']['f_lambda'] is None:
         print('Frequency lambda search')
-        if fit_data['prep_opts']['f_lam0'] is None:
+        if data['prep_opts']['f_lam0'] is None:
             lam0_obj = LamFuncs.Lam0_Easylam()
         else:
             lam0_obj = LamFuncs.Lam0_Fixed(prep_opts['f_lam0'])
 
-        if(fit_data['prep_opts']['individual_lambdas']):
+        if(data['prep_opts']['individual_lambdas']):
             lam_obj = LamFuncs.SearchLambdaIndividual(lam0_obj)
         else:
             lam_obj = LamFuncs.SearchLambda(lam0_obj)
@@ -335,47 +326,59 @@ def fit_one_time_series(fit_data):
         lam_obj.rms_key = optimize_rms_key
         lam_obj.rms_index = optimize_rms_index
     else:
-        lam_obj = LamFuncs.FixedLambda(fit_data['prep_opts']['f_lambda'])
+        lam_obj = LamFuncs.FixedLambda(data['prep_opts']['f_lambda'])
 
     reg_object = RegFuncs.SmoothingFirstOrder(decouple=[0, ])
     ND.Model.add_regularization(0, reg_object, lam_obj)
 
     # # add time regularization
     # rho0 regularization
-    if(fit_data['prep_opts']['time_weighting_rho0'] or
-       fit_data['prep_opts']['time_weighting_mi']):
+    if(data['prep_opts']['time_weighting_rho0'] or
+       data['prep_opts']['time_weighting_mi']):
         weighting_obj = RegFuncs.DifferenceWeighting(fit_data['times'])
     else:
         weighting_obj = None
 
-    if(fit_data['prep_opts']['trho0_first_order']):
-        reg_obj = RegFuncs.SmoothingFirstOrder(decouple=[],
-                                               outside_first_dim=[0, ],
-                                               weighting_obj=weighting_obj)
+    if(data['prep_opts']['trho0_first_order']):
+        reg_obj = RegFuncs.SmoothingFirstOrder(
+            decouple=[],
+            outside_first_dim=[0, ],
+            weighting_obj=weighting_obj)
     else:
-        reg_obj = RegFuncs.SmoothingSecondOrder(decouple=[],
-                                                outside_first_dim=[0, ],
-                                                weighting_obj=None)
-    ND.Model.add_regularization(1,
-                                reg_obj,
-                                LamFuncs.FixedLambda(
-                                    fit_data['prep_opts']['t_rho0_lambda'])
-                                )
-    # m regularization
-    if(fit_data['prep_opts']['tmi_first_order']):
-        reg_obj = RegFuncs.SmoothingFirstOrder(decouple=[],
-                                               outside_first_dim=range(
-                                                   1, nr_tau_values),
-                                               weighting_obj=weighting_obj)
-    else:
-        reg_obj = RegFuncs.SmoothingSecondOrder(decouple=[],
-                                                outside_first_dim=range(
-                                                    1, nr_tau_values))
-    ND.Model.add_regularization(1, reg_obj,
-                                LamFuncs.FixedLambda(
-                                    fit_data['prep_opts']['t_m_i_lambda'])
-                                )
+        reg_obj = RegFuncs.SmoothingSecondOrder(
+            decouple=[],
+            outside_first_dim=[0, ],
+            weighting_obj=None)
 
+    ND.Model.add_regularization(
+        1,
+        reg_obj,
+        LamFuncs.FixedLambda(
+        data['prep_opts']['t_rho0_lambda'])
+        )
+
+    # m regularization
+    if data['prep_opts']['tmi_first_order']:
+        reg_obj = RegFuncs.SmoothingFirstOrder(
+            decouple=[],
+            outside_first_dim=range(
+            1, nr_tau_values),
+            weighting_obj=weighting_obj)
+    else:
+        reg_obj = RegFuncs.SmoothingSecondOrder(
+            decouple=[],
+            outside_first_dim=range(
+            1, nr_tau_values))
+    ND.Model.add_regularization(
+        1, reg_obj,
+        LamFuncs.FixedLambda(
+        data['prep_opts']['t_m_i_lambda'])
+        )
+    return ND
+
+
+def fit_one_time_series(data):
+    ND = _prepare_ND_object(data)
     # debug start
     """
     ND.start_inversion()
@@ -403,19 +406,49 @@ def fit_one_time_series(fit_data):
     """
 
     ND.run_inversion()
+
+    # renormalize data
+    if data['inv_opts']['norm_factors'] is not None:
+        parsize = final_iteration.Model.M_base_dims[0][1]
+        spectrum_nr = 0
+        for index, norm_fac in zip(range(0, final_iteration.m.size, parsize),
+                                   data['inv_opts']['norm_factors']):
+            # add normalization factor to the parameters
+            final_iteration.m[index] -= np.log10(norm_fac)
+            final_iteration.f = final_iteration.Model.f(final_iteration.m)
+            # data
+            # note: the normalization factor can be applied either to the
+            # magnitude, or to both real and imaginary parts!
+            final_iteration.Data.D[:, :, spectrum_nr] /= norm_fac
+            spectrum_nr += 1
+
+    call_fit_functions(data, ND)
     return ND
+
+
+def call_fit_functions(data, ND):
+    if data['prep_opts']['plot']:
+        print('Plotting final iteration')
+        ND.iterations[-1].plot()
+        ND.iterations[-1].plot_reg_strengths()
+
+    if data['prep_opts']['plot_it_spectra']:
+        for it in ND.iterations:
+            it.plot()
+
+    if data['prep_opts']['plot_lambda'] is not None:
+        ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve()
 
 
 if __name__ == '__main__':
     options = handle_cmd_options()
     dd.check_input_files(options, ['times', ])
     outdir = dd.get_output_dir(options)
-    data, options = get_data_dd_time(options)
-    prep_opts, inv_opts = split_options(options)
+    data = get_data_dd_time(options)
 
     # for the fitting process, change to the output_directory
     pwd = os.getcwd()
     os.chdir(outdir)
-    fit_sip_data(data, prep_opts, inv_opts)
+    fit_data(data)
     # go back to initial working directory
     os.chdir(pwd)
