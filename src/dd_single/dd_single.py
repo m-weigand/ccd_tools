@@ -69,7 +69,7 @@ def add_base_options(parser):
                       'conductivity', default='rmag_rpha')
     parser.add_option("-n", "--nr_terms", dest="nr_terms_decade", type='int',
                       help="Number of Debye terms per frequency decade " +
-                      "(default: 10)", metavar="INT", default=10)
+                      "(default: 20)", metavar="INT", default=20)
     parser.add_option("-o", "--output", type='string', metavar='DIR',
                       help="Output directory (default: results)",
                       default="results", dest="output_dir")
