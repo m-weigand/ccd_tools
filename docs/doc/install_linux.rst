@@ -21,9 +21,7 @@ should suffice to install the libraries and scripts.
     export PATH=$HOME/inst/pip_installs/bin:$PATH
     python seutp.py develop --user
 
-To build the documentation
-
-::
+To build the documentation, execute ::
 
     cd docs/doc
     python setup.py sphinx_build

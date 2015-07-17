@@ -20,6 +20,6 @@ the SIP spectra:
     programs/dd_single
     programs/dd_time
     programs/dd_space_time
+    programs/ddps
     output_formats
-    usage
 

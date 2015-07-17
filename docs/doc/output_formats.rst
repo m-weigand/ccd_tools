@@ -7,22 +7,23 @@ ascii_audit format
 A typical result directory in this format contains the following files ::
 
     results/
-    ├── covf.dat
-    ├── covm.dat
-    ├── data.dat
-    ├── errors.dat
-    ├── f.dat
-    ├── frequencies.dat
-    ├── integrated_paramaters.dat
-    ├── inversion_options.json
-    ├── lams_and_nr_its.dat
-    ├── m_i.dat
-    ├── normalization_factors.dat
-    ├── rms_definition.json
-    ├── tau.dat
-    └── version.dat
+    |-- covf.dat
+    |-- covm.dat
+    |-- data.dat
+    |-- errors.dat
+    |-- f.dat
+    |-- frequencies.dat
+    |-- integrated_paramaters.dat
+    |-- inversion_options.json
+    |-- lams_and_nr_its.dat
+    |-- m_i.dat
+    |-- normalization_factors.dat
+    |-- rms_definition.json
+    |-- tau.dat
+    `-- version.dat
 
     0 directories, 14 files
+
 
 ascii format
 """"""""""""
@@ -30,55 +31,55 @@ ascii format
 A typical result directory in this format contains the following files ::
 
     results/
-    ├── command.dat
-    ├── data.dat
-    ├── data_format.dat
-    ├── errors.dat
-    ├── f.dat
-    ├── f_format.dat
-    ├── frequencies.dat
-    ├── inversion_options.json
-    ├── lambdas.dat
-    ├── normalization_factors.dat
-    ├── nr_iterations.dat
-    ├── omega.dat
-    ├── rms_definition.json
-    ├── s.dat
-    ├── stats_and_rms
-    │   ├── covf_results.dat
-    │   ├── covm_results.dat
-    │   ├── decade_bins_results.dat
-    │   ├── decade_loadings_results.dat
-    │   ├── f_50_results.dat
-    │   ├── f_arithmetic_results.dat
-    │   ├── f_geometric_results.dat
-    │   ├── f_max_results.dat
-    │   ├── f_mean_results.dat
-    │   ├── f_peak1_results.dat
-    │   ├── f_peak2_results.dat
-    │   ├── f_peaks_all_results.dat
-    │   ├── m_data_results.dat
-    │   ├── m_i_results.dat
-    │   ├── m_tot_n_results.dat
-    │   ├── m_tot_results.dat
-    │   ├── rho0_results.dat
-    │   ├── rms_all_error.dat
-    │   ├── rms_all_noerr.dat
-    │   ├── rms_imag_parts_error.dat
-    │   ├── rms_imag_parts_noerr.dat
-    │   ├── rms_real_parts_error.dat
-    │   ├── rms_real_parts_noerr.dat
-    │   ├── tau_50_results.dat
-    │   ├── tau_arithmetic_results.dat
-    │   ├── tau_geometric_results.dat
-    │   ├── tau_max_results.dat
-    │   ├── tau_mean_results.dat
-    │   ├── tau_peak1_results.dat
-    │   ├── tau_peak2_results.dat
-    │   ├── tau_peaks_all_results.dat
-    │   └── U_tau_results.dat
-    ├── tau.dat
-    └── version.dat
+    |-- command.dat
+    |-- data.dat
+    |-- data_format.dat
+    |-- errors.dat
+    |-- f.dat
+    |-- f_format.dat
+    |-- frequencies.dat
+    |-- inversion_options.json
+    |-- lambdas.dat
+    |-- normalization_factors.dat
+    |-- nr_iterations.dat
+    |-- omega.dat
+    |-- rms_definition.json
+    |-- s.dat
+    |-- stats_and_rms
+    |   |-- covf_results.dat
+    |   |-- covm_results.dat
+    |   |-- decade_bins_results.dat
+    |   |-- decade_loadings_results.dat
+    |   |-- f_50_results.dat
+    |   |-- f_arithmetic_results.dat
+    |   |-- f_geometric_results.dat
+    |   |-- f_max_results.dat
+    |   |-- f_mean_results.dat
+    |   |-- f_peak1_results.dat
+    |   |-- f_peak2_results.dat
+    |   |-- f_peaks_all_results.dat
+    |   |-- m_data_results.dat
+    |   |-- m_i_results.dat
+    |   |-- m_tot_n_results.dat
+    |   |-- m_tot_results.dat
+    |   |-- rho0_results.dat
+    |   |-- rms_all_error.dat
+    |   |-- rms_all_noerr.dat
+    |   |-- rms_imag_parts_error.dat
+    |   |-- rms_imag_parts_noerr.dat
+    |   |-- rms_real_parts_error.dat
+    |   |-- rms_real_parts_noerr.dat
+    |   |-- tau_50_results.dat
+    |   |-- tau_arithmetic_results.dat
+    |   |-- tau_geometric_results.dat
+    |   |-- tau_max_results.dat
+    |   |-- tau_mean_results.dat
+    |   |-- tau_peak1_results.dat
+    |   |-- tau_peak2_results.dat
+    |   |-- tau_peaks_all_results.dat
+    |   `-- U_tau_results.dat
+    |-- tau.dat
+    `-- version.dat
 
     1 directory, 48 files
 
@@ -94,13 +95,24 @@ Input data
 * Frequencies and corresponding angular frequencies (
    :math:`\omega = 2 \cdot \pi \cdot f`) are stored in the files
    *frequencies.dat* and *omega.dat*.
-* The file *command.dat* holds the complexe call to the fit routine
+* The file *command.dat* holds the complete call to the fit routine
 * A JSON formatted file *inversion_options.json* stores internal inversion
   options. This file is mainly for debugging purposes, and needed to recreated
   inversion objects from fit results.
+* *rho_normalizations.dat* contains normalization factors if the option
+  ``--norm_mag`` was used.
+
+*dd_time.py* only:
+
+* the file *times.dat* contains the time strings as read from the input files.
+  One time per line.
 
 Filter results
 ++++++++++++++
+
+.. todo::
+
+    Explain filtering
 
 * *filter_mask.dat* contains the remaining indices after a filter operation
   with `ddps.py`
@@ -175,13 +187,13 @@ filename                       stored values per line
 *tau_x_\*.dat*                 :math:`log_{10}(\tau_x)`; see description below
 *tau_max.dat*                  :math:`\tau` corresponding to max. chargeability. First occurence.
 *U_tau_results.dat*            Uniformity parameter :math:`U_{\tau} = \frac{\tau_{60}}{\tau_{10}}`
-*f_50_results.dat*
-*f_mean_results.dat*
-*f_peak1_results.dat*
-*f_peak2_results.dat*
-*f_peaks_all_results.dat*
-*covf_results.dat*
-*covm_results.dat*
+*f_50_results.dat*             frequency corresponding to :math:`\tau_{50}`
+*f_mean_results.dat*           frequency corresponding to :math:`\tau_{mean}`
+*f_peak1_results.dat*          frequency corresponding to :math:`\tau_{peak}^1`
+*f_peak2_results.dat*          frequency corresponding to :math:`\tau_{peak}^2`
+*f_peaks_all_results.dat*      frequency corresponding to all peaks :math:`\tau_{peak}^N`
+*covf_results.dat*             coverage frequencies
+*covm_results.dat*             coverage parameters
 =============================  ===============================
 
 :math:`\tau_x`: Arbitrary cumulative relaxation times can be computed by setting

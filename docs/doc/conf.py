@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'DD_Interfaces - time lapse Debye decomposition routines'
+project = u'Time lapse Debye decomposition routines'
 copyright = u'2014, 2015, Maximilian Weigand'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -192,13 +192,13 @@ latex_elements = {
 #'pointsize': '10pt',
 
 # Additional stuff for the LaTeX preamble.
-#'preamble': '',
+'preamble': '\usepackage[utf8]{inputenc}\usepackage{textcomp}\usepackage[T1]{fontenc}',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'DebyeDecomposition.tex', u'DebyeDecomposition Documentation',
+  ('index', 'DebyeDecomposition.tex', u'Debye Decomposition Documentation',
    u'Maximilian Weigand', 'manual'),
 ]
 

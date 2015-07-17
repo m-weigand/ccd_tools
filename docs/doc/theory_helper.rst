@@ -1,6 +1,9 @@
 Mathematical helper terms
 =========================
 
+The following expressions are used in the following presentation of the various
+model equations:
+
 .. math::
 
     j &= e^{j \frac{\pi}{2}}\\
@@ -27,5 +30,17 @@ Mathematical helper terms
     \left(\frac{c \pi}{2}\right) + (\omega \tau)^{2c}}
 
 
+Remember:
+
+* :math:`\frac{\partial}{\partial x} \cdot 10^x = log_e(10) 10^x`
+* :math:`log_{10}(F(x)) = \frac{log_e(F(x))}{log_e(10)}`
+* :math:`\frac{\partial}{\partial x} log_{10}(F(x)) = \frac{1}{log_e(10)} \cdot
+  \frac{1}{F(x)} \cdot \frac{\partial F(x)}{\partial x}`
+
+.. math::
+
+    \frac{\partial F(x)}{\partial \log_{10}(x)} &= \\
+    \frac{\partial log_{10}(F(x))}{\partial x} &= \\
+    \frac{\partial log_{10}(F(x))}{\partial \log_{10}(x)} &= \\
 
 

@@ -15,7 +15,8 @@ DD_Interfaces
     getting_started
     fit_routines
     theory
-    implementation
+    inversion
+    usage_and_implementation
     debugging
     api
 

@@ -6,10 +6,10 @@ Theory of SIP models
     :maxdepth: 2
 
     theory_overview
-    theory_helper
-    theory_cc_res
     theory_dd_res
-    theory_conductivity
+    theory_dd_cond
+    theory_cc_cond
+    theory_cc_res
     dd_theory_eps
-    dd_sensitivities
+    dd_coverage
     dd_general
