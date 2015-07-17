@@ -2,6 +2,7 @@
 from setuptools import setup
 import subprocess
 import os
+import sys
 # from setuptools import find_packages
 # find_packages
 
@@ -19,6 +20,11 @@ try:
         version_long += '+' + git_output
 except:
     pass
+
+extra = {}
+if sys.version_info >= (3,):
+    print('V3')
+    extra['use_2to3'] = True
 
 if __name__ == '__main__':
     setup(name='dd_interface',
@@ -41,5 +47,6 @@ if __name__ == '__main__':
                    'src/ddps/ddps.py',
                    'src/ddpt/ddpt.py',
                    'src/ddpst/ddpst.py'],
-          install_requires=['numpy', 'scipy>=0.12', 'matplotlib', 'geccoinv']
+          install_requires=['numpy', 'scipy>=0.12', 'matplotlib', 'geccoinv'],
+          **extra
           )
