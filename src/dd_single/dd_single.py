@@ -140,7 +140,7 @@ def handle_cmd_options():
 
     # print version information if requested
     if(options.version):
-        print version._get_version_numbers()
+        print(version._get_version_numbers())
         exit()
     return options
 
@@ -155,8 +155,8 @@ def check_input_files(options, additional_files=[]):
     for attr in base_files + additional_files:
         filename = getattr(options, attr)
         if not os.path.isfile(filename):
-            print('Filename not found for attribute {0}: {1}'.format(
-                attr, filename))
+            print(('Filename not found for attribute {0}: {1}'.format(
+                attr, filename)))
             none_missing = False
     else:
         if not none_missing:
@@ -387,7 +387,7 @@ def fit_data(data):
     if(data['prep_opts']['nr_cores'] == 1):
         print('single processing')
         # single processing
-        results = map(fit_one_spectrum, fit_datas)
+        results = list(map(fit_one_spectrum, fit_datas))
     else:
         # multi processing
         print('multi processing')
@@ -512,7 +512,7 @@ def main():
         if os.path.isdir(options.output_dir):
             print('WARNING: Output directory already exists')
             print('The new inversion can be found here:')
-            print(options.output_dir + os.sep + os.path.basename(outdir))
+            print((options.output_dir + os.sep + os.path.basename(outdir)))
         shutil.move(outdir, options.output_dir)
 
 
