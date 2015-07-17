@@ -15,6 +15,10 @@ def save_base_results(final_iterations, data):
     Save data files that are shared between
     dd_single.py/dd_time.py/dd_space_time.py
     """
+    # convert all arrays to lists
+    for key in data['inv_opts'].keys():
+        if isinstance(data['inv_opts'][key], np.ndarray):
+            data['inv_opts'][key] = data['inv_opts'][key].tolist()
     with open('inversion_options.json', 'w') as fid:
         json.dump(data['inv_opts'], fid)
 

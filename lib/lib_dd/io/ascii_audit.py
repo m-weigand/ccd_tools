@@ -65,8 +65,13 @@ def save_results(data, NDlist):
     with open('version.dat', 'w') as fid:
         fid.write(version._get_version_numbers() + '\n')
 
+    iopts = data['inv_opts']
+    for key in iopts.keys():
+        if isinstance(iopts[key], np.ndarray):
+            iopts[key] = iopts[key].tolist()
+
     with open('inversion_options.json', 'w') as fid:
-        json.dump(data['inv_opts'], fid)
+        json.dump(iopts, fid)
 
 
 def save_data(data, norm_factors, final_iterations):
@@ -143,9 +148,10 @@ def save_frequency_data(final_iterations, data, header):
     # save frequencies/omega
     frequencies = final_iterations[0][0].Data.obj.frequencies
 
-    # save weighting factors
-    Wd_diag = final_iterations[0][0].Data.Wd.diagonal().reshape(
-        (frequencies.size, 2))
+    Wd_diag_1d = final_iterations[0][0].Data.Wd.diagonal()
+    nr_x = int(Wd_diag_1d.size / frequencies.size)
+
+    Wd_diag_2d = Wd_diag_1d.reshape(frequencies.size, nr_x)
 
     orig_data = data['raw_data']
     if norm_factors is not None:
