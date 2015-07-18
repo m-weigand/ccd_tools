@@ -92,6 +92,10 @@ def save_data(data, norm_factors, final_iterations):
             if norm_factors is not None:
                 f_data /= norm_factors[index]
 
+    # save times
+    if 'times' in data:
+        np.savetxt('times.dat', data['times'])
+
 
 def save_integrated_parameters(final_iterations, data, header):
     stat_pars = lDDi.aggregate_dicts(final_iterations, 'stat_pars')

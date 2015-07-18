@@ -109,4 +109,7 @@ def save_data(data, NDlist):
             np.savetxt(fid, f_data)
     open('f_format.dat', 'w').write(itd[0].Data.obj.data_format)
 
+    # save times
+    if 'times' in data:
+        np.savetxt('times.dat', data['times'])
 
