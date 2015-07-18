@@ -211,7 +211,7 @@ def _prepare_ND_object(fit_data):
         # there are multiple parameterisations available, use the log10 one
         # model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
         if 'DD_C' in os.environ:
-            fit_data['inv_opts']['c'] = float(os.environ['c'])
+            fit_data['inv_opts']['c'] = float(os.environ['DD_C'])
         else:
             fit_data['inv_opts']['c'] = 1.0
         model = lib_cc2.decomposition_resistivity(fit_data['inv_opts'])
