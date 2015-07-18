@@ -335,7 +335,7 @@ def _prepare_ND_object(data):
     # rho0 regularization
     if(data['prep_opts']['time_weighting_rho0'] or
        data['prep_opts']['time_weighting_mi']):
-        weighting_obj = RegFuncs.DifferenceWeighting(fit_data['times'])
+        weighting_obj = RegFuncs.DifferenceWeighting(data['times'])
     else:
         weighting_obj = None
 
@@ -437,7 +437,7 @@ def call_fit_functions(data, ND):
             it.plot()
 
     if data['prep_opts']['plot_lambda'] is not None:
-        ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve()
+        ND.iterations[data['prep_opts']['plot_lambda']].plot_lcurve()
 
 
 if __name__ == '__main__':
