@@ -93,7 +93,7 @@ def save_data(data, NDlist):
     with open('data.dat', 'w') as fid:
         orig_data = data['raw_data']
         if norm_factors is not None:
-            orig_data = orig_data / norm_factors
+            orig_data = orig_data / norm_factors[:, np.newaxis]
         np.savetxt(fid, orig_data)
 
     # (re)save the data format
