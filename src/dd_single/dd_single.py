@@ -162,6 +162,12 @@ def check_input_files(options, additional_files=[]):
         if not none_missing:
             exit()
 
+    # check if output directory already exists
+    if os.path.isdir(options.output_dir):
+        raise IOError(
+            'Output directory already exists. Please choose another ' +
+            'output directory, or delete the existing one.')
+
 
 def split_options_base(options):
     """
