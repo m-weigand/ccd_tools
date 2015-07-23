@@ -24,7 +24,25 @@ import subprocess
 import shutil
 import sys
 
+# 
 all_tests_directory = 'test_results'
+
+# dict with the available binaries, and the corresponding data files
+available_binaries = {
+    'dd_single.py': {
+        'data_files': {
+            '-f': 'frequencies.dat',
+            '-d': 'data.dat'
+        }
+    },
+    'dd_time.py': {
+        'data_files': {
+            '-f': 'frequencies.dat',
+            '-d': 'data.dat',
+            '--times': 'times.dat'
+        }
+    }
+}
 
 
 def handle_cmd_options():
@@ -32,6 +50,14 @@ def handle_cmd_options():
     Handle command line options
     """
     parser = OptionParser()
+    for full_binary in sorted(available_binaries.keys()):
+        binary = full_binary[:-3]
+        parser.add_option("--" + binary,
+                          action="store_true",
+                          dest=binary,
+                          help="Create test for " + binary,
+                          default=False)
+
     parser.add_option("--init", action="store_true", dest="init_record",
                       help="Init a new test result directory (default: False)",
                       default=False)
@@ -43,6 +69,20 @@ def handle_cmd_options():
                       "results (default: False)", dest="test")
 
     (options, args) = parser.parse_args()
+
+    if options.init_record:
+        nr_found = 0
+        for full_binary in sorted(available_binaries.keys()):
+            value = getattr(options, full_binary[:-3])
+            if value:
+                nr_found += 1
+                # store the binary for later use
+                setattr(options, 'binary', full_binary[:-3])
+        if nr_found == 0:
+            raise Exception(
+                'You MUST provide either --dd_single or --dd_time!')
+        if nr_found > 1:
+            print('You can use one of the binaries!')
 
     if(len(args) > 1):
         print('Only one additional argument is allowed (test directory)')
@@ -94,14 +134,20 @@ def write_pc_infos(fid):
     fid.write(hostname)
 
 
-def initialize_new_test_dir():
+def _get_data_files_for_binary(options):
+    return available_binaries[options.binary + '.py']['data_files'].values()
+
+
+def initialize_new_test_dir(options):
     """
     Create all necessary directories and files for a new test
     """
-    if(not os.path.isfile('data.dat') or
-       not os.path.isfile('frequencies.dat') or
-       not os.path.isfile('test_func.py')):
-        raise Exception('data.dat or frequencies.dat files not found')
+    file_list = _get_data_files_for_binary(options)
+    file_list += ['test_func.py', ]
+
+    for filename in file_list:
+        if not os.path.isfile(filename):
+            raise Exception('File not found: {0}'.format(filename))
 
     if(not os.path.isdir(all_tests_directory)):
         os.makedirs(all_tests_directory)
@@ -115,12 +161,13 @@ def initialize_new_test_dir():
         fid.write('# edit the following line to your needs\n')
         fid.write('# all lines below the initial dd_single.py call\n')
         fid.write('# will be joined to one CMD line\n')
-        fid.write('# do not use the -f and -d options. They will be added\n')
+        fid.write('# do not use the -f and -d (and --times) options. ' +
+                  'They will be added\n')
         fid.write('# automatically.\n')
         # now write default dd_single.py call
         default_N = 20
         default_nr_cores = 1
-        fid.write('dd_single.py\n')
+        fid.write(options.binary + '.py\n')
         fid.write('-n {0}\n-c {1}\n--silent\n'.format(
             default_N, default_nr_cores))
 
@@ -132,6 +179,7 @@ def initialize_new_test_dir():
 
 
 def get_cmd(testcfg_file):
+    binary = _get_binary(options)
     # read test.cfg file, fourth line
     with open(testcfg_file, 'r') as fid:
         cmd = []
@@ -140,7 +188,7 @@ def get_cmd(testcfg_file):
         for line in fid.readlines():
             if add_to_cmd:
                 cmd.append(line.strip())
-            expression = re.compile('dd_single.py')
+            expression = re.compile(binary)
             if(not line.startswith('#') and
                re.search(expression, line) is not None):
                 cmd.append(line.strip())
@@ -214,7 +262,7 @@ if __name__ == '__main__':
     options, args = handle_cmd_options()
 
     if(options.init_record is True):
-        initialize_new_test_dir()
+        initialize_new_test_dir(options)
 
     # we use the last test directory if no test dir was give
     if(options.record is True):
