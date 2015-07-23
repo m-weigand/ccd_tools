@@ -407,6 +407,8 @@ def fit_one_time_series(data):
 
     ND.run_inversion()
 
+    final_iteration = ND.iterations[-1]
+
     # renormalize data
     if data['inv_opts']['norm_factors'] is not None:
         parsize = final_iteration.Model.M_base_dims[0][1]
