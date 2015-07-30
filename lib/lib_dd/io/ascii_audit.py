@@ -34,8 +34,17 @@ def save_results(data, NDlist):
     save_integrated_parameters(final_iterations, data, header)
     save_frequency_data(final_iterations, data, header)
     save_data(data, norm_factors, final_iterations)
-    np.savetxt('frequencies.dat', final_iterations[0][0].Data.obj.frequencies)
-    np.savetxt('tau.dat', final_iterations[0][0].Data.obj.tau)
+
+    with open('frequencies.dat', 'w') as fid:
+        fid.write(header)
+        fid.write('# frequencies [Hz]\n')
+        np.savetxt(fid, final_iterations[0][0].Data.obj.frequencies)
+
+    with open('tau.dat', 'w') as fid:
+        fid.write(header)
+        fid.write('# relaxation times used for the decomposition\n')
+        np.savetxt(fid, final_iterations[0][0].Data.obj.tau)
+
     final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
 
     # save lambdas
@@ -56,13 +65,19 @@ def save_results(data, NDlist):
 
     # save normalization factors
     if('norm_factors' in data):
+        fid.write(header)
+        fid.write('# normalisation factors\n')
         np.savetxt('normalization_factors.dat', data['norm_factors'])
 
     # save weighting factors
     Wd_diag = final_iterations[0][0].Data.Wd.diagonal()
-    np.savetxt('errors.dat', Wd_diag)
+    with open('errors.dat', 'w') as fid:
+        fid.write(header)
+        fid.write('# weighting factors\n')
+        np.savetxt(fid, Wd_diag)
 
     with open('version.dat', 'w') as fid:
+        fid.write(header)
         fid.write(version._get_version_numbers() + '\n')
 
     iopts = data['inv_opts']
@@ -71,22 +86,28 @@ def save_results(data, NDlist):
             iopts[key] = iopts[key].tolist()
 
     with open('inversion_options.json', 'w') as fid:
+        fid.write(header)
+        fid.write('# inversion options dict\n')
         json.dump(iopts, fid)
 
 
 def save_data(data, norm_factors, final_iterations):
+    header = _get_header()
     # save original data
     with open('data.dat', 'w') as fid:
-        fid.write('#' + data['raw_format'] + '\n')
+        fid.write(header)
+        fid.write('# raw data, format: ' + data['raw_format'] + '\n')
 
         orig_data = data['raw_data']
         if norm_factors is not None:
             orig_data = orig_data / norm_factors
         np.savetxt(fid, orig_data)
 
-    # save forwardmodel
+    # save forward response
     with open('f.dat', 'w') as fid:
-        fid.write('#' + final_iterations[0][0].Data.obj.data_format + '\n')
+        fid.write(header)
+        fid.write('# forward response data format:' +
+                  final_iterations[0][0].Data.obj.data_format + '\n')
         for index, itd in enumerate(final_iterations):
             f_data = itd[0].Model.f(itd[0].m)[np.newaxis, :]
             if norm_factors is not None:
@@ -94,7 +115,11 @@ def save_data(data, norm_factors, final_iterations):
 
     # save times
     if 'times' in data:
-        np.savetxt('times.dat', data['times'])
+        with open('times.dat', 'w') as fid:
+            fid.write(header)
+            # write column description
+            fid.write('# time of each spectrum\n')
+            np.savetxt(fid, data['times'])
 
 
 def save_integrated_parameters(final_iterations, data, header):
@@ -137,7 +162,7 @@ def save_integrated_parameters(final_iterations, data, header):
 
     all_data = np.vstack(pars_list).T
     with open('integrated_paramaters.dat', 'w') as fid:
-        fid.write(header + '\n')
+        fid.write(header)
         fid.write('#' + ' '.join(pars_labels) + '\n')
         np.savetxt(fid, all_data, fmt='%.6f')
 
