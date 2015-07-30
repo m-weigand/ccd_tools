@@ -117,8 +117,8 @@ def add_base_options(parser):
                       dest="version", default=False,
                       help="Print version information")
     parser.add_option("--output_format", type='string', metavar='TYPE',
-                      help="Output format (ascii, simple)",
-                      default='ascii', dest="output_format")
+                      help="Output format (ascii, ascii_audit)",
+                      default='ascii_audit', dest="output_format")
 
     return parser
 
