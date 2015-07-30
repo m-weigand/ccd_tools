@@ -217,6 +217,7 @@ The following approach to selecting :math:`\tau` values is called 'data_ext'.
 
 This approach adds one frequency decade to each of the frequency limits of the
 data prior to converting those limits to :math:`\tau` values.
+
 Creating synthetic relaxation time distributions
 ------------------------------------------------
 

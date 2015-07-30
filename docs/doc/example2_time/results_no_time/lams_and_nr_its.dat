@@ -1,0 +1,5 @@
+# id:ca142f00-e9fa-4abf-97e5-c0c6b3ba6de2
+# 20150730_15h:03m
+# /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat -d data/data.dat -o results_no_time --f_lambda 50 --tm_i_lambda 0 --trho0_lambda 0 --plot
+nr-its lambda
+6.000000000000000000e+00 5.000000000000000000e+01

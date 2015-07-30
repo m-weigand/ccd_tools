@@ -8,6 +8,7 @@ Workflow
 --------
 
 .. blockdiag::
+    :scale: 110%
 
     blockdiag workflow{
         "data/frequencies" -> "batch file (.sh/.bat)";
@@ -231,4 +232,104 @@ Linux (:download:`download linux shell file<example1_single/run_dd3.sh>`): ::
 Example: Fitting multiple spectra using a time regularisation
 -------------------------------------------------------------
 
-* Example multiple spectra dd_time (including post-plotting)
+Suppose the following spectra belong to a time-lapse SIP measurement:
+
+.. plot::
+
+   import os
+   os.environ['DD_USE_LATEX'] = "1"
+   from NDimInv.plot_helper import *
+   import numpy as np
+
+   frequencies  = np.loadtxt('example2_time/data/frequencies.dat')
+   data  = np.loadtxt('example2_time/data/data.dat')
+
+   fig, axes = plt.subplots(2, 1)
+   for spectrum in data:
+       subdata = spectrum.reshape((2, spectrum.size / 2)).T
+       ax = axes[0]
+       ax.semilogx(frequencies, subdata[:, 0], '.-', color='k')
+       ax = axes[1]
+       ax.semilogx(frequencies, -subdata[:, 1], '.-', color='k')
+
+   for ax in axes:
+       ax.set_xlabel('frequency [Hz]')
+   axes[0].set_ylabel(r"$|\rho| [\Omega m]$")
+   axes[1].set_ylabel(r"$\phi [mrad]$")
+   fig.tight_layout()
+
+Download the raw data files:
+
+* data.dat (:download:`Download data.dat (unix)<example2_time/data/data.dat>`,
+  :download:`Download data.dat (Windows)<example2_time/data/data_windows.dat>`
+* frequencies.dat (:download:`Download frequencies.dat
+  (unix)<example2_time/data/frequencies.dat>`, :download:`Download
+  frequencies.dat (Windows)<example2_time/data/frequencies_windows.dat>`
+* times.dat (:download:`Download times.dat
+  (unix)<example2_time/data/times.dat>`, :download:`Download times.dat
+  (Windows)<example2_time/data/times_windows.dat>`
+
+Save the files to a new directory in the subdirectory **data**, and rename them
+according to the file listing:
+
+::
+
+    .
+    |-- data
+        |-- data.dat
+        |-- frequencies.dat
+        `-- times.dat
+
+
+To fit all spectra without any time regularisation, use the following batch
+file for Linux: ::
+
+    dd_time.py -f data/frequencies.dat\
+     --times data/times.dat\
+     -d data/data.dat\
+     -o "results_no_time"\
+     --f_lambda 50\
+     --tm_i_lambda 0\
+     --trho0_lambda 0\
+     --plot
+
+Use this bat file for Windows: (:download:`Download
+run_no_time.bat<example2_time/run_no_time.bat>`)::
+
+    dd_time.py -f data/frequencies.dat^
+     --times data/times.dat^
+     -d data/data.dat^
+     -o "results_no_time"^
+     --f_lambda 50^
+     --tm_i_lambda 0^
+     --trho0_lambda 0^
+     --plot
+
+Important are the **--f_lambda**, **--tm_i_lambda**, and **--trho0_lambda**
+switches, which control the various regularisation strategies. For more
+information, please refer to the list of options for *dd_time.py**:
+:doc:`programs/dd_time`.
+
+The resulting directory listing now should look like this (with either the .bat
+or the .sh file): ::
+
+    .
+    |-- data
+    |   |-- data.dat
+    |   |-- frequencies.dat
+    |   `-- times.dat
+    |.. run_no_time.bat
+    |.. run_no_time.sh
+
+After executing the corresponding bat/batch file, results will be saved to the
+directory **results/**, with the plot file **plot_times_iteration0006.png**:
+
+.. image:: example2_time/results_no_time/plot_times_iteration0006.png
+    :align: center
+    :scale: 70%
+
+
+.. image:: example2_time/results_time/plot_times_iteration0005.png
+    :align: center
+    :scale: 70%
+

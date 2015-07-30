@@ -1,12 +1,63 @@
 Output Files
 ^^^^^^^^^^^^
 
+The following sections describe the output files of the various formats.
+Formats can be changed using the **--output_format** switch.
+
 ascii_audit format
 """"""""""""""""""
 
+This output format saves fit results to ASCII text files. Each text file
+contains a header which uniquely identifies the fit run that the results were
+created from. In addition, this format tries to group results into one file,
+where possible. Using the header information, clear process logs can be
+created, and mix-ups of results can be prevented.
+
+This is the default output format.
+
+.. note::
+
+    Can be enabled using the **--output_format ascii_audit** switch
+
+.. note::
+
+    While this output format is great for ensuring a clear processing trail, it
+    is currently not possible to directly use the OUTPUT files as INPUT files
+    for new decompositions!
+
+
+
+header
+^^^^^^
+
+Each output file consists of two parts: the header (four lines), and the data
+part (the rest of the file). The header looks like this ::
+
+    # id:30ffcd8e-2b75-48f9-acc4-3f93c9c0d48e
+    # 20150730_14h:32m
+    # /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat\
+        -d data/data.dat -o results_time --f_lambda 50\
+        --tmi_first_order --tm_i_lambda 5000 --plot
+    # covf
+
+* the '#' character indicates a non-data line
+* the first line contains a unique id, which is generated for each run of
+  either **dd_single.py** or **dd_time.py**. This id changes also for repeated
+  runs of the same settings!
+* The second line contains a datetime string: first the date in the order
+  year-month-day, followed by the hour (24 hours) and minute.
+* The third line contains the command call. Note that in the example above, the
+  command is stretched over three lines. This is only for display purposes, and
+  in the files will always be in one line.
+* The fourth line contains the data header, indicating the type of data
+  (sometimes even column descriptions).
+    results/
+
+Files
+^^^^^
+
 A typical result directory in this format contains the following files ::
 
-    results/
     |-- covf.dat
     |-- covm.dat
     |-- data.dat
@@ -24,9 +75,20 @@ A typical result directory in this format contains the following files ::
 
     0 directories, 14 files
 
+* **covf.dat**
+* **covm.dat**
 
 ascii format
 """"""""""""
+
+This output format saves the files to ASCII text files. Most
+parameters/variables are saved to a separate file, resulting in a large number
+of files. No, or only very limited, headers are provided. This format can make
+postprocessing easy, but should only be used if really necessary.
+
+.. note::
+
+    can be enabled using the **--output_format ascii** switch
 
 A typical result directory in this format contains the following files ::
 

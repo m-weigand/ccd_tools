@@ -1,0 +1,4 @@
+# id:fe9c5776-4bfc-4956-8531-57f2e0cad0a5
+# 20150730_15h:03m
+# /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat -d data/data.dat -o results_no_time --f_lambda 50 --tm_i_lambda 0 --trho0_lambda 0 --plot
+# forward response data format:rre_rmim
