@@ -25,10 +25,8 @@ This is the default output format.
     is currently not possible to directly use the OUTPUT files as INPUT files
     for new decompositions!
 
-
-
 header
-^^^^^^
+++++++
 
 Each output file consists of two parts: the header (four lines), and the data
 part (the rest of the file). The header looks like this ::
@@ -51,10 +49,10 @@ part (the rest of the file). The header looks like this ::
   in the files will always be in one line.
 * The fourth line contains the data header, indicating the type of data
   (sometimes even column descriptions).
-    results/
+  results/
 
 Files
-^^^^^
++++++
 
 A typical result directory in this format contains the following files ::
 

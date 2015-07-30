@@ -30,32 +30,24 @@ Python (x,y)
 *
 
   .. image:: install/windows/pythonxy/setup01.png
-    :scale: 50%
-
-*
+    :scale: 65%
 
   .. image:: install/windows/pythonxy/setup02.png
-    :scale: 50%
-
-*
+    :scale: 65%
 
   .. image:: install/windows/pythonxy/setup03.png
-    :scale: 50%
+    :scale: 65%
 
-*
+* Change the type of install to *full*
 
   .. image:: install/windows/pythonxy/setup04.png
-    :scale: 50%
-
-*
+    :scale: 65%
 
   .. image:: install/windows/pythonxy/setup05.png
-    :scale: 50%
-
-*
+    :scale: 65%
 
   .. image:: install/windows/pythonxy/setup06.png
-    :scale: 50%
+    :scale: 65%
 
 Anaconda
 --------
@@ -66,52 +58,66 @@ Anaconda
 * Start by opening the file manager in the download directoy:
 
   .. image:: install/windows/anaconda/file_explorer.png
-    :scale: 50%
+    :scale: 65%
 
 * The following screenshots show the steps of the setup wizard. Usually all
   presets can be accepted by clicking on the 'next' button.
 
   .. image:: install/windows/anaconda/setup1.png
-    :scale: 50%
-
-*
+    :scale: 65%
 
   .. image:: install/windows/anaconda/setup2.png
-    :scale: 50%
-
-*
+    :scale: 65%
 
   .. image:: install/windows/anaconda/setup3.png
-    :scale: 50%
+    :scale: 65%
 
-* 
+
   .. image:: install/windows/anaconda/setup4.png
-    :scale: 50%
+    :scale: 65%
 
-*
+.. warning::
+
+    Note that Anaconda (as tested in Juli, 2015) does not register the .py
+    extension with the Python interpreter. That means that, at this point, you
+    cannot click on a Python file and execute it as any executable. The
+    following screenshots show you how to register Python with the **.py**
+    extension.
+
+* Find a **.py** file. If in doubt, use the Anaconda installation directory
+  (here: **C:\\Users\Maximilian\\Anaconda\\Scripts**, the Windows user is
+  Maximilian, replace with your user name). Right click on the Python file, and
+  select "Properties".
+
   .. image:: install/windows/anaconda/setup5.png
-    :scale: 50%
+    :scale: 65%
 
-*
+* Find the line starting with "Opens with:", and select "Change"
+
   .. image:: install/windows/anaconda/setup6.png
-    :scale: 50%
+    :scale: 65%
 
-*
+* A new window opens that lists all available programs registered with the
+  operating system. Choose "Look for another app on this PC" at the bottom.
+
   .. image:: install/windows/anaconda/setup7.png
-    :scale: 50%
+    :scale: 65%
 
-*
+* A normal file-open dialog appears. Select the python.exe binary in the
+  Anaconda installation directory (here: **C:\\Users\Maximilian\\Anaconda**),
+  and click "open".
+
   .. image:: install/windows/anaconda/setup8.png
-    :scale: 50%
+    :scale: 65%
 
-*
+* Finally, the properties dialog of the python file should look like this:
 
   .. image:: install/windows/anaconda/setup9.png
-    :scale: 50%
+    :scale: 65%
 
 *
   .. image:: install/windows/anaconda/setup10.png
-    :scale: 50%
+    :scale: 65%
 
 
 Installing the DD tools

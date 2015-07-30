@@ -63,3 +63,9 @@ relevant if you plan on changing the code):
 The Debye decomposition tools (including the components "DD_Interfaces" and
 "geccoinv") are  licenced under the GPL 3 or later
 (https://www.gnu.org/licenses/licenses.html#GPL).
+
+.. note::
+
+    If you are reading this manual as a PDF file, please note that download
+    links do not work. Please refer to the corresponding HTML version for these
+    links.

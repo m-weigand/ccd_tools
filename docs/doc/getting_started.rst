@@ -29,6 +29,8 @@ postprocessing can be applied to the output directory.
 Batch files
 -----------
 
+bla :ref:`environ_vars` asdf
+
 Windows
 #######
 
@@ -79,7 +81,8 @@ a decomposition call is: ::
      --tausel data_ext \
      --nr_cores=1 --plot
 
-Environment variables can also be set only for a given command by prepending the assignment before the command::
+Environment variables can also be set only for a given command by prepending
+the assignment before the command::
 
     DD_COND=0 DD_STARTING_MODEL=3 dd_single.py -f frequencies.dat -d data.dat \
      -n 20 -o results \
@@ -188,8 +191,10 @@ The spectrum can now be fitted to a Debye decomposition using the command
     dd_single.py -f frequencies.dat -d data.dat -o results1/
 
 This call uses a line search to find an optimal lambda value, and saves fit
-results in the directory **results1/**. The `--plot` option results in the last
-iteration being plotted:
+results in the directory **results1/**. The last iteration will be ploted if
+the option `- -plot` is added to the call::
+
+    dd_single.py -f frequencies.dat -d data.dat -o results1/ --plot
 
 .. image:: example1_single/results1/plot_spec_000_iteration0005.png
     :align: center
