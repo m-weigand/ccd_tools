@@ -179,20 +179,24 @@ def initialize_new_test_dir(options):
 
 
 def get_cmd(testcfg_file):
-    binary = _get_binary(options)
+    available_binaries = ('dd_single.py', 'dd_time.py')
+    regexes = [re.compile(x) for x in available_binaries]
+
     # read test.cfg file, fourth line
     with open(testcfg_file, 'r') as fid:
         cmd = []
         add_to_cmd = False
-        # find initial call to dd
+        # find initial call to dd_single or dd_time
         for line in fid.readlines():
+            # if the binaries was already found
             if add_to_cmd:
                 cmd.append(line.strip())
-            expression = re.compile(binary)
-            if(not line.startswith('#') and
-               re.search(expression, line) is not None):
-                cmd.append(line.strip())
-                add_to_cmd = True
+            # look for the binaries
+            if not line.startswith('#'):
+                for regex in regexes:
+                    if re.search(regex, line) is not None:
+                        cmd.append(line.strip())
+                        add_to_cmd = True
     return cmd
 
 
@@ -206,7 +210,8 @@ def record_test(test_dir):
 
     cmd = get_cmd('test.cfg')
     cmd += [' -f ../../frequencies.dat ',
-            ' --data_file ../../data.dat'
+            ' --data_file ../../data.dat',
+            '--output_format ascii',
             ]
     cmd = ' '.join(cmd)
     pwd = os.getcwd()
@@ -232,7 +237,8 @@ def run_test(test_dir):
     cmd = get_cmd('test.cfg')
     cmd += ['-f frequencies.dat ',
             '--data_file data.dat',
-            '-o active_run'
+            '-o active_run',
+            '--output_format ascii',
             ]
     cmd = ' '.join(cmd)
 
