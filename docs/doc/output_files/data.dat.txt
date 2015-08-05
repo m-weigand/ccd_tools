@@ -1,0 +1,9 @@
+
+
+* *data.dat* contains the input data saved in the format used by the chosen
+  forward model. Each line contains one full spectrum with 2 * N columns, with
+  N being the number of frequencies. If the resistivity formulation is used for the decomposition
+  process, the first N columns contain the real parts of the resistivities, if
+  the conductivity formulation is used, real parts of the conductivities are
+  stored here. Correspondingly, the second N columns contain imaginary parts of
+  either the resistivities, or the conductivities.

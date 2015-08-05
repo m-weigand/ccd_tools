@@ -74,7 +74,15 @@ A typical result directory in this format contains the following files ::
     0 directories, 14 files
 
 * **covf.dat**
+
 * **covm.dat**
+
+.. include:: output_files/data.dat.txt
+
+.. include:: output_files/f.dat.txt
+
+
+
 
 ascii format
 """"""""""""
@@ -149,7 +157,8 @@ These files are described below, sorted by category.
 Input data
 ++++++++++
 
-* *data.dat* contains the input data saved as :math:`\rho';\rho''~[\Omega m]`.
+.. include:: output_files/data.dat.txt
+
 * *data_format.dat* contains the data format in the format usable with the
   ``--data_format`` command line option (usually **cre_cim**).
 * Frequencies and corresponding angular frequencies (
@@ -170,9 +179,10 @@ Input data
 Filter results
 ++++++++++++++
 
-.. todo::
+.. note::
 
-    Explain filtering
+    Filtering using `ddps.py` is still an experimental feature and might not
+    work at the moment.
 
 * *filter_mask.dat* contains the remaining indices after a filter operation
   with `ddps.py`
@@ -194,7 +204,7 @@ Primary fit results
 * The chargeability values of the last iteration can be found in
   *stats_and_rms/m_i_results.dat*
 
-* The forward response of the final iteration is stored in *f.dat*
+.. include:: output_files/f.dat.txt
 
 * RMS values are stored in the subdirectory *stats_and_rms*, using the
   following files (final RMS of each spectrum per line). *real/imag* here
@@ -217,7 +227,7 @@ Primary fit results
         RMS_{\text{no error}} = \sqrt{\frac{1}{N} \sum_i^N d_i - f_i(m)}\\
         RMS_{\text{with error}} = \sqrt{\frac{1}{N} \sum_i^N \frac{d_i - f_i(m)}{\epsilon_i}}
 
-* The number of iterations for each spectrum are stored in *nr_iterations.dat*
+* The number of iterations actually used for each spectrum are stored in *nr_iterations.dat*.
 
 * Data weighting errors are stored in *errors.dat*
 

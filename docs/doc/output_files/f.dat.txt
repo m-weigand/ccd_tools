@@ -1,0 +1,7 @@
+
+* The forward response of the final iteration is stored in *f.dat*. Each row
+  contains one spectrum, with the first N columns containing either magnitudes
+  or real parts, corresponding to the N frequencies. The second N columns
+  contain either phase values or imaginary parts. Which parameters are stored in
+  the column blocks is defined in the output file *f_format.dat*.
+
