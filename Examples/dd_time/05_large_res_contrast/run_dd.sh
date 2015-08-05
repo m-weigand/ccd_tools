@@ -8,7 +8,7 @@ dd_time.py -f data/frequencies.dat --times data/times.dat\
     --data_format "cre_cmim"\
     -c 1\
     --tm_i_lambda 5\
-    --norm_mag 100 --plot
+    --norm 100 --plot --output_format ascii
 
 # plot time evolutation
 ddpt.py --plot_stats -i ${outdir}

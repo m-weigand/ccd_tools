@@ -10,7 +10,6 @@ DD_STARTING_MODEL=3 dd_time.py -f data/frequencies.dat --times data/times.dat\
 	--norm 10\
 	--f_lambda 1 --output_format ascii
 
-exit
 # fit with time regularization in rho0
 outdir="results_time_rho0"
 test -d ${outdir} && rm -r ${outdir}
@@ -19,7 +18,7 @@ dd_time.py -f data/frequencies.dat --times data/times.dat\
     -o ${outdir}\
     -c 1\
     --trho0_lambda 100\
-    --plot
+    --plot --output_format ascii
 
 # compare both fits
 ddpt.py --plot_stats --compare results_no_time results_time_rho0
