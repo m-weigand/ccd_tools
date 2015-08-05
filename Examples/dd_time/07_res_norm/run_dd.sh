@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DD_USE_LATEX=0
+
 # fit without any time regularization
 outdir="results_no_time"
 test -d ${outdir} && rm -r ${outdir}
