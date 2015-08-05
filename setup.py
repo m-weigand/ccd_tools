@@ -46,7 +46,8 @@ if __name__ == '__main__':
                    'src/dd_test/dd_test.py',
                    'src/ddps/ddps.py',
                    'src/ddpt/ddpt.py',
-                   'src/ddpst/ddpst.py'],
+                   'src/ddpst/ddpst.py',
+                   'src/ddplot/ddplot.py'],
           install_requires=['numpy', 'scipy>=0.12', 'matplotlib', 'geccoinv'],
           **extra
           )
