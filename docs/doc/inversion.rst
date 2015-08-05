@@ -4,7 +4,7 @@ Inversion and implementation details
 Inversion
 ---------
 
-The forward model is be formulated using the real and imaginary parts, and is a
+The forward model is formulated using the real and imaginary parts, and is a
 real valued function by stacking real and imaginary part on top of each other,
 i.e. by doubling the data space.
 
