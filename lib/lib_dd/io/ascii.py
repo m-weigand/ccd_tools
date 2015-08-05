@@ -5,9 +5,11 @@ This is the default output format
 import os
 import sys
 import json
+from operator import mul
 import numpy as np
 import lib_dd.version as version
 import lib_dd.interface as lDDi
+import general
 
 
 def save_base_results(final_iterations, data):
@@ -66,12 +68,9 @@ def save_base_results(final_iterations, data):
         np.savetxt('normalization_factors.dat', data['norm_factors'])
 
 
-
-
 def save_data(data, NDlist):
     """Save fit results to the current directory
     """
-
     final_iterations = [(x.iterations[-1], nr) for nr, x in enumerate(NDlist)]
 
     save_base_results(final_iterations, data)
@@ -102,12 +101,7 @@ def save_data(data, NDlist):
 
     # save model response
     with open('f.dat', 'w') as fid:
-        for index, itd in enumerate(final_iterations):
-            f_data = itd[0].Model.f(itd[0].m)[np.newaxis, :]
-            if norm_factors is not None:
-                f_data /= norm_factors[index]
-            np.savetxt(fid, f_data)
-    open('f_format.dat', 'w').write(itd[0].Data.obj.data_format)
+        general.save_f(fid, final_iterations, norm_factors)
 
     # save times
     if 'times' in data:

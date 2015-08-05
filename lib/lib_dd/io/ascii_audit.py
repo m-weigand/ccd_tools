@@ -4,6 +4,7 @@ import numpy as np
 import uuid
 import lib_dd.interface as lDDi
 import lib_dd.version as version
+import general
 
 
 def _get_header():
@@ -108,10 +109,7 @@ def save_data(data, norm_factors, final_iterations):
         fid.write(header)
         fid.write('# forward response data format:' +
                   final_iterations[0][0].Data.obj.data_format + '\n')
-        for index, itd in enumerate(final_iterations):
-            f_data = itd[0].Model.f(itd[0].m)[np.newaxis, :]
-            if norm_factors is not None:
-                f_data /= norm_factors[index]
+        general.save_f(fid, final_iterations, norm_factors)
 
     # save times
     if 'times' in data:
