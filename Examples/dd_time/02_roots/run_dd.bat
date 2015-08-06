@@ -12,3 +12,5 @@ dd_time.py -f frequencies.dat --times times.dat -d data.dat^
     --tm_i_lambda 1^
     --trho0_lambda 10000 --output_format ascii
 ddpt.py -i results_time_reg/ --plot_stats
+
+pause

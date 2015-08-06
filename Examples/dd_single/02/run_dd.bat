@@ -6,3 +6,5 @@ dd_single.py -f frequencies.dat -d data.dat^
     --tausel "10,1000"^
     --nr_cores=1^
     --plot
+
+pause

@@ -4,3 +4,5 @@ dd_single.py -f frequencies.dat -d data.dat -n 20 -o results --tausel data_ext^
     --plot^
     --plot_its^
     --plot_lcurve -1
+
+pause

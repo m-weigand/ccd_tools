@@ -17,3 +17,5 @@ dd_time.py -f data/frequencies.dat --times data/times.dat^
 
 REM compare both fits
 ddpt.py --plot_stats --compare results_no_time results_time_rho0
+
+pause

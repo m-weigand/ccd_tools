@@ -39,3 +39,5 @@ dd_time.py -f data/frequencies.dat^
 	--output_format ascii
 
 ddpt.py -i results_tw/ --plot_stats
+
+pause

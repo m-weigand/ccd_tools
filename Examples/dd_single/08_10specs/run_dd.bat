@@ -3,3 +3,5 @@ dd_single.py -f frequencies.dat -d data.dat^
     --nr_cores=2^
     --tausel data_ext^
     --lambda 1.0
+
+pause

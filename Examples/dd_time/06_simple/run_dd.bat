@@ -3,3 +3,5 @@ dd_time.py -f frequencies.dat --times times.dat -d data.dat^
     --f_lambda 5^
     --tm_i_lambda 0^
     --trho0_lambda 0 --plot
+
+pause

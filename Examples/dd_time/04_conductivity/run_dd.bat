@@ -10,3 +10,5 @@ dd_time.py -f data/frequencies.dat --times data/times.dat^
 REM plot time evolutation
 REM only works with --output_format ascii
 REM ddpt.py --plot_stats -i output${outdir}
+
+pause

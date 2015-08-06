@@ -8,3 +8,5 @@ dd_time.py -f data/frequencies.dat --times data/times.dat^
 
 REM plot time evolutation
 ddpt.py --plot_stats -i results_time
+
+pause

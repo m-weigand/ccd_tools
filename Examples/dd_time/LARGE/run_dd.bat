@@ -5,3 +5,5 @@ dd_time.py -f frequencies.dat --times times.dat -d data.dat -o results_time_reg 
 	--output_format ascii
 
 ddpt.py -i results_time_reg/ --plot_stats
+
+pause

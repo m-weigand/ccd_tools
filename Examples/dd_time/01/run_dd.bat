@@ -5,3 +5,5 @@ dd_time.py -f data/frequencies.dat^
   -o results -c 1^
   --f_lambda 10^
   --plot
+
+pause
