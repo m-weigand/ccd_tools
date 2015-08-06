@@ -66,9 +66,10 @@ def save_results(data, NDlist):
 
     # save normalization factors
     if('norm_factors' in data):
-        fid.write(header)
-        fid.write('# normalisation factors\n')
-        np.savetxt('normalization_factors.dat', data['norm_factors'])
+        with open('normalization_factors.dat', 'w') as fid:
+            fid.write(header)
+            fid.write('# normalisation factors\n')
+            np.savetxt(fid, data['norm_factors'])
 
     # save weighting factors
     Wd_diag = final_iterations[0][0].Data.Wd.diagonal()
