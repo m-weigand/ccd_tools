@@ -34,3 +34,5 @@ dd_single.py^
     --tausel data_ext^
     --lambda 1.0^
     --plot -c 1
+
+pause

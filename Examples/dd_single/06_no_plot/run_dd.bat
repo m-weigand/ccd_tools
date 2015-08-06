@@ -5,3 +5,4 @@ dd_single.py -f frequencies.dat -d data.dat -n 20^
 	--norm 10^
     --lambda 50
 
+pause
