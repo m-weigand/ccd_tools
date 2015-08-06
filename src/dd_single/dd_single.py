@@ -138,6 +138,10 @@ def handle_cmd_options():
                       default=None, dest="fixed_lambda")
     (options, args) = parser.parse_args()
 
+    # multi threading does not work on Windows
+    if platform.system() == "Windows":
+        options.nr_cores = 1
+
     # print version information if requested
     if(options.version):
         print(version._get_version_numbers())
