@@ -9,7 +9,9 @@ The installation for the Windows operating system consists of the following step
   corresponding environment variable).
 * Installation of the Debye decomposition tools
 
-There are multiple suitable Python distributions to choose from. At the moment the Anaconda distribution is recommended: http://continuum.io/downloads (use Python 2.7, 64 bit)
+There are multiple suitable Python distributions to choose from. At the moment
+the Anaconda distribution is recommended: http://continuum.io/downloads (use
+Python 2.7, 64 bit)
 
 In the following, please install only one of the Python distributions, and then
 proceed with the installation of the DD-Tools, and optionally the MikTex
@@ -148,3 +150,20 @@ Installing the DD tools
 
 .. image:: install/windows/miktex/setup07.png
     :scale: 65%
+
+Problems
+--------
+
+* if the decomposition starts, but command line options are not recognized,
+  this is usually a problem with incorrect file type associations. We provide a
+  file **fix_registry_windows.py** (which normally already executed during the
+  installation process) which tries to fix some of these problems. Just execute
+  it in order to implement the fixes.
+
+  In addition, the following web links discuss solutions to this kind of problems:
+
+  * http://stackoverflow.com/questions/9880540/python-command-line-arguments-windows
+  * http://bugs.python.org/issue7936
+  * http://eli.thegreenplace.net/2010/12/14/problem-passing-arguments-to-python-scripts-on-windows/
+
+
