@@ -46,7 +46,7 @@ def save_results(data, NDlist):
         fid.write('# relaxation times used for the decomposition\n')
         np.savetxt(fid, final_iterations[0][0].Data.obj.tau)
 
-    final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
+    # final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
 
     # save lambdas
     # TODO: We want all lambdas, not only from the last iteration
