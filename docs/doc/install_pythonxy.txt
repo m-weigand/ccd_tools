@@ -1,0 +1,25 @@
+
+Python (x,y)
+------------
+
+*
+
+  .. image:: install/windows/pythonxy/setup01.png
+    :scale: 65%
+
+  .. image:: install/windows/pythonxy/setup02.png
+    :scale: 65%
+
+  .. image:: install/windows/pythonxy/setup03.png
+    :scale: 65%
+
+* Change the type of install to *full*
+
+  .. image:: install/windows/pythonxy/setup04.png
+    :scale: 65%
+
+  .. image:: install/windows/pythonxy/setup05.png
+    :scale: 65%
+
+  .. image:: install/windows/pythonxy/setup06.png
+    :scale: 65%

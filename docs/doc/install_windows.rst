@@ -9,45 +9,11 @@ The installation for the Windows operating system consists of the following step
   corresponding environment variable).
 * Installation of the Debye decomposition tools
 
-There are multiple suitable Python distributions to choose from. We provide
-screenshot installation instructions for the following distributions:
-
-* For a complete Python distribution, use Python(x,y) 2.7.x
-   (https://code.google.com/p/pythonxy/)
-
-* The Anaconda Python distribution can also be used:
-  http://continuum.io/downloads
-
-  Python 2.7, 64 bit
+There are multiple suitable Python distributions to choose from. At the moment the Anaconda distribution is recommended: http://continuum.io/downloads (use Python 2.7, 64 bit)
 
 In the following, please install only one of the Python distributions, and then
 proceed with the installation of the DD-Tools, and optionally the MikTex
 distribution.
-
-Python (x,y)
-------------
-
-*
-
-  .. image:: install/windows/pythonxy/setup01.png
-    :scale: 65%
-
-  .. image:: install/windows/pythonxy/setup02.png
-    :scale: 65%
-
-  .. image:: install/windows/pythonxy/setup03.png
-    :scale: 65%
-
-* Change the type of install to *full*
-
-  .. image:: install/windows/pythonxy/setup04.png
-    :scale: 65%
-
-  .. image:: install/windows/pythonxy/setup05.png
-    :scale: 65%
-
-  .. image:: install/windows/pythonxy/setup06.png
-    :scale: 65%
 
 Anaconda
 --------
@@ -84,10 +50,10 @@ Anaconda
     following screenshots show you how to register Python with the **.py**
     extension.
 
-* Find a **.py** file. If in doubt, use the Anaconda installation directory
-  (here: **C:\\Users\Maximilian\\Anaconda\\Scripts**, the Windows user is
-  Maximilian, replace with your user name). Right click on the Python file, and
-  select "Properties".
+* Find the file **fix_registry_windows.py** that resides in the root directory
+  of the zip-archive (or the extracted directory). Note that sometimes the file
+  extension *.py* is not shown.  Right click on the file, and select
+  "Properties".
 
   .. image:: install/windows/anaconda/setup5.png
     :scale: 65%
@@ -160,3 +126,25 @@ Installing the DD tools
     We had some problems and long waiting times during the installation of
     MiKTex. Therefore we disabled the Latex support in the DD tools for the
     Windows installation, and made MiKTex an optional requirement.
+
+
+.. image:: install/windows/miktex/setup01.png
+    :scale: 65%
+
+.. image:: install/windows/miktex/setup02.png
+    :scale: 65%
+
+.. image:: install/windows/miktex/setup03.png
+    :scale: 65%
+
+.. image:: install/windows/miktex/setup04.png
+    :scale: 65%
+
+.. image:: install/windows/miktex/setup05.png
+    :scale: 65%
+
+.. image:: install/windows/miktex/setup06.png
+    :scale: 65%
+
+.. image:: install/windows/miktex/setup07.png
+    :scale: 65%
