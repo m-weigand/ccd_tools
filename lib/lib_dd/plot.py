@@ -44,7 +44,7 @@ class plot_iteration():
 
         def __enter__(self):
             space_top = 1.2
-            size_x = 12
+            size_x = 14
             size_y = 2 * self.nr_spectra + space_top
 
             fig, axes = plt.subplots(self.nr_spectra, 5,
