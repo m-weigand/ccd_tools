@@ -10,7 +10,9 @@ function baseline()
         --tausel data_ext\
         --tm_i_lambda 0\
         --trho0_lambda 0\
-        --plot
+        --plot\
+		--output_format ascii
+
     ddpt.py -i results_no_time --plot_stats
 }
 
@@ -25,7 +27,8 @@ function rho0_reg()
         --tausel data_ext\
         --tm_i_lambda 0\
         --trho0_lambda 100000\
-        --plot
+        --plot\
+		--output_format ascii
 
     ddpt.py -i results/ --plot_stats
 }
@@ -42,14 +45,13 @@ function rho0_time_diff()
         --trho0_first_order\
         --trho0_lambda 600000\
         --plot\
-        --tw_rho0
+        --tw_rho0\
+		--output_format ascii
 
     ddpt.py -i results_tw/ --plot_stats
 }
 
 
-#baseline
-#rho0_reg
+baseline
+rho0_reg
 rho0_time_diff
-
-./compare_rho0.py
