@@ -1,0 +1,4 @@
+
+* *errors.dat*: Stores the data weighting errors from the matrix
+  :math:`\underline{\underline{W}}_d`.
+

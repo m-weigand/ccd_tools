@@ -1,0 +1,3 @@
+
+* *tau.dat*: stores the relaxation times used for decomposition
+

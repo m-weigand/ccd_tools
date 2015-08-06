@@ -1,0 +1,4 @@
+
+* *covf.dat*: Frequency coverage values for all spectra. Each line contains the
+  data for one spectrum, with N columns corresponding to the N frequency values
+  of covf.

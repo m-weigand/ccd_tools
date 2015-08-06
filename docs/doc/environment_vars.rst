@@ -14,7 +14,17 @@ Environment variables
 * **DD_C**: (resistivity only) Use a Cole-Cole decomposition with the provided
   *c* value. Values larger than 0 and smaller, or equal to, 1 are valid.
   Default is 1 (the Debye decomposition).
-* **DD_TAU_X**: internal parameter
+* **DD_TAU_X**: Sets the cumulative relaxation times :math:`\tau_x` which shall
+  be computed. The string separates the requested percentages as fractions with
+  ';' characters.
+
+  For example, the following call to **dd_single** computes the 20%, 35%, and 60%
+  percentiles of the RTD:
+
+  ::
+
+      DD_TAU_X="0.2;0.35;0.6" dd_single.py
+
 * **DD_DEBUG_STARTING_PARS**: internal parameter
 * **DD_USE_LATEX**: Enable the Latex backend. Plot labels will be processed by
   Latex, producing better plot output. On Windows, this requires a working

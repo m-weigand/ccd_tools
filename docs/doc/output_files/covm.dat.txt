@@ -1,0 +1,4 @@
+
+* *covm.dat*: Parameter coverage values for all spectra. Each line contains the
+  data for one spectrum, with M columns corresponding to the M model parameters
+  (i.e. :math:`\rho_0` and the :math:`m_i` values).

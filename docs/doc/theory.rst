@@ -13,3 +13,4 @@ Theory of SIP models
     dd_theory_eps
     dd_coverage
     dd_general
+    integral_parameters

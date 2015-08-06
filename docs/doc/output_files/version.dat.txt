@@ -1,0 +1,4 @@
+
+* *version.dat*: This file contains the package versions of either dd_tools, or
+  geccoinv and dd_interface (depending on the installation method, dd_tools
+  groups the later two packages).
