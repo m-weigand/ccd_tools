@@ -129,6 +129,11 @@ Installing the DD tools
     MiKTex. Therefore we disabled the Latex support in the DD tools for the
     Windows installation, and made MiKTex an optional requirement.
 
+.. note::
+
+    The first plotting call will take a LONG time, as MiKTex will
+    (automatically) install (and download) all required latex packages.
+    Subsequent calls should be much faster!
 
 .. image:: install/windows/miktex/setup01.png
     :scale: 65%

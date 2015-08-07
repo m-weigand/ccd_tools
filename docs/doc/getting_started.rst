@@ -29,8 +29,6 @@ postprocessing can be applied to the output directory.
 Batch files
 -----------
 
-bla :ref:`environ_vars` asdf
-
 Windows
 #######
 
@@ -191,8 +189,15 @@ The spectrum can now be fitted to a Debye decomposition using the command
     dd_single.py -f frequencies.dat -d data.dat -o results1/
 
 This call uses a line search to find an optimal lambda value, and saves fit
-results in the directory **results1/**. The last iteration will be ploted if
-the option `- -plot` is added to the call::
+results in the directory **results1/**.
+
+By default, no plot is created for the fit results. The command **ddplot.py**
+creates these plots afterwards (output files are named **spec_*.png**: ::
+
+    ddplot.py -i results1/
+
+In addition, the last iteration can directly be plotted by **dd_time.py** by
+using the option `- -plot`::
 
     dd_single.py -f frequencies.dat -d data.dat -o results1/ --plot
 
@@ -337,4 +342,9 @@ directory **results/**, with the plot file **plot_times_iteration0006.png**:
 .. image:: example2_time/results_time/plot_times_iteration0005.png
     :align: center
     :scale: 70%
+
+With **dd_time.py**, too, plot can be created afterward by using the command:
+
+::
+    ddplot.py -i results1/
 
