@@ -6,7 +6,8 @@ complex
 
 .. math::
 
-    \hat{\rho}(\omega) &= \rho_0 \left[ 1 - \sum_k m_k \left(1 - \frac{1}{1 + (j \omega \tau_k)^c} \right) \right]
+    \hat{\rho}(\omega) &= \rho_0 \left[ 1 - \sum_k m_k \left(1 - \frac{1}{1 +
+    (j \omega \tau_k)^c} \right) \right]
 
 real and imaginary parts
 ------------------------
@@ -35,15 +36,16 @@ derivatives
     (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}\\
     \frac{\partial \hat{\rho'}(\omega)}{\partial \tau} &= \rho_0 \frac{-m
     \omega^c c \tau^{c-1} cos(\frac{c \pi}{2} - m \omega^{2 c} 2 c \tau^{2c -
-    1}}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}} +
-    \rho_0 \frac{\left[m (\omega \tau)^c (cos(\frac{c \pi}{2}) + (\omega
+    1}}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}} +\\
+    &\rho_0 \frac{\left[m (\omega \tau)^c (cos(\frac{c \pi}{2}) + (\omega
     \tau)^c) \right] \cdot \left[ 2 \omega^c c \tau^{c-1} cos(\frac{c \pi}{2})
     + 2 c \omega^{2 c} \tau^{2 c - 1}\right]}{\left[1 + 2 (\omega \tau)^c
       cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}\right]^2}\\
     \frac{\partial \hat{\rho'}(\omega)}{\partial c} &= \rho_0 \frac{-m
     ln(\omega \tau) (\omega \tau)^c cos(\frac{c \pi}{2}) + m (\omega\tau)^c
     \frac{\pi}{2} sin(\frac{c \pi}{2}) + ln(\omega \tau)(\omega \tau)^c}{1 + 2
-    (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}} + \rho_0
+    (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}} +\\
+    &\rho_0
     \frac{\left[-m (\omega \tau)^c (cos(\frac{c \pi}{2}) + (\omega \tau)^c)
     \right] \cdot \left[ -2 ln(\omega \tau) (\omega \tau)^c cos(\frac{c
     \pi}{2}) + 2 (\omega \tau)^c \frac{\pi}{2} cos(\frac{c \pi}{2} + 2
@@ -60,14 +62,16 @@ derivatives
     \pi}{2}) + (\omega \tau)^{2 c}}\\
     \frac{\partial \hat{\rho''}(\omega)}{\partial \tau} &= \rho_0 \frac{-m
     \omega^c c \tau^{c-1} sin(\frac{c \pi}{2} }{1 + 2 (\omega \tau)^c
-    cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}} + \rho_0 \frac{\left[-m (\omega
+    cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}} +\\
+    &\rho_0 \frac{\left[-m (\omega
     \tau)^c sin(\frac{c \pi}{2} \right] \cdot \left[ 2 \omega^c c \tau^{c-1}
     cos(\frac{c \pi}{2}) + 2 c \omega^{2 c} \tau^{2 c - 1}\right]}{\left[1 + 2
     (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}\right]^2}\\
     \frac{\partial \hat{\rho''}(\omega)}{\partial c} &= \rho_0 \frac{-m
     sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
     \frac{\pi}{2} cos(\frac{\pi}{2}}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2})
-    + (\omega \tau)^{2 c}} + \rho_0 \frac{\left[-m (\omega \tau)^c cos(\frac{c
+    + (\omega \tau)^{2 c}} +\\
+     &\rho_0 \frac{\left[-m (\omega \tau)^c cos(\frac{c
       \pi}{2}) \right] \cdot \left[ -2 ln(\omega \tau) (\omega \tau)^c
       cos(\frac{c \pi}{2}) + 2 (\omega \tau)^c \frac{\pi}{2} cos(\frac{c
       \pi}{2}) \right] + \left[2 ln(\omega \tau) (\omega \tau)^{2

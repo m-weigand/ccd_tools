@@ -346,5 +346,6 @@ directory **results/**, with the plot file **plot_times_iteration0006.png**:
 With **dd_time.py**, too, plot can be created afterward by using the command:
 
 ::
+
     ddplot.py -i results1/
 

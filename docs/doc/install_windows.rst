@@ -17,8 +17,8 @@ In the following, please install only one of the Python distributions, and then
 proceed with the installation of the DD-Tools, and optionally the MikTex
 distribution.
 
-Anaconda
---------
+Installing the Anaconda Python distribution
+-------------------------------------------
 
 * Download the Python 2.7, 64 bit version of the Anaconda distribution:
   http://continuum.io/downloads
@@ -55,38 +55,51 @@ Anaconda
 * Find the file **fix_registry_windows.py** that resides in the root directory
   of the zip-archive (or the extracted directory). Note that sometimes the file
   extension *.py* is not shown.  Right click on the file, and select
-  "Properties".
+  "Open with".
 
   .. image:: install/windows/anaconda/setup5.png
     :scale: 65%
 
-* Find the line starting with "Opens with:", and select "Change"
+* The following dialog in Windows 7 looks like:
+
+  .. image:: install/windows/anaconda/open_with_01_win7.png
+    :scale: 65%
+
+* The Windows 8.1 version looks like this:
+
+  .. image:: install/windows/anaconda/open_with_01.png
+    :scale: 65%
+
+* Click on 'More options' to expand the window:
 
   .. image:: install/windows/anaconda/setup6.png
     :scale: 65%
 
-* A new window opens that lists all available programs registered with the
-  operating system. Choose "Look for another app on this PC" at the bottom.
+* Check the box "Use this app for all .py files". Scroll down and click on
+  "Look for another app on this PC" at the bottom:
 
   .. image:: install/windows/anaconda/setup7.png
     :scale: 65%
 
-* A normal file-open dialog appears. Select the python.exe binary in the
-  Anaconda installation directory (here: **C:\\Users\Maximilian\\Anaconda**),
+* A file-open dialog appears. Select the python.exe binary in the Anaconda
+  installation directory (in this example **C:\\Users\Maximilian\\Anaconda**),
   and click "open".
 
   .. image:: install/windows/anaconda/setup8.png
     :scale: 65%
 
-* Finally, the properties dialog of the python file should look like this:
+* The icon next to all Python (.py) files should now show the Python logo:
 
-  .. image:: install/windows/anaconda/setup9.png
+  .. image:: install/windows/anaconda/setup11.png
     :scale: 65%
 
-*
-  .. image:: install/windows/anaconda/setup10.png
-    :scale: 65%
+.. note::
 
+    During the process of associating the file type .py with the Python.exe
+    executable the Python script **fix_registry_windows.py** was executed. This
+    script tries to fix some common problems with the file type association. If
+    you associated the extension via another way, please execute this script
+    once.
 
 Installing the DD tools
 -----------------------
