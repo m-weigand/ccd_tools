@@ -108,7 +108,7 @@ def save_data(data, norm_factors, final_iterations):
     # save forward response
     with open('f.dat', 'w') as fid:
         fid.write(header)
-        fid.write('# forward response data format:' +
+        fid.write('# forward response data format: ' +
                   final_iterations[0][0].Data.obj.data_format + '\n')
         general.save_f(fid, final_iterations, norm_factors)
 
