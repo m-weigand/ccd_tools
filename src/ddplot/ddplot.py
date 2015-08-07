@@ -63,7 +63,7 @@ def _get_result_type(directory):
     Possible types are 'ascii' and 'ascii_audit'
     """
     if not os.path.isdir(directory):
-        raise IOException('Directory does not exist: {0}'.format(directory))
+        raise Exception('Directory does not exist: {0}'.format(directory))
 
     if os.path.isdir(directory + os.sep + 'stats_and_rms'):
         return 'ascii'
@@ -103,11 +103,79 @@ def load_ascii_audit_data(directory):
         data['d_rre'] = rmag
         data['d_rim'] = rpha
 
+    with open(directory + os.sep + 'f.dat', 'r') as fid:
+        [fid.readline() for x in xrange(0, 3)]
+        header = fid.readline().strip()
+        index = header.find('format:')
+        data_format = header[index + 8:].strip()
+        subdata = np.loadtxt(fid)
+        temp = SC.convert(data_format, 'rmag_rpha', subdata)
+        rmag, rpha = SC.split_data(temp)
+        data['f_rmag'] = rmag
+        data['f_rpha'] = rpha
+        temp = SC.convert(data_format, 'cre_cim', subdata)
+        rmag, rpha = SC.split_data(temp)
+        data['f_cre'] = rmag
+        data['f_cim'] = rpha
+        temp = SC.convert(data_format, 'rre_rim', subdata)
+        rmag, rpha = SC.split_data(temp)
+        data['f_rre'] = rmag
+        data['f_rim'] = rpha
+
+    data['rtd'] = np.atleast_2d(
+        np.loadtxt(directory + os.sep + 'm_i.dat', skiprows=4))
+
+    data['tau'] = np.loadtxt(directory + os.sep + 'tau.dat', skiprows=4)
+
     return data
 
 
 def load_ascii_data(directory):
-    pass
+    data = {}
+    frequencies = np.loadtxt(directory + os.sep + 'frequencies.dat')
+    data['frequencies'] = frequencies
+
+    data_format = open(
+        directory + os.sep + 'data_format.dat', 'r').readline().strip()
+
+    subdata = np.loadtxt(directory + os.sep + 'data.dat')
+    temp = SC.convert(data_format, 'rmag_rpha', subdata)
+    rmag, rpha = SC.split_data(temp)
+    data['d_rmag'] = rmag
+    data['d_rpha'] = rpha
+    temp = SC.convert(data_format, 'cre_cim', subdata)
+    rmag, rpha = SC.split_data(temp)
+    data['d_cre'] = rmag
+    data['d_cim'] = rpha
+    temp = SC.convert(data_format, 'rre_rim', subdata)
+    rmag, rpha = SC.split_data(temp)
+    data['d_rre'] = rmag
+    data['d_rim'] = rpha
+
+
+    f_format = open(
+        directory + os.sep + 'f_format.dat', 'r').readline().strip()
+    subdata = np.loadtxt(directory + os.sep + 'f.dat')
+    temp = SC.convert(f_format, 'rmag_rpha', subdata)
+    rmag, rpha = SC.split_data(temp)
+    data['f_rmag'] = rmag
+    data['f_rpha'] = rpha
+    temp = SC.convert(f_format, 'cre_cim', subdata)
+    rmag, rpha = SC.split_data(temp)
+    data['f_cre'] = rmag
+    data['f_cim'] = rpha
+    temp = SC.convert(f_format, 'rre_rim', subdata)
+    rmag, rpha = SC.split_data(temp)
+    data['f_rre'] = rmag
+    data['f_rim'] = rpha
+
+    data['rtd'] = np.atleast_2d(
+        np.loadtxt(directory + os.sep + 'stats_and_rms' + os.sep +
+                   'm_i_results.dat'))
+
+    data['tau'] = np.loadtxt(directory + os.sep + 'tau.dat')
+    return data
+
 
 def extract_indices_from_range_str(filter_string, max_index=None):
     """
@@ -164,12 +232,12 @@ def plot_data(data, options):
     frequencies = data['frequencies']
 
     for index in indices:
-        fig, axes = plt.subplots(1, 5, figsize=(12, 3))
+        fig, axes = plt.subplots(1, 5, figsize=(14, 3))
 
         # Magnitude and phase values
         ax = axes[0]
         ax.semilogx(frequencies, data['d_rmag'][index, :], '.', color='k')
-        # ax.semilogx(frequencies, rmag_rpha_fit[:, 0], '-', color='k')
+        ax.semilogx(frequencies, data['f_rmag'][index, :], '-', color='k')
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r'$|\rho|~[\Omega m]$')
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
@@ -177,7 +245,7 @@ def plot_data(data, options):
 
         ax = axes[1]
         ax.semilogx(frequencies, -data['d_rpha'][index, :], '.', color='k')
-        # ax.semilogx(frequencies, -rmag_rpha_fit[:, 1], '-', color='k')
+        ax.semilogx(frequencies, -data['f_rpha'][index, :], '-', color='k')
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r'$-\phi~[mrad]$')
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
@@ -187,21 +255,22 @@ def plot_data(data, options):
         ## real and imaginary parts
         ax = axes[2]
         ax.semilogx(frequencies, data['d_rre'][index, :], '.', color='k')
-        # ax.semilogx(frequencies, cre_cim_fit[:, 0], '-', color='gray')
+        ax.semilogx(frequencies, data['f_rre'][index, :], '-', color='k')
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r"$-\rho'~[\Omega m]$", color='k')
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
         ax = axes[2].twinx()
         ax.semilogx(frequencies, data['d_cre'][index, :], '.', color='gray')
-        # ax.semilogx(frequencies, cre_cim_fit[:, 0], '-', color='gray')
+        ax.semilogx(frequencies, data['f_cre'][index, :], '-', color='gray')
         ax.set_ylabel(r"$-\sigma'~[S/m]$", color='gray')
+        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
         ax = axes[3]
         ax.semilogx(frequencies, -data['d_rim'][index, :], '.', color='k',
                     label='data')
-        # ax.semilogx(frequencies, cre_cim_fit[:, 1], '-', color='gray',
-        #             label='fit')
+        ax.semilogx(frequencies, -data['f_rim'][index, :], '-', color='k',
+                    label='fit')
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r"$-\rho''~[\Omega m]$", color='k')
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
@@ -209,16 +278,19 @@ def plot_data(data, options):
         ax = axes[3].twinx()
         ax.semilogx(frequencies, data['d_cim'][index, :], '.', color='gray',
                     label='data')
-        # ax.semilogx(frequencies, cre_cim_fit[:, 1], '-', color='gray',
-        #             label='fit')
+        ax.semilogx(frequencies, data['f_cim'][index, :], '-', color='gray',
+                    label='fit')
         # ax.set_xlabel('frequency [Hz]')
         ax.set_ylabel(r"$-\sigma''~[S/m]$", color='gray')
-        # self._plot_rre_rim(nr, axes[nr, 0:2], D[d], F[d], it)
-        # self._plot_rmag_rpha(nr, axes[nr, 2:4], D[d], F[d], it)
+        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
+
         # self._plot_rtd(nr, axes[nr, 4], M[m], it)
-        # ax1 = axes[nr, 0].twinx()
-        # ax2 = axes[nr, 1].twinx()
-        # self._plot_cre_cim(nr, [ax1, ax2], D[d], F[d], it)
+
+        ax = axes[4]
+        ax.semilogx(data['tau'], data['rtd'][index, :], '.-', color='k')
+        ax.set_xlabel(r'$\tau~[s]$')
+        ax.set_ylabel(r'$log_{10}(m)$')
+        ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
         fig.tight_layout()
         fig.savefig('spec_{0:03}.png'.format(index), dpi=300)
