@@ -15,7 +15,8 @@ def _get_header():
     datetimestr = datetime.datetime.strftime(
         datetime.datetime.now(), '%Y%m%d_%Hh:%Mm')
 
-    command = lDDi.get_command()
+    command = lDDi.get_command().split("\n")
+    command = ';'.join(command)
 
     # assemble header
     header = '\n'.join(('# id:' + uuidstr,
