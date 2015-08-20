@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# pylint: disable=unused-wildcard-import,wildcard-import
 """
 Debye decomposition interface for spectral induced polarisation data. One or
 more spectra can be fitted using a Debye decomposition approach.
