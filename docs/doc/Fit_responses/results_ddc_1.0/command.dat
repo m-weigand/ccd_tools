@@ -1,0 +1,2 @@
+export DD_STARTING_MODEL="3"
+/home/mweigand/.local/bin/dd_single.py -o results_ddc_1.0 --output_format ascii --lambda 5 --plot

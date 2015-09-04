@@ -338,3 +338,31 @@ Normally distributed noise can then be added to this spectrum:
 
    fig.subplots_adjust(hspace=0.3, wspace=0.4)
    fig.show()
+
+
+Using the Cole-Cole distribution
+--------------------------------
+
+A single-termin Cole-Cole spectrum with c = 0.5 was fitted using kernel functions of c = (0.3, 0.5, 0.7, and 1.0).
+
+* c = 0.3:
+
+  The kernel function is too wide to fit the response:
+
+  .. image:: Fit_responses/results_ddc_0.3/plot_spec_000_iteration0001.png
+
+* c = 0.5
+
+  The kernel function has the same slope as the response. Any widening of the
+  peak in the RTD is due to regularisation smoothing.
+
+  .. image:: Fit_responses/results_ddc_0.5/plot_spec_000_iteration0012.png
+
+* c = 0.7
+
+  .. image:: Fit_responses/results_ddc_0.7/plot_spec_000_iteration0004.png
+
+* c = 1.0
+
+  .. image:: Fit_responses/results_ddc_1.0/plot_spec_000_iteration0004.png
+
