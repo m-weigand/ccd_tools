@@ -37,7 +37,8 @@ def get_command():
                 'DD_STARTING_MODEL',
                 'DD_TAU_X',
                 'DD_DEBUG_STARTING_PARS',
-                'DD_USE_LATEX'):
+                'DD_USE_LATEX',
+                'DD_C'):
         if key in os.environ:
             cmd += 'export {0}="{1}"\n'.format(key, os.environ[key])
 
