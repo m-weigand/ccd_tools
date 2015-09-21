@@ -4,6 +4,10 @@ Getting Started
 This section describes the basic workflow for the decomposition of SIP spectra,
 and provides two detailed usage examples.
 
+.. note::
+
+    Download links are only present in the HTML version of this manual!
+
 Workflow
 --------
 
@@ -126,8 +130,9 @@ a Debye decomposition scheme:
 You need a frequency file which contains the frequencies, each in a seperate
 line, in ascending order:
 
-frequency.dat(:download:`Download frequencies.dat
-(unix)<example1_single/frequencies.dat>`, :download:`Download frequencies.dat
+frequency.dat (:download:`Download frequencies.dat
+(unix)<example1_single/frequencies.dat>`)
+(:download:`Download frequencies.dat
 (Windows)<example1_single/data_windows/frequencies.dat>`): ::
 
     0.0010
@@ -163,9 +168,13 @@ magnitude values (:math:`\Omega m`) corresponding to the frequencies stored in
 *frequencies.dat*. The following N columns represent the corresponding phase
 values.
 
-data.dat (:download:`Download data.dat (unix)<example1_single/data.dat>`,
-:download:`Download data.dat
-(Windows)<example1_single/data_windows/data.dat>`): ::
+data.dat 
+(:download:`download data.dat (unix)<example1_single/data.dat>`)
+
+(:download:`download data.dat (Windows)
+<example1_single/data_windows/data.dat>`)
+
+::
 
     49.345594 49.120225 48.860658 48.589371 48.333505 48.113950 47.939222\
     47.807051 47.709583 47.637735 47.583349 47.539704 47.501267 47.463162\
@@ -176,6 +185,8 @@ data.dat (:download:`Download data.dat (unix)<example1_single/data.dat>`,
     -8.272438 -11.148023 -14.941904 -19.734922 -25.441545 -31.665354\
     -37.581057 -41.99903
 
+
+
 .. note::
 
     The previous listing for the data.dat file contains only one line. For
@@ -183,8 +194,8 @@ data.dat (:download:`Download data.dat (unix)<example1_single/data.dat>`,
     characters.
 
 The spectrum can now be fitted to a Debye decomposition using the command
-(:download:`download linux shell file<example1_single/run_dd1.sh>`,
-:download:`download Windows shell file<example1_single/run_dd1.bat>`): ::
+(:download:`download linux shell file<example1_single/run_dd1.sh>`)
+(:download:`download Windows shell file<example1_single/run_dd1.bat>`): ::
 
     dd_single.py -f frequencies.dat -d data.dat -o results1/
 
@@ -206,7 +217,7 @@ using the option `- -plot`::
 
 
 The fit can be further controlled by providing a fixed lambda value
-(`--lambda`) and by using an advanced starting model (nr 3, using the
+(`- -lambda`) and by using an advanced starting model (nr 3, using the
 environment variable **DD_STARTING_MODEL**):
 
 Windows (:download:`download Windows batch file<example1_single/run_dd2.bat>`): ::
@@ -270,14 +281,16 @@ Suppose the following spectra belong to a time-lapse SIP measurement:
 
 Download the raw data files:
 
-* data.dat (:download:`Download data.dat (unix)<example2_time/data/data.dat>`,
-  :download:`Download data.dat (Windows)<example2_time/data/data_windows.dat>`
+* data.dat (:download:`Download data.dat (unix)<example2_time/data/data.dat>`)
+  (:download:`Download data.dat (Windows)<example2_time/data/data_windows.dat>`)
 * frequencies.dat (:download:`Download frequencies.dat
-  (unix)<example2_time/data/frequencies.dat>`, :download:`Download
-  frequencies.dat (Windows)<example2_time/data/frequencies_windows.dat>`
+  (unix)<example2_time/data/frequencies.dat>`)
+  (:download:`Download frequencies.dat
+  (Windows)<example2_time/data/frequencies_windows.dat>`)
 * times.dat (:download:`Download times.dat
-  (unix)<example2_time/data/times.dat>`, :download:`Download times.dat
-  (Windows)<example2_time/data/times_windows.dat>`
+  (unix)<example2_time/data/times.dat>`)
+  (:download:`Download times.dat
+  (Windows)<example2_time/data/times_windows.dat>`)
 
 Save the files to a new directory in the subdirectory **data**, and rename them
 according to the file listing:
@@ -317,7 +330,7 @@ run_no_time.bat<example2_time/run_no_time.bat>`)::
 
 Important are the **--f_lambda**, **--tm_i_lambda**, and **--trho0_lambda**
 switches, which control the various regularisation strategies. For more
-information, please refer to the list of options for *dd_time.py**:
+information, please refer to the list of options for *dd_time.py*:
 :doc:`programs/dd_time`.
 
 The resulting directory listing now should look like this (with either the .bat
