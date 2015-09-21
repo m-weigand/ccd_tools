@@ -5,7 +5,7 @@
 Debye decomposition interface for spectral induced polarisation data. One or
 more spectra can be fitted using a Debye decomposition approach.
 
-Copyright 2014 Maximilian Weigand
+Copyright 2014,2015 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
