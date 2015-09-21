@@ -10,8 +10,8 @@ import sys
 # python.exe setup.py bdist --format msi
 # to create a windows installer
 
-version_short = '0.6'
-version_long = '0.6.0'
+version_short = '0.7'
+version_long = '0.7.0'
 # if we are in a git directory, use the last git commit as the version
 cmd = 'git log -1 --format=%H'
 try:
