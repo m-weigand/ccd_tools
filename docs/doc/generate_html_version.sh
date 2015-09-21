@@ -1,5 +1,5 @@
 #!/bin/bash
-make clean
+# make clean
 
 filename="getting_started.rst"
 
