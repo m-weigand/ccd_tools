@@ -62,6 +62,7 @@ def generate_dd(directory, settings):
         fid.write(' --lambda {0}'.format(settings['lam']))
         fid.write(' --norm {0}'.format(settings['norm']))
         fid.write(' --data_format "{0}"'.format(settings['data_format']))
+        fid.write(' --output_format ascii ')
         fid.write(' -o "results"')
         fid.write('\n')
 
