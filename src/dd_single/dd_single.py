@@ -57,6 +57,18 @@ def add_base_options(parser):
     parser.add_option("--ignore", help="Frequency id's to ignore, example:\
                       '12,13,14'. Starts with index 0.", type='string',
                       default=None, dest="ignore_frequencies")
+    parser.add_option(
+        '--fmin',
+        help='Ignore frequencies below this value (default: None)',
+        type=float,
+        dest='data_fmin'
+    )
+    parser.add_option(
+        '--fmax',
+        help='Ignore frequencies above this value (default: None)',
+        type=float,
+        dest='data_fmax'
+    )
 
     parser.add_option("-d", "--data_file", dest="data_file", type='string',
                       help="Data file (default: data.dat)", metavar="FILE",

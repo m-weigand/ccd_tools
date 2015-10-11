@@ -75,15 +75,35 @@ def aggregate_dicts(iteration_list, dict_name):
 
 
 def _get_frequencies(options):
+    # we can filter by id (0-indexed)
     if(options.ignore_frequencies is not None):
         f_ignore_ids = [int(x) for x in options.ignore_frequencies.split(',')]
     else:
-        f_ignore_ids = None
+        f_ignore_ids = []
 
     frequencies = np.loadtxt(options.frequency_file)
+
+    # or we can filter by values
+    if options.data_fmin is not None:
+        f_below_ids = np.where(frequencies < options.data_fmin)[0]
+        f_ignore_ids.extend(f_below_ids.tolist())
+
+    if options.data_fmax is not None:
+        f_above_ids = np.where(frequencies > options.data_fmax)[0]
+        f_ignore_ids.extend(f_above_ids.tolist())
+
     # filter frequencies
-    if(f_ignore_ids is not None):
+    if len(f_ignore_ids) > 0:
+        # remove duplicates
+        f_ignore_ids = list(set(f_ignore_ids))
+
+        # sort
+        f_ignore_ids = sorted(f_ignore_ids)
+
         frequencies = np.delete(frequencies, f_ignore_ids, axis=0)
+    else:
+        f_ignore_ids = None
+
     return frequencies, f_ignore_ids
 
 
