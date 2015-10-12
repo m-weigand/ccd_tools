@@ -159,13 +159,11 @@ def save_integrated_parameters(final_iterations, data, header):
                     fid.write('#' + key + '\n')
                     np.savetxt(fid, values)
 
-
     all_data = np.vstack(pars_list).T
     with open('integrated_paramaters.dat', 'w') as fid:
         fid.write(header)
         fid.write('#' + ' '.join(pars_labels) + '\n')
         np.savetxt(fid, all_data, fmt='%.6f')
-
 
 
 def save_frequency_data(final_iterations, data, header):
@@ -175,12 +173,11 @@ def save_frequency_data(final_iterations, data, header):
         norm_factors = None
 
     # save frequencies/omega
-    frequencies = final_iterations[0][0].Data.obj.frequencies
+    # frequencies = final_iterations[0][0].Data.obj.frequencies
+    # Wd_diag_1d = final_iterations[0][0].Data.Wd.diagonal()
+    # nr_x = int(Wd_diag_1d.size / frequencies.size)
 
-    Wd_diag_1d = final_iterations[0][0].Data.Wd.diagonal()
-    nr_x = int(Wd_diag_1d.size / frequencies.size)
-
-    Wd_diag_2d = Wd_diag_1d.reshape(frequencies.size, nr_x)
+    # Wd_diag_2d = Wd_diag_1d.reshape(frequencies.size, nr_x)
 
     orig_data = data['raw_data']
     if norm_factors is not None:
