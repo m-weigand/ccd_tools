@@ -29,7 +29,7 @@ def _get_header():
 def save_results(data, NDlist):
     """Save fit results to the current directory
     """
-    norm_factors = getattr(data, 'norm_factors', None)
+    norm_factors = data.get('norm_factors', None)
     header = _get_header()
     final_iterations = [(x.iterations[-1], nr) for nr, x in enumerate(NDlist)]
 
@@ -103,7 +103,7 @@ def save_data(data, norm_factors, final_iterations):
 
         orig_data = data['raw_data']
         if norm_factors is not None:
-            orig_data = orig_data / norm_factors
+            orig_data = np.atleast_2d(orig_data) / norm_factors[:, np.newaxis]
         np.savetxt(fid, orig_data)
 
     # save forward response
@@ -127,7 +127,7 @@ def save_integrated_parameters(final_iterations, data, header):
     # get keys of statistical parameters
     keys = stat_pars.keys()
 
-    norm_factors = getattr(data, 'norm_factors', None)
+    norm_factors = data.get('norm_factors', None)
 
     # do not save these values here
     black_list = ['m_data', 'm_i', 'covf', 'covm']
@@ -184,7 +184,7 @@ def save_frequency_data(final_iterations, data, header):
 
     orig_data = data['raw_data']
     if norm_factors is not None:
-        orig_data = orig_data / norm_factors
+        orig_data = np.atleast_2d(orig_data) / norm_factors[:, np.newaxis]
 
     # (re)save the data format
     # open('data_format.dat', 'w').write(prep_opts['data_format'])
