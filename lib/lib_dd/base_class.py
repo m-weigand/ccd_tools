@@ -36,6 +36,10 @@ class starting_pars_3():
 
         # rho0 can be approximated by the low-frequency magnitude
         self.rho0 = np.sqrt(re[0] ** 2 + mim[0] ** 2)
+        # the conductivity formulation uses sigma_\infty, i.e. the
+        # high-frequency limit
+        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+            self.rho0 = np.sqrt(re[-1] ** 2 + mim[-1] ** 2)
 
         # compute bins for each frequency decade
         self.minf = self.frequencies.min()
