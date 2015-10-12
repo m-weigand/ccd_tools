@@ -14,6 +14,15 @@ import shutil
 import numpy as np
 import lib_cc.main as cc
 import sip_formats.convert as sip_converter
+from collections import namedtuple
+
+cc_pars = namedtuple('ccpars', ('rho0', 'm', 'tau', 'c'))
+initial_cc_pars = cc_pars(
+    rho0=100,
+    m=0.1,
+    tau=0.04,
+    c=0.6
+)
 
 
 def generate_data(directory, settings):
@@ -27,7 +36,10 @@ def generate_data(directory, settings):
     cc_obj = cc.get('logrho0_m_logtau_c',
                     {'frequencies': settings['frequencies']}
                     )
-    pars = [np.log(100), 0.1, np.log(0.04), 0.6]
+    pars = [np.log(initial_cc_pars.rho0),
+            initial_cc_pars.m,
+            np.log(initial_cc_pars.tau),
+            initial_cc_pars.c]
     response = cc_obj.cc_rmag_rpha(pars).T.reshape(
         1, settings['frequencies'].size * 2)
 
@@ -57,13 +69,14 @@ def generate_dd(directory, settings):
         fid.write('#!/bin/bash\n')
         if settings['model'] == 'cond':
             fid.write('DD_COND=1 ')
+        fid.write(' DD_STARTING_MODEL=3 ')
         fid.write('dd_single.py -c 1')
         fid.write(' -n {0}'.format(settings['Nd']))
         fid.write(' --lambda {0}'.format(settings['lam']))
-        fid.write(' --norm {0}'.format(settings['norm']))
+        if settings['norm'] is not None:
+            fid.write(' --norm {0}'.format(settings['norm']))
         fid.write(' --data_format "{0}"'.format(settings['data_format']))
-        fid.write(' --output_format ascii ')
-        fid.write(' -o "results"')
+        fid.write(' -o "results" ')
         fid.write('\n')
 
 
@@ -90,12 +103,32 @@ def _check_io_datafiles(directory, dd_dir, format_orig):
         print('data_format is wrong!', dataformat_fit, format_orig)
 
 
+def _check_rho0(directory, dd_dir):
+    with open(dd_dir + os.sep + 'integrated_paramaters.dat', 'r') as fid:
+        fid.readline()
+        fid.readline()
+        fid.readline()
+        labels = fid.readline().strip().split(' ')
+
+        intpars_raw = np.loadtxt(fid)
+        intpars = {key: item for key, item in zip(labels, intpars_raw)}
+
+    rho0_diff = np.abs(initial_cc_pars.rho0 - 10 ** intpars['rho0']) / \
+        initial_cc_pars.rho0
+    print 'rho0 orig', initial_cc_pars.rho0
+    print 'rho0 recovered', 10 ** intpars['rho0']
+    print 'rho0_diff (relative, percentage)', rho0_diff * 1e2
+    # we only allow for 2 percent variation
+    assert_true(rho0_diff < 0.02)
+
+
 def apply_checks(directory, settings_data, settings_dd):
     """Check a given directory for correct results
     """
     dd_dir = directory + os.sep + 'results'
 
-    _check_io_datafiles(directory, dd_dir, settings_data['data_format'])
+    # _check_io_datafiles(directory, dd_dir, settings_data['data_format'])
+    _check_rho0(directory, dd_dir)
     # TODO: more checks
 
 
@@ -135,9 +168,13 @@ def test_generator():
     """Generate the various test cases
     """
     for model in ('res', 'cond'):
-        for norm in (0.1, 1, 10):
-            for data_format in ('rmag_rpha', 'rre_rmim', 'cmag_cpha',
-                                'cre_cim'):
+        for norm in (None, 0.1, 1, 10):
+            for data_format in (
+                    'rmag_rpha',
+                    'rre_rmim',
+                    'cmag_cpha',
+                    'cre_cim',
+            ):
                 def fn(x, y, z):
                     case(x, y, z)
                 fn.description =\
