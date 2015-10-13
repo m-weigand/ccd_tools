@@ -60,11 +60,13 @@ class plot_iteration():
             title = 'Debye Decomposition, iteration {0}'.format(self.it.nr)
             ax.annotate(title, xy=(0.0, 1.00), xytext=(15, -30),
                         textcoords='offset points', xycoords='figure fraction')
-            dd_c = 'c = {0}'.format(os.environ.get('DD_COND', '1.0'))
+            dd_c = 'c = {0}'.format(os.environ.get('DD_C', '1.0'))
             if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-                model_title = 'conductivity model, {0}'.format(dd_c)
+                model_title = 'conductivity model'
             else:
-                model_title = 'resistivity model, {0}'.format(dd_c)
+                model_title = 'resistivity model'
+            print 'dd_c', dd_c
+            model_title += ', {0}'.format(dd_c)
             ax.annotate(model_title, xy=(1.0, 1.0), xytext=(-160, -30),
                         textcoords='offset points', xycoords='figure fraction')
 
