@@ -172,6 +172,18 @@ Installing the DD tools
 Problems
 --------
 
+* We experienced some Problems with Anaconda 2.4 on Windows 64-bit with the
+  mock-module missing:
+
+  ::
+
+    pkg_resources.DistributionNotFound: The 'mock' distribution was not found and is
+     required by matplotlib
+
+  Open the Anaconda command prompt an execute: ::
+
+    pip install mock
+
 * if the decomposition starts, but command line options are not recognized,
   this is usually a problem with incorrect file type associations. We provide a
   file **fix_registry_windows.py** (which normally already executed during the
