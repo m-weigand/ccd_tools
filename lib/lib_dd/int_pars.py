@@ -189,6 +189,11 @@ def U_tau(pars, tau, s):
     u_tau = 10**tau_60 / 10**tau_10
     return u_tau
 
+def U_tau_nordsiek(pars, tau, s):
+    r"""compute the uniformity parameter as defined by Nordsiek et al., 2008
+    """
+    u_tau = U_tau(pars, tau, s)
+    return 1.0 / u_tau
 
 def tau_max(pars, tau, s):
     index_max = np.argmax(tau)
