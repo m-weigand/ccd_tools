@@ -138,6 +138,9 @@ def handle_cmd_options():
                       default='filtered_results',
                       dest="output_dir")
 
+    parser.add_option("--output_format", type='string', metavar='TYPE',
+                      help="Output format (ascii, ascii_audit)",
+                      default='ascii', dest="output_format")
     (options, args) = parser.parse_args()
     return options, args
 
@@ -341,7 +344,12 @@ def recreate_ND_obj_list(result_dir, indices=None, nr_cpus=1):
     pre_data['frequencies'] = frequencies
 
     # create data option list
-    fit_datas = dd_single._get_fit_datas(pre_data, prep_opts, inv_opts)
+    data = {}
+    data['frequencies'] = frequencies
+    data['prep_opts'] = prep_opts
+    data['inv_opts'] = inv_opts
+    data['cr_data'] = data_list
+    fit_datas = dd_single._get_fit_datas(data)
 
     # # spectrum specific data ##
     lambdas = np.atleast_1d(np.loadtxt('lambdas.dat'))
@@ -469,18 +477,18 @@ def filter_result_dir(options):
                                    filter_mask,
                                    options.nr_cpus)
 
-    final_iterations = [(y.iterations[-1], x) for x, y in enumerate(ND_list)]
+    # final_iterations = [(y.iterations[-1], x) for x, y in enumerate(ND_list)]
 
     if(filter_mask is not None):
         remaining_indices = filter_mask
     else:
-        remaining_indices = range(0, len(final_iterations))
+        remaining_indices = range(0, len(ND_list))
 
     # # now we have to apply the various filters
     indices_to_delete = []
 
     index = 0
-    for it, nr in final_iterations:
+    for nr, ND in enumerate(ND_list):
         delete = False
         for filter_key in filters.keys():
             settings = filters[filter_key]
@@ -498,35 +506,36 @@ def filter_result_dir(options):
                 filter_value = 10 ** (filter_value)
 
             # the filter process
-            it_value = it.stat_pars[settings['key']][0]
+            it_value = ND.iterations[-1].stat_pars[settings['key']][0]
             if(it_value <= filter_value):
                 delete = True
         if delete:
             indices_to_delete.append(index)
         index += 1
 
-    _delete_indices(final_iterations, indices_to_delete, remaining_indices)
+    ND_list, remaining_indices =_delete_indices(
+        ND_list, indices_to_delete, remaining_indices)
 
-    save_filter_results(options, remaining_indices, final_iterations)
+    save_filter_results(options, remaining_indices, ND_list)
 
 
-def _delete_indices(final_iterations, indices_to_delete, remaining_indices):
+def _delete_indices(ND_list, indices_to_delete, remaining_indices):
     # delete all marked indices
-    old_nr_iterations = len(final_iterations)
+    old_nr_iterations = len(ND_list)
     for i in reversed(sorted(indices_to_delete)):
-        del(final_iterations[i])
+        del(ND_list[i])
         del(remaining_indices[i])
 
     print('{0} of {1} remaining'.format(
-        len(final_iterations), old_nr_iterations))
+        len(ND_list), old_nr_iterations))
 
-    if(len(final_iterations) == 0):
+    if(len(ND_list) == 0):
         print('Filter process would remove all spectra! Stopping process.')
         exit()
-    return final_iterations, remaining_indices
+    return ND_list, remaining_indices
 
 
-def save_filter_results(options, remaining_indices, final_iterations):
+def save_filter_results(options, remaining_indices, ND_list):
     # # save
     if(not os.path.isdir(options.output_dir)):
         os.makedirs(options.output_dir)
@@ -541,8 +550,15 @@ def save_filter_results(options, remaining_indices, final_iterations):
 
     # save fit results
     # the data format is kept
-    data_options = {'raw_format': final_iterations[0][0].Data.obj.data_format}
-    dd_single.save_fit_results(final_iterations, data_options, {})
+    # data_options = {'raw_format': final_iterations[0][0].Data.obj.data_format}
+    data_options = {
+        'options': options,
+        'raw_data': np.atleast_2d(np.array((1))),
+        'raw_format': 'None',
+        'inv_opts': {},
+    }
+
+    dd_single.save_fit_results(data_options, ND_list)
     os.chdir(pwd)
 
 
