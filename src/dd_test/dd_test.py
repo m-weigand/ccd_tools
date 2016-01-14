@@ -242,6 +242,10 @@ def run_test(test_dir):
             ]
     cmd = ' '.join(cmd)
 
+    # write to bash file for debug purposes
+    with open('active_run.sh', 'w') as fid:
+        fid.write(cmd)
+
     # subprocess.call(test_cmd, shell=True, stdin=PIPE)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
