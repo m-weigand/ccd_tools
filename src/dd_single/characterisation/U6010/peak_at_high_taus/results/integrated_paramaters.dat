@@ -1,0 +1,5 @@
+# id:7d37850d-97d8-4697-b7ac-012b1d53529c
+# 20160114_17h:01m
+# export DD_STARTING_MODEL="3";/home/mweigand/.local/bin/dd_single.py -f frequencies.dat -d data.dat -n 20 -o results --tausel data_ext --nr_cores=1 --tausel 100,100 --lambda 1.0 --plot -c 1 --max_it 20 --plot
+#decade_loadings decade_loadings-1 decade_loadings-2 decade_loadings-3 decade_loadings-4 decade_loadings-5 tau_max rho0 tau_peak1 tau_geometric tau_peak2 tau_peaks_all U_tau_nordsiek f_50 tau_arithmetic f_max tau_mean tau_50 decade_bins decade_bins-1 decade_bins-2 decade_bins-3 decade_bins-4 decade_bins-5 decade_bins-6 m_tot f_geometric U_tau f_peak2 f_peak1 f_peaks_all f_arithmetic f_mean m_tot_n
+0.625394 0.265550 0.063535 0.015457 0.003820 691.792199 2.182434 1.702125 1.831869 1.256136 nan 1.831869 0.177333 168.961110 1.613671 0.001046 1.256136 -3.025967 0.001000 0.010000 0.100000 1.000000 10.000000 100.000000 1000.000000 -1.137850 0.008824 5.639124 nan 0.002344 0.002344 0.003874 0.008824 -2.839975

@@ -1,0 +1,5 @@
+# id:0abd3c41-0ce5-427c-a55b-3a01afd4fd76
+# 20160114_17h:04m
+# export DD_STARTING_MODEL="3";/home/mweigand/.local/bin/dd_single.py -f frequencies.dat -d data.dat -n 20 -o results --tausel data_ext --nr_cores=1 --tausel 100,100 --lambda 1.0 --plot -c 1 --max_it 20
+# inversion options dict
+{"Nd": 20, "tausel": "100,100", "max_iterations": 20}

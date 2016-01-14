@@ -1,0 +1,5 @@
+# id:0abd3c41-0ce5-427c-a55b-3a01afd4fd76
+# 20160114_17h:04m
+# export DD_STARTING_MODEL="3";/home/mweigand/.local/bin/dd_single.py -f frequencies.dat -d data.dat -n 20 -o results --tausel data_ext --nr_cores=1 --tausel 100,100 --lambda 1.0 --plot -c 1 --max_it 20
+geccoinv version: 0.8.0-0c55f9f4abbe3a97787a62b8cf33d2f7aae8b8a7
+dd_interface version: 0.8.0-c6a4462ab68d7195f5b5708fcaf23f6be0fa3928
