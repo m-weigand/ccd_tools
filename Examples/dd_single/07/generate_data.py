@@ -3,7 +3,7 @@
 Generate sample SIP-Spectrum
 """
 import numpy as np
-import NDimInv.colecole as CC
+import lib_dd.colecole as CC
 
 frequencies = np.logspace(-3, 3, 25)
 fin = np.hstack((frequencies, frequencies))
