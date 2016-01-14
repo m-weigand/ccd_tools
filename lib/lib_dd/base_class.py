@@ -211,7 +211,7 @@ class starting_pars_3():
         mim_list = []
         rms_list = []
         m_list = []
-        scales = np.logspace(-5, 0, 10)
+        scales = np.logspace(-7, 0, 15)
         # scales = np.array((1e-3, 0.5, 1))
         for scale in scales:
             # test forward modelling
@@ -232,13 +232,17 @@ class starting_pars_3():
         # find minimum rms
         min_index = np.argmin(rms_list)
 
-        # select three values
+        # select three values to fit a parabola through
         # indices = [0, min_index, len(scales) - 1]
         indices = [min_index - 1, min_index, min_index + 1]
 
         # if min_index is the largest scaling factor, use this
+        a = b = c = 0
         if indices[-1] == len(scales):
             x_min = scales[-1]
+            # remove last entry from index because it points to a value outside
+            # the 'scales' array
+            del(indices[-1])
         elif indices[-1] == 0:
             x_min = scales[0]
         else:
@@ -256,8 +260,11 @@ class starting_pars_3():
             # compute minum minmum
             x_min = -b / (2 * a)
 
+            # set to default, if we get a nevative scaling factor
             if x_min < 0:
-                x_min = 0.01
+                # note that this is an arbitrarily small factor, adjusted by
+                # experience! Please find a suitable automatic way for this!
+                x_min = 0.0001
         # """
 
         # test for conductivity
@@ -283,22 +290,30 @@ class starting_pars_3():
 
             # real part
             ax = axes[0]
-            ax.loglog(self.frequencies, self.re, '.-', color='k', alpha=0.5)
-            ax.loglog(self.frequencies, re_f, '-', color='green')
+            ax.loglog(self.frequencies, self.re, '.-', color='k', alpha=0.5,
+                      label='data')
+            ax.loglog(self.frequencies, re_f, '-', color='green',
+                      label='model')
             ax.set_xlabel('frequency [Hz]')
             ax.set_ylabel(r"$-\sigma'~[\Omega m]$")
+            ax.set_xlim(self.frequencies.min(), self.frequencies.max())
+            ax.legend(loc='best')
 
             # imaginary part
             ax = axes[1]
+            ax.set_title('xmin: {0}'.format(x_min))
             for key in sec_data.keys():
                 ax.scatter(10 ** np.array(sec_data[key][0]), sec_data[key][1],
-                           s=30, color='blue')
-            ax.loglog(self.frequencies, self.mim, '.-', color='k', alpha=0.5)
+                           s=30, color='blue',
+                           label='')
+            ax.loglog(self.frequencies, self.mim, '.-', color='k', alpha=0.5,
+                      label='data')
             ax.set_xlabel('frequency [Hz]')
             ax.set_ylabel(r"$-\sigma''~[\Omega m]$")
             # for scaled_mim in mim_list:
             # print('mimf', mim_f)
-            ax.loglog(self.frequencies, mim_f, '-', color='green')
+            ax.loglog(self.frequencies, mim_f, '-', color='green',
+                      label='model')
             ax.set_xlim([self.f_tau_min, self.f_tau_max])
 
             for scale in (0.1, 0.5, 1.0):
@@ -309,6 +324,7 @@ class starting_pars_3():
                 re_f = re_mim[:, 0]
                 mim_f = re_mim[:, 1]
                 ax.loglog(self.frequencies, mim_f, '-', color='red')
+            ax.legend(loc='best')
 
             # plot RTD
             ax = axes[2]
