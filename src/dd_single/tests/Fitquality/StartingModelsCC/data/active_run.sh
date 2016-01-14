@@ -1,0 +1,1 @@
+DD_STARTING_MODEL=3 dd_single.py -n 20 -c 2 --silent --lambda 1 -f frequencies.dat  --data_file data.dat -o active_run --output_format ascii
