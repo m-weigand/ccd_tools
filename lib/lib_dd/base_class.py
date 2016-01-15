@@ -421,7 +421,6 @@ class integrated_parameters():
                         'tau_peaks': int_pars.tau_peaks,
                         'tau_max': int_pars.tau_max,
                         'U_tau': int_pars.U_tau,
-                        'U_tau_nordsiek': int_pars.U_tau_nordsiek,
                         'tau_arithmetic': int_pars.tau_arithmetic,
                         'tau_geometric': int_pars.tau_geometric,
                         'decade_loadings': int_pars.decade_loadings

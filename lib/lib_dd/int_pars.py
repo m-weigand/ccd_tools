@@ -96,10 +96,8 @@ def _cumulative_tau(pars, tau, s):
     """Compute the cumulative chargeabilites, normalized to the total
     chargeability sum
 
-    NOTE: Corresponding to the frequencies, we compute the cumulative sum down
-    from large tau values to small ones!
     """
-    g_tau = pars[1:][::-1] / _m_tot_linear(pars, tau, s)
+    g_tau = pars[1:] / _m_tot_linear(pars, tau, s)
     cums_gtau = np.cumsum(g_tau)
     return cums_gtau
 
@@ -107,8 +105,8 @@ def _cumulative_tau(pars, tau, s):
 def _tau_x(x, pars, tau, s):
     r"""
     Compute the relaxation time corresponding to a certain percentage of the
-    cumulative chargeabilities. The cumulative chargeabilities are counted down
-    from large to small tau values, corresponding to the frequency domain.
+    cumulative chargeabilities. The cumulative chargeabilities are counted up
+    from small to large tau values.
 
     Parameters
     ----------
@@ -135,7 +133,7 @@ def _tau_x(x, pars, tau, s):
         # norm to one
         cums_gtau_normed = cums_gtau / np.abs(cums_gtau).max()
 
-        index = np.argmin(np.abs(cums_gtau_normed[::-1] - x))
+        index = np.argmin(np.abs(cums_gtau_normed - x))
         if(np.isnan(index)):
             tau_x = np.nan
             f_x = np.nan
@@ -189,11 +187,6 @@ def U_tau(pars, tau, s):
     u_tau = 10**tau_60 / 10**tau_10
     return u_tau
 
-def U_tau_nordsiek(pars, tau, s):
-    r"""compute the uniformity parameter as defined by Nordsiek et al., 2008
-    """
-    u_tau = U_tau(pars, tau, s)
-    return 1.0 / u_tau
 
 def tau_max(pars, tau, s):
     index_max = np.argmax(tau)
