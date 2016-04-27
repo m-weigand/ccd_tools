@@ -513,7 +513,7 @@ def filter_result_dir(options):
             indices_to_delete.append(index)
         index += 1
 
-    ND_list, remaining_indices =_delete_indices(
+    ND_list, remaining_indices = _delete_indices(
         ND_list, indices_to_delete, remaining_indices)
 
     save_filter_results(options, remaining_indices, ND_list)
@@ -550,7 +550,9 @@ def save_filter_results(options, remaining_indices, ND_list):
 
     # save fit results
     # the data format is kept
-    # data_options = {'raw_format': final_iterations[0][0].Data.obj.data_format}
+    # data_options = {
+    # 'raw_format': final_iterations[0][0].Data.obj.data_format
+    # }
     data_options = {
         'options': options,
         'raw_data': np.atleast_2d(np.array((1))),
