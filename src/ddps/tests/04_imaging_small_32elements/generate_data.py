@@ -10,7 +10,7 @@ fin = np.hstack((frequencies, frequencies))
 
 pixel_list = []  # stores the pixel spectra
 
-for m, nr in ((0.05, 100), (0.07, 120)):
+for m, nr in ((0.01, 10), (0.07, 22)):
     for spec in range(0, nr):
         # rho0 m1 tau1 c1 m2 tau2 c2
         cc_pars = [np.log(50), m, np.log(40), 0.6,

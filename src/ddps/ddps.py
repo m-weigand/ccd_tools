@@ -128,7 +128,7 @@ def handle_cmd_options():
                       dest="apply_filters", default=False,
                       help="Apply filters and save to new directory")
     parser.add_option("--maskfile", type='str', metavar='FILE',
-                      help="Mask file for filtering",
+                      help="Mask file for filtering: discard all other pixels",
                       default=None, dest="maskfile")
     parser.add_option("--nr_cpus", type='int', metavar='NR',
                       help="Output directory", default=1,
@@ -340,6 +340,7 @@ def recreate_ND_obj_list(result_dir, indices=None, nr_cpus=1):
             subdata = np.fromstring(line.strip(), sep=' ')
             subdata = subdata.reshape((subdata.size / 2, 2), order='F')
             data_list.append(subdata)
+    total_nr_spectra = len(data_list)
     pre_data['cr_data'] = data_list
     pre_data['frequencies'] = frequencies
 
@@ -389,7 +390,7 @@ def recreate_ND_obj_list(result_dir, indices=None, nr_cpus=1):
         ND_list = p.map(_get_ND, data_list)
 
     os.chdir(pwd)
-    return ND_list
+    return ND_list, total_nr_spectra
 
 
 def plot_iterations(options):
@@ -401,7 +402,7 @@ def plot_iterations(options):
         options.result_dir + '/nr_iterations.dat').size
     indices = extract_indices_from_range_str(options.spec_ranges,
                                              total_nr_spectra)
-    ND_list = recreate_ND_obj_list(options.result_dir, indices)
+    ND_list, _ = recreate_ND_obj_list(options.result_dir, indices)
     pwd = os.getcwd()
     os.chdir(options.result_dir)
     total_nr = len(ND_list)
@@ -467,22 +468,30 @@ def filter_result_dir(options):
     Filter the dataset
     """
     # check if we filter using a mask file
-    if(options.maskfile is not None):
-        filter_mask = np.loadtxt(options.maskfile, dtype=int)
-        filter_mask = list(np.asarray(filter_mask))
+    if options.maskfile is not None:
+        print 'using mask file'
+        indices_to_use = np.loadtxt(options.maskfile, dtype=int).tolist()
+        # filter_mask = list(np.asarray(filter_mask))
     else:
-        filter_mask = None
+        indices_to_use = None
 
-    ND_list = recreate_ND_obj_list(options.result_dir,
-                                   filter_mask,
-                                   options.nr_cpus)
+    ND_list, total_nr_spectra = recreate_ND_obj_list(
+        options.result_dir,
+        indices_to_use,
+        options.nr_cpus
+    )
 
-    # final_iterations = [(y.iterations[-1], x) for x, y in enumerate(ND_list)]
-
-    if(filter_mask is not None):
-        remaining_indices = filter_mask
+    # if we use a mask then all indices from here on refer to this smaller set
+    # therefore set the list of remaining indices here
+    if(indices_to_use is not None):
+        remaining_indices = indices_to_use
+        print remaining_indices
+        deleted_indices = [i for i in range(0, total_nr_spectra) if
+                           i not in remaining_indices]
     else:
         remaining_indices = range(0, len(ND_list))
+        deleted_indices = []
+    print 'DEL', deleted_indices
 
     # # now we have to apply the various filters
     indices_to_delete = []
@@ -513,17 +522,26 @@ def filter_result_dir(options):
             indices_to_delete.append(index)
         index += 1
 
-    ND_list, remaining_indices = _delete_indices(
-        ND_list, indices_to_delete, remaining_indices)
+    ND_list, remaining_indices, deleted_indices = _delete_indices(
+        ND_list,
+        indices_to_delete,
+        remaining_indices,
+        deleted_indices,
+    )
+    print 'DEL F', deleted_indices, len(deleted_indices)
+    print 'REM F', remaining_indices, len(remaining_indices)
 
-    save_filter_results(options, remaining_indices, ND_list)
+    save_filter_results(options, remaining_indices, deleted_indices, ND_list)
 
 
-def _delete_indices(ND_list, indices_to_delete, remaining_indices):
+def _delete_indices(ND_list, indices_to_delete, remaining_indices,
+                    deleted_indices):
     # delete all marked indices
     old_nr_iterations = len(ND_list)
     for i in reversed(sorted(indices_to_delete)):
         del(ND_list[i])
+        deleted_indices.append(remaining_indices[i])
+        print 'add', i, remaining_indices[i]
         del(remaining_indices[i])
 
     print('{0} of {1} remaining'.format(
@@ -532,10 +550,10 @@ def _delete_indices(ND_list, indices_to_delete, remaining_indices):
     if(len(ND_list) == 0):
         print('Filter process would remove all spectra! Stopping process.')
         exit()
-    return ND_list, remaining_indices
+    return ND_list, remaining_indices, sorted(deleted_indices)
 
 
-def save_filter_results(options, remaining_indices, ND_list):
+def save_filter_results(options, remaining_indices, deleted_indices, ND_list):
     # # save
     if(not os.path.isdir(options.output_dir)):
         os.makedirs(options.output_dir)
@@ -546,7 +564,7 @@ def save_filter_results(options, remaining_indices, ND_list):
     os.chdir(options.output_dir)
     # save filter_mask.dat
     np.savetxt('remaining_indices.dat', remaining_indices, fmt='%i')
-    np.savetxt('deleted_indices.dat', remaining_indices, fmt='%i')
+    np.savetxt('deleted_indices.dat', deleted_indices, fmt='%i')
 
     # save fit results
     # the data format is kept
