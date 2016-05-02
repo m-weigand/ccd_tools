@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import alabaster
+html_theme_path = [alabaster.get_path()]
 #
 # DebyeDecomposition documentation build configuration file, created by
 # sphinx-quickstart on Mon Jun 17 09:29:21 2013.
@@ -33,7 +35,8 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.coverage',
               'sphinx.ext.pngmath', 'sphinx.ext.viewcode',
               'matplotlib.sphinxext.plot_directive', 'numpydoc',
               'sphinx.ext.autosummary', 'sphinxcontrib.blockdiag',
-              'sphinxcontrib.programoutput'
+              'sphinxcontrib.programoutput',
+              'alabaster',
               ]
 
 numpydoc_show_class_members = False
@@ -51,8 +54,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Time lapse Debye decomposition routines'
-copyright = u'2014, 2015, Maximilian Weigand'
+project = u'Time-lapse Debye decomposition routines'
+copyright = u'2014-2016, Maximilian Weigand'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -106,7 +109,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'nature'
+html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
