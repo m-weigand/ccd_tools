@@ -29,8 +29,12 @@ class plot_iteration():
 
     In addition, it will renormalise data if necessary.
     """
-    def plot(self, it, filename, keep_plot=False):
+    def plot(self, it, filename, keep_plot=False, norm_factors=None):
         try:
+            if norm_factors is None:
+                self.norm_factors = 1.0
+            else:
+                self.norm_factors = norm_factors
             self._plot(it, filename, keep_plot)
         except Exception, e:
             print('Exception in plot routine', e)
@@ -82,10 +86,10 @@ class plot_iteration():
     def _plot(self, it, filename, keep_plot):
         """Plot one or more spectra
         """
-        D = it.Data.D
+        D = it.Data.D / self.norm_factors
         M = it.Model.convert_to_M(it.m)
         # renormalize here? why do we compuate the forward solution again?
-        F = it.Model.F(M)
+        F = it.Model.F(M) / self.norm_factors
         extra_size = int(
             np.sum([x[1][1] for x in it.Data.extra_dims.iteritems()]))
         nr_spectra = max(1, extra_size)
