@@ -30,6 +30,28 @@ model equations:
     \left(\frac{c \pi}{2}\right) + (\omega \tau)^{2c}}
 
 
+.. math::
+
+    \frac{\partial}{\partial c} (\omega \tau)^c &= \frac{\partial}{\partial c}
+    e^{\ln (\omega \tau)^c} = \frac{\partial e^{c \ln (\omega \tau)}}{\partial
+    c} = \ln (\omega \tau) \cdot e^{c \ln (\omega \tau)} = \ln (\omega \tau)
+    (\omega \tau)^c\\
+    \frac{\partial (\omega \tau)^{2 c}}{\partial c} &= 2 \ln (\omega \tau)
+    (\omega \tau)^{2 c}\\
+    \frac{\partial}{\partial c} \left[(\omega \tau)^{c} \sin \frac{c \pi}{2}\right] &= \ln (\omega \tau) (\omega
+    \tau)^c \sin \frac{c \pi}{2} + (\omega \tau)^c \cos \left(\frac{c \pi}{2}\right)
+    \frac{\pi}{2}\\
+    \frac{\partial}{\partial c} \left[2 (\omega \tau)^c \cos \frac{c \pi}{2} \right] &=
+    2 \ln(\omega \tau) (\omega \tau)^c \cos \frac{c \pi}{2} - 2 (\omega \tau)^c \frac{\pi}{2} \sin \frac{c \pi}{2}
+
+
+.. math::
+
+    \frac{\partial}{\partial c} (\omega \tau)^c &= c \omega (\omega \tau)^{c - 1}\\
+    \frac{\partial}{\partial c} \left[ 1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c} \right] &=
+    2 c \omega (\omega \tau)^{c -1} \cos \frac{c \pi}{2} + 2 c (\omega \tau)^{2
+    c - 1} \omega
+
 Remember:
 
 * :math:`\frac{\partial}{\partial x} \cdot 10^x = log_e(10) 10^x`

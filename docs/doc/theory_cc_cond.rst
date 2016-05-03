@@ -5,11 +5,16 @@ complex
 -------
 After Tarasov and Titov, 2013:
 
-
 .. math::
 
     \hat{\sigma}(\omega) &= \sigma_\infty \left(1 - \sum_k\frac{m_k}{1 + (j
     \omega \tau_k)^c}\right)\\
+
+real and imaginary parts
+------------------------
+
+.. math::
+
     &= \sigma_\infty \left( 1 - \sum_k m_k \frac{1 + (\omega \tau)^c \cos
     \frac{c \pi}{2} - j (\omega \tau)^c \sin \frac{c \pi}{2}}{1 + 2 (\omega
     \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right)\\
@@ -39,8 +44,22 @@ derivatives
     \frac{\partial \hat{\sigma'}(\omega)}{\partial m_i} &= -\sigma_\infty \frac{1 +
     (\omega \tau)^c \cos \frac{c \pi}{2}}{1 + 2 (\omega \tau)^c \cos \frac{c
     \pi}{2} + (\omega \tau)^{2 c}}\\
-    \frac{\partial \hat{\sigma'}(\omega)}{\partial \tau_k} &=  \\
-    \frac{\partial \hat{\sigma'}(\omega)}{\partial c} &= 
+    \frac{\partial \hat{\sigma'}(\omega)}{\partial \tau_k} &=
+    \sigma_\infty m_k \left[
+        \frac{c \omega (\omega \tau)^{c - 1} \cos \frac{c \pi}{2}}
+        {1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} -
+        \frac{1 + (\omega \tau)^c \cos \frac{c \pi}{2}}
+        {\left[{1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right]^2} \cdot
+        \frac{2 c \omega (\omega \tau)^{c-1} \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}}{1}
+    \right]\\
+    \frac{\partial \hat{\sigma'}(\omega)}{\partial c} &=
+    \sigma_\infty m_k \left[
+        \frac{\ln(\omega \tau) (\omega \tau)^{c} \sin \frac{c \pi}{2} + (\omega \tau)^c \cos \frac{c \pi}{2} \frac{\pi}{2}}
+        {1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} -
+        \frac{(\omega \tau)^c \sin \frac{c}{\pi}{2}}
+        {\left[{1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right]^2} \right. \cdot\\
+        & \left. \frac{2 \ln (\omega \tau) (\omega \tau)^c \cos \frac{c \pi}{2} - 2 (\omega \tau)^2 \frac{\pi}{2} \sin \frac{c \pi}{2} + 2 \ln(\omega \tau) (\omega \tau)^{2 c}}{1}
+    \right]
 
 .. math::
 
