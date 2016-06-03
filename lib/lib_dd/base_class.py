@@ -26,6 +26,139 @@ import int_pars
 logger = logging.getLogger('lib_dd.main')
 
 
+def determine_tau_range(settings):
+    """Return the tau values depending on the settings 'Nd', 'tau_values'
+    and 'tau_sel' in the dict 'settings'
+
+    Tau values can be set by using one of the following strings in
+        self.settings['tausel']:
+
+            data
+            data_ext
+            factor_left,factor_right
+            ,factor_right
+            factor_left,
+
+    Missing values are replaced by one (i.e. the data frequency limits are
+                                        used).
+    """
+    # check which selection strategy to use
+    if('tau_values' in settings):
+        # we got custom tau values
+        tau = settings['tau_values']
+        s = np.log10(tau)
+        tau_f_values = 1 / (2 * np.pi * tau)
+    else:
+        # determine range
+        if(settings['tausel'] == 'data'):
+                factor_left = 1
+                factor_right = 1
+        elif(settings['tausel'] == 'data_ext'):
+                factor_left = 10
+                factor_right = 10
+        else:
+            # try to parse
+            items = settings['tausel'].split(',')
+            if(len(items) != 2):
+                raise Exception('Wrong format for tausel')
+
+            if(not items[0]):
+                factor_left = 1
+            else:
+                factor_left = int(items[0])
+
+            if(not items[1]):
+                factor_right = 1
+            else:
+                factor_right = int(items[1])
+
+        # determine tau values for one data set
+        tau, s, tau_f_values = get_tau_values_for_data(
+            settings['frequencies'],
+            settings['Nd'],
+            factor_left=factor_left,
+            factor_right=factor_right)
+    return tau, s, tau_f_values
+
+
+def get_tau_values_for_data(frequencies, Nd, factor_left=1,
+                            factor_right=1):
+    r"""
+    Return the :math:`\tau` values corresponding to the frequency range of
+    the data set.
+
+    Parameters
+    ----------
+    Nd : number of :math:`\tau` values per decade
+    factor_left : factor to divide to the lower limit by
+    factor_right : factor to multiply to the upper limit
+
+    Returns
+    -------
+    tau,s with :math:`s = log_{10}(\tau)`
+
+    """
+    minf = np.min(frequencies)
+    maxf = np.max(frequencies)
+
+    # check min/max frequencies
+    # if(minf < 1e-4):
+    #    logger.warn('Minimum frequency below global minimum')
+
+    # if(maxf > 1e-4):
+    #    logger.warn('Maximum frequency above global minimum')
+
+    # global min/max values for tau, corresponding to the frequency range
+    # [1e-4 Hz,1e6 Hz]
+    min_tau_f = 1e-15
+    max_tau_f = 1e16
+    nr_decades = np.log10(max_tau_f) - np.log10(min_tau_f)
+    g_tau_fmin = 1.0 / (2 * np.pi * 1e-15)
+    g_tau_fmax = 1.0 / (2 * np.pi * 1e16)
+
+    # compile total pool of tau values
+    # the (fixed) global frequency range spans 9 order of magnitude
+    N = nr_decades * Nd
+    g_tau = np.logspace(np.log10(g_tau_fmin), np.log10(g_tau_fmax), N)
+    g_tau_frequencies = 1.0 / (2 * np.pi * g_tau)
+
+    # the global pool
+    g_pool = np.hstack((g_tau_frequencies[:, np.newaxis],
+                        g_tau[:, np.newaxis]))
+
+    # find nearest index
+    fmin = minf / float(factor_left)
+    fmax = maxf * float(factor_right)
+
+    index_min = np.argmin(np.abs(g_pool[:, 0] - fmin))
+    index_max = np.argmin(np.abs(g_pool[:, 0] - fmax))
+
+    # fmin/fmax depend on the data frequency range
+    # when we choose our tau value out of the (data independent) pool, it
+    # is possible that we choose a tau value corresponding to a slightly
+    # larger/smaller value of fmin/max. In those cases we just use the next
+    # smaller/larger value of tau
+    if(g_pool[index_min, 0] > fmin and index_min > 0):
+        # logger.info('Reducing index_min by one')
+        index_min -= 1
+
+    if(g_pool[index_max, -1] < fmax and index_max < (g_pool.shape[0] - 1)):
+        # logger.info('Increasing index_max by one')
+        index_max += 1
+
+    tau_data = g_pool[index_min:index_max + 1, :]
+
+    # tau values should be sorted in ascending order
+    if(tau_data[0, 1] > tau_data[-1, 1]):
+        tau_data = tau_data[::-1, :]
+
+    tau_s = tau_data[:, 1]
+    f_s = tau_data[:, 0]
+    s_s = np.log10(tau_s)
+
+    return tau_s, s_s, f_s
+
+
 class starting_pars_3():
     def __init__(self, re, mim, frequencies, taus):
         self.re = re
