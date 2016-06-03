@@ -39,13 +39,11 @@ from NDimInv.plot_helper import *
 import lib_dd.interface as lDDi
 import gc
 import lib_dd.plot as lDDp
-import lib_dd.main
 import lib_dd.version as version
 import sip_formats.convert as sip_converter
 import lib_dd.conductivity.model as cond_model
 import lib_dd.io.ascii as ioascii
 import lib_dd.io.ascii_audit as ioascii_audit
-# import lib_cc2
 from lib_dd.models import ccd_res
 
 
