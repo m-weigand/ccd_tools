@@ -71,7 +71,7 @@ dd_stats['m_tot_n'] = {'filename': 'm_tot_n_results.dat',
                        'apply_filter': False,
                        'scale': 'linear',
                        'reverse': True,
-                       'label': r'$m_{tot}^n$'
+                       'label': r'$m_{tot}^n~[S/m]$'
                        }
 dd_stats['u_tau'] = {'filename': 'U_tau_results.dat',
                      'apply_filter': False,
@@ -273,10 +273,18 @@ def plot_to_grid(options):
         print 'min/max', elem.plt_opt.cbmin, elem.plt_opt.cbmax
         print 'scale', scale
 
+        elem.plt_opt.xlabel = 'x'
+        elem.plt_opt.ylabel = 'z'
+        elem.plt_opt.cb_nr_tiks = 5
+
+        if key in dd_stats:
+            elem.plt_opt.title = dd_stats[key]['label']
+
         cid = elem.add_to_element_data(data_new)
         fig, ax = plt.subplots(1, 1, figsize=(6, 4))
         elem.plot_element_data_to_ax(cid, ax, scale=scale)
-        fig.savefig(key + '.png', bbox_inches='tight')
+
+        fig.savefig(key + '.png', bbox_inches='tight', dpi=300)
         plt.close(fig)
         del(fig)
     os.chdir(pwd)
