@@ -279,6 +279,8 @@ def plot_to_grid(options):
 
         if key in dd_stats:
             elem.plt_opt.title = dd_stats[key]['label']
+        else:
+            elem.plt_opt.title = ''
 
         cid = elem.add_to_element_data(data_new)
         fig, ax = plt.subplots(1, 1, figsize=(6, 4))
