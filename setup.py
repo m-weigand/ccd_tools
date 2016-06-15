@@ -29,7 +29,7 @@ if sys.version_info >= (3,):
 if __name__ == '__main__':
     setup(name='dd_interface',
           version=version_long,
-          description='Time-lapse Debye decomposition routines',
+          description='Time-lapse Cole-Cole decomposition routines',
           author='Maximilian Weigand',
           author_email='mweigand@geo.uni-bonn.de',
           url='http://www.geo.uni-bonn.de/~mweigand',
@@ -48,6 +48,8 @@ if __name__ == '__main__':
                    'src/ddpt/ddpt.py',
                    'src/ddpst/ddpst.py',
                    'src/ddplot/ddplot.py'],
-          install_requires=['numpy', 'scipy>=0.12', 'matplotlib', 'geccoinv'],
+          install_requires=['numpy', 'scipy>=0.12', 'matplotlib', 'geccoinv',
+                            'sip_models',
+                            ],
           **extra
           )
