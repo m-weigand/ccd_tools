@@ -142,7 +142,7 @@ def run_batch(directory):
     os.chdir(pwd)
 
 
-def case(model, norm, data_format):
+def case(model, norm, lam, data_format):
     directory = 'case_{0}_{1}_{2}'.format(model, norm,
                                           data_format)
     if os.path.isdir(directory):
@@ -154,7 +154,7 @@ def case(model, norm, data_format):
     generate_data(directory, settings_data)
 
     settings_dd = {'Nd': 20,
-                   'lam': 10,
+                   'lam': lam,
                    'data_format': data_format,
                    'model': model,
                    'norm': norm
@@ -167,20 +167,24 @@ def case(model, norm, data_format):
 def test_generator():
     """Generate the various test cases
     """
-    for model in ('res', 'cond'):
-        for norm in (None, 0.1, 1, 10):
+    # for model in ('res', 'cond'):
+    for model in ('cond', ):
+        for norm, lam in zip(
+                (None, 0.1, 1, 10),
+                (10, 1, 10, 10)
+        ):
             for data_format in (
                     'rmag_rpha',
                     'rre_rmim',
                     'cmag_cpha',
                     'cre_cim',
             ):
-                def fn(x, y, z):
-                    case(x, y, z)
+                def fn(x, y, z, a):
+                    case(x, y, z, a)
                 fn.description =\
                     'model: {0} norm: {1} data_format {2}'.format(
                         model, norm, data_format)
-                yield fn, model, norm, data_format
+                yield fn, model, norm, lam, data_format
 
 if __name__ == '__main__':
     test_generator()

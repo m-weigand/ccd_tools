@@ -3,24 +3,45 @@ Template class for models
 """
 import lib_dd.base_class as base_class
 import numpy as np
+import NDimInv.model_template as mt
+import lib_dd.starting_parameters as starting_parameters
+import lib_dd.plot_stats as plot_stats
 
 
-class dd_conductivity(base_class.dd_resistivity_skeleton):
+class dd_conductivity(
+    plot_stats._plot_stats,
+    base_class.integrated_parameters,    # base_class.dd_resistivity_skeleton
+    starting_parameters.starting_parameters,
+    mt.model_template,
+):
 
     def __init__(self, settings):
-        """
-        Parameters
-        ----------
-        settings : dict containing the settings for the forward model. These
-                   settings are mode dependent, but usually include a parameter
-                   (e.g. 'x') which serves as the independent variable
-                   associated with the model parameters.
-
-        """
-        base_class.dd_resistivity_skeleton.__init__(self, settings)
-        # super(dd_conductivity, self).__init__()
-        # set this to None if no data conversion is to done
         self.data_format = 'cre_cim'
+        self.D_base_dims = None
+        # required_keys = ('Nd', 'tausel', 'frequencies', 'c')
+        required_keys = ('Nd', 'tausel', 'frequencies', )
+        for key in required_keys:
+            if key not in settings:
+                raise Exception('required key not found: {0}'.format(key))
+
+        self.frequencies = settings['frequencies']
+        self.set_settings(settings)
+
+    def set_settings(self, settings):
+        """
+        Set the settings and call necessary functions
+        """
+        self.settings = settings
+
+        # extract some variables
+        self.frequencies = self.settings['frequencies']
+        self.omega = 2.0 * np.pi * self.frequencies
+
+        # set min/max tau values corresponding to data limits
+        self.tau_data_min = 1 / (2 * np.pi * self.frequencies.max())
+        self.tau_data_max = 1 / (2 * np.pi * self.frequencies.min())
+
+        self.tau, self.s, self.tau_f_values = base_class.determine_tau_range(settings)
 
     def convert_parameters(self, pars):
         """Convert from linear to the actually used scale
@@ -31,23 +52,6 @@ class dd_conductivity(base_class.dd_resistivity_skeleton):
         """Convert from log10 to linear
         """
         return 10**pars.copy()
-
-    def estimate_starting_parameters(self, base_data):
-        """Given a data set of base data dimensions, return an initial guess
-        (starting parameters) for the inversion.
-
-        Parameters
-        ----------
-        base_data : input data with base dimensions
-
-        Returns
-        -------
-        initial_pars : initial parameters, size model base dimensions
-
-        """
-        pars0 = base_class.dd_resistivity_skeleton.estimate_starting_parameters(
-            self, base_data)
-        return pars0
 
     def forward(self, pars):
         """Return the forward response in base dimensions
@@ -183,7 +187,7 @@ class dd_conductivity(base_class.dd_resistivity_skeleton):
         Store in self.stat_pars = dict()
 
         """
-        base_class.dd_resistivity_skeleton.compute_par_stats(self, pars)
+        base_class.integrated_parameters.compute_par_stats(self, pars)
 
         # self.stat_pars = {}
         # the statistical parameters as computed above relate to the
