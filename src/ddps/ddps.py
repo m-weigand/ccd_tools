@@ -239,7 +239,7 @@ def plot_to_grid(options):
     if(not os.path.isdir(outdir)):
         os.makedirs(outdir)
     os.chdir(outdir)
-    nr_elements = elem.width_in_elements * elem.height_in_elements
+    nr_elements = len(elem.element_type_list[0])
     for key in sorted(data.keys()):
         print('Plotting {0}'.format(key))
         # set limits
