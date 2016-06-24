@@ -34,8 +34,9 @@ import sip_formats.convert as SC
 import sip_formats.convert as sip_converter
 import lib_dd.interface as lDDi
 import lib_dd.plot as lDDp
-import lib_dd.main
 import lib_dd.version as version
+import lib_dd.conductivity.model as cond_model
+from lib_dd.models import ccd_res
 
 
 def handle_cmd_options():
@@ -265,10 +266,17 @@ def save_fit_results(data, NDobj):
 
 
 def _prepare_ND_object(data):
-    # init the object
-    model = lib_dd.main.get(
-        'log10rho0log10m',
-        data['inv_opts'])
+    # use conductivity or resistivity model?
+    if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+        # there is only one parameterisation: log10(sigma_i), log10(m)
+        model = cond_model.dd_conductivity(data['inv_opts'])
+    else:
+        # there are multiple parameterisations available, use the log10 one
+        if 'DD_C' in os.environ:
+            data['inv_opts']['c'] = float(os.environ['DD_C'])
+        else:
+            data['inv_opts']['c'] = 1.0
+        model = ccd_res.decomposition_resistivity(data['inv_opts'])
     ND = NDimInv.NDimInv(model, data['inv_opts'])
 
     # add extra dimensions
