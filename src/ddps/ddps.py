@@ -73,6 +73,12 @@ dd_stats['m_tot_n'] = {'filename': 'm_tot_n_results.dat',
                        'reverse': True,
                        'label': r'$m_{tot}^n~[S/m]$'
                        }
+dd_stats['m_tot'] = {'filename': 'm_tot_results.dat',
+                       'apply_filter': False,
+                       'scale': 'linear',
+                       'reverse': True,
+                       'label': r'$m_{tot}~[-]$'
+                       }
 dd_stats['U_tau'] = {'filename': 'U_tau_results.dat',
                      'apply_filter': False,
                      'scale': 'linear',
