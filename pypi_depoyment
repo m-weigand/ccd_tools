@@ -1,0 +1,23 @@
+
+* create login credentials for pypi.python.org and pypitest.python.org
+* install twine
+* create ~/.pypirc ::
+
+	[distutils]
+	index-servers=
+		pypi
+		pypitest
+
+	[pypitest]
+	repository=https://testpypi.python.org/pypi
+	username=[USER]
+	password=[PASSWORD]
+
+	[pypi]
+	repository=https://pypi.python.org/pypi
+	username=[USER]
+	password=[PASSWORD]
+
+* python setup.py register -r https://testpypi.python.org/pypi
+* python setup.py sdist
+* twine upload -r pypitest dist/dd_interface-0.8.0.tar.gz
