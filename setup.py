@@ -28,6 +28,8 @@ if __name__ == '__main__':
           keywords=['SIP, Cole-Cole model, Debye decomposition'],
           classifiers=[
               "Development Status :: 5 - Production/Stable",
+              "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+              "Programming Language :: Python :: 2.7",
           ],
           # find_packages() somehow does not work under Win7 when creating a
           # msi # installer
