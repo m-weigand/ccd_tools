@@ -47,12 +47,16 @@ from lib_dd.models import ccd_res
 def add_base_options(parser):
     """Add options common to all dd_* programs to the parser
     """
-    parser.add_option("-f", "--frequency_file", dest="frequency_file",
-                      type='string', metavar="FILE", default='frequencies.dat',
-                      help="Frequency file (default: frequency.dat)")
-    parser.add_option("--ignore", help="Frequency id's to ignore, example:\
-                      '12,13,14'. Starts with index 0.", type='string',
-                      default=None, dest="ignore_frequencies")
+    parser.add_option(
+        "-f", "--frequency_file", dest="frequency_file",
+        type='string', metavar="FILE", default='frequencies.dat',
+        help="Frequency file (default: frequency.dat)"
+    )
+    parser.add_option(
+        "--ignore", help="Frequency id's to ignore, example:\
+        '12,13,14'. Starts with index 0.", type='string',
+        default=None, dest="ignore_frequencies"
+    )
     parser.add_option(
         '--fmin',
         help='Ignore frequencies below this value (default: None)',
@@ -66,40 +70,66 @@ def add_base_options(parser):
         dest='data_fmax'
     )
 
-    parser.add_option("-d", "--data_file", dest="data_file", type='string',
-                      help="Data file (default: data.dat)", metavar="FILE",
-                      default='data.dat')
-    parser.add_option('--data_format', dest='data_format', type='string',
-                      help='Input data format, possible values are: ' +
-                      'rmag_rpha, lnrmag_rpha, log10rmag_rpha, rmag_rpha, ' +
-                      ' rre_rim rre_rmim, cmag_cpha, cre_cim, cre_cmim ' +
-                      '(default: rmag_rpha). "r" stands for resistance/' +
-                      'resistivity, and "c" stands for conductance/' +
-                      'conductivity', default='rmag_rpha')
-    parser.add_option("-n", "--nr_terms", dest="nr_terms_decade", type='int',
-                      help="Number of Debye terms per frequency decade " +
-                      "(default: 20)", metavar="INT", default=20)
-    parser.add_option("-o", "--output", type='string', metavar='DIR',
-                      help="Output directory (default: results)",
-                      default="results", dest="output_dir")
-    parser.add_option('-p', "--plot", action="store_true", dest="plot_spectra",
-                      help="Plot final iterations (default: False)",
-                      default=False)
-    parser.add_option("--plot_reg_strength", action="store_true",
-                      dest="plot_reg_strength",
-                      help="Plot regularization strengths of final " +
-                      "iterations (default: False)",
-                      default=False)
-    parser.add_option('-i', "--plot_its", action="store_true",
-                      dest="plot_it_spectra", default=False,
-                      help="Plot spectra of each iteration (default: False)")
-    parser.add_option("--silent", action="store_true", dest="silent",
-                      help="Do not plot any logs to STDOUT (default: False)",
-                      default=False)
-    parser.add_option("--tmp", action="store_true", dest="use_tmp",
-                      help="Create the output in a temporary directory and " +
-                      "later move it later to its destination (default: " +
-                      "False)", default=False)
+    parser.add_option(
+        "-d", "--data_file",
+        dest="data_file",
+        type='string',
+        help="Data file (default: data.dat)",
+        metavar="FILE",
+        default='data.dat'
+    )
+    parser.add_option(
+        '--data_format', dest='data_format', type='string',
+        help='Input data format, possible values are: ' +
+        'rmag_rpha, lnrmag_rpha, log10rmag_rpha, rmag_rpha, ' +
+        ' rre_rim rre_rmim, cmag_cpha, cre_cim, cre_cmim ' +
+        '(default: rmag_rpha). "r" stands for resistance/' +
+        'resistivity, and "c" stands for conductance/' +
+        'conductivity',
+        default='rmag_rpha'
+    )
+    parser.add_option(
+        "-n", "--nr_terms", dest="nr_terms_decade", type='int',
+        help="Number of Debye terms per frequency decade " +
+        "(default: 20)",
+        metavar="INT",
+        default=20
+    )
+    parser.add_option(
+        "-o", "--output", type='string', metavar='DIR',
+        help="Output directory (default: results)",
+        default="results",
+        dest="output_dir"
+    )
+    parser.add_option(
+        '-p', "--plot", action="store_true", dest="plot_spectra",
+        help="Plot final iterations (default: False)",
+        default=False
+    )
+    parser.add_option(
+        "--plot_reg_strength", action="store_true",
+        dest="plot_reg_strength",
+        help="Plot regularization strengths of final " +
+        "iterations (default: False)",
+        default=False
+    )
+    parser.add_option(
+        '-i', "--plot_its", action="store_true",
+        dest="plot_it_spectra", default=False,
+        help="Plot spectra of each iteration (default: False)"
+    )
+    parser.add_option(
+        "--silent", action="store_true", dest="silent",
+        help="Do not plot any logs to STDOUT (default: False)",
+        default=False
+    )
+    parser.add_option(
+        "--tmp", action="store_true", dest="use_tmp",
+        help="Create the output in a temporary directory and " +
+        "later move it later to its destination (default: " +
+        "False)",
+        default=False
+    )
 
     parser.add_option("--tausel", type='string', metavar='STRATEGY',
                       help="Tau selection strategy:\ndata: Use " +
@@ -159,7 +189,7 @@ def handle_cmd_options():
 
 
 def check_input_files(options, additional_files=[]):
-    """Check the input files for existance. In addition to the base files for
+    """Check the input files for existence. In addition to the base files for
     data and frequency, also test for all filenames stored in the corresponding
     attributes as provided by the extra list.
     """
@@ -487,7 +517,7 @@ def get_data_dd_single(options):
 def get_output_dir(options):
     if(options.use_tmp):
         # get temporary directory
-        tmp_outdir = tempfile.mkdtemp(suffix='dd_')
+        tmp_outdir = tempfile.mkdtemp(suffix='ccd_')
         outdir = tmp_outdir
     else:
         if(not os.path.isdir(options.output_dir)):
@@ -498,7 +528,7 @@ def get_output_dir(options):
 
 # @profile
 def main():
-    print('Debye Decomposition')
+    print('Cole-Cole decomposition, no time regularization')
     options = handle_cmd_options()
     check_input_files(options)
     outdir = get_output_dir(options)
