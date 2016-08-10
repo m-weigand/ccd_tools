@@ -41,7 +41,7 @@ import lib_dd.io.ascii as ioascii
 import lib_dd.io.ascii_audit as ioascii_audit
 from lib_dd.models import ccd_res
 
-import lib_dd.config.cfg_base as cfg_base
+import lib_dd.config.cfg_single as cfg_single
 
 
 def check_input_files(options, additional_files=[]):
@@ -343,7 +343,7 @@ def get_output_dir(options):
 def main():
     print('Cole-Cole decomposition, no time regularization')
 
-    options = cfg_base.cfg_single()
+    options = cfg_single.cfg_single()
     options.parse_cmd_arguments()
 
     check_input_files(options)
