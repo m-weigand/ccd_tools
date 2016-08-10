@@ -22,7 +22,6 @@ Input files
 import os
 import logging
 logging.basicConfig(level=logging.INFO)
-from optparse import OptionParser
 import dd_single as dd
 import numpy as np
 import NDimInv
@@ -32,65 +31,65 @@ import sip_formats.convert as SC
 import sip_formats.convert as sip_converter
 import lib_dd.interface as lDDi
 import lib_dd.plot as lDDp
-import lib_dd.version as version
 import lib_dd.conductivity.model as cond_model
 from lib_dd.models import ccd_res
 
+import lib_cc.config.cfg_time as cfg_time
 
-def handle_cmd_options():
-    """
-    Handle command line options
-    """
-    parser = OptionParser()
-    parser = dd.add_base_options(parser)
-    parser.add_option("--times", dest="times", type='string',
-                      help="Time index (default: times.dat)", metavar="FILE",
-                      default='times.dat')
-    parser.add_option("-c", "--nr_cores", dest="nr_cores", type='int',
-                      help="Number of CPU cores to use (default: 1)",
-                      metavar="INT", default=1)
-    parser.add_option("--f_lambda", type='float', metavar='FLOAT',
-                      help="Use a fixed lambda (float) for the " +
-                      "tau-regularization, default=None",
-                      default=None, dest="freq_lambda")
-    parser.add_option("--trho0_lambda", type='float', metavar='FLOAT',
-                      help="Fixed time regularization lambda for rho0, " +
-                      "default=0", default=0, dest="time_rho0_lambda")
-    parser.add_option("--tm_i_lambda", type='float', metavar='FLOAT',
-                      help="Fixed time regularization lambda for the " +
-                      "chargeabilities m_i, default=0",
-                      default=0, dest="time_m_i_lambda")
-    parser.add_option("--ind_lams", action="store_true",
-                      dest="individual_lambdas", default=False,
-                      help="Use individual lambdas for f-regularization")
-    parser.add_option("--lam0", type='float', metavar='FLOAT',
-                      help="Initial lambda for f-regularization (default: " +
-                      "None - use Easylam", default=None,
-                      dest="f_lam0")
-    parser.add_option("--trho0_first_order", action="store_true",
-                      dest="trho0_first_order", default=False,
-                      help="Use first order smoothing for rho_0 " +
-                      "(instead of second order smoothing)")
-    parser.add_option("--tw_rho0", action="store_true",
-                      dest="time_weighting_rho0", default=False,
-                      help="Use time-weighting (only in combination with " +
-                      "--trho0_first_order)")
-    parser.add_option("--tmi_first_order", action="store_true",
-                      dest="tmi_first_order", default=False,
-                      help="Use first order smoothing for m_i " +
-                      "(instead of second order smoothing)")
-    parser.add_option("--tw_mi", action="store_true",
-                      dest="time_weighting_mi", default=False,
-                      help="Use time-weighting (only in combination with " +
-                      "--tmi_first_order)")
-    (options, args) = parser.parse_args()
+# def handle_cmd_options():
+#     """
+#     Handle command line options
+#     """
+#     parser = OptionParser()
+#     parser = dd.add_base_options(parser)
+#     parser.add_option("--times", dest="times", type='string',
+#                       help="Time index (default: times.dat)", metavar="FILE",
+#                       default='times.dat')
+#     parser.add_option("-c", "--nr_cores", dest="nr_cores", type='int',
+#                       help="Number of CPU cores to use (default: 1)",
+#                       metavar="INT", default=1)
+#     parser.add_option("--f_lambda", type='float', metavar='FLOAT',
+#                       help="Use a fixed lambda (float) for the " +
+#                       "tau-regularization, default=None",
+#                       default=None, dest="freq_lambda")
+#     parser.add_option("--trho0_lambda", type='float', metavar='FLOAT',
+#                       help="Fixed time regularization lambda for rho0, " +
+#                       "default=0", default=0, dest="time_rho0_lambda")
+#     parser.add_option("--tm_i_lambda", type='float', metavar='FLOAT',
+#                       help="Fixed time regularization lambda for the " +
+#                       "chargeabilities m_i, default=0",
+#                       default=0, dest="time_m_i_lambda")
+#     parser.add_option("--ind_lams", action="store_true",
+#                       dest="individual_lambdas", default=False,
+#                       help="Use individual lambdas for f-regularization")
+#     parser.add_option("--lam0", type='float', metavar='FLOAT',
+#                       help="Initial lambda for f-regularization (default: " +
+#                       "None - use Easylam", default=None,
+#                       dest="f_lam0")
+#     parser.add_option("--trho0_first_order", action="store_true",
+#                       dest="trho0_first_order", default=False,
+#                       help="Use first order smoothing for rho_0 " +
+#                       "(instead of second order smoothing)")
+#     parser.add_option("--tw_rho0", action="store_true",
+#                       dest="time_weighting_rho0", default=False,
+#                       help="Use time-weighting (only in combination with " +
+#                       "--trho0_first_order)")
+#     parser.add_option("--tmi_first_order", action="store_true",
+#                       dest="tmi_first_order", default=False,
+#                       help="Use first order smoothing for m_i " +
+#                       "(instead of second order smoothing)")
+#     parser.add_option("--tw_mi", action="store_true",
+#                       dest="time_weighting_mi", default=False,
+#                       help="Use time-weighting (only in combination with " +
+#                       "--tmi_first_order)")
+#     (options, args) = parser.parse_args()
 
-    # print version information if requested
-    if(options.version):
-        print version._get_version_numbers()
-        exit()
+#     # print version information if requested
+#     if(options.version):
+#         print version._get_version_numbers()
+#         exit()
 
-    return options
+#     return options
 
 
 def _get_times(options):
@@ -454,7 +453,10 @@ def call_fit_functions(data, ND):
 
 
 if __name__ == '__main__':
-    options = handle_cmd_options()
+    options = cfg_time.cfg_time()
+    options.parse_cmd_arguments()
+
+    # options = handle_cmd_options()
     dd.check_input_files(options, ['times', ])
     outdir = dd.get_output_dir(options)
     data = get_data_dd_time(options)
