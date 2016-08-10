@@ -25,7 +25,6 @@ logging.basicConfig(level=logging.INFO)
 import os
 import numpy as np
 from multiprocessing import Pool
-import tempfile
 import shutil
 
 import NDimInv
@@ -42,30 +41,6 @@ import lib_dd.io.ascii_audit as ioascii_audit
 from lib_dd.models import ccd_res
 
 import lib_dd.config.cfg_single as cfg_single
-
-
-def check_input_files(options, additional_files=[]):
-    """Check if the input files exist. In addition to the base files for
-    data and frequency, also test for all filenames stored in the corresponding
-    attributes as provided by the extra list.
-    """
-    none_missing = True
-    base_files = ['frequency_file', 'data_file']
-    for attr in base_files + additional_files:
-        filename = options[attr]
-        if not os.path.isfile(filename):
-            print(('Filename not found for attribute {0}: {1}'.format(
-                attr, filename)))
-            none_missing = False
-    else:
-        if not none_missing:
-            exit()
-
-    # check if output directory already exists
-    if os.path.isdir(options['output_dir']):
-        raise IOError(
-            'Output directory already exists. Please choose another ' +
-            'output directory, or delete the existing one.')
 
 
 def _prepare_ND_object(fit_data):
@@ -327,18 +302,6 @@ def get_data_dd_single(options):
     return data
 
 
-def get_output_dir(options):
-    if options['use_tmp']:
-        # get temporary directory
-        tmp_outdir = tempfile.mkdtemp(suffix='ccd_')
-        outdir = tmp_outdir
-    else:
-        if(not os.path.isdir(options['output_dir'])):
-            os.makedirs(options['output_dir'])
-        outdir = options['output_dir']
-    return outdir
-
-
 # @profile
 def main():
     print('Cole-Cole decomposition, no time regularization')
@@ -346,8 +309,8 @@ def main():
     options = cfg_single.cfg_single()
     options.parse_cmd_arguments()
 
-    check_input_files(options)
-    outdir = get_output_dir(options)
+    options.check_input_files()
+    outdir = lDDi.create_output_dir(options)
 
     # DD_RES_INV.inversion.setup_logger('dd', outdir, options.silent)
     # logger = logging.getLogger('dd.debye decomposition')

@@ -33,70 +33,14 @@ import lib_dd.interface as lDDi
 import lib_dd.plot as lDDp
 import lib_dd.conductivity.model as cond_model
 from lib_dd.models import ccd_res
-
-import lib_cc.config.cfg_time as cfg_time
-
-# def handle_cmd_options():
-#     """
-#     Handle command line options
-#     """
-#     parser = OptionParser()
-#     parser = dd.add_base_options(parser)
-#     parser.add_option("--times", dest="times", type='string',
-#                       help="Time index (default: times.dat)", metavar="FILE",
-#                       default='times.dat')
-#     parser.add_option("-c", "--nr_cores", dest="nr_cores", type='int',
-#                       help="Number of CPU cores to use (default: 1)",
-#                       metavar="INT", default=1)
-#     parser.add_option("--f_lambda", type='float', metavar='FLOAT',
-#                       help="Use a fixed lambda (float) for the " +
-#                       "tau-regularization, default=None",
-#                       default=None, dest="freq_lambda")
-#     parser.add_option("--trho0_lambda", type='float', metavar='FLOAT',
-#                       help="Fixed time regularization lambda for rho0, " +
-#                       "default=0", default=0, dest="time_rho0_lambda")
-#     parser.add_option("--tm_i_lambda", type='float', metavar='FLOAT',
-#                       help="Fixed time regularization lambda for the " +
-#                       "chargeabilities m_i, default=0",
-#                       default=0, dest="time_m_i_lambda")
-#     parser.add_option("--ind_lams", action="store_true",
-#                       dest="individual_lambdas", default=False,
-#                       help="Use individual lambdas for f-regularization")
-#     parser.add_option("--lam0", type='float', metavar='FLOAT',
-#                       help="Initial lambda for f-regularization (default: " +
-#                       "None - use Easylam", default=None,
-#                       dest="f_lam0")
-#     parser.add_option("--trho0_first_order", action="store_true",
-#                       dest="trho0_first_order", default=False,
-#                       help="Use first order smoothing for rho_0 " +
-#                       "(instead of second order smoothing)")
-#     parser.add_option("--tw_rho0", action="store_true",
-#                       dest="time_weighting_rho0", default=False,
-#                       help="Use time-weighting (only in combination with " +
-#                       "--trho0_first_order)")
-#     parser.add_option("--tmi_first_order", action="store_true",
-#                       dest="tmi_first_order", default=False,
-#                       help="Use first order smoothing for m_i " +
-#                       "(instead of second order smoothing)")
-#     parser.add_option("--tw_mi", action="store_true",
-#                       dest="time_weighting_mi", default=False,
-#                       help="Use time-weighting (only in combination with " +
-#                       "--tmi_first_order)")
-#     (options, args) = parser.parse_args()
-
-#     # print version information if requested
-#     if(options.version):
-#         print version._get_version_numbers()
-#         exit()
-
-#     return options
+import lib_dd.config.cfg_time as cfg_time
 
 
 def _get_times(options):
     """
     Read in times
     """
-    times = np.loadtxt(options.times)
+    times = np.loadtxt(options['times'])
     return times
 
 
@@ -143,45 +87,11 @@ def get_data_dd_time(options):
     data['times'] = _get_times(options)
     data['cr_data'] = data['raw_data']
 
-    prep_opts, inv_opts = split_options(options)
+    prep_opts, inv_opts = options.split_options()
     data['options'] = options
     data['prep_opts'] = prep_opts
     data['inv_opts'] = inv_opts
     return data
-
-
-def split_options(options):
-    """
-    Extract options for two groups:
-    1) prep_opts : these options are used to prepare the actual inversion, i.e.
-                   which regularization objects to use
-    2) inv_opts : these options are directly passed through to the NDimInv
-                  object
-    """
-    prep_opts, inv_opts = dd.split_options_base(options)
-
-    # prep_opts = {}
-    prep_opts['nr_cores'] = options.nr_cores
-    # prep_opts['plot_it_spectra'] = options.plot_it_spectra
-    # prep_opts['plot'] = options.plot_spectra
-    # prep_opts['output_dir'] = options.output_dir
-    prep_opts['f_lambda'] = options.freq_lambda
-    prep_opts['t_rho0_lambda'] = options.time_rho0_lambda
-    prep_opts['t_m_i_lambda'] = options.time_m_i_lambda
-    # prep_opts['data_format'] = options.data_format
-    prep_opts['individual_lambdas'] = options.individual_lambdas
-    prep_opts['f_lam0'] = options.f_lam0
-    # prep_opts['max_iterations'] = options.max_iterations
-    prep_opts['trho0_first_order'] = options.trho0_first_order
-    prep_opts['tmi_first_order'] = options.tmi_first_order
-    prep_opts['time_weighting_rho0'] = options.time_weighting_rho0
-    prep_opts['time_weighting_mi'] = options.time_weighting_mi
-    # prep_opts['plot_lambda'] = options.plot_lambda
-
-    # inv_opts = {}
-    # inv_opts['tausel'] = options.tausel
-    # inv_opts['Nd'] = options.nr_terms_decade
-    return prep_opts, inv_opts
 
 
 def _get_fit_datas(data):
@@ -220,46 +130,6 @@ def fit_data(data):
 
 def save_fit_results(data, NDobj):
     dd.save_fit_results(data, NDobj)
-
-    # note: we don't want to provide the data parameter, but until we really
-    # incorporate times into the inversion..just save it
-    # final_iteration = (NDobj.iterations[-1], )
-
-    # dd.save_base_results(final_iterations, data)
-    # if not os.path.isdir('stats_and_rms'):
-    #     os.makedirs('stats_and_rms')
-    # os.chdir('stats_and_rms')
-    # if('norm_factors' in data):
-    #     norm_factors = data['norm_factors']
-    # else:
-    #     norm_factors = None
-
-    # lDDi.save_stat_pars(final_iteration.stat_pars, norm_factors)
-    # lDDi.save_rms_values(final_iteration.rms_values,
-    #                      final_iteration.RMS.rms_names)
-
-    # os.chdir('..')
-
-    # # save data
-    # # we know that the Data array is only 2D
-    # with open('data.dat', 'w') as fid:
-    #     D = final_iteration.Data.D
-    #     # times to the front
-    #     D = np.swapaxes(D, 0, 2)
-    #     # reshape
-    #     D = D.reshape((D.shape[0], np.prod(D.shape[1:])))
-    #     np.savetxt(fid, D)
-
-    # # save model response
-    # Dsize = np.prod(final_iteration.Data.D_base_size)
-    # f = final_iteration.Model.f(final_iteration.m)
-    # f_reshaped = np.reshape(f, (Dsize, f.size / Dsize), order='F').T
-    # np.savetxt('f.dat', f_reshaped)
-
-    # # save times
-    # with open('times.dat', 'w') as fid:
-    #     for item in data['times']:
-    #         fid.write('{0}'.format(item) + '\n')
 
 
 def _prepare_ND_object(data):
@@ -389,34 +259,7 @@ def _prepare_ND_object(data):
 
 def fit_one_time_series(data):
     ND = _prepare_ND_object(data)
-    # debug start
-    """
-    ND.start_inversion()
-    m = ND.iterations[-1].m
-    M = ND.Model.convert_to_M(m)
-    f1 = ND.Model.F(M)
-    f2 = ND.Model.F_ng(M)
-    print f1 - f2
-    exit()
-
-    D = ND.Data.D
-
-    f = ND.Model.f(m)
-    print 'f', f.shape
-    print 'M', M.shape
-    print 'D', D.shape
-    m1 = M[:, 0]
-    f1 = ND.Model.obj.forward(m1)
-    print 'f1', f1.shape
-
-    print ND.Model.F(M)
-
-    exit()
-    # # debug end
-    """
-
     ND.run_inversion()
-
     final_iteration = ND.iterations[-1]
 
     # renormalize data
@@ -456,9 +299,8 @@ if __name__ == '__main__':
     options = cfg_time.cfg_time()
     options.parse_cmd_arguments()
 
-    # options = handle_cmd_options()
-    dd.check_input_files(options, ['times', ])
-    outdir = dd.get_output_dir(options)
+    options.check_input_files(['times', ])
+    outdir = lDDi.create_output_dir(options)
     data = get_data_dd_time(options)
 
     # for the fitting process, change to the output_directory

@@ -128,6 +128,28 @@ class cfg_time(cfg_base.cfg_base):
             }
         )
 
+    def split_options(self):
+        """
+        Extract options for two groups:
+        1) prep_opts : these options are used to prepare the actual inversion,
+        i.e.  which regularization objects to use
+        2) inv_opts : these options are directly passed through to the NDimInv
+        object
+        """
+        prep_opts, inv_opts = self.split_options_base()
+
+        prep_opts['f_lambda'] = self['freq_lambda']
+        prep_opts['t_rho0_lambda'] = self['time_rho0_lambda']
+        prep_opts['t_m_i_lambda'] = self['time_m_i_lambda']
+        prep_opts['individual_lambdas'] = self['individual_lambdas']
+        prep_opts['f_lam0'] = self['f_lam0']
+        prep_opts['trho0_first_order'] = self['trho0_first_order']
+        prep_opts['tmi_first_order'] = self['tmi_first_order']
+        prep_opts['time_weighting_rho0'] = self['time_weighting_rho0']
+        prep_opts['time_weighting_mi'] = self['time_weighting_mi']
+        return prep_opts, inv_opts
+
+
 if __name__ == '__main__':
     options = cfg_time()
     options.parse_cmd_arguments()

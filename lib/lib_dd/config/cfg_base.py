@@ -3,6 +3,7 @@
 from optparse import OptionParser
 import lib_dd.version as version
 import platform
+import os
 
 
 class cfg_base(dict):
@@ -367,3 +368,26 @@ class cfg_base(dict):
         # inv_opts['max_iterations'] = options.max_iterations
 
         return prep_opts, inv_opts
+
+    def check_input_files(self, additional_files=[]):
+        """Check if the input files exist. In addition to the base files for
+        data and frequency, also test for all filenames stored in the
+        corresponding attributes as provided by the extra list.
+        """
+        none_missing = True
+        base_files = ['frequency_file', 'data_file']
+        for attr in base_files + additional_files:
+            filename = self[attr]
+            if not os.path.isfile(filename):
+                print(('Filename not found for attribute {0}: {1}'.format(
+                    attr, filename)))
+                none_missing = False
+        else:
+            if not none_missing:
+                exit()
+
+        # check if output directory already exists
+        if os.path.isdir(self['output_dir']):
+            raise IOError(
+                'Output directory already exists. Please choose another ' +
+                'output directory, or delete the existing one.')

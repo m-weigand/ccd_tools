@@ -15,14 +15,31 @@ You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-Functions common to the Debye implementations dd_single, dd_time,
-dd_space_time.
+Functions common to the Cole-Cole decomposition implementations dd_single,
+dd_time, dd_space_time.
 """
 import sys
 import os
+import tempfile
 import numpy as np
 import sip_formats.convert as SC
 # ## general helper functions ###
+
+
+def create_output_dir(options):
+    """
+    Create the output directory
+    """
+    if options['use_tmp']:
+        # get temporary directory
+        tmp_outdir = tempfile.mkdtemp(suffix='ccd_')
+        outdir = tmp_outdir
+    else:
+        if(not os.path.isdir(options['output_dir'])):
+            os.makedirs(options['output_dir'])
+        outdir = options['output_dir']
+    return outdir
+
 
 
 def get_command():
