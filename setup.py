@@ -40,6 +40,7 @@ if __name__ == '__main__':
               'lib_dd.models',
               'lib_dd.conductivity',
               'lib_dd.io',
+              'lib_dd.config',
           ],
           scripts=[
               'src/dd_single/dd_single.py',

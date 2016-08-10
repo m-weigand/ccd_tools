@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=unused-wildcard-import,wildcard-import
 """
-Debye decomposition interface for spectral induced polarization data. One or
-more spectra can be fitted using a Debye decomposition approach.
+Cole-Cole decomposition interface for spectral induced polarization data. One
+or more spectra can be fitted using a Debye decomposition approach.
 
 Copyright 2014,2015,2016 Maximilian Weigand
 
@@ -23,7 +23,6 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 logging.basicConfig(level=logging.INFO)
 import os
-from optparse import OptionParser
 import numpy as np
 from multiprocessing import Pool
 import tempfile
@@ -43,131 +42,16 @@ import lib_dd.io.ascii as ioascii
 import lib_dd.io.ascii_audit as ioascii_audit
 from lib_dd.models import ccd_res
 
-
-def add_base_options(parser):
-    """Add options common to all dd_* programs to the parser
-    """
-    parser.add_option(
-        "-f", "--frequency_file", dest="frequency_file",
-        type='string', metavar="FILE", default='frequencies.dat',
-        help="Frequency file (default: frequency.dat)"
-    )
-    parser.add_option(
-        "--ignore", help="Frequency id's to ignore, example:\
-        '12,13,14'. Starts with index 0.", type='string',
-        default=None, dest="ignore_frequencies"
-    )
-    parser.add_option(
-        '--fmin',
-        help='Ignore frequencies below this value (default: None)',
-        type=float,
-        dest='data_fmin'
-    )
-    parser.add_option(
-        '--fmax',
-        help='Ignore frequencies above this value (default: None)',
-        type=float,
-        dest='data_fmax'
-    )
-
-    parser.add_option(
-        "-d", "--data_file",
-        dest="data_file",
-        type='string',
-        help="Data file (default: data.dat)",
-        metavar="FILE",
-        default='data.dat'
-    )
-    parser.add_option(
-        '--data_format', dest='data_format', type='string',
-        help='Input data format, possible values are: ' +
-        'rmag_rpha, lnrmag_rpha, log10rmag_rpha, rmag_rpha, ' +
-        ' rre_rim rre_rmim, cmag_cpha, cre_cim, cre_cmim ' +
-        '(default: rmag_rpha). "r" stands for resistance/' +
-        'resistivity, and "c" stands for conductance/' +
-        'conductivity',
-        default='rmag_rpha'
-    )
-    parser.add_option(
-        "-n", "--nr_terms", dest="nr_terms_decade", type='int',
-        help="Number of Debye terms per frequency decade " +
-        "(default: 20)",
-        metavar="INT",
-        default=20
-    )
-    parser.add_option(
-        "-o", "--output", type='string', metavar='DIR',
-        help="Output directory (default: results)",
-        default="results",
-        dest="output_dir"
-    )
-    parser.add_option(
-        '-p', "--plot", action="store_true", dest="plot_spectra",
-        help="Plot final iterations (default: False)",
-        default=False
-    )
-    parser.add_option(
-        "--plot_reg_strength", action="store_true",
-        dest="plot_reg_strength",
-        help="Plot regularization strengths of final " +
-        "iterations (default: False)",
-        default=False
-    )
-    parser.add_option(
-        '-i', "--plot_its", action="store_true",
-        dest="plot_it_spectra", default=False,
-        help="Plot spectra of each iteration (default: False)"
-    )
-    parser.add_option(
-        "--silent", action="store_true", dest="silent",
-        help="Do not plot any logs to STDOUT (default: False)",
-        default=False
-    )
-    parser.add_option(
-        "--tmp", action="store_true", dest="use_tmp",
-        help="Create the output in a temporary directory and " +
-        "later move it later to its destination (default: " +
-        "False)",
-        default=False
-    )
-
-    parser.add_option("--tausel", type='string', metavar='STRATEGY',
-                      help="Tau selection strategy:\ndata: Use " +
-                      "data frequency limits for tau selection\ndata_ext " +
-                      "(default): Extend tau ranges by one frequency decade " +
-                      "compared to the 'data' strategy. Factors can be set " +
-                      "for the low and high frequency by separating with a " +
-                      "',': LEFT,RIGHT, e.g. '10,100'", default="data_ext",
-                      dest="tausel")
-    parser.add_option("--norm", type='float', metavar='FLOAT',
-                      help="Normalize magnitudes to the linear " +
-                      "resistivity/resistance value (default: None)",
-                      default=None, dest="norm")
-    parser.add_option("--plot_lcurve", type='int', metavar='ITERATION',
-                      help="Plot the l-curve for a selected iteration. " +
-                      "WARNING: This only plots the lcurve and does not " +
-                      "use it in the inversion process. Use -1 for last " +
-                      "iteration. default=None ",
-                      default=None, dest="plot_lambda")
-    parser.add_option("--max_it", type='int', metavar='INT',
-                      help="Maximum nr of iterations (default: 20)",
-                      default=20, dest="max_iterations")
-    parser.add_option('-v', "--version", action="store_true",
-                      dest="version", default=False,
-                      help="Print version information")
-    parser.add_option("--output_format", type='string', metavar='TYPE',
-                      help="Output format (ascii, ascii_audit)",
-                      default='ascii_audit', dest="output_format")
-
-    return parser
+import lib_dd.config.cfg_base as cfg_base
 
 
 def handle_cmd_options():
     """
     Handle command line options
     """
-    parser = OptionParser()
-    parser = add_base_options(parser)
+    config_base = cfg_base.cfg_base()
+    parser = config_base.get_cmd_parser()
+
     # add options specific to dd_single
     parser.add_option("-c", "--nr_cores", dest="nr_cores", type='int',
                       help="Number of CPU cores to use (default: 1)",
@@ -182,9 +66,10 @@ def handle_cmd_options():
         options.nr_cores = 1
 
     # print version information if requested
-    if(options.version):
+    if options.version:
         print(version._get_version_numbers())
         exit()
+
     return options
 
 
