@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Invert time-lapse SIP data using the Debye Decoposition approach.
+Invert time-lapse SIP data using the Cole-Cole decomposition approach.
 
-Copyright 2014,2015 Maximilian Weigand
+Copyright 2014,2015,2016 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -20,8 +20,6 @@ Input files
 """
 # from memory_profiler import *
 import os
-import pkg_resources
-# import json
 import logging
 logging.basicConfig(level=logging.INFO)
 from optparse import OptionParser
@@ -322,7 +320,7 @@ def _prepare_ND_object(data):
         if data['prep_opts']['f_lam0'] is None:
             lam0_obj = LamFuncs.Lam0_Easylam()
         else:
-            lam0_obj = LamFuncs.Lam0_Fixed(prep_opts['f_lam0'])
+            lam0_obj = LamFuncs.Lam0_Fixed(data['prep_opts']['f_lam0'])
 
         if(data['prep_opts']['individual_lambdas']):
             lam_obj = LamFuncs.SearchLambdaIndividual(lam0_obj)
@@ -362,26 +360,31 @@ def _prepare_ND_object(data):
         1,
         reg_obj,
         LamFuncs.FixedLambda(
-        data['prep_opts']['t_rho0_lambda'])
+            data['prep_opts']['t_rho0_lambda']
         )
+    )
 
     # m regularization
     if data['prep_opts']['tmi_first_order']:
         reg_obj = RegFuncs.SmoothingFirstOrder(
             decouple=[],
             outside_first_dim=range(
-            1, nr_tau_values),
-            weighting_obj=weighting_obj)
+                1, nr_tau_values
+            ),
+            weighting_obj=weighting_obj
+        )
     else:
         reg_obj = RegFuncs.SmoothingSecondOrder(
             decouple=[],
             outside_first_dim=range(
-            1, nr_tau_values))
+                1, nr_tau_values)
+        )
     ND.Model.add_regularization(
         1, reg_obj,
         LamFuncs.FixedLambda(
-        data['prep_opts']['t_m_i_lambda'])
+            data['prep_opts']['t_m_i_lambda']
         )
+    )
     return ND
 
 
