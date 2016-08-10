@@ -35,7 +35,6 @@ from NDimInv.plot_helper import *
 import lib_dd.interface as lDDi
 import gc
 import lib_dd.plot as lDDp
-import lib_dd.version as version
 import sip_formats.convert as sip_converter
 import lib_dd.conductivity.model as cond_model
 import lib_dd.io.ascii as ioascii
@@ -45,43 +44,15 @@ from lib_dd.models import ccd_res
 import lib_dd.config.cfg_base as cfg_base
 
 
-def handle_cmd_options():
-    """
-    Handle command line options
-    """
-    config_base = cfg_base.cfg_base()
-    parser = config_base.get_cmd_parser()
-
-    # add options specific to dd_single
-    parser.add_option("-c", "--nr_cores", dest="nr_cores", type='int',
-                      help="Number of CPU cores to use (default: 1)",
-                      metavar="INT", default=1)
-    parser.add_option("--lambda", type='float', metavar='FLOAT',
-                      help="Use a fixed lambda (integer), default=None",
-                      default=None, dest="fixed_lambda")
-    (options, args) = parser.parse_args()
-
-    # multi threading does not work on Windows
-    if platform.system() == "Windows":
-        options.nr_cores = 1
-
-    # print version information if requested
-    if options.version:
-        print(version._get_version_numbers())
-        exit()
-
-    return options
-
-
 def check_input_files(options, additional_files=[]):
-    """Check the input files for existence. In addition to the base files for
+    """Check if the input files exist. In addition to the base files for
     data and frequency, also test for all filenames stored in the corresponding
     attributes as provided by the extra list.
     """
     none_missing = True
     base_files = ['frequency_file', 'data_file']
     for attr in base_files + additional_files:
-        filename = getattr(options, attr)
+        filename = options[attr]
         if not os.path.isfile(filename):
             print(('Filename not found for attribute {0}: {1}'.format(
                 attr, filename)))
@@ -91,49 +62,10 @@ def check_input_files(options, additional_files=[]):
             exit()
 
     # check if output directory already exists
-    if os.path.isdir(options.output_dir):
+    if os.path.isdir(options['output_dir']):
         raise IOError(
             'Output directory already exists. Please choose another ' +
             'output directory, or delete the existing one.')
-
-
-def split_options_base(options):
-    """
-    Prepare dicts containing preparation and inversion settings common to all
-    dd_* programs
-    """
-    prep_opts = {}
-    prep_opts['plot_it_spectra'] = options.plot_it_spectra
-    prep_opts['plot'] = options.plot_spectra
-    prep_opts['plot_reg_strength'] = options.plot_reg_strength
-    prep_opts['output_dir'] = options.output_dir
-    prep_opts['data_format'] = options.data_format
-    prep_opts['plot_lambda'] = options.plot_lambda
-
-    inv_opts = {}
-    inv_opts['tausel'] = options.tausel
-    inv_opts['Nd'] = options.nr_terms_decade
-    inv_opts['max_iterations'] = options.max_iterations
-
-    return prep_opts, inv_opts
-
-
-def split_options_single(options):
-    """
-    Extract options for two groups:
-    1) prep_opts : these options are used to prepare the actual inversion, i.e.
-                   which regularization objects to use. Those options do not
-                   enter the NDimInv objects
-    2) inv_opts : these options are directly passed through to the NDimInv
-                  object
-    """
-    prep_opts, inv_opts = split_options_base(options)
-
-    # now add options specific to dd_single
-    prep_opts['lambda'] = options.fixed_lambda
-    prep_opts['nr_cores'] = options.nr_cores
-
-    return prep_opts, inv_opts
 
 
 def _prepare_ND_object(fit_data):
@@ -278,10 +210,6 @@ def _get_fit_datas(data):
     """
     fit_datas = []
 
-    # add frequencies to inv_opts
-    # opts['max_iterations'] = 20
-    # opts['frequencies'] = frequencies  # why do we need this
-
     nr_of_spectra = len(data['cr_data'])
     for i in range(0, nr_of_spectra):
         fit_data = {}
@@ -354,7 +282,7 @@ def save_fit_results(data, NDobj):
            objects
     """
     NDlist = _make_list(NDobj)
-    output_format = data['options'].output_format
+    output_format = data['options']['output_format']
     if output_format == 'ascii':
         ioascii.save_data(data, NDlist)
     elif output_format == 'ascii_audit':
@@ -391,7 +319,7 @@ def get_data_dd_single(options):
     # prep_opts : all settings we need to prepare the inversion (i.e. set
     #             regularization objects)
     # inv_opts : options that are directly looped through to the NDimInv object
-    prep_opts, inv_opts = split_options_single(options)
+    prep_opts, inv_opts = options.split_options()
 
     data['options'] = options
     data['prep_opts'] = prep_opts
@@ -400,21 +328,24 @@ def get_data_dd_single(options):
 
 
 def get_output_dir(options):
-    if(options.use_tmp):
+    if options['use_tmp']:
         # get temporary directory
         tmp_outdir = tempfile.mkdtemp(suffix='ccd_')
         outdir = tmp_outdir
     else:
-        if(not os.path.isdir(options.output_dir)):
-            os.makedirs(options.output_dir)
-        outdir = options.output_dir
+        if(not os.path.isdir(options['output_dir'])):
+            os.makedirs(options['output_dir'])
+        outdir = options['output_dir']
     return outdir
 
 
 # @profile
 def main():
     print('Cole-Cole decomposition, no time regularization')
-    options = handle_cmd_options()
+
+    options = cfg_base.cfg_single()
+    options.parse_cmd_arguments()
+
     check_input_files(options)
     outdir = get_output_dir(options)
 
@@ -444,12 +375,12 @@ def main():
     os.chdir(pwd)
 
     # move temp directory to output directory
-    if(options.use_tmp):
-        if os.path.isdir(options.output_dir):
+    if options['use_tmp']:
+        if os.path.isdir(options['output_dir']):
             print('WARNING: Output directory already exists')
             print('The new inversion can be found here:')
-            print((options.output_dir + os.sep + os.path.basename(outdir)))
-        shutil.move(outdir, options.output_dir)
+            print((options['output_dir'] + os.sep + os.path.basename(outdir)))
+        shutil.move(outdir, options['output_dir'])
 
 
 if __name__ == '__main__':

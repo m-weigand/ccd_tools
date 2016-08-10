@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # *-* coding: utf-8 *-*
 from optparse import OptionParser
+import lib_dd.version as version
+import platform
 
 
 class cfg_base(dict):
@@ -12,6 +14,9 @@ class cfg_base(dict):
             self.cmd_dict = cmd_dict
 
     def __init__(self):
+
+        # will store the command line parser object
+        self.cmd_parser = None
         # store the cfg objects here
         self.cfg = {}
 
@@ -307,16 +312,110 @@ class cfg_base(dict):
                 **opts
             )
 
+        self.cmd_parser = parser
         return parser
 
+    def parse_cmd_arguments(self):
+        """
+        Parse the command line arguments and update the dictionary
+        """
+        if self.cmd_parser is None:
+            self.get_cmd_parser()
+
+        (options, args) = self.cmd_parser.parse_args()
+
+        # multi threading does not work on Windows
+        if platform.system() == "Windows":
+            options.nr_cores = 1
+
+        # print version information if requested
+        if options.version:
+            print(version._get_version_numbers())
+            exit()
+
+        # update the self-dict with the new values
+        for key in self.keys():
+            self[key] = getattr(options, key)
+
+        return options
+
+    def split_options_base(self):
+        """
+        Prepare dicts containing preparation and inversion settings common to
+        all cdd_* programs
+        """
+        prep_opts = {key: self[key] for key in (
+            'plot_it_spectra',
+            'plot_reg_strength',
+            'output_dir',
+            'data_format',
+            'plot_lambda',
+        )
+        }
+        # prep_opts['plot_it_spectra'] = options.plot_it_spectra
+        prep_opts['plot'] = self['plot_spectra']
+        # prep_opts['plot_reg_strength'] = options.plot_reg_strength
+        # prep_opts['output_dir'] = options.output_dir
+        # prep_opts['data_format'] = options.data_format
+        # prep_opts['plot_lambda'] = options.plot_lambda
+
+        inv_opts = {key: self[key] for key in (
+            'tausel', 'max_iterations')
+        }
+        # inv_opts['tausel'] = options.tausel
+        inv_opts['Nd'] = self['nr_terms_decade']
+        # inv_opts['max_iterations'] = options.max_iterations
+
+        return prep_opts, inv_opts
+
+
+class cfg_single(cfg_base):
+    def __init__(self):
+        # call the init function of cfg_base
+        super(cfg_single, self).__init__()
+
+        self['nr_cores'] = 1
+        self.cfg['nr_cores'] = self.cfg_obj(
+            type='int',
+            help='Numer of CPU cores to use',
+            cmd_dict={
+                'short': '-c',
+                'long': '--nr_cores',
+                'metavar': 'INT',
+            }
+        )
+
+        self['fixed_lambda'] = 1
+        self.cfg['fixed_lambda'] = self.cfg_obj(
+            type='float',
+            help='Use a fixed lambda (integer)',
+            cmd_dict={
+                'short': None,
+                'long': '--lambda',
+                'metavar': 'INT',
+            }
+        )
+
+    def split_options(self):
+        """
+        Extract options for two groups:
+        1) prep_opts : these options are used to prepare the actual inversion,
+                    i.e.  which regularization objects to use. Those options do
+                    not enter the NDimInv objects
+        2) inv_opts : these options are directly passed through to the NDimInv
+                      object
+        """
+        prep_opts, inv_opts = self.split_options_base()
+
+        # now add options specific to dd_single
+        prep_opts['lambda'] = self['fixed_lambda']
+        prep_opts['nr_cores'] = self['nr_cores']
+
+        return prep_opts, inv_opts
+
+
 if __name__ == '__main__':
-    config = cfg_base()
-
-    print 'old', config['frequency_file']
-    config['frequency_file'] = 'new_value.dat'
-    print 'new', config['frequency_file']
-
-    parser = config.get_cmd_parser()
-    print dir(parser)
-
-    options = parser.parse_args()
+    config = cfg_single()
+    print 'lambda old', config['fixed_lambda']
+    config.parse_cmd_arguments()
+    print 'lambda new', config['fixed_lambda']

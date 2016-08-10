@@ -76,20 +76,21 @@ def aggregate_dicts(iteration_list, dict_name):
 
 def _get_frequencies(options):
     # we can filter by id (0-indexed)
-    if(options.ignore_frequencies is not None):
-        f_ignore_ids = [int(x) for x in options.ignore_frequencies.split(',')]
+    if options['ignore_frequencies'] is not None:
+        f_ignore_ids = [int(x) for x in
+                        options['ignore_frequencies'].split(',')]
     else:
         f_ignore_ids = []
 
-    frequencies = np.loadtxt(options.frequency_file)
+    frequencies = np.loadtxt(options['frequency_file'])
 
     # or we can filter by values
-    if options.data_fmin is not None:
-        f_below_ids = np.where(frequencies < options.data_fmin)[0]
+    if options['data_fmin'] is not None:
+        f_below_ids = np.where(frequencies < options['data_fmin'])[0]
         f_ignore_ids.extend(f_below_ids.tolist())
 
-    if options.data_fmax is not None:
-        f_above_ids = np.where(frequencies > options.data_fmax)[0]
+    if options['data_fmax'] is not None:
+        f_above_ids = np.where(frequencies > options['data_fmax'])[0]
         f_ignore_ids.extend(f_above_ids.tolist())
 
     # filter frequencies
@@ -133,14 +134,14 @@ def load_frequencies_and_data(options):
     # # data ##
     # # load raw data
     try:
-        raw_data = np.atleast_2d(np.loadtxt(options.data_file))
+        raw_data = np.atleast_2d(np.loadtxt(options['data_file']))
     except Exception, e:
         print('There was an error loading the data file')
         print(e)
         exit()
 
     # # filter frequencies
-    if(f_ignore_ids is not None):
+    if f_ignore_ids is not None:
         # split data for easy access
         part1 = raw_data[:, 0:raw_data.shape[1] / 2]
         part2 = raw_data[:, raw_data.shape[1] / 2:]
@@ -155,21 +156,21 @@ def load_frequencies_and_data(options):
     else:
         target_format = "rre_rim"
 
-    raw_data = SC.convert(options.data_format, target_format, raw_data)
-    options.data_format = target_format
+    raw_data = SC.convert(options['data_format'], target_format, raw_data)
+    options['data_format'] = target_format
 
     # apply normalization if necessary
     # note, because the previous format transformations, the normalisation can
     # directly be applied (it is always given in the model data format)
-    if(options.norm is not None):
-        norm_factors = options.norm / raw_data[:, 0]
+    if options['norm'] is not None:
+        norm_factors = options['norm'] / raw_data[:, 0]
         norm_factors = norm_factors[:, np.newaxis]
 
         # apply factors
         raw_data *= norm_factors
         data['norm_factors'] = np.atleast_1d(norm_factors[:, 0].squeeze())
 
-    data['raw_format'] = options.data_format
+    data['raw_format'] = options['data_format']
     data['raw_data'] = raw_data
 
     return data, options
@@ -227,7 +228,7 @@ def prepare_stat_values(raw_values, key, norm_factors):
             return vector
 
         values = np.array([np.pad(i, (0, max_len - i.size), padwithnans) for i
-                  in raw_values])
+                           in raw_values])
     else:
         values = np.array(raw_values)
         # values = values.squeeze()
@@ -270,7 +271,9 @@ def save_rms_values(rms_list, rms_names):
         rms_all = np.array(rms_list[key]).T
         if len(names) != rms_all.shape[0]:
             names = [
-                names[0] + '{0}'.format(x) for x in xrange(0, rms_all.shape[0])]
+                names[0] + '{0}'.format(x) for x in
+                xrange(0, rms_all.shape[0])
+            ]
         for name, rms in zip(names, rms_all):
             filename = name + key_type + '.dat'
             np.savetxt(filename, np.atleast_1d(rms))
