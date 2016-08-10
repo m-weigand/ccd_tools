@@ -16,13 +16,11 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
-Input files
 """
 # from memory_profiler import *
 import os
 import logging
 logging.basicConfig(level=logging.INFO)
-import dd_single as dd
 import numpy as np
 import NDimInv
 import NDimInv.regs as RegFuncs
@@ -34,6 +32,7 @@ import lib_dd.plot as lDDp
 import lib_dd.conductivity.model as cond_model
 from lib_dd.models import ccd_res
 import lib_dd.config.cfg_time as cfg_time
+import lib_dd.io.general as iog
 
 
 def _get_times(options):
@@ -125,11 +124,7 @@ def fit_data(data):
     ND = fit_one_time_series(data_struct)
 
     # results now contains one or more ND objects
-    save_fit_results(data, ND)
-
-
-def save_fit_results(data, NDobj):
-    dd.save_fit_results(data, NDobj)
+    iog.save_fit_results(data, ND)
 
 
 def _prepare_ND_object(data):
