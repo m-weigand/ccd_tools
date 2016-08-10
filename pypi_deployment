@@ -21,3 +21,12 @@
 * python setup.py register -r https://testpypi.python.org/pypi
 * python setup.py sdist
 * twine upload -r pypitest dist/dd_interface-0.8.0.tar.gz
+
+
+Links
+=====
+
+https://pythonhosted.org/an_example_pypi_project/setuptools.html
+http://peterdowns.com/posts/first-time-with-pypi.html
+https://github.com/pypa/twine
+http://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies
