@@ -3,13 +3,11 @@
 This is the default output format
 """
 import os
-import sys
 import json
-from operator import mul
 import numpy as np
 import lib_dd.version as version
 import lib_dd.interface as lDDi
-import general
+import helper
 
 
 def save_base_results(final_iterations, data):
@@ -54,7 +52,7 @@ def save_base_results(final_iterations, data):
     try:
         lambdas = [x[0].lams for x in final_iterations]
         np.savetxt('lambdas.dat', lambdas)
-    except Exception, e:
+    except Exception as e:
         print('There was an error saving the lambda values')
         print(e)
         pass
@@ -101,9 +99,8 @@ def save_data(data, NDlist):
 
     # save model response
     with open('f.dat', 'w') as fid:
-        general.save_f(fid, final_iterations, norm_factors)
+        helper.save_f(fid, final_iterations, norm_factors)
 
     # save times
     if 'times' in data:
         np.savetxt('times.dat', data['times'])
-

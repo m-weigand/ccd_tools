@@ -39,6 +39,7 @@ if __name__ == '__main__':
               'lib_dd',
               'lib_dd.models',
               'lib_dd.conductivity',
+              'lib_dd.decomposition',
               'lib_dd.io',
               'lib_dd.config',
           ],

@@ -15,6 +15,11 @@ class cfg_base(dict):
             self.cmd_dict = cmd_dict
 
     def __init__(self):
+        self.web_blacklist = [
+            'version',
+            'frequency_file',
+            'data_file',
+        ]
 
         # will store the command line parser object
         self.cmd_parser = None

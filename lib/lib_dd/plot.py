@@ -36,7 +36,7 @@ class plot_iteration():
             else:
                 self.norm_factors = norm_factors
             self._plot(it, filename, keep_plot)
-        except Exception, e:
+        except Exception as e:
             print('Exception in plot routine', e)
 
     class figure_environment(object):

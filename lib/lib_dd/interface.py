@@ -152,7 +152,7 @@ def load_frequencies_and_data(options):
     # # load raw data
     try:
         raw_data = np.atleast_2d(np.loadtxt(options['data_file']))
-    except Exception, e:
+    except Exception as e:
         print('There was an error loading the data file')
         print(e)
         exit()

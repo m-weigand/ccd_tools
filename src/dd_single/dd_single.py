@@ -28,7 +28,7 @@ from multiprocessing import Pool
 import shutil
 from NDimInv.plot_helper import *
 import lib_dd.interface as lDDi
-import lib_dd.io.general as iog
+import lib_dd.io.io_general as iog
 import lib_dd.config.cfg_single as cfg_single
 import lib_dd.decomposition.ccd_single as decomp_single
 
@@ -137,7 +137,7 @@ class ccd_single(object):
         data, options = lDDi.load_frequencies_and_data(options)
 
         # we need list of spectra
-        size_y = data['raw_data'].shape[1] / 2
+        size_y = int(data['raw_data'].shape[1] / 2)
         cr_data = [x.reshape((size_y, 2), order='F') for x in data['raw_data']]
 
         data['cr_data'] = cr_data

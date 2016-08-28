@@ -4,7 +4,7 @@ import numpy as np
 import uuid
 import lib_dd.interface as lDDi
 import lib_dd.version as version
-import general
+import helper
 
 
 def _get_header():
@@ -60,7 +60,7 @@ def save_results(data, NDlist):
             fid.write(header)
             fid.write('nr-its lambda\n')
             np.savetxt(fid, nr_its_and_lambdas)  # , fmt='%i %f')
-    except Exception, e:
+    except Exception as e:
         print('There was an error saving the lambda and nr its values')
         print(e)
         pass
@@ -111,7 +111,7 @@ def save_data(data, norm_factors, final_iterations):
         fid.write(header)
         fid.write('# forward response data format: ' +
                   final_iterations[0][0].Data.obj.data_format + '\n')
-        general.save_f(fid, final_iterations, norm_factors)
+        helper.save_f(fid, final_iterations, norm_factors)
 
     # save times
     if 'times' in data:
