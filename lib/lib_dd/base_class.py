@@ -17,9 +17,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 from NDimInv.plot_helper import *
 import logging
 import numpy as np
-import scipy.stats as stats
 import os
-import Jacobian
 import int_pars
 
 logger = logging.getLogger('lib_dd.main')
@@ -222,10 +220,10 @@ class starting_pars_3():
     def get_sec_data(self):
         sec_data = {}
         for key, bins, frequencies in (
-                ('lowf', self.bins_tau_lowf, None),
-                ('inside', self.bins_inside_f, self.frequencies),
-                ('highf', self.bins_tau_highf, None),
-                ):
+            ('lowf', self.bins_tau_lowf, None),
+            ('inside', self.bins_inside_f, self.frequencies),
+            ('highf', self.bins_tau_highf, None),
+        ):
             if(bins is None):
                 continue
 
@@ -575,7 +573,7 @@ class integrated_parameters():
         Jsize = Jacobian.shape
 
         # extract dsigma''/dm
-        del_mim_del_m = Jacobian[Jsize[0] / 2:, 1:]
+        del_mim_del_m = Jacobian[int(Jsize[0] / 2):, 1:]
 
         covf = np.abs(del_mim_del_m).sum(axis=1)
         covf /= np.max(covf)

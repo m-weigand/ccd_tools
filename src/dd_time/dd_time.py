@@ -49,10 +49,10 @@ def _get_cr_data(options, data):
     """
     cr_data = np.loadtxt(options.data_file)
     if(options.norm_mag is not None):
-        print 'normalizing'
+        print('normalizing')
         # data must me in format 'rmag_rpha'
         if(options.data_format != "rmag_rpha"):
-            print 'formatting'
+            print('formatting')
             cr_data = SC.convert(options.data_format, 'rmag_rpha', cr_data)
             options.data_format = 'rmag_rpha'
 

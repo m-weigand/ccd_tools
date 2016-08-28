@@ -37,14 +37,17 @@ def save_results(data, NDlist):
     save_frequency_data(final_iterations, data, header)
     save_data(data, norm_factors, final_iterations)
 
-    with open('frequencies.dat', 'w') as fid:
-        fid.write(header)
-        fid.write('# frequencies [Hz]\n')
+    with open('frequencies.dat', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        fid.write(bytes('# frequencies [Hz]\n', 'UTF-8'))
         np.savetxt(fid, final_iterations[0][0].Data.obj.frequencies)
 
-    with open('tau.dat', 'w') as fid:
-        fid.write(header)
-        fid.write('# relaxation times used for the decomposition\n')
+    with open('tau.dat', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        fid.write(bytes(
+            '# relaxation times used for the decomposition\n',
+            'UTF-8')
+        )
         np.savetxt(fid, final_iterations[0][0].Data.obj.tau)
 
     # final_iterations[0][0].RMS.save_rms_definition('rms_definition.json')
@@ -56,9 +59,12 @@ def save_results(data, NDlist):
         nr_of_iterations = [x[0].nr for x in final_iterations]
         nr_its_and_lambdas = np.vstack((nr_of_iterations, lambdas)).T
 
-        with open('lams_and_nr_its.dat', 'w') as fid:
-            fid.write(header)
-            fid.write('nr-its lambda\n')
+        with open('lams_and_nr_its.dat', 'wb') as fid:
+            fid.write(bytes(header, 'UTF-8'))
+            fid.write(bytes(
+                'nr-its lambda\n',
+                'UTF-8'
+            ))
             np.savetxt(fid, nr_its_and_lambdas)  # , fmt='%i %f')
     except Exception as e:
         print('There was an error saving the lambda and nr its values')
@@ -67,39 +73,45 @@ def save_results(data, NDlist):
 
     # save normalization factors
     if('norm_factors' in data):
-        with open('normalization_factors.dat', 'w') as fid:
-            fid.write(header)
-            fid.write('# normalisation factors\n')
+        with open('normalization_factors.dat', 'wb') as fid:
+            fid.write(bytes(header, 'UTF-8'))
+            fid.write(bytes('# normalisation factors\n', 'UTF-8'))
             np.savetxt(fid, data['norm_factors'])
 
     # save weighting factors
     Wd_diag = final_iterations[0][0].Data.Wd.diagonal()
-    with open('errors.dat', 'w') as fid:
-        fid.write(header)
-        fid.write('# weighting factors\n')
+    with open('errors.dat', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        fid.write(bytes('# weighting factors\n', 'UTF-8'))
         np.savetxt(fid, Wd_diag)
 
-    with open('version.dat', 'w') as fid:
-        fid.write(header)
-        fid.write(version._get_version_numbers() + '\n')
+    with open('version.dat', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        fid.write(bytes(
+            version._get_version_numbers() + '\n', 'UTF-8')
+        )
 
     iopts = data['inv_opts']
     for key in iopts.keys():
         if isinstance(iopts[key], np.ndarray):
             iopts[key] = iopts[key].tolist()
 
-    with open('inversion_options.json', 'w') as fid:
-        fid.write(header)
-        fid.write('# inversion options dict\n')
-        json.dump(iopts, fid)
+    with open('inversion_options.json', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        fid.write(bytes('# inversion options dict\n', 'UTF-8'))
+        fid.write(bytes(
+            json.dumps(iopts),
+            'UTF-8'
+        ))
 
 
 def save_data(data, norm_factors, final_iterations):
     header = _get_header()
     # save original data
-    with open('data.dat', 'w') as fid:
-        fid.write(header)
-        fid.write('# raw data, format: ' + data['raw_format'] + '\n')
+    with open('data.dat', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        out_str = '# raw data, format: ' + data['raw_format'] + '\n'
+        fid.write(bytes(out_str, 'UTF-8'))
 
         orig_data = data['raw_data']
         if norm_factors is not None:
@@ -107,18 +119,23 @@ def save_data(data, norm_factors, final_iterations):
         np.savetxt(fid, orig_data)
 
     # save forward response
-    with open('f.dat', 'w') as fid:
-        fid.write(header)
-        fid.write('# forward response data format: ' +
-                  final_iterations[0][0].Data.obj.data_format + '\n')
+    with open('f.dat', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        fid.write(bytes(
+            '# forward response data format: ' +
+            final_iterations[0][0].Data.obj.data_format + '\n',
+            'UTF-8'
+        ))
         helper.save_f(fid, final_iterations, norm_factors)
 
     # save times
     if 'times' in data:
-        with open('times.dat', 'w') as fid:
-            fid.write(header)
+        with open('times.dat', 'wb') as fid:
+            fid.write(bytes(header, 'UTF-8'))
             # write column description
-            fid.write('# time of each spectrum\n')
+            fid.write(bytes(
+                '# time of each spectrum\n', 'UTF-8')
+            )
             np.savetxt(fid, data['times'])
 
 
@@ -154,15 +171,17 @@ def save_integrated_parameters(final_iterations, data, header):
         else:
             if key not in ('m_data', ):
                 # save to its own file
-                with open(key + '.dat', 'w') as fid:
-                    fid.write(header)
-                    fid.write('#' + key + '\n')
+                with open(key + '.dat', 'wb') as fid:
+                    fid.write(bytes(header, 'UTF-8'))
+                    out_str = '#' + key + '\n'
+                    fid.write(bytes(out_str, 'UTF-8'))
                     np.savetxt(fid, values)
 
     all_data = np.vstack(pars_list).T
-    with open('integrated_paramaters.dat', 'w') as fid:
-        fid.write(header)
-        fid.write('#' + ' '.join(pars_labels) + '\n')
+    with open('integrated_paramaters.dat', 'wb') as fid:
+        fid.write(bytes(header, 'UTF-8'))
+        out_str = '#' + ' '.join(pars_labels) + '\n'
+        fid.write(bytes(out_str, 'UTF-8'))
         np.savetxt(fid, all_data, fmt='%.6f')
 
 

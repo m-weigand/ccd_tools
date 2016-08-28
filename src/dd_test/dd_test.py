@@ -24,7 +24,7 @@ import subprocess
 import shutil
 import sys
 
-# 
+#
 all_tests_directory = 'test_results'
 
 # dict with the available binaries, and the corresponding data files
@@ -230,7 +230,7 @@ def run_test(test_dir):
     # execute test snippet
     # -> the test snippet should yield errors usable by nosetests...
     """
-    print 'Run test'
+    print('Run test')
     if(os.path.isdir('active_run')):
         shutil.rmtree('active_run')
 
