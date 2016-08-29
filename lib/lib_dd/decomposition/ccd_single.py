@@ -111,6 +111,11 @@ def fit_one_spectrum(fit_data):
 
 
 def call_fit_functions(fit_data, ND):
+    # run plot functions in output directory
+    pwd = os.getcwd()
+    os.chdir(fit_data['outdir'])
+    print('Changing to: {0}'.format(fit_data['outdir']))
+
     if(fit_data['prep_opts']['plot']):
         print('Plotting final iteration')
         ND.iterations[-1].plot(
@@ -128,3 +133,4 @@ def call_fit_functions(fit_data, ND):
 
     if(fit_data['prep_opts']['plot_lambda'] is not None):
         ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve()
+    os.chdir(pwd)

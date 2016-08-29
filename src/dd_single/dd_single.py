@@ -70,6 +70,7 @@ class ccd_single(object):
         nr_of_spectra = len(data['cr_data'])
         for i in range(0, nr_of_spectra):
             fit_data = {}
+            fit_data['outdir'] = data['outdir']
             # change file prefix for each spectrum
             # at the moment we need a copy for this
             frequencies_cropped, cr_data = self._filter_nan_values(
@@ -119,7 +120,7 @@ class ccd_single(object):
         # results now contains one or more ND objects
         # iog.save_fit_results(data, results)
 
-    def get_data_dd_single(self, options):
+    def get_data_dd_single(self, options, outdir):
         """
         Load frequencies and data and return a data dict
 
@@ -149,6 +150,7 @@ class ccd_single(object):
         # object
         prep_opts, inv_opts = options.split_options()
 
+        data['outdir'] = outdir
         data['options'] = options
         data['prep_opts'] = prep_opts
         data['inv_opts'] = inv_opts
@@ -177,7 +179,7 @@ def main():
     # logger.info('Frequency file: {0}'.format(options.frequency_file))
     # logger.info('Data file: {0}'.format(options.data_file))
     # frequencies, data_list = get_frequencies_and_data(options)
-    data = ccds_object.get_data_dd_single(options)
+    data = ccds_object.get_data_dd_single(options, os.path.abspath(outdir))
 
     # fit the data
     ccds_object.fit_data(data)
