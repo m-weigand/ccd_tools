@@ -9,16 +9,28 @@ import os
 class cfg_base(dict):
 
     class cfg_obj(object):
-        def __init__(self, type, help, cmd_dict):
+        def __init__(self, type, help, cmd_dict, possible_values=None):
             self.type = type
             self.help_text = help
             self.cmd_dict = cmd_dict
+            self.possible_values = possible_values
 
     def __init__(self):
+        self.web_order = [
+            'nr_terms_decade',
+        ]
+
+        # these options will not be shown in the web interface
         self.web_blacklist = [
             'version',
             'frequency_file',
             'data_file',
+            'output_dir',
+            'nr_cores',
+            'silent',
+            'output_format',
+            'use_tmp',
+            'data_format',
         ]
 
         # will store the command line parser object
@@ -119,6 +131,10 @@ class cfg_base(dict):
                 'long': '--data_format',
                 'metavar': 'FORMAT',
             },
+            possible_values=[
+                'rmag_rpha',
+                'cre_cim',
+            ],
         )
 
         self['nr_terms_decade'] = 20
