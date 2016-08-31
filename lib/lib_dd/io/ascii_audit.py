@@ -152,7 +152,7 @@ def save_integrated_parameters(final_iterations, data, header):
     pars_labels = []
     pars_list = []
     # save keys (statistics)
-    for key in keys:
+    for key in sorted(keys):
         raw_values = stat_pars[key]
         # we need to treat some keys different than others before we can save
         # them
