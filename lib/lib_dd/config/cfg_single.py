@@ -17,7 +17,7 @@ class cfg_single(cfg_base.cfg_base):
             }
         )
 
-        self['fixed_lambda'] = 1
+        self['fixed_lambda'] = None
         self.cfg['fixed_lambda'] = self.cfg_obj(
             type='float',
             help='Use a fixed lambda (integer)',
