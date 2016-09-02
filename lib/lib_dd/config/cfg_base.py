@@ -2,6 +2,7 @@
 # *-* coding: utf-8 *-*
 from optparse import OptionParser
 import lib_dd.version as version
+import NDimInv.data_weighting as data_weighting
 import platform
 import os
 
@@ -297,6 +298,18 @@ class cfg_base(dict):
             },
         )
 
+        self['data_weighting'] = 're_vs_im'
+        self.cfg['data_weighting'] = self.cfg_obj(
+            type='string',
+            help='Data weighting scheme to use.',
+            cmd_dict={
+                'short': None,
+                'long': '--data_weighting',
+                'metavar': 'SCHEME',
+            },
+            possible_values=sorted(data_weighting.functions.keys()),
+        )
+
     def get_cmd_parser(self):
         parser = OptionParser()
         for key in self.cfg.keys():
@@ -382,7 +395,10 @@ class cfg_base(dict):
         # prep_opts['plot_lambda'] = options.plot_lambda
 
         inv_opts = {key: self[key] for key in (
-            'tausel', 'max_iterations')
+            'tausel',
+            'max_iterations',
+            'data_weighting',
+        )
         }
         # inv_opts['tausel'] = options.tausel
         inv_opts['Nd'] = self['nr_terms_decade']

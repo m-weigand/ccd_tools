@@ -82,7 +82,14 @@ def save_results(data, NDlist):
     Wd_diag = final_iterations[0][0].Data.Wd.diagonal()
     with open('errors.dat', 'wb') as fid:
         fid.write(bytes(header, 'UTF-8'))
-        fid.write(bytes('# weighting factors\n', 'UTF-8'))
+        fid.write(
+            bytes(
+                '# weighting factors, scheme: {0}\n'.format(
+                    data['inv_opts']['data_weighting'],
+                ),
+                'UTF-8'
+            )
+        )
         np.savetxt(fid, Wd_diag)
 
     with open('version.dat', 'wb') as fid:
