@@ -87,7 +87,7 @@ def save_data(data, NDlist):
     os.chdir('..')
 
     # save original data
-    with open('data.dat', 'w') as fid:
+    with open('data.dat', 'wb') as fid:
         orig_data = data['raw_data']
         if norm_factors is not None:
             orig_data = orig_data / norm_factors[:, np.newaxis]
@@ -98,7 +98,7 @@ def save_data(data, NDlist):
     open('data_format.dat', 'w').write(data['raw_format'])
 
     # save model response
-    with open('f.dat', 'w') as fid:
+    with open('f.dat', 'wb') as fid:
         helper.save_f(fid, final_iterations, norm_factors)
 
     # save times
