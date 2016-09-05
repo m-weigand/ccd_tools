@@ -36,10 +36,10 @@ import glob
 import numpy as np
 from NDimInv.plot_helper import *
 import NDimInv.elem as elem
-import dd_single
 import NDimInv
 import lib_dd.plot as lDDp
 import lib_dd.decomposition.ccd_single_stateless as decomp_single_sl
+import lib_dd.io.io_general as iog
 
 
 # we need to keep track of certain characteristics regarding the output files
@@ -509,13 +509,11 @@ def filter_result_dir(options):
     # therefore set the list of remaining indices here
     if(indices_to_use is not None):
         remaining_indices = indices_to_use
-        print(remaining_indices)
         deleted_indices = [i for i in range(0, total_nr_spectra) if
                            i not in remaining_indices]
     else:
-        remaining_indices = range(0, len(ND_list))
+        remaining_indices = list(range(0, len(ND_list)))
         deleted_indices = []
-    print('DEL', deleted_indices)
 
     # # now we have to apply the various filters
     indices_to_delete = []
@@ -552,8 +550,6 @@ def filter_result_dir(options):
         remaining_indices,
         deleted_indices,
     )
-    print('DEL F', deleted_indices, len(deleted_indices))
-    print('REM F', remaining_indices, len(remaining_indices))
 
     save_filter_results(options, remaining_indices, deleted_indices, ND_list)
 
@@ -594,14 +590,21 @@ def save_filter_results(options, remaining_indices, deleted_indices, ND_list):
     # data_options = {
     # 'raw_format': final_iterations[0][0].Data.obj.data_format
     # }
+    #
+    prep_opts = {
+        'output_format': 'ascii',
+    }
     data_options = {
-        'options': options,
+        # 'options': options,
+        'options': prep_opts,
         'raw_data': np.atleast_2d(np.array((1))),
         'raw_format': 'None',
         'inv_opts': {},
     }
 
-    dd_single.save_fit_results(data_options, ND_list)
+    print(data_options['options'])
+    print(type(data_options['options']))
+    iog.save_fit_results(data_options, ND_list)
     os.chdir(pwd)
 
 
