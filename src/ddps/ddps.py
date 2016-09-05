@@ -39,6 +39,8 @@ import NDimInv.elem as elem
 import dd_single
 import NDimInv
 import lib_dd.plot as lDDp
+import lib_dd.decomposition.ccd_single_stateless as decomp_single_sl
+
 
 # we need to keep track of certain characteristics regarding the output files
 # of dd_single.py. These are stored in the dict for later use
@@ -76,11 +78,11 @@ dd_stats['m_tot_n'] = {'filename': 'm_tot_n_results.dat',
                        'label': r'$m_{tot}^n~[S/m]$'
                        }
 dd_stats['m_tot'] = {'filename': 'm_tot_results.dat',
-                       'apply_filter': False,
-                       'scale': 'linear',
-                       'reverse': True,
-                       'label': r'$m_{tot}~[-]$'
-                       }
+                     'apply_filter': False,
+                     'scale': 'linear',
+                     'reverse': True,
+                     'label': r'$m_{tot}~[-]$'
+                     }
 dd_stats['U_tau'] = {'filename': 'U_tau_results.dat',
                      'apply_filter': False,
                      'scale': 'linear',
@@ -306,7 +308,7 @@ def _get_ND(subdata):
     # set lambdas
     fit_data['prep_opts']['lambda'] = subdata['lams'][nr]
     # create ND object
-    ND = dd_single._prepare_ND_object(fit_data)
+    ND = decomp_single_sl._prepare_ND_object(fit_data)
 
     # recreate the last iteration
     it = NDimInv.main.Iteration(1, ND.Data, ND.Model, ND.RMS, ND.settings)
@@ -356,7 +358,7 @@ def recreate_ND_obj_list(result_dir, indices=None, nr_cpus=1):
     with open('data.dat', 'r') as fid:
         for line in fid.readlines():
             subdata = np.fromstring(line.strip(), sep=' ')
-            subdata = subdata.reshape((subdata.size / 2, 2), order='F')
+            subdata = subdata.reshape((int(subdata.size / 2), 2), order='F')
             data_list.append(subdata)
     total_nr_spectra = len(data_list)
     pre_data['cr_data'] = data_list
@@ -368,7 +370,10 @@ def recreate_ND_obj_list(result_dir, indices=None, nr_cpus=1):
     data['prep_opts'] = prep_opts
     data['inv_opts'] = inv_opts
     data['cr_data'] = data_list
-    fit_datas = dd_single._get_fit_datas(data)
+
+    data['outdir'] = os.getcwd()
+
+    fit_datas = decomp_single_sl._get_fit_datas(data)
 
     # # spectrum specific data ##
     lambdas = np.atleast_1d(np.loadtxt('lambdas.dat'))
@@ -402,7 +407,7 @@ def recreate_ND_obj_list(result_dir, indices=None, nr_cpus=1):
     # get the required ND objects
     print('Assembling ND objects - this can take a while')
     if(nr_cpus == 1):
-        ND_list = map(_get_ND, data_list)
+        ND_list = [x for x in map(_get_ND, data_list)]
     else:
         p = Pool(nr_cpus)
         ND_list = p.map(_get_ND, data_list)
@@ -415,6 +420,7 @@ def plot_iterations(options):
     """
     Plot various iteration plots
     """
+
     # we need to get the total nr of spectra
     total_nr_spectra = np.loadtxt(
         options.result_dir + '/nr_iterations.dat').size
