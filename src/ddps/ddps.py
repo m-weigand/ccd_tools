@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# *-* coding: utf-8 *-*
 """
 ddpt.py is the post-processing tool for dd_single.py
 
@@ -276,8 +278,8 @@ def plot_to_grid(options):
             elem.plt_opt.cbmax = None
             elem.plt_opt.reverse = False
             scale = 'linear'
-        print 'min/max', elem.plt_opt.cbmin, elem.plt_opt.cbmax
-        print 'scale', scale
+        print('min/max', elem.plt_opt.cbmin, elem.plt_opt.cbmax)
+        print('scale', scale)
 
         elem.plt_opt.xlabel = 'x'
         elem.plt_opt.ylabel = 'z'
@@ -485,7 +487,7 @@ def filter_result_dir(options):
     """
     # check if we filter using a mask file
     if options.maskfile is not None:
-        print 'using mask file'
+        print('using mask file')
         indices_to_use = np.loadtxt(options.maskfile, dtype=int).tolist()
         # filter_mask = list(np.asarray(filter_mask))
     else:
@@ -501,13 +503,13 @@ def filter_result_dir(options):
     # therefore set the list of remaining indices here
     if(indices_to_use is not None):
         remaining_indices = indices_to_use
-        print remaining_indices
+        print(remaining_indices)
         deleted_indices = [i for i in range(0, total_nr_spectra) if
                            i not in remaining_indices]
     else:
         remaining_indices = range(0, len(ND_list))
         deleted_indices = []
-    print 'DEL', deleted_indices
+    print('DEL', deleted_indices)
 
     # # now we have to apply the various filters
     indices_to_delete = []
@@ -544,8 +546,8 @@ def filter_result_dir(options):
         remaining_indices,
         deleted_indices,
     )
-    print 'DEL F', deleted_indices, len(deleted_indices)
-    print 'REM F', remaining_indices, len(remaining_indices)
+    print('DEL F', deleted_indices, len(deleted_indices))
+    print('REM F', remaining_indices, len(remaining_indices))
 
     save_filter_results(options, remaining_indices, deleted_indices, ND_list)
 
@@ -557,7 +559,6 @@ def _delete_indices(ND_list, indices_to_delete, remaining_indices,
     for i in reversed(sorted(indices_to_delete)):
         del(ND_list[i])
         deleted_indices.append(remaining_indices[i])
-        print 'add', i, remaining_indices[i]
         del(remaining_indices[i])
 
     print('{0} of {1} remaining'.format(
