@@ -602,8 +602,6 @@ def save_filter_results(options, remaining_indices, deleted_indices, ND_list):
         'inv_opts': {},
     }
 
-    print(data_options['options'])
-    print(type(data_options['options']))
     iog.save_fit_results(data_options, ND_list)
     os.chdir(pwd)
 
