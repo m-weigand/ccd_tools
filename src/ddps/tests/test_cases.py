@@ -34,5 +34,5 @@ def run_case(directory, filename):
     result = subprocess.call(cmd, shell=True)
     # if the command returns 1, then there was an error during the execution
     assert_equal(result, 0)
-    print 'result', result
+    print('result', result)
     os.chdir(pwd)
