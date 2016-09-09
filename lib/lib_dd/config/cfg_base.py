@@ -428,3 +428,13 @@ class cfg_base(dict):
             raise IOError(
                 'Output directory already exists. Please choose another ' +
                 'output directory, or delete the existing one.')
+
+    def __repr__(self):
+        output = '\n'
+        output += 'CCD configuration:\n'
+        for key in sorted(self.keys()):
+            output += 'Entry {0}:{1}\n'.format(key, self[key])
+
+        output += '--- end ---'
+
+        return output
