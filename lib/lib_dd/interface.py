@@ -101,7 +101,10 @@ def _get_frequencies(options):
     else:
         f_ignore_ids = []
 
-    frequencies = np.loadtxt(options['frequency_file'])
+    if isinstance(options['frequency_file'], np.ndarray):
+        frequencies = options['frequency_file']
+    else:
+        frequencies = np.loadtxt(options['frequency_file'])
 
     # or we can filter by values
     if options['data_fmin'] is not None:
@@ -152,12 +155,16 @@ def load_frequencies_and_data(options):
     data['frequencies'] = frequencies
     # # data ##
     # # load raw data
-    try:
-        raw_data = np.atleast_2d(np.loadtxt(options['data_file']))
-    except Exception as e:
-        print('There was an error loading the data file')
-        print(e)
-        exit()
+
+    if isinstance(options['data_file'], np.ndarray):
+        raw_data = np.atleast_2d(options['data_file'])
+    else:
+        try:
+            raw_data = np.atleast_2d(np.loadtxt(options['data_file']))
+        except Exception as e:
+            print('There was an error loading the data file')
+            print(e)
+            exit()
 
     # # filter frequencies
     if f_ignore_ids is not None:

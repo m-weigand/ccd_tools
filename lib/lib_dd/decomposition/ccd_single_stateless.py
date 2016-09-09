@@ -176,6 +176,22 @@ def fit_one_spectrum(fit_data):
 
 
 def call_fit_functions(fit_data, ND):
+    # only proceed if one of the plot functions will be called. This makes sure
+    # that we can run without an existing output directory, and only fail if we
+    # really try to plot...
+    keys = (
+        'plot',
+        'plot_reg_strength',
+        'plot_it_spectra',
+        'plot_lambda',
+    )
+    will_activate = [
+        fit_data['prep_opts'][key] for key in keys if
+        fit_data['prep_opts'][key] is not None
+    ]
+    if not np.any(np.array(will_activate)):
+        return
+
     # run plot functions in output directory
     pwd = os.getcwd()
     os.chdir(fit_data['outdir'])
