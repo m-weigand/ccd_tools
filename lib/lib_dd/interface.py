@@ -30,16 +30,18 @@ def create_output_dir(options):
     """
     Create the output directory
     """
+    # store the final output directory
+    outdir = options['output_dir']
+
     if options['use_tmp']:
         # get temporary directory
         tmp_outdir = tempfile.mkdtemp(suffix='ccd_')
-        outdir = tmp_outdir
+        options['output_dir'] = tmp_outdir
     else:
         if(not os.path.isdir(options['output_dir'])):
             os.makedirs(options['output_dir'])
-        outdir = options['output_dir']
-    return outdir
 
+    return outdir, options
 
 
 def get_command():

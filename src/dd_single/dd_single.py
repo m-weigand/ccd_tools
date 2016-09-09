@@ -38,12 +38,12 @@ def main():
 
     options = cfg_single.cfg_single()
     options.parse_cmd_arguments()
+    options.check_input_files()
+
+    outdir_real, options = lDDi.create_output_dir(options)
 
     ccds_object = ccd_single(options)
     # ccds_object.fit_data()
-
-    options.check_input_files()
-    outdir = lDDi.create_output_dir(options)
 
     # DD_RES_INV.inversion.setup_logger('dd', outdir, options.silent)
     # logger = logging.getLogger('dd.debye decomposition')
@@ -53,15 +53,15 @@ def main():
     # logger.info('----------------------------------')
     # logger.info('Frequency file: {0}'.format(options.frequency_file))
     # logger.info('Data file: {0}'.format(options.data_file))
-    # frequencies, data_list = get_frequencies_and_data(options)
-    data = ccds_object.get_data_dd_single(options, os.path.abspath(outdir))
+
+    data = ccds_object.get_data_dd_single()
 
     # fit the data
     ccds_object.fit_data(data)
 
     # for the fitting process, change to the output_directory
     pwd = os.getcwd()
-    os.chdir(outdir)
+    os.chdir(options['output_dir'])
 
     iog.save_fit_results(
         ccds_object.data,
@@ -77,11 +77,11 @@ def main():
 
     # move temp directory to output directory
     if options['use_tmp']:
-        if os.path.isdir(options['output_dir']):
+        if os.path.isdir(outdir_real):
             print('WARNING: Output directory already exists')
             print('The new inversion can be found here:')
             print((options['output_dir'] + os.sep + os.path.basename(outdir)))
-        shutil.move(outdir, options['output_dir'])
+        shutil.move(options['output_dir'], outdir_real)
 
 
 if __name__ == '__main__':

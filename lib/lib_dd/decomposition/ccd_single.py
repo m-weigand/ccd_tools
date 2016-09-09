@@ -1,6 +1,7 @@
 """
 
 """
+import os
 import ccd_single_stateless as decomp_single_sl
 from multiprocessing import Pool
 import lib_dd.interface as lDDi
@@ -16,10 +17,16 @@ class ccd_single(object):
             config = cfg_single.cfg_single()
         self.config = config
 
+        # this will be filled by self.get_data_dd_single
+        self.data = None
+
     def fit_data(self, data):
         """This is the central fit function, which prepares the data, fits each
         spectrum, plots (if requested), and then saves the results.
         """
+
+        # prepare data for multiprocessing by sorting it into individual dicts
+        # note that this process duplicated a lot of data!
         fit_datas = decomp_single_sl._get_fit_datas(data)
 
         # fit
@@ -38,7 +45,7 @@ class ccd_single(object):
         # results now contains one or more ND objects
         # iog.save_fit_results(data, results)
 
-    def get_data_dd_single(self, options, outdir):
+    def get_data_dd_single(self):
         """
         Load frequencies and data and return a data dict
 
@@ -53,7 +60,10 @@ class ccd_single(object):
         data: dict with entries "raw_data", "cr_data", "options", "inv_opts",
               "prep_opts"
         """
-        data, options = lDDi.load_frequencies_and_data(options)
+        # make sure we deal with an absolute path
+        outdir = os.path.abspath(self.config['output_dir'])
+
+        data, self.config = lDDi.load_frequencies_and_data(self.config)
 
         # we need list of spectra
         size_y = int(data['raw_data'].shape[1] / 2)
@@ -66,10 +76,10 @@ class ccd_single(object):
         #             regularization objects)
         # inv_opts : options that are directly looped through to the NDimInv
         # object
-        prep_opts, inv_opts = options.split_options()
+        prep_opts, inv_opts = self.config.split_options()
 
         data['outdir'] = outdir
-        data['options'] = options
+        data['options'] = self.config
         data['prep_opts'] = prep_opts
         data['inv_opts'] = inv_opts
         return data
