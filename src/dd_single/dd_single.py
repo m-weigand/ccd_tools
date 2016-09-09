@@ -48,16 +48,8 @@ def main():
     # DD_RES_INV.inversion.setup_logger('dd', outdir, options.silent)
     # logger = logging.getLogger('dd.debye decomposition')
 
-    # logger.info('----------------------------------')
-    # logger.info('       Debye Decomposition')
-    # logger.info('----------------------------------')
-    # logger.info('Frequency file: {0}'.format(options.frequency_file))
-    # logger.info('Data file: {0}'.format(options.data_file))
-
-    data = ccds_object.get_data_dd_single()
-
     # fit the data
-    ccds_object.fit_data(data)
+    ccds_object.fit_data()
 
     # for the fitting process, change to the output_directory
     pwd = os.getcwd()
@@ -67,10 +59,6 @@ def main():
         ccds_object.data,
         ccds_object.results
     )
-
-    # logger.info('=======================================')
-    # logger.info('     Debye Decomposition finished!     ')
-    # logger.info('=======================================')
 
     # go back to initial working directory
     os.chdir(pwd)
@@ -82,6 +70,10 @@ def main():
             print('The new inversion can be found here:')
             print((options['output_dir'] + os.sep + os.path.basename(outdir)))
         shutil.move(options['output_dir'], outdir_real)
+
+    # logger.info('=======================================')
+    # logger.info('     Debye Decomposition finished!     ')
+    # logger.info('=======================================')
 
 
 if __name__ == '__main__':

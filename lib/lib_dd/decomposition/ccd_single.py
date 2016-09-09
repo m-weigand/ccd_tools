@@ -20,30 +20,30 @@ class ccd_single(object):
         # this will be filled by self.get_data_dd_single
         self.data = None
 
-    def fit_data(self, data):
+    def fit_data(self):
         """This is the central fit function, which prepares the data, fits each
         spectrum, plots (if requested), and then saves the results.
         """
+        if self.data is None:
+            self.get_data_dd_single()
 
         # prepare data for multiprocessing by sorting it into individual dicts
         # note that this process duplicated a lot of data!
-        fit_datas = decomp_single_sl._get_fit_datas(data)
+        fit_datas = decomp_single_sl._get_fit_datas(self.data)
 
         # fit
-        if(data['prep_opts']['nr_cores'] == 1):
+        if(self.data['prep_opts']['nr_cores'] == 1):
             print('single processing')
             # single processing
             results = list(map(decomp_single_sl.fit_one_spectrum, fit_datas))
         else:
             # multi processing
             print('multi processing')
-            p = Pool(data['prep_opts']['nr_cores'])
+            p = Pool(self.data['prep_opts']['nr_cores'])
             results = p.map(decomp_single_sl.fit_one_spectrum, fit_datas)
 
-        self.results = results
-        self.data = data
         # results now contains one or more ND objects
-        # iog.save_fit_results(data, results)
+        self.results = results
 
     def get_data_dd_single(self):
         """
@@ -82,4 +82,6 @@ class ccd_single(object):
         data['options'] = self.config
         data['prep_opts'] = prep_opts
         data['inv_opts'] = inv_opts
+
+        self.data = data
         return data
