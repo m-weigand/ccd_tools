@@ -137,9 +137,14 @@ def handle_cmd_options():
     parser.add_option("--filter", action="store_true",
                       dest="apply_filters", default=False,
                       help="Apply filters and save to new directory")
-    parser.add_option("--maskfile", type='str', metavar='FILE',
-                      help="Mask file for filtering: discard all other pixels",
-                      default=None, dest="maskfile")
+    parser.add_option(
+        "--maskfile",
+        type='str',
+        metavar='FILE',
+        help="Mask file for filtering: discard all other pixels (start at 0)",
+        default=None,
+        dest="maskfile",
+    )
     parser.add_option("--nr_cpus", type='int', metavar='NR',
                       help="Output directory", default=1,
                       dest="nr_cpus")
