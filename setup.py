@@ -23,13 +23,14 @@ if __name__ == '__main__':
           description='Time-lapse Cole-Cole decomposition routines',
           author='Maximilian Weigand',
           author_email='mweigand@geo.uni-bonn.de',
-          url='https://https://github.com/m-weigand/dd_interfaces',
+          url='https://github.com/m-weigand/ccd_tools',
           licence='GPL-3',
           keywords=['SIP, Cole-Cole model, Debye decomposition'],
           classifiers=[
               "Development Status :: 5 - Production/Stable",
               "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
               "Programming Language :: Python :: 3.4",
+              "Intended Audience :: Science/Research",
           ],
           # find_packages() somehow does not work under Win7 when creating a
           # msi # installer

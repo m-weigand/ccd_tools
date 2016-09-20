@@ -1,5 +1,10 @@
-DD_Interfaces - Debye decomposition routines
-============================================
+Cole-Cole decomposition routines
+================================
+
+Introduction
+------------
+
+
 
 Licence
 -------
