@@ -185,7 +185,7 @@ def save_integrated_parameters(final_iterations, data, header):
                     np.savetxt(fid, values)
 
     all_data = np.vstack(pars_list).T
-    with open('integrated_paramaters.dat', 'wb') as fid:
+    with open('integrated_parameters.dat', 'wb') as fid:
         fid.write(bytes(header, 'UTF-8'))
         out_str = '#' + ' '.join(pars_labels) + '\n'
         fid.write(bytes(out_str, 'UTF-8'))
