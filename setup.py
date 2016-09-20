@@ -18,7 +18,7 @@ if sys.version_info >= (3,):
     extra['use_2to3'] = True
 
 if __name__ == '__main__':
-    setup(name='dd_interface',
+    setup(name='ccd_tools',
           version=version_long,
           description='Time-lapse Cole-Cole decomposition routines',
           author='Maximilian Weigand',
