@@ -26,14 +26,13 @@ def _get_version_numbers():
         geccoinv_version = pkg_resources.require('dd-tools')[0].version
 
     try:
-        dd_interface_version = pkg_resources.require('dd_interface')[0].version
+        ccd_tools_version = pkg_resources.require('ccd_tools')[0].version
     except pkg_resources.DistributionNotFound:
-        dd_interface_version = pkg_resources.require('dd-tools')[0].version
+        ccd_tools_version = pkg_resources.require('dd-tools')[0].version
 
     versions = ''.join(('geccoinv version: ',
                         geccoinv_version,
                         '\n',
-                        'dd_interface version: ',
-                        dd_interface_version))
+                        'ccd_tools version: ',
+                        ccd_tools_version))
     return versions
-
