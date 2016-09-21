@@ -295,12 +295,13 @@ if __name__ == '__main__':
     options.parse_cmd_arguments()
 
     options.check_input_files(['times', ])
-    outdir = lDDi.create_output_dir(options)
+    outdir_real, options = lDDi.create_output_dir(options)
+
     data = get_data_dd_time(options)
 
     # for the fitting process, change to the output_directory
     pwd = os.getcwd()
-    os.chdir(outdir)
+    os.chdir(options['output_dir'])
     fit_data(data)
     # go back to initial working directory
     os.chdir(pwd)
