@@ -169,8 +169,8 @@ def load_frequencies_and_data(options):
     # # filter frequencies
     if f_ignore_ids is not None:
         # split data for easy access
-        part1 = raw_data[:, 0:raw_data.shape[1] / 2]
-        part2 = raw_data[:, raw_data.shape[1] / 2:]
+        part1 = raw_data[:, 0:int(raw_data.shape[1] / 2)]
+        part2 = raw_data[:, (raw_data.shape[1] / 2):]
         part1 = np.delete(part1, f_ignore_ids, axis=1)
         part2 = np.delete(part2, f_ignore_ids, axis=1)
         # rebuild raw_data
