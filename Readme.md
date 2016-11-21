@@ -52,15 +52,14 @@ Under Windows, the program was tested using the 'pythonxy' distribution
 Installation
 ------------
 
- ::
+Install the source package using setuptools: ::
 
     python setup.py build
     python setup.py install
 
 
-The package can also be installed to a user-defined directory:
+The package can also be installed to a user-defined directory: ::
 
-::
     export PYTHONUSERBASE=$HOME/inst/pip_installs
     export PYTHONPATH=$HOME/inst/pip_installs/lib/python2.7/\
         site-packages/:$PYTHONPATH
@@ -68,14 +67,11 @@ The package can also be installed to a user-defined directory:
     export PATH=$HOME/inst/pip_installs/bin:$PATH
 
 
-For developers:
+For developers: ::
 
-::
     python seutp.py develop --user
 
-To build the documentation
-
-::
+To build the documentation ::
 
     cd docs/doc
     python setup.py sphinx_build
