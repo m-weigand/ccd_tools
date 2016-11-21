@@ -26,13 +26,12 @@ import NDimInv
 import NDimInv.regs as RegFuncs
 import NDimInv.reg_pars as LamFuncs
 import sip_formats.convert as SC
-import sip_formats.convert as sip_converter
 import lib_dd.interface as lDDi
 import lib_dd.plot as lDDp
 import lib_dd.conductivity.model as cond_model
 from lib_dd.models import ccd_res
 import lib_dd.config.cfg_time as cfg_time
-import lib_dd.io.general as iog
+import lib_dd.io.io_general as iog
 
 
 def _get_times(options):
@@ -48,19 +47,19 @@ def _get_cr_data(options, data):
     Load complex resistivity data.
     """
     cr_data = np.loadtxt(options.data_file)
-    if(options.norm_mag is not None):
-        print('normalizing')
+    if options.norm_mag is not None:
         # data must me in format 'rmag_rpha'
-        if(options.data_format != "rmag_rpha"):
-            print('formatting')
+        if options.data_format != "rmag_rpha":
             cr_data = SC.convert(options.data_format, 'rmag_rpha', cr_data)
             options.data_format = 'rmag_rpha'
 
         # apply normalization
         index_end = cr_data.shape[1] / 2
         norm_factors = options.norm_mag / cr_data[:, 0]
-        norm_factors = np.resize(norm_factors.T,
-                                 (index_end, norm_factors.size)).T
+        norm_factors = np.resize(
+            norm_factors.T,
+            (index_end, norm_factors.size)
+        ).T
         cr_data[:, 0:index_end] *= norm_factors
         data['norm_factors'] = norm_factors[:, 0].squeeze()
 
@@ -103,12 +102,13 @@ def _get_fit_datas(data):
     else:
         data['inv_opts']['norm_factors'] = None
 
-    fit_data = {'data': data['cr_data'],
-                'times': data['times'],
-                'frequencies': data['frequencies'],
-                'prep_opts': data['prep_opts'],
-                'inv_opts': data['inv_opts']
-                }
+    fit_data = {
+        'data': data['cr_data'],
+        'times': data['times'],
+        'frequencies': data['frequencies'],
+        'prep_opts': data['prep_opts'],
+        'inv_opts': data['inv_opts']
+    }
 
     return fit_data
 
@@ -145,7 +145,7 @@ def _prepare_ND_object(data):
     nr_timesteps = data['data'].shape[0]
     ND.add_new_dimension('time', nr_timesteps)
     ND.finalize_dimensions()
-    ND.Data.data_converter = sip_converter.convert
+    ND.Data.data_converter = SC.convert
 
     # register data
     for index, subdata in enumerate(data['data']):
