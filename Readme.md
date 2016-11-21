@@ -18,17 +18,17 @@ Requirements
 The following Python packages are required to run the Debye decomposition
 routines:
 
-numpy
-scipy
-matplotlib
-geccoinv
+	numpy
+	scipy
+	matplotlib
+	geccoinv
 
 In order to build the documentation, the additional packages are required:
 
 sphinx
 
 Under Debian-related linux systems, these packages can be installed using the
-commands:
+commands: ::
 
     sudo apt-get install texlive-latex-base texlive-latex-extra\
         texlive-fonts-recommended texlive-fonts-extra dvipng
@@ -36,7 +36,7 @@ commands:
         python-setuptools python-nose python-tornado
 
 In order to build the documentation, the following sphinx-related packages must
-be installed:
+be installed: ::
 
     sudo apt-get install python-sphinx
     sudo apt-get install python-sphinx python-sphinxcontrib.blockdiag
@@ -52,13 +52,13 @@ Under Windows, the program was tested using the 'pythonxy' distribution
 Installation
 ------------
 
-::
+ ::
 
     python setup.py build
     python setup.py install
 
 
-The package can also be installe to a user-defined directory:
+The package can also be installed to a user-defined directory:
 
 ::
     export PYTHONUSERBASE=$HOME/inst/pip_installs
@@ -86,6 +86,7 @@ https://pythonhosted.org/setuptools/setuptools.html
 
 Documentation
 -------------
+
  * Documentation can be found in docs/
  * The sphinx-generated documentation can be found in docs/doc
  * For the internal version related literature can be found in docs/literature
