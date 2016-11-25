@@ -37,7 +37,7 @@ inversions using *dd_single.py* and *dd_time.py*:
   drives (for SSDs there shouldn't be any improvement)
 
 
-Normalisation
+Normalization
 -------------
 
 The DD is linear in :math:`\rho_0/\sigma_\infty`, as as such data can be
@@ -171,7 +171,7 @@ independently from the minimum and maximum data frequencies. However, the
    m = np.array((np.log10(0.01),))
    f = np.logspace(-5, 6, 100)
 
-   settings = {'Nd': x,
+   settings = {'Nd': 20,
                'tau_values': tau,
                'frequencies': f,
                'tausel': 'data_ext'
@@ -241,7 +241,7 @@ log-normal distributions to the :math:`g_i` distribution.
    f = np.logspace(-3, 4, 100)
    tau = np.logspace(-5, 2, 100) # create tau distribution
    s = np.log10(tau) # natural logarithm
-   settings = {'Nd': x,
+   settings = {'Nd': 20,
                'tau_values': tau,
                'frequencies': f,
                'tausel': 'data_ext'
@@ -293,11 +293,12 @@ Normally distributed noise can then be added to this spectrum:
    f = np.logspace(-3, 4, 100)
    tau = np.logspace(-5,2,100) # create tau distribution
    s = np.log10(tau) # natural logarithm
-   settings = {'Nd': x,
-               'tau_values': tau,
-               'frequencies': f,
-               'tausel': 'data_ext'
-               }
+   settings = {
+        'Nd': 20,
+        'tau_values': tau,
+        'frequencies': f,
+        'tausel': 'data_ext'
+   }
    model = lib_dd.main.get('log10rho0log10m', settings)
    # tau-distribtution, mean, std
    m = stats.norm.pdf(s, 0, 1.5) / 100 + \

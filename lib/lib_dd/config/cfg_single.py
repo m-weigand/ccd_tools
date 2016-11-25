@@ -30,12 +30,19 @@ class cfg_single(cfg_base.cfg_base):
 
     def split_options(self):
         """
+
+        Notes
+        -----
+
         Extract options for two groups:
-        1) prep_opts : these options are used to prepare the actual inversion,
-                    i.e.  which regularization objects to use. Those options do
-                    not enter the NDimInv objects
-        2) inv_opts : these options are directly passed through to the NDimInv
-                      object
+
+        prep_opts) these options are used to prepare the actual inversion,
+        i.e.,  which regularization objects to use. Those options do not enter
+        the NDimInv objects
+
+        inv_opts) these options are directly passed through to the NDimInv
+        object
+
         """
         prep_opts, inv_opts = self.split_options_base()
 
