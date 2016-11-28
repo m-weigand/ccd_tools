@@ -4,6 +4,21 @@ Cole-Cole decomposition routines
 Introduction
 ------------
 
+This package contains an implementation of the Cole-Cole decomposition (CCD)
+scheme, which is used in near-surface geophysical applications to describe
+electrical polarization signatures measured for frequencies in the mHz range up
+to multiple kHz.
+
+In the CCD, spectral induced polarization (SIP) signatures are described by a
+superposition of elementary polarization terms, which are suitably distributed
+to cover at least the frequency range spanned by the measurement data.
+
+!(example output)[docs/example_for_readme/results_3/plot_spec_000_iteration0004.png]
+
+Parts of this code were described in two open access publications:
+
+[1. Weigand and Kemna, 2016, Computers and Geosciences](http://www.sciencedirect.com/science/article/pii/S0098300415300625)
+[2. Weigand and Kemna, 2016, Geophysical Journal International](http://gji.oxfordjournals.org/content/205/3/1414)
 
 
 Licence
@@ -22,10 +37,11 @@ routines:
 	scipy
 	matplotlib
 	geccoinv
+	sip_models
 
 In order to build the documentation, the additional packages are required:
 
-sphinx
+	sphinx
 
 Under Debian-related linux systems, these packages can be installed using the
 commands: ::
@@ -43,7 +59,7 @@ be installed: ::
     pip install sphinxcontrib-programoutput
 
 
-geccoinv has to be installed according to its own documentation.
+geccoinv and sip_models have to be installed according to their own documentation.
 
 Under Windows, the program was tested using the 'pythonxy' distribution
 (https://code.google.com/p/pythonxy/).
@@ -74,7 +90,7 @@ For developers: ::
 To build the documentation ::
 
     cd docs/doc
-    python setup.py sphinx_build
+    make html
 
 Setuptools Developer Guide:
 
@@ -83,7 +99,6 @@ https://pythonhosted.org/setuptools/setuptools.html
 Documentation
 -------------
 
- * Documentation can be found in docs/
- * The sphinx-generated documentation can be found in docs/doc
- * For the internal version related literature can be found in docs/literature
+ * Documentation is located in docs/
+ * The sphinx-generated documentation is found in docs/doc
 
