@@ -109,16 +109,18 @@ independently from the minimum and maximum data frequencies. However, the
     import numpy as np
     import sys
     import lib_dd
+    import lib_dd.models.ccd_res
 
     f = np.logspace(-3, 6, 100)
     tau = np.array((1.5915e-06,))
 
-    settings = {'Nd': x,
+    settings = {'Nd': 20,
                 'tau_values': tau,
                 'frequencies': f,
-                'tausel': 'data_ext'
+                'tausel': 'data_ext',
+                'c': 1.0,
                 }
-    model = lib_dd.main.get('log10rho0log10m', settings)
+    model = lib_dd.models.ccd_res.decomposition_resistivity(settings)
     m = np.array((np.log10(0.01),))
     s = np.log10(tau) # natural logarithm
 
@@ -127,7 +129,9 @@ independently from the minimum and maximum data frequencies. However, the
     pars = np.hstack((100, m))
     omega = f * 2 * np.pi
 
-    re, im = model.forward_re_mim(pars)
+    rre_rim = model.forward(pars)
+    rre = rre_rim[:, 0].squeeze()
+    rim = rre_rim[:, 1].squeeze()
 
     fig = plt.figure()
     fig.suptitle(r'Minimum frequency $\tau$ selection')
@@ -139,18 +143,18 @@ independently from the minimum and maximum data frequencies. However, the
     ax.set_xlim([1e-6, 1e8])
 
     ax = fig.add_subplot(412)
-    ax.semilogx(f, re)
+    ax.semilogx(f, rre)
     ax.set_ylabel(r'$Re(\rho) (\Omega m)$')
     ax.set_xlabel('Frequency (Hz)')
 
     ax = fig.add_subplot(413)
-    ax.semilogx(f, im)
+    ax.semilogx(f, rim)
     ax.axvline(f_max, color='r')
     ax.set_ylabel(r'$-Im(\rho) (\Omega m)$')
     ax.set_xlabel('Frequency (Hz)')
 
     ax = fig.add_subplot(414)
-    pha = np.arctan(-im/re) * 1000
+    pha = np.arctan(-rim/rre) * 1000
     ax.semilogx(f, -pha)
     ax.set_ylabel(r'$-Phase (mrad)$')
     ax.set_xlabel('Frequency (Hz)')
@@ -174,13 +178,16 @@ independently from the minimum and maximum data frequencies. However, the
    settings = {'Nd': 20,
                'tau_values': tau,
                'frequencies': f,
-               'tausel': 'data_ext'
+               'tausel': 'data_ext',
+               'c': 1.0,
                }
-   model = lib_dd.main.get('log10rho0log10m', settings)
+   model = lib_dd.models.ccd_res.decomposition_resistivity(settings)
    pars = np.hstack((100, m))
    omega = f * 2 * np.pi
 
-   re, im = model.forward_re_mim(pars)
+   rre_rim = model.forward(pars)
+   rre = rre_rim[:, 0]
+   rim = rre_rim[:, 1]
 
    fig = plt.figure()
    fig.suptitle('Minimum frequency $\tau$ selection')
@@ -193,18 +200,18 @@ independently from the minimum and maximum data frequencies. However, the
    ax.set_ylabel('m')
 
    ax = fig.add_subplot(412)
-   ax.semilogx(f, re)
+   ax.semilogx(f, rre)
    ax.set_ylabel(r'$Re(\rho) (\Omega m)$')
    ax.set_xlabel('Frequency (Hz)')
 
    ax = fig.add_subplot(413)
-   ax.semilogx(f, im)
+   ax.semilogx(f, rim)
    ax.set_ylabel(r'$-Im(\rho) (\Omega m)$')
    ax.set_xlabel('Frequency (Hz)')
    ax.axvline(f_max, color='r')
 
    ax = fig.add_subplot(414)
-   pha = np.arctan(-im/re) * 1000
+   pha = np.arctan(-rim/rre) * 1000
    ax.semilogx(f, -pha)
    ax.set_xlabel('Frequency (Hz)')
    ax.set_ylabel(r'$-Phase (mrad)$')
@@ -244,9 +251,11 @@ log-normal distributions to the :math:`g_i` distribution.
    settings = {'Nd': 20,
                'tau_values': tau,
                'frequencies': f,
-               'tausel': 'data_ext'
+               'tausel': 'data_ext',
+               'c': 1.0,
                }
-   model = lib_dd.main.get('log10rho0log10m', settings)
+   model = lib_dd.models.ccd_res.decomposition_resistivity(settings)
+
    # tau-distribtution, mean, std
    m = stats.norm.pdf(s, 0, 1.5) / 100 + \
        stats.norm.pdf(s, -4.5, 1.5) / 50
@@ -264,15 +273,18 @@ log-normal distributions to the :math:`g_i` distribution.
    pars = np.hstack((100, g))
    omega = f * 2 * np.pi
 
-   re, im = model.forward_re_mim(pars)
-   ax.semilogx(f, re)
-   ax.set_xlabel('Frequencies (Hz)')
+   rre_rim = model.forward(pars)
+   rre = rre_rim[:, 0]
+   rim = rre_rim[:, 1]
+
+   ax.semilogx(f, rre)
+   ax.set_xlabel('frequencies (Hz)')
    ax.set_ylabel(r'$Re(\rho) (\Omega m)$')
    ax = fig.add_subplot(223)
-   ax.semilogx(f, im)
+   ax.semilogx(f, rim)
    ax.set_ylabel(r'$-Im(\rho) (\Omega m)$')
    ax = fig.add_subplot(224)
-   pha = np.arctan(-im/re) * 1000
+   pha = np.arctan(-rim/rre) * 1000
    ax.semilogx(f, -pha)
    ax.set_ylabel(r'$-Phase (mrad)$')
 
@@ -297,9 +309,10 @@ Normally distributed noise can then be added to this spectrum:
         'Nd': 20,
         'tau_values': tau,
         'frequencies': f,
-        'tausel': 'data_ext'
+        'tausel': 'data_ext',
+        'c': 1.0,
    }
-   model = lib_dd.main.get('log10rho0log10m', settings)
+   model = lib_dd.models.ccd_res.decomposition_resistivity(settings)
    # tau-distribtution, mean, std
    m = stats.norm.pdf(s, 0, 1.5) / 100 + \
        stats.norm.pdf(s, -4.5, 1.5) / 50
@@ -316,22 +329,25 @@ Normally distributed noise can then be added to this spectrum:
    pars = np.hstack((100, g))
    omega = f * 2 * np.pi
 
-   re, im = model.forward_re_mim(pars)
+   rre_rim = model.forward(pars)
+   rre = rre_rim[:, 0]
+   rim = rre_rim[:, 1]
+
    np.random.rand(5)
    # add 5% noise
-   re_noised = re + np.random.rand(re.shape[0]) * 0.05  * re
-   im_noised = im + np.random.rand(im.shape[0]) * 0.05  * im
+   re_noised = rre + np.random.rand(rre.shape[0]) * 0.05  * rre
+   im_noised = rim + np.random.rand(rim.shape[0]) * 0.05  * rim
 
-   ax.semilogx(f, re)
+   ax.semilogx(f, rre)
    ax.semilogx(f, re_noised)
-   ax.set_xlabel('Frequencies (Hz)')
+   ax.set_xlabel('frequencies (Hz)')
    ax.set_ylabel(r'$Re(\rho) (\Omega m)$')
    ax = fig.add_subplot(223)
-   ax.semilogx(f, im)
+   ax.semilogx(f, rim)
    ax.semilogx(f, im_noised)
    ax.set_ylabel(r'$-Im(\rho) (\Omega m)$')
    ax = fig.add_subplot(224)
-   pha = np.arctan(-im/re) * 1000
+   pha = np.arctan(-rim/rre) * 1000
    pha_noised = np.arctan(-im_noised/re_noised) * 1000
    ax.semilogx(f, -pha)
    ax.semilogx(f, -pha_noised)
