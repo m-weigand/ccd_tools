@@ -13,11 +13,12 @@ In the CCD, spectral induced polarization (SIP) signatures are described by a
 superposition of elementary polarization terms, which are suitably distributed
 to cover at least the frequency range spanned by the measurement data.
 
-!(example output)[docs/example_for_readme/results_3/plot_spec_000_iteration0004.png]
+![example output](docs/example_for_readme/results_3/plot_spec_000_iteration0004.png)
 
 Parts of this code were described in two open access publications:
 
 [1. Weigand and Kemna, 2016, Computers and Geosciences](http://www.sciencedirect.com/science/article/pii/S0098300415300625)
+
 [2. Weigand and Kemna, 2016, Geophysical Journal International](http://gji.oxfordjournals.org/content/205/3/1414)
 
 
