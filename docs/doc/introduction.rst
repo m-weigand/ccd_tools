@@ -2,25 +2,25 @@
 Introduction
 ============
 
-The Debye decomposition tools provide a set of Python programs to fit
-electrical complex resistivity spectra (or Spectral Induces Polarisation, SIP,
-spectra) using a Debye decomposition scheme (see section :doc:`theory` for an
-theoretical overview of the implemented methods). In addition to the
-independent decomposition of one or more spectra, a smoothing regularisation
-can be applied between multiple spectra, i.e. if the spectra belong to a
-time-lapse measurement, and only smooth changes are expected.
+The Cole-Cole decomposition tools provide a set of Python programs to fit
+electrical complex resistivity spectra (or Spectral Induced Polarisation, SIP,
+spectra) using a Cole-Cole decomposition scheme (see section :doc:`theory` for
+an theoretical overview of the implemented methods). This also includes the
+popular Debye decomposition scheme. In addition to the independent
+decomposition of one or more spectra, a smoothing regularization can be applied
+between multiple spectra for cases of time-lapse data where only smooth changes
+between subsequent spectra are expected.
 
 The installation for Windows and Linux is described in the section
 :doc:`installation`, and the section :doc:`getting_started` provides first
 usage instructions.
 
-Please note that the name of the project suggests that only the Debye
-decomposition is implemented here. However, work has progress relatively far in
-implementing the more general case of a Cole-Cole decomposition, in which the
-parameter *c* can be freely chosen between 0 and 1.
+Please note that the Cole-Cole decomposition is, at the moment, only
+implemented for the resistivity case. For the conductivity formulation, only
+the Debye decompositon (*c = 1*) is implemented.
 
-If you are looking for a classic Cole-Cole fit using only one term, have a look
-at https://github.com/m-weigand/Cole-Cole-fit.
+If you are looking for a classic Cole-Cole fit using only one or two terms,
+have a look at https://github.com/m-weigand/Cole-Cole-fit.
 
 Two primary decomposition programs are provided:
 
@@ -48,17 +48,16 @@ if in doubt.
 
 Feedback, bug reports, and general advice is always welcome. Please use the
 issue tracker on the github pages for communication
-(https://github.com/m-weigand/Debye_Decomposition_Tools).  Before you report a
-bug, make sure to search the existing bugs (issues) for a relevant item.  Also
-make sure to include all necessary information to reproduce the bug. A small
-example, including data set and batch file to trigger the bug, are always
-helpful!
+(https://github.com/m-weigand/ccd_tools/).  Before you report a bug, make sure
+to search the existing bugs (issues) for a relevant item.  Also make sure to
+include all necessary information to reproduce the bug. A small example,
+including data set and batch file to trigger the bug, are always helpful!
 
-Separate repositories are maintained for *geccoing* and *dd_interfaces* (only
+Separate repositories are maintained for *geccoing* and *ccd_tools* (only
 relevant if you plan on changing the code):
 
+* https://github.com/m-weigand/ccd_tools
 * https://github.com/m-weigand/geccoinv
-* https://github.com/m-weigand/dd_interfaces
 
 The Debye decomposition tools (including the components "DD_Interfaces" and
 "geccoinv") are  licenced under the GPL 3 or later
