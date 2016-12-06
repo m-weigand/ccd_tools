@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 ddplot.py can create plots from plot results created using dd_single.py and
 dd_time.py
@@ -85,7 +87,7 @@ def load_ascii_audit_data(directory):
     data['frequencies'] = frequencies
 
     with open(directory + os.sep + 'data.dat', 'r') as fid:
-        [fid.readline() for x in xrange(0, 3)]
+        [fid.readline() for x in range(0, 3)]
         header = fid.readline().strip()
         index = header.find('format:')
         data_format = header[index + 8:].strip()
@@ -104,7 +106,7 @@ def load_ascii_audit_data(directory):
         data['d_rim'] = rpha
 
     with open(directory + os.sep + 'f.dat', 'r') as fid:
-        [fid.readline() for x in xrange(0, 3)]
+        [fid.readline() for x in range(0, 3)]
         header = fid.readline().strip()
         index = header.find('format:')
         data_format = header[index + 8:].strip()
@@ -208,15 +210,15 @@ def extract_indices_from_range_str(filter_string, max_index=None):
     for section in sections:
         filter_range = section.split('-')
         if(len(filter_range) == 2):
-                start = filter_range[0]
-                end = filter_range[1]
-                # check for an open range, e.g. 4-
-                if(end == ''):
-                    if(max_index is not None):
-                        end = max_index
-                    else:
-                        continue
-                filter_ids += range(int(start) - 1, int(end))
+            start = filter_range[0]
+            end = filter_range[1]
+            # check for an open range, e.g. 4-
+            if(end == ''):
+                if(max_index is not None):
+                    end = max_index
+                else:
+                    continue
+            filter_ids += list(range(int(start) - 1, int(end)))
         else:
             filter_ids.append(int(section) - 1)
     return filter_ids
@@ -227,7 +229,7 @@ def plot_data(data, options):
     indices = extract_indices_from_range_str(options.spec_ranges,
                                              nr_specs)
     if indices is None:
-        indices = range(0, nr_specs)
+        indices = list(range(0, nr_specs))
 
     frequencies = data['frequencies']
 
@@ -296,7 +298,7 @@ def plot_data(data, options):
         fig.savefig('spec_{0:03}.png'.format(index), dpi=300)
 
 
-def _plot_rtd(self, nr,  ax, m, it):
+def _plot_rtd(self, nr, ax, m, it):
     ax.semilogx(it.Data.obj.tau, m[1:], '.-', color='k')
     ax.set_xlim(it.Data.obj.tau.min(), it.Data.obj.tau.max())
     ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=5))
