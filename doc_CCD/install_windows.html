@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Windows &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="up" title="Installation" href="installation.html" />
+    <link rel="next" title="Linux" href="install_linux.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="windows">
+<h1>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h1>
+<p>The installation for the Windows operating system consists of the following steps:</p>
+<ul class="simple">
+<li>Installation of a suitable Python distribution</li>
+<li>(optional) Installation of the MiKTex Latex distribution (under Windows,
+Latex support is disabled by default, and has to be activated using the
+corresponding environment variable).</li>
+<li>Installation of the Debye decomposition tools</li>
+</ul>
+<p>There are multiple suitable Python distributions to choose from. At the moment
+the Anaconda distribution is recommended: <a class="reference external" href="http://continuum.io/downloads">http://continuum.io/downloads</a> (use
+Python 2.7, 64 bit)</p>
+<p>In the following, please install only one of the Python distributions, and then
+proceed with the installation of the DD-Tools, and optionally the MikTex
+distribution.</p>
+<div class="section" id="installing-the-anaconda-python-distribution">
+<h2>Installing the Anaconda Python distribution<a class="headerlink" href="#installing-the-anaconda-python-distribution" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Download the Python 2.7, 64 bit version of the Anaconda distribution:
+<a class="reference external" href="http://continuum.io/downloads">http://continuum.io/downloads</a></p>
+</li>
+<li><p class="first">Start by opening the file manager in the download directoy:</p>
+<a class="reference internal image-reference" href="_images/file_explorer.png"><img alt="_images/file_explorer.png" src="_images/file_explorer.png" style="width: 390.0px; height: 52.65px;" /></a>
+</li>
+<li><p class="first">The following screenshots show the steps of the setup wizard. Usually all
+presets can be accepted by clicking on the &#8216;next&#8217; button.</p>
+<a class="reference internal image-reference" href="_images/setup1.png"><img alt="_images/setup1.png" src="_images/setup1.png" style="width: 330.2px; height: 258.05px;" /></a>
+<a class="reference internal image-reference" href="_images/setup2.png"><img alt="_images/setup2.png" src="_images/setup2.png" style="width: 333.45px; height: 259.35px;" /></a>
+<a class="reference internal image-reference" href="_images/setup3.png"><img alt="_images/setup3.png" src="_images/setup3.png" style="width: 333.45px; height: 260.0px;" /></a>
+<a class="reference internal image-reference" href="_images/setup4.png"><img alt="_images/setup4.png" src="_images/setup4.png" style="width: 328.25px; height: 260.65px;" /></a>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note that Anaconda (as tested in Juli, 2015) does not register the .py
+extension with the Python interpreter. That means that, at this point, you
+cannot click on a Python file and execute it as any executable. The
+following screenshots show you how to register Python with the <strong>.py</strong>
+extension.</p>
+</div>
+<ul>
+<li><p class="first">Find the file <strong>fix_registry_windows.py</strong> that resides in the root directory
+of the zip-archive (or the extracted directory). Note that sometimes the file
+extension <em>.py</em> is not shown.  Right click on the file, and select
+&#8220;Open with&#8221;.</p>
+<a class="reference internal image-reference" href="_images/setup5.png"><img alt="_images/setup5.png" src="_images/setup5.png" style="width: 495.95px; height: 191.1px;" /></a>
+</li>
+<li><p class="first">The following dialog in Windows 7 looks like:</p>
+<a class="reference internal image-reference" href="_images/open_with_01_win7.png"><img alt="_images/open_with_01_win7.png" src="_images/open_with_01_win7.png" style="width: 375.7px; height: 312.65px;" /></a>
+</li>
+<li><p class="first">The Windows 8.1 version looks like this:</p>
+<a class="reference internal image-reference" href="_images/open_with_01.png"><img alt="_images/open_with_01.png" src="_images/open_with_01.png" style="width: 239.85px; height: 128.7px;" /></a>
+</li>
+<li><p class="first">Click on &#8216;More options&#8217; to expand the window:</p>
+<a class="reference internal image-reference" href="_images/setup6.png"><img alt="_images/setup6.png" src="_images/setup6.png" style="width: 236.6px; height: 296.4px;" /></a>
+</li>
+<li><p class="first">Check the box &#8220;Use this app for all .py files&#8221;. Scroll down and click on
+&#8220;Look for another app on this PC&#8221; at the bottom:</p>
+<a class="reference internal image-reference" href="_images/setup7.png"><img alt="_images/setup7.png" src="_images/setup7.png" style="width: 245.05px; height: 296.4px;" /></a>
+</li>
+<li><p class="first">A file-open dialog appears. Select the python.exe binary in the Anaconda
+installation directory (in this example <strong>C:\UsersMaximilian\Anaconda</strong>),
+and click &#8220;open&#8221;.</p>
+<a class="reference internal image-reference" href="_images/setup8.png"><img alt="_images/setup8.png" src="_images/setup8.png" style="width: 309.4px; height: 423.15px;" /></a>
+</li>
+<li><p class="first">The icon next to all Python (.py) files should now show the Python logo:</p>
+<a class="reference internal image-reference" href="_images/setup11.png"><img alt="_images/setup11.png" src="_images/setup11.png" style="width: 535.6px; height: 244.4px;" /></a>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">During the process of associating the file type .py with the Python.exe
+executable the Python script <strong>fix_registry_windows.py</strong> was executed. This
+script tries to fix some common problems with the file type association. If
+you associated the extension via another way, please execute this script
+once.</p>
+</div>
+</div>
+<div class="section" id="installing-the-dd-tools">
+<h2>Installing the DD tools<a class="headerlink" href="#installing-the-dd-tools" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">The DD tools are provided in <strong>.zip</strong> file which contains the source code,
+the documentation, examples, and a Windows installation file. Extract the
+archive file to a new directory:</p>
+<img alt="_images/setup01.png" src="_images/setup01.png" />
+</li>
+<li><p class="first">We provide a MSI-Installation file called <strong>dd_tools_0.5.4.win.amd64.msi</strong>
+(the version number can vary). Execute this installer by double clicking on
+it, and follow the installation instructions (usually all preset settings can
+be accepted by clicking &#8216;next&#8217;).</p>
+<img alt="_images/setup02.png" src="_images/setup02.png" />
+</li>
+<li><p class="first">After the installation, open the following subdirectory in the extracted
+directory: <strong>dd_interfaces/examples/dd_single/01</strong>. Execute the file
+<strong>run_dd</strong> by double clicking on it:</p>
+<img alt="_images/setup03.png" src="_images/setup03.png" />
+</li>
+<li><p class="first">A terminal window should appear with the output of the call.</p>
+<img alt="_images/setup04.png" src="_images/setup04.png" />
+<p>The window should close itself after the decomposition finished. The
+installation was successful if a directory <strong>results/</strong> was created with the
+fit results.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="optional-installing-miktex">
+<h2>(optional) Installing MiKTex<a class="headerlink" href="#optional-installing-miktex" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>MiKTex can be obtained from the homepage <a class="reference external" href="http://miktex.org/download">http://miktex.org/download</a>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We had some problems and long waiting times during the installation of
+MiKTex. Therefore we disabled the Latex support in the DD tools for the
+Windows installation, and made MiKTex an optional requirement.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The first plotting call will take a LONG time, as MiKTex will
+(automatically) install (and download) all required latex packages.
+Subsequent calls should be much faster!</p>
+</div>
+<a class="reference internal image-reference" href="_images/setup011.png"><img alt="_images/setup011.png" src="_images/setup011.png" style="width: 620.1px; height: 159.25px;" /></a>
+<a class="reference internal image-reference" href="_images/setup021.png"><img alt="_images/setup021.png" src="_images/setup021.png" style="width: 334.1px; height: 260.0px;" /></a>
+<a class="reference internal image-reference" href="_images/setup031.png"><img alt="_images/setup031.png" src="_images/setup031.png" style="width: 329.55px; height: 257.4px;" /></a>
+<a class="reference internal image-reference" href="_images/setup041.png"><img alt="_images/setup041.png" src="_images/setup041.png" style="width: 329.55px; height: 255.45px;" /></a>
+<a class="reference internal image-reference" href="_images/setup05.png"><img alt="_images/setup05.png" src="_images/setup05.png" style="width: 325.65px; height: 254.15px;" /></a>
+<a class="reference internal image-reference" href="_images/setup06.png"><img alt="_images/setup06.png" src="_images/setup06.png" style="width: 325.0px; height: 256.75px;" /></a>
+<a class="reference internal image-reference" href="_images/setup07.png"><img alt="_images/setup07.png" src="_images/setup07.png" style="width: 329.55px; height: 261.3px;" /></a>
+</div>
+<div class="section" id="problems">
+<h2>Problems<a class="headerlink" href="#problems" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">We experienced some Problems with Anaconda 2.4 on Windows 64-bit with the
+mock-module missing:</p>
+<div class="highlight-python"><div class="highlight"><pre>pkg_resources.DistributionNotFound: The &#39;mock&#39; distribution was not found and is
+ required by matplotlib
+</pre></div>
+</div>
+<p>Open the Anaconda command prompt an execute:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install mock
+</pre></div>
+</div>
+</li>
+<li><p class="first">if the decomposition starts, but command line options are not recognized,
+this is usually a problem with incorrect file type associations. We provide a
+file <strong>fix_registry_windows.py</strong> (which normally already executed during the
+installation process) which tries to fix some of these problems. Just execute
+it in order to implement the fixes.</p>
+<p>In addition, the following web links discuss solutions to this kind of problems:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://stackoverflow.com/questions/9880540/python-command-line-arguments-windows">http://stackoverflow.com/questions/9880540/python-command-line-arguments-windows</a></li>
+<li><a class="reference external" href="http://bugs.python.org/issue7936">http://bugs.python.org/issue7936</a></li>
+<li><a class="reference external" href="http://eli.thegreenplace.net/2010/12/14/problem-passing-arguments-to-python-scripts-on-windows/">http://eli.thegreenplace.net/2010/12/14/problem-passing-arguments-to-python-scripts-on-windows/</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="installation.html">Installation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-the-anaconda-python-distribution">Installing the Anaconda Python distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-the-dd-tools">Installing the DD tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-installing-miktex">(optional) Installing MiKTex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#problems">Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="installation.html">Installation</a><ul>
+      <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="install_linux.html" title="next chapter">Linux</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/install_windows.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

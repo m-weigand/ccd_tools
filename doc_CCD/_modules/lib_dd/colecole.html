@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lib_dd.colecole &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for lib_dd.colecole</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright 2014,2015 Maximilian Weigand</span>
+
+<span class="sd">This program is free software: you can redistribute it and/or modify it under</span>
+<span class="sd">the terms of the GNU General Public License as published by the Free Software</span>
+<span class="sd">Foundation, either version 3 of the License, or (at your option) any later</span>
+<span class="sd">version.</span>
+
+<span class="sd">This program is distributed in the hope that it will be useful, but WITHOUT</span>
+<span class="sd">ANY WARRANTY without even the implied warranty of MERCHANTABILITY or FITNESS</span>
+<span class="sd">FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License along</span>
+<span class="sd">with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+
+
+<span class="sd">This is a really old and naive implementation of the Cole-Cole model. Do not</span>
+<span class="sd">change or work with it! It&#39;s only here until we can adapt lib_cc and/or lib_cc2</span>
+<span class="sd">as replacements.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="cole_real"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cole_real">[docs]</a><span class="k">def</span> <span class="nf">cole_real</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">data_complex</span> <span class="o">=</span> <span class="n">cole_complex</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">frequencies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span>
+                                <span class="n">params</span><span class="p">)</span>
+    <span class="n">data_real</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">data_complex</span><span class="p">)</span>
+    <span class="n">data_imag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">data_complex</span><span class="p">)</span>
+
+    <span class="n">mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">data_complex</span><span class="p">)</span>
+    <span class="c"># phases, [mrad]</span>
+    <span class="n">pha</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">data_imag</span><span class="o">/</span><span class="n">data_real</span><span class="p">)</span>
+    <span class="n">data_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mag</span><span class="p">),</span> <span class="n">pha</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">data_all</span>
+
+</div>
+<div class="viewcode-block" id="cole_complex"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cole_complex">[docs]</a><span class="k">def</span> <span class="nf">cole_complex</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="c"># determine number of Cole-Cole terms</span>
+    <span class="n">nr_cc_terms</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+    <span class="c"># extract the Cole-Cole parameters</span>
+    <span class="n">rho0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c"># DC resistance</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">):</span><span class="mi">3</span><span class="p">]</span>  <span class="c"># chargeability</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">):</span><span class="mi">3</span><span class="p">])</span>  <span class="c"># time constant</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">):</span><span class="mi">3</span><span class="p">]</span>  <span class="c"># cementation exponent</span>
+
+    <span class="c"># extract frequencies</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">frequencies</span>
+
+    <span class="c"># prepare temporary array which will store the values of all CC-terms,</span>
+    <span class="c"># which later will be summed up</span>
+    <span class="n">term</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">f</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nr_cc_terms</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+
+    <span class="c"># compute Cole-Cole function, each term separately</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nr_cc_terms</span><span class="p">):</span>
+        <span class="n">term</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span>
+                               <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">((</span><span class="mi">0</span><span class="o">+</span><span class="mi">1j</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">**</span> <span class="n">c</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+
+    <span class="c"># sum up</span>
+    <span class="n">term_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># multiply rho0</span>
+    <span class="n">Zfit</span> <span class="o">=</span> <span class="n">rho0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">term_g</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Zfit</span>
+
+</div>
+<div class="viewcode-block" id="cole_log"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cole_log">[docs]</a><span class="k">def</span> <span class="nf">cole_log</span><span class="p">(</span><span class="n">inputdata</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    compute impedance values (amplitude and phase) from a given set of</span>
+<span class="sd">    Cole-Cole parameters at different frequencies.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inputdata : array containing the frequency values at which the impedance</span>
+<span class="sd">                  values will be computed twice: [frequencies  frequencies].</span>
+<span class="sd">    params : array containg the rho0 and an arbitrary number of (m,tau,c)</span>
+<span class="sd">             tuples of the parameters: ln(rho0), m, ln(tau), c. The natural</span>
+<span class="sd">             logarithm is used here! rho0 and tau are always positive (in a</span>
+<span class="sd">             physical sense).  Thus the length of this vector is L = 1 + 3 * N,</span>
+<span class="sd">             where N is the number of Cole-Cole terms.  m and c are both limited</span>
+<span class="sd">             to the range [0,1]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fitdata : array containing amplitude and phase values for the given</span>
+<span class="sd">              frequencies. The first half of the vector contains the</span>
+<span class="sd">              amplitudes (in natural logarithm), the second one the phases,</span>
+<span class="sd">              in mRad</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># determine number of Cole-Cole terms</span>
+    <span class="n">nr_cc_terms</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+    <span class="c"># extract the Cole-Cole parameters</span>
+    <span class="n">rho0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c"># DC resistance</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">):</span><span class="mi">3</span><span class="p">]</span>  <span class="c"># chargeability</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">):</span><span class="mi">3</span><span class="p">])</span>  <span class="c"># time constant</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">):</span><span class="mi">3</span><span class="p">]</span>  <span class="c"># cementation exponent</span>
+
+    <span class="c"># extract frequencies</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">inputdata</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="nb">len</span><span class="p">(</span><span class="n">inputdata</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="c"># prepare temporary array which will store the values of all CC-terms,</span>
+    <span class="c"># which later will be summed up</span>
+    <span class="n">term</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">nr_cc_terms</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+
+    <span class="c"># compute Cole-Cole function, each term separately</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nr_cc_terms</span><span class="p">):</span>
+        <span class="n">term</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">((</span><span class="mi">0</span><span class="o">+</span><span class="mi">1j</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">**</span> <span class="n">c</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+
+    <span class="c"># sum up</span>
+    <span class="n">term_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># multiply rho0</span>
+    <span class="n">Zfit</span> <span class="o">=</span> <span class="n">rho0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">term_g</span><span class="p">)</span>
+    <span class="c"># we return magnitude and phase values</span>
+    <span class="n">rhoreal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Zfit</span><span class="p">)</span>
+    <span class="n">rhoimag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">Zfit</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">rhofit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rhoreal</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">rhoimag</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>  <span class="c"># Amplitude</span>
+    <span class="k">except</span> <span class="ne">FloatingPointError</span><span class="p">:</span>
+        <span class="c"># Return NaN values for the whole spectrum!</span>
+        <span class="n">rhofit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">rhoreal</span><span class="p">)</span>
+        <span class="n">rhofit</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="c"># Developer : Uncomment the following lines to show more info data</span>
+        <span class="c"># leading to the error</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;FloatingPointError&#39;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;rhofit&#39;</span><span class="p">,</span> <span class="n">rhofit</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;rhoreal&#39;</span><span class="p">,</span> <span class="n">rhoreal</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;rhoimag&#39;</span><span class="p">,</span> <span class="n">rhoimag</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="c"># phases, [mrad]</span>
+    <span class="n">phifit</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">rhoimag</span><span class="o">/</span><span class="n">rhoreal</span><span class="p">)</span>
+
+    <span class="c"># Magnitude, Phase</span>
+    <span class="c"># returns a 2 x [number of frequencies] ndarray</span>
+    <span class="c"># fitdata[0, :] are the magnitudes</span>
+    <span class="c"># fitdata[1, :] the phase values</span>
+
+    <span class="n">fitdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rhofit</span><span class="p">),</span> <span class="n">phifit</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">fitdata</span>
+
+</div>
+<div class="viewcode-block" id="cc_jac"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_jac">[docs]</a><span class="k">def</span> <span class="nf">cc_jac</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper for cc_jac_real which takes a frequency array as large as the</span>
+<span class="sd">    output of the cole_real function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f_red</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">cc_jac_real</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="cc_jac_real"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_jac_real">[docs]</a><span class="k">def</span> <span class="nf">cc_jac_real</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    :math:`\frac{d \hat{rho}}{d |R|}`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">cc_der_lnR</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">),</span> <span class="n">cc_der_phi</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+</div>
+<div class="viewcode-block" id="cc_der_phi"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_der_phi">[docs]</a><span class="k">def</span> <span class="nf">cc_der_phi</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">cole_complex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">cc_drhodx_complex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">rho</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">rho</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="mi">1j</span> <span class="o">*</span> <span class="p">(</span><span class="n">cc_der_lnR</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span> <span class="o">-</span> <span class="n">term2</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+</div>
+<div class="viewcode-block" id="cc_drhodx_complex"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_drhodx_complex">[docs]</a><span class="k">def</span> <span class="nf">cc_drhodx_complex</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="n">der_lnrho0</span> <span class="o">=</span> <span class="n">cc_der_lnrho</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+    <span class="n">der_m</span> <span class="o">=</span> <span class="n">cc_der_m</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+    <span class="n">der_lntau</span> <span class="o">=</span> <span class="n">cc_der_lntau</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+    <span class="n">der_c</span> <span class="o">=</span> <span class="n">cc_der_c</span><span class="p">(</span><span class="n">f_red</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+
+    <span class="n">jac_complex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">der_lnrho0</span><span class="p">,</span> <span class="n">der_m</span><span class="p">,</span> <span class="n">der_lntau</span><span class="p">,</span> <span class="n">der_c</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">jac_complex</span><span class="o">.</span><span class="n">T</span>
+
+</div>
+<div class="viewcode-block" id="cc_der_lnR"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_der_lnR">[docs]</a><span class="k">def</span> <span class="nf">cc_der_lnR</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">cole_complex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+    <span class="n">crho</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span>
+
+    <span class="n">faktor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">crho</span><span class="p">)</span>
+
+    <span class="n">sum1</span> <span class="o">=</span> <span class="p">(</span><span class="n">crho</span> <span class="o">*</span> <span class="n">rho</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">crho</span> <span class="o">*</span> <span class="n">rho</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="p">(</span><span class="n">cc_der_m</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">+</span> <span class="n">crho</span> <span class="o">*</span> <span class="n">cc_der_m</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">))</span>
+    <span class="n">sum3</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">cc_der_lntau</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">+</span> <span class="n">crho</span> <span class="o">*</span> <span class="n">cc_der_lntau</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">))</span>
+    <span class="n">sum4</span> <span class="o">=</span> <span class="p">(</span><span class="n">cc_der_c</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">+</span> <span class="n">crho</span> <span class="o">*</span> <span class="n">cc_der_c</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">))</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">faktor</span> <span class="o">*</span> <span class="n">sum1</span><span class="p">,</span> <span class="n">faktor</span> <span class="o">*</span> <span class="n">sum2</span><span class="p">,</span> <span class="n">faktor</span> <span class="o">*</span> <span class="n">sum3</span><span class="p">,</span> <span class="n">faktor</span> <span class="o">*</span> <span class="n">sum4</span><span class="p">))</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="o">.</span><span class="n">T</span>
+
+</div>
+<div class="viewcode-block" id="cc_der_lnrho"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_der_lnrho">[docs]</a><span class="k">def</span> <span class="nf">cc_der_lnrho</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">cole_complex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="cc_der_m"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_der_m">[docs]</a><span class="k">def</span> <span class="nf">cc_der_m</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="n">ret_complex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1j</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="o">**</span><span class="n">par</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret_complex</span>
+
+</div>
+<div class="viewcode-block" id="cc_der_lntau"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_der_lntau">[docs]</a><span class="k">def</span> <span class="nf">cc_der_lntau</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">par</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="mi">1j</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="o">**</span><span class="n">par</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="mi">1j</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="o">**</span><span class="n">par</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">ret_komplex</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">par</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ret_komplex</span>
+
+</div>
+<div class="viewcode-block" id="cc_der_c"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.colecole.cc_der_c">[docs]</a><span class="k">def</span> <span class="nf">cc_der_c</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">par</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="mi">1j</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="o">**</span><span class="n">par</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1j</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="o">**</span><span class="n">par</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">ret_komplex</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1j</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">par</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">ret_komplex</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

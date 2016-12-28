@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DD_Interfaces &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="#" />
+    <link rel="next" title="Introduction" href="introduction.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="dd-interfaces">
+<h1>DD_Interfaces<a class="headerlink" href="#dd-interfaces" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install_windows.html">Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install_windows.html#installing-the-anaconda-python-distribution">Installing the Anaconda Python distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_windows.html#installing-the-dd-tools">Installing the DD tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_windows.html#optional-installing-miktex">(optional) Installing MiKTex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_windows.html#problems">Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#batch-files">Batch files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#example-fitting-one-spectrum">Example: Fitting one spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#example-fitting-multiple-spectra-using-a-time-regularisation">Example: Fitting multiple spectra using a time regularisation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="programs/dd_single.html">dd_single.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="environment_vars.html">Environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/dd_single.html#command-line-options">Command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/dd_single.html#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="programs/dd_time.html">dd_time.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="environment_vars.html">Environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/dd_time.html#command-line-options">Command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/dd_time.html#regularisation-parameters">Regularisation Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="programs/dd_space_time.html">dd_space_time.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="programs/dd_space_time.html#command-line-options">Command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/dd_space_time.html#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="programs/ddps.html">ddps.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="programs/ddps.html#command-line-options">Command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output_formats.html">Output Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output_formats.html#ascii-audit-format">ascii_audit format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output_formats.html#ascii-format">ascii format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory_overview.html">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory_helper.html">Mathematical helper terms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory_dd_res.html">Debye decomposition resistivities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_res.html#complex">complex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_res.html#real-and-imaginary-parts">real and imaginary parts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_res.html#derivatives">Derivatives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_res.html#relating-peak-frequency-of-imaginary-part-to-relaxation-time">Relating peak frequency of imaginary part to relaxation time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_res.html#peak-relaxation-times">Peak relaxation times</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory_dd_cond.html">Debye decomposition on conductivities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_cond.html#complex">complex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_cond.html#real-and-imaginary-parts">real and imaginary parts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_dd_cond.html#derivatives">derivatives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory_cc_res.html">Cole-Cole decomposition resistivities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory_cc_res.html#complex">complex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_cc_res.html#real-and-imaginary-parts">real and imaginary parts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_cc_res.html#derivatives">derivatives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory_cc_cond.html">Cole-Cole decomposition conductivities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory_cc_cond.html#complex">complex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_cc_cond.html#real-and-imaginary-parts">real and imaginary parts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory_cc_cond.html#derivatives">derivatives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dd_theory_eps.html">Formulation using the dielectric constant</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dd_theory_eps.html#transformation-to-conductivity">Transformation to conductivity</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dd_coverage.html">Coverage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dd_coverage.html#id1"><img class="math" src="_images/math/041c943de7a5a310d6816519c228463ce0fc9153.png" alt="Cov_f"/></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dd_coverage.html#id2"><img class="math" src="_images/math/6a53de510ee79ce971ec433c738707ee68c8ac17.png" alt="Cov_m"/></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dd_general.html">Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral_parameters.html">Integral Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inversion.html#inversion">Inversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inversion.html#jacobian">Jacobian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="starting_models.html">Starting Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="starting_models.html#model-1">Model 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="starting_models.html#model-2">Model 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="starting_models.html#model-3">Model 3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#best-practices">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#normalisation">Normalisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#determining-relaxation-time-ranges">Determining relaxation time ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#creating-synthetic-relaxation-time-distributions">Creating synthetic relaxation time distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#using-the-cole-cole-distribution">Using the Cole-Cole distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#debugging-notes">Debugging notes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dd_testing_res_inv.html">Testing and characterization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html">lib_dd package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.Jacobian">lib_dd.Jacobian module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.base_class">lib_dd.base_class module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.colecole">lib_dd.colecole module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_base_log10rho0_log10m">lib_dd.dd_res_base_log10rho0_log10m module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_base_rho0_log10m">lib_dd.dd_res_base_rho0_log10m module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_base_rho0_m">lib_dd.dd_res_base_rho0_m module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_data_log10re_mim">lib_dd.dd_res_data_log10re_mim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.int_pars">lib_dd.int_pars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.interface">lib_dd.interface module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.main">lib_dd.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.plot">lib_dd.plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.sample_data">lib_dd.sample_data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.test_functions">lib_dd.test_functions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.version">lib_dd.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.html#module-lib_dd">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.conductivity.html">lib_dd.conductivity package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.conductivity.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.conductivity.html#module-lib_dd.conductivity.model">lib_dd.conductivity.model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.conductivity.html#module-lib_dd.conductivity">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.io.html">lib_dd.io package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.io.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.ascii">lib_dd.io.ascii module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.ascii_audit">lib_dd.io.ascii_audit module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.general">lib_dd.io.general module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="introduction.html" title="next chapter">Introduction</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

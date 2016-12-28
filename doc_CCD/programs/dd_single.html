@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dd_single.py &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="../index.html" />
+    <link rel="up" title="Fit Routines" href="../fit_routines.html" />
+    <link rel="next" title="Environment variables" href="../environment_vars.html" />
+    <link rel="prev" title="Fit Routines" href="../fit_routines.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="dd-single-py">
+<h1>dd_single.py<a class="headerlink" href="#dd-single-py" title="Permalink to this headline">¶</a></h1>
+<p><em>dd_single.py</em> is used to fit one or multiple SIP spectra using the Debye (or
+Cole-Cole) decomposition scheme. No smoothing regularization between the
+spectra is applied.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../environment_vars.html">Environment variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../environment_vars.html#usage-windows">Usage Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environment_vars.html#usage-linux">Usage Linux</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command line options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-text"><div class="highlight"><pre>Debye Decomposition
+Usage: dd_single.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -f FILE, --frequency_file=FILE
+                        Frequency file (default: frequency.dat)
+  --ignore=IGNORE_FREQUENCIES
+                        Frequency id&#39;s to ignore, example:
+                        &#39;12,13,14&#39;. Starts with index 0.
+  --fmin=DATA_FMIN      Ignore frequencies below this value (default: None)
+  --fmax=DATA_FMAX      Ignore frequencies above this value (default: None)
+  -d FILE, --data_file=FILE
+                        Data file (default: data.dat)
+  --data_format=DATA_FORMAT
+                        Input data format, possible values are: rmag_rpha,
+                        lnrmag_rpha, log10rmag_rpha, rmag_rpha,  rre_rim
+                        rre_rmim, cmag_cpha, cre_cim, cre_cmim (default:
+                        rmag_rpha). &quot;r&quot; stands for resistance/resistivity, and
+                        &quot;c&quot; stands for conductance/conductivity
+  -n INT, --nr_terms=INT
+                        Number of Debye terms per frequency decade (default:
+                        20)
+  -o DIR, --output=DIR  Output directory (default: results)
+  -p, --plot            Plot final iterations (default: False)
+  --plot_reg_strength   Plot regularization strengths of final iterations
+                        (default: False)
+  -i, --plot_its        Plot spectra of each iteration (default: False)
+  --silent              Do not plot any logs to STDOUT (default: False)
+  --tmp                 Create the output in a temporary directory and later
+                        move it later to its destination (default: False)
+  --tausel=STRATEGY     Tau selection strategy: data: Use data frequency
+                        limits for tau selection data_ext (default): Extend
+                        tau ranges by one frequency decade compared to the
+                        &#39;data&#39; strategy. Factors can be set for the low and
+                        high frequency by separating with a &#39;,&#39;: LEFT,RIGHT,
+                        e.g. &#39;10,100&#39;
+  --norm=FLOAT          Normalize magnitudes to the linear
+                        resistivity/resistance value (default: None)
+  --plot_lcurve=ITERATION
+                        Plot the l-curve for a selected iteration. WARNING:
+                        This only plots the lcurve and does not use it in the
+                        inversion process. Use -1 for last iteration.
+                        default=None
+  --max_it=INT          Maximum nr of iterations (default: 20)
+  -v, --version         Print version information
+  --output_format=TYPE  Output format (ascii, ascii_audit)
+  -c INT, --nr_cores=INT
+                        Number of CPU cores to use (default: 1)
+  --lambda=FLOAT        Use a fixed lambda (integer), default=None
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Beware of the chargeability distribution at the frequency edges: Here the
+distribution is often dominated by the starting model due to low
+sensitivities. However it is advisable to add one frequency decade in
+<img class="math" src="../_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values to the edges.</p>
+</div>
+<span class="target" id="ref-dd-single-best-pract"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../fit_routines.html">Fit Routines</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">dd_single.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../environment_vars.html">Environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dd_time.html">dd_time.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dd_space_time.html">dd_space_time.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddps.html">ddps.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output_formats.html">Output Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../fit_routines.html">Fit Routines</a><ul>
+      <li>Previous: <a href="../fit_routines.html" title="previous chapter">Fit Routines</a></li>
+      <li>Next: <a href="../environment_vars.html" title="next chapter">Environment variables</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="../_sources/programs/dd_single.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

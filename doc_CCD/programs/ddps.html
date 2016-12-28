@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ddps.py &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="../index.html" />
+    <link rel="up" title="Fit Routines" href="../fit_routines.html" />
+    <link rel="next" title="Output Files" href="../output_formats.html" />
+    <link rel="prev" title="dd_space_time.py" href="dd_space_time.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ddps-py">
+<h1>ddps.py<a class="headerlink" href="#ddps-py" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><em>ddps.py</em> only works with the ascii output format!</p>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command line options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-text"><div class="highlight"><pre>Usage: ddps.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -i DIR, --dir=DIR     dd_time result directory default=results
+  --log10mtot=FLOAT     Remove all spectra with log10(mtot) below threshold
+                        for filter-enabled plots
+  --log10mtotn=FLOAT    Remove all spectra with log10(mtotn) below threshold
+                        for filter-enabled plots
+  --statistics          Compute statistics of stats
+  --plot_specs          Plot specs
+  --plot_reg_strengths  Plot regularization strengths
+  --range=SPEC_RANGES   Pixel range(s) to plot. Separate by &#39;;&#39; and start with
+                        1. For example: &quot;1;2;4;5&quot;. Also allowed are ranges:
+                        &quot;2-10&quot;, and open ranges: &quot;5-&quot; (default: -1 (all))
+  --plot_to_grid        Plot results to grid
+  --elem=ELEM_FILE      elem.dat file (default: elem.dat)
+  --elec=ELEC_FILE      elec.dat file (default: elec.dat)
+  --u_tau_min=U_TAU_MIN
+                        Min value for u_tau
+  --u_tau_max=U_TAU_MAX
+                        Max value for u_tau
+  --tau_peak1_min=TAU_PEAK1_MIN
+                        Min value for tau_peak1
+  --tau_peak1_max=TAU_PEAK1_MAX
+                        Max value for tau_peak1
+  --tau_mean_min=TAU_MEAN_MIN
+                        Min value for tau_mean
+  --tau_mean_max=TAU_MEAN_MAX
+                        Max value for tau_mean
+  --rho0_min=RHO0_MIN   Min value for rho0
+  --rho0_max=RHO0_MAX   Max value for rho0
+  --tau_50_min=TAU_50_MIN
+                        Min value for tau_50
+  --tau_50_max=TAU_50_MAX
+                        Max value for tau_50
+  --m_tot_n_min=M_TOT_N_MIN
+                        Min value for m_tot_n
+  --m_tot_n_max=M_TOT_N_MAX
+                        Max value for m_tot_n
+  --filter              Apply filters and save to new directory
+  --maskfile=FILE       Mask file for filtering: discard all other pixels
+  --nr_cpus=NR          Output directory
+  -o DIR, --output=DIR  Output directory (default: filtered_results)
+  --output_format=TYPE  Output format (ascii, ascii_audit)
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../fit_routines.html">Fit Routines</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dd_single.html">dd_single.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dd_time.html">dd_time.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dd_space_time.html">dd_space_time.py</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">ddps.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../output_formats.html">Output Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../fit_routines.html">Fit Routines</a><ul>
+      <li>Previous: <a href="dd_space_time.html" title="previous chapter">dd_space_time.py</a></li>
+      <li>Next: <a href="../output_formats.html" title="next chapter">Output Files</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="../_sources/programs/ddps.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

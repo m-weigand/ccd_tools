@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="next" title="lib_dd package" href="api/lib_dd.html" />
+    <link rel="prev" title="Testing and characterization" href="dd_testing_res_inv.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/lib_dd.html">lib_dd package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.conductivity.html">lib_dd.conductivity package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.conductivity.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.conductivity.html#module-lib_dd.conductivity.model">lib_dd.conductivity.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.conductivity.html#module-lib_dd.conductivity">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/lib_dd.io.html">lib_dd.io package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.io.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.ascii">lib_dd.io.ascii module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.ascii_audit">lib_dd.io.ascii_audit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.general">lib_dd.io.general module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.Jacobian">lib_dd.Jacobian module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.base_class">lib_dd.base_class module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.colecole">lib_dd.colecole module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_base_log10rho0_log10m">lib_dd.dd_res_base_log10rho0_log10m module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_base_rho0_log10m">lib_dd.dd_res_base_rho0_log10m module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_base_rho0_m">lib_dd.dd_res_base_rho0_m module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.dd_res_data_log10re_mim">lib_dd.dd_res_data_log10re_mim module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.int_pars">lib_dd.int_pars module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.interface">lib_dd.interface module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.main">lib_dd.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.plot">lib_dd.plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.sample_data">lib_dd.sample_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.test_functions">lib_dd.test_functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd.version">lib_dd.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html#module-lib_dd">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/lib_dd.conductivity.html">lib_dd.conductivity package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.conductivity.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.conductivity.html#module-lib_dd.conductivity.model">lib_dd.conductivity.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.conductivity.html#module-lib_dd.conductivity">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/lib_dd.io.html">lib_dd.io package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.io.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.ascii">lib_dd.io.ascii module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.ascii_audit">lib_dd.io.ascii_audit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io.general">lib_dd.io.general module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.io.html#module-lib_dd.io">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.html">lib_dd package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.conductivity.html">lib_dd.conductivity package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/lib_dd.io.html">lib_dd.io package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="dd_testing_res_inv.html" title="previous chapter">Testing and characterization</a></li>
+      <li>Next: <a href="api/lib_dd.html" title="next chapter">lib_dd package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/api.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,269 @@
+2013-11-05 11:08:59,681 - dd.debye decomposition - INFO - ----------------------------------
+2013-11-05 11:08:59,681 - dd.debye decomposition - INFO -        Debye Decomposition
+2013-11-05 11:08:59,681 - dd.debye decomposition - INFO - ----------------------------------
+2013-11-05 11:08:59,681 - dd.debye decomposition - INFO - Frequency file: frequencies.dat
+2013-11-05 11:08:59,682 - dd.debye decomposition - INFO - Data file: data.dat
+2013-11-05 11:08:59,684 - dd.dd_res - INFO - Reducing index_min by one
+2013-11-05 11:08:59,684 - dd.dd_res - INFO - Increasing index_max by one
+2013-11-05 11:08:59,693 - dd.debye decomposition - INFO - Fitting spectrum 1 from 1
+2013-11-05 11:08:59,914 - dd.dd_res_inv - INFO - Using 123 chargeability values
+2013-11-05 11:08:59,914 - dd.dd_res_inv - INFO - =====================================
+2013-11-05 11:08:59,914 - dd.dd_res_inv - INFO - Using damping regularization: False
+2013-11-05 11:08:59,915 - dd.dd_res_inv - INFO - Using Tikhonov regularization: True
+2013-11-05 11:08:59,915 - dd.dd_res_inv - INFO - Lambda 0
+2013-11-05 11:08:59,915 - dd.dd_res_inv - INFO - Method: jacobian
+2013-11-05 11:08:59,915 - dd.dd_res_inv - INFO - Lambda selection during inversion:
+2013-11-05 11:08:59,916 - dd.dd_res_inv - INFO - Use fixed lambda: False
+2013-11-05 11:08:59,916 - dd.dd_res_inv - INFO - Use l-curve lambda: False
+2013-11-05 11:08:59,916 - dd.dd_res_inv - INFO - Use factor/quotient search for lambda: True
+2013-11-05 11:08:59,916 - dd.dd_res_inv - INFO - =====================================
+2013-11-05 11:08:59,933 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-11-05 11:08:59,933 - dd.dd_res_inv - INFO - Iteration 1
+2013-11-05 11:08:59,983 - dd.dd_res_inv - INFO - Initial lambda value: 21616.1961518
+2013-11-05 11:08:59,983 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:08:59,983 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-11-05 11:08:59,984 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:00,014 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,099 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,183 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,268 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,352 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,436 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,520 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,605 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,690 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-11-05 11:09:00,690 - dd.dd_res_inv - DEBUG - [10.18547191247549, 9.674310830848702, 9.2516527115358258, 8.176432114692771, 7.6011426087957963, 5.2538382773204564, 4.6368792470851607, 2.2379891663937839, 1.5404369894664574]
+2013-11-05 11:09:00,690 - dd.dd_res_inv - DEBUG - [0.10228687383830887, 0.097300703470349206, 0.093297612832571583, 0.083110699851579692, 0.077895624895493648, 0.058627209001574039, 0.050778944321457894, 0.018921684343833404, 0.01649561448517162]
+2013-11-05 11:09:00,690 - dd.dd_res_inv - DEBUG - Lambdas
+2013-11-05 11:09:00,690 - dd.dd_res_inv - DEBUG - [108.08098075917511, 216.16196151835021, 432.32392303670042, 2161.619615183502, 4323.239230367004, 108080.98075917512, 216161.96151835023, 2161619.615183502, 21616.196151835022]
+2013-11-05 11:09:00,691 - dd.dd_res_inv - DEBUG - New lambda: 21616.1961518
+2013-11-05 11:09:00,691 - dd.dd_res_inv - DEBUG - ######################################
+2013-11-05 11:09:00,691 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,762 - dd.dd_res_inv - INFO - find_alpha start
+2013-11-05 11:09:00,778 - dd.dd_res_inv - INFO - rms im 0.1 - 0.964644929452
+2013-11-05 11:09:00,794 - dd.dd_res_inv - INFO - rms im 0.5 - 0.197971213709
+2013-11-05 11:09:00,811 - dd.dd_res_inv - INFO - rms im 1 - 4.48396378483
+2013-11-05 11:09:00,812 - dd.dd_res_inv - INFO - best alpha: 0.5
+2013-11-05 11:09:00,812 - dd.dd_res_inv - INFO - find_alpha end
+2013-11-05 11:09:00,813 - dd.dd_res_inv - INFO - Alpha: 0.5
+2013-11-05 11:09:00,813 - dd.dd_res_inv - DEBUG - check_update_before_application
+2013-11-05 11:09:00,814 - dd.dd_res_inv - DEBUG - <type 'instance'>
+2013-11-05 11:09:00,814 - dd.dd_res_inv - DEBUG - len(it_list): 1
+2013-11-05 11:09:00,814 - dd.dd_res_inv - DEBUG - step 1
+2013-11-05 11:09:00,814 - dd.dd_res_inv - DEBUG - step 1a
+2013-11-05 11:09:00,833 - dd.dd_res_inv - DEBUG - step 2
+2013-11-05 11:09:00,833 - dd.dd_res_inv - INFO - Old rms_no_err: 1.54043698947
+2013-11-05 11:09:00,833 - dd.dd_res_inv - INFO - New rms_no_err: 0.464934277177
+2013-11-05 11:09:00,833 - dd.dd_res_inv - INFO - Old rms_im_no_err: 1.08599327209
+2013-11-05 11:09:00,834 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.197971213709
+2013-11-05 11:09:00,834 - dd.dd_res_inv - DEBUG - Computing iteration infos
+2013-11-05 11:09:00,848 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-11-05 11:09:00,849 - dd.dd_res_inv - INFO - 0.443364525642 0.464934277177
+2013-11-05 11:09:00,849 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-11-05 11:09:00,849 - dd.dd_res_inv - INFO - Iteration 2
+2013-11-05 11:09:00,849 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:00,850 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-11-05 11:09:00,850 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:00,881 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:00,966 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,050 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,134 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,218 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,301 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,385 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,470 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,554 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-11-05 11:09:01,554 - dd.dd_res_inv - DEBUG - [0.2329484022326769, 0.23004811989968868, 0.22727080772238745, 0.22027414390392944, 0.21606659207544146, 0.16445811523012527, 0.16909858942848241, 0.32296692830601215, 0.46493427717705688]
+2013-11-05 11:09:01,554 - dd.dd_res_inv - DEBUG - [0.00091217099581852, 0.00085841843185576459, 0.00081885776302986269, 0.00076766573345223965, 0.00075849349695969774, 0.0013701128761823859, 0.0018710494786704638, 0.0037870044269267661, 0.0030070691084619202]
+2013-11-05 11:09:01,555 - dd.dd_res_inv - DEBUG - Lambdas
+2013-11-05 11:09:01,555 - dd.dd_res_inv - DEBUG - [108.08098075917511, 216.16196151835021, 432.32392303670042, 2161.619615183502, 4323.239230367004, 108080.98075917512, 216161.96151835023, 2161619.615183502, 21616.196151835022]
+2013-11-05 11:09:01,555 - dd.dd_res_inv - DEBUG - New lambda: 4323.23923037
+2013-11-05 11:09:01,555 - dd.dd_res_inv - DEBUG - ######################################
+2013-11-05 11:09:01,555 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,624 - dd.dd_res_inv - INFO - find_alpha start
+2013-11-05 11:09:01,639 - dd.dd_res_inv - INFO - rms im 0.1 - 0.178832056186
+2013-11-05 11:09:01,655 - dd.dd_res_inv - INFO - rms im 0.5 - 0.109475376212
+2013-11-05 11:09:01,670 - dd.dd_res_inv - INFO - rms im 1 - 0.0499356259426
+2013-11-05 11:09:01,670 - dd.dd_res_inv - INFO - best alpha: 1
+2013-11-05 11:09:01,671 - dd.dd_res_inv - INFO - find_alpha end
+2013-11-05 11:09:01,671 - dd.dd_res_inv - INFO - Alpha: 1
+2013-11-05 11:09:01,671 - dd.dd_res_inv - DEBUG - check_update_before_application
+2013-11-05 11:09:01,671 - dd.dd_res_inv - DEBUG - <type 'instance'>
+2013-11-05 11:09:01,671 - dd.dd_res_inv - DEBUG - len(it_list): 2
+2013-11-05 11:09:01,671 - dd.dd_res_inv - DEBUG - step 1
+2013-11-05 11:09:01,671 - dd.dd_res_inv - DEBUG - step 1a
+2013-11-05 11:09:01,686 - dd.dd_res_inv - DEBUG - step 2
+2013-11-05 11:09:01,686 - dd.dd_res_inv - INFO - Old rms_no_err: 0.464934277177
+2013-11-05 11:09:01,686 - dd.dd_res_inv - INFO - New rms_no_err: 0.216066592075
+2013-11-05 11:09:01,686 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.197971213709
+2013-11-05 11:09:01,687 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.0499356259426
+2013-11-05 11:09:01,687 - dd.dd_res_inv - DEBUG - Computing iteration infos
+2013-11-05 11:09:01,703 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-11-05 11:09:01,703 - dd.dd_res_inv - INFO - 0.213162558856 0.216066592075
+2013-11-05 11:09:01,703 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-11-05 11:09:01,704 - dd.dd_res_inv - INFO - Iteration 3
+2013-11-05 11:09:01,704 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:01,704 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-11-05 11:09:01,704 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:01,734 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,818 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,901 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:01,985 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,070 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,154 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,237 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,321 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,404 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-11-05 11:09:02,404 - dd.dd_res_inv - DEBUG - [0.060574863419235646, 0.051357606370937753, 0.044686403147026925, 0.03636342662537613, 0.034583378348863394, 0.034946078939446727, 0.051744869325227545, 0.29435994234150592, 0.21606659207544146]
+2013-11-05 11:09:02,405 - dd.dd_res_inv - DEBUG - [0.00056624639288220481, 0.00039955040110314352, 0.00027935577843717102, 0.00016440674746182298, 0.00016533419626488057, 0.0004365356282683012, 0.00070382839112545525, 0.0028544661566962072, 0.00075849349695969774]
+2013-11-05 11:09:02,405 - dd.dd_res_inv - DEBUG - Lambdas
+2013-11-05 11:09:02,405 - dd.dd_res_inv - DEBUG - [21.61619615183502, 43.232392303670039, 86.464784607340079, 432.32392303670042, 864.64784607340084, 21616.196151835022, 43232.392303670043, 432323.92303670041, 4323.239230367004]
+2013-11-05 11:09:02,405 - dd.dd_res_inv - DEBUG - New lambda: 432.323923037
+2013-11-05 11:09:02,405 - dd.dd_res_inv - DEBUG - ######################################
+2013-11-05 11:09:02,405 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,481 - dd.dd_res_inv - INFO - find_alpha start
+2013-11-05 11:09:02,496 - dd.dd_res_inv - INFO - rms im 0.1 - 0.045165977332
+2013-11-05 11:09:02,512 - dd.dd_res_inv - INFO - rms im 0.5 - 0.0278783008378
+2013-11-05 11:09:02,527 - dd.dd_res_inv - INFO - rms im 1 - 0.0108237629941
+2013-11-05 11:09:02,527 - dd.dd_res_inv - INFO - best alpha: 1
+2013-11-05 11:09:02,528 - dd.dd_res_inv - INFO - find_alpha end
+2013-11-05 11:09:02,528 - dd.dd_res_inv - INFO - Alpha: 1
+2013-11-05 11:09:02,528 - dd.dd_res_inv - DEBUG - check_update_before_application
+2013-11-05 11:09:02,528 - dd.dd_res_inv - DEBUG - <type 'instance'>
+2013-11-05 11:09:02,528 - dd.dd_res_inv - DEBUG - len(it_list): 3
+2013-11-05 11:09:02,528 - dd.dd_res_inv - DEBUG - step 1
+2013-11-05 11:09:02,528 - dd.dd_res_inv - DEBUG - step 1a
+2013-11-05 11:09:02,543 - dd.dd_res_inv - DEBUG - step 2
+2013-11-05 11:09:02,544 - dd.dd_res_inv - INFO - Old rms_no_err: 0.216066592075
+2013-11-05 11:09:02,544 - dd.dd_res_inv - INFO - New rms_no_err: 0.0363634266254
+2013-11-05 11:09:02,544 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.0499356259426
+2013-11-05 11:09:02,545 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.0108237629941
+2013-11-05 11:09:02,545 - dd.dd_res_inv - DEBUG - Computing iteration infos
+2013-11-05 11:09:02,560 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-11-05 11:09:02,560 - dd.dd_res_inv - INFO - 0.0355490560782 0.0363634266254
+2013-11-05 11:09:02,560 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-11-05 11:09:02,560 - dd.dd_res_inv - INFO - Iteration 4
+2013-11-05 11:09:02,560 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:02,561 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-11-05 11:09:02,561 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:02,591 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,675 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,759 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,843 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:02,927 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,011 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,095 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,180 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,266 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-11-05 11:09:03,266 - dd.dd_res_inv - DEBUG - [0.09061254837537365, 0.0664002695719558, 0.047221158903560427, 0.018719744795705606, 0.012818388094078995, 0.014708898726348512, 0.017980522834040589, 0.074920684348099759, 0.03636342662537613]
+2013-11-05 11:09:03,266 - dd.dd_res_inv - DEBUG - [0.0012603914991507247, 0.00088576167117364194, 0.00059557050999411673, 0.0001790737836726462, 9.88945234165189e-05, 0.00014641424105067821, 0.00019271938339114516, 0.00085806342435612657, 0.00016440674746182298]
+2013-11-05 11:09:03,267 - dd.dd_res_inv - DEBUG - Lambdas
+2013-11-05 11:09:03,267 - dd.dd_res_inv - DEBUG - [2.1616196151835023, 4.3232392303670046, 8.6464784607340093, 43.232392303670039, 86.464784607340079, 2161.619615183502, 4323.239230367004, 43232.392303670043, 432.32392303670042]
+2013-11-05 11:09:03,267 - dd.dd_res_inv - DEBUG - New lambda: 86.4647846073
+2013-11-05 11:09:03,267 - dd.dd_res_inv - DEBUG - ######################################
+2013-11-05 11:09:03,267 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,338 - dd.dd_res_inv - INFO - find_alpha start
+2013-11-05 11:09:03,353 - dd.dd_res_inv - INFO - rms im 0.1 - 0.00999787140514
+2013-11-05 11:09:03,369 - dd.dd_res_inv - INFO - rms im 0.5 - 0.00734205186395
+2013-11-05 11:09:03,384 - dd.dd_res_inv - INFO - rms im 1 - 0.00651074788234
+2013-11-05 11:09:03,384 - dd.dd_res_inv - INFO - best alpha: 1
+2013-11-05 11:09:03,385 - dd.dd_res_inv - INFO - find_alpha end
+2013-11-05 11:09:03,385 - dd.dd_res_inv - INFO - Alpha: 1
+2013-11-05 11:09:03,385 - dd.dd_res_inv - DEBUG - check_update_before_application
+2013-11-05 11:09:03,385 - dd.dd_res_inv - DEBUG - <type 'instance'>
+2013-11-05 11:09:03,385 - dd.dd_res_inv - DEBUG - len(it_list): 4
+2013-11-05 11:09:03,385 - dd.dd_res_inv - DEBUG - step 1
+2013-11-05 11:09:03,385 - dd.dd_res_inv - DEBUG - step 1a
+2013-11-05 11:09:03,400 - dd.dd_res_inv - DEBUG - step 2
+2013-11-05 11:09:03,400 - dd.dd_res_inv - INFO - Old rms_no_err: 0.0363634266254
+2013-11-05 11:09:03,400 - dd.dd_res_inv - INFO - New rms_no_err: 0.0128183880941
+2013-11-05 11:09:03,401 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.0108237629941
+2013-11-05 11:09:03,401 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.00651074788234
+2013-11-05 11:09:03,401 - dd.dd_res_inv - DEBUG - Computing iteration infos
+2013-11-05 11:09:03,417 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-11-05 11:09:03,417 - dd.dd_res_inv - INFO - 0.0119633207932 0.0128183880941
+2013-11-05 11:09:03,417 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-11-05 11:09:03,417 - dd.dd_res_inv - INFO - Iteration 5
+2013-11-05 11:09:03,417 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:03,418 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-11-05 11:09:03,418 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:03,447 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,532 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,616 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,700 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,783 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,867 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:03,951 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,035 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,120 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-11-05 11:09:04,120 - dd.dd_res_inv - DEBUG - [0.14472583952472112, 0.10537365487278746, 0.073931946444073873, 0.02568351839230933, 0.014543922721355096, 0.014080055769053933, 0.018563884598309714, 0.038597922923471223, 0.012818388094078995]
+2013-11-05 11:09:04,120 - dd.dd_res_inv - DEBUG - [0.002054235837181579, 0.0014526531733331839, 0.00098426117510827592, 0.00029419877386326152, 0.00013854219585924336, 0.00012137433105364944, 0.00017408699759914657, 0.00041555841254011644, 9.88945234165189e-05]
+2013-11-05 11:09:04,121 - dd.dd_res_inv - DEBUG - Lambdas
+2013-11-05 11:09:04,121 - dd.dd_res_inv - DEBUG - [0.43232392303670042, 0.86464784607340084, 1.7292956921468017, 8.6464784607340075, 17.292956921468015, 432.32392303670042, 864.64784607340084, 8646.478460734008, 86.464784607340079]
+2013-11-05 11:09:04,121 - dd.dd_res_inv - DEBUG - New lambda: 86.4647846073
+2013-11-05 11:09:04,121 - dd.dd_res_inv - DEBUG - ######################################
+2013-11-05 11:09:04,121 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,190 - dd.dd_res_inv - INFO - find_alpha start
+2013-11-05 11:09:04,206 - dd.dd_res_inv - INFO - rms im 0.1 - 0.00613281396954
+2013-11-05 11:09:04,222 - dd.dd_res_inv - INFO - rms im 0.5 - 0.00485026374318
+2013-11-05 11:09:04,237 - dd.dd_res_inv - INFO - rms im 1 - 0.00413723215711
+2013-11-05 11:09:04,237 - dd.dd_res_inv - INFO - best alpha: 1
+2013-11-05 11:09:04,237 - dd.dd_res_inv - INFO - find_alpha end
+2013-11-05 11:09:04,237 - dd.dd_res_inv - INFO - Alpha: 1
+2013-11-05 11:09:04,237 - dd.dd_res_inv - DEBUG - check_update_before_application
+2013-11-05 11:09:04,237 - dd.dd_res_inv - DEBUG - <type 'instance'>
+2013-11-05 11:09:04,238 - dd.dd_res_inv - DEBUG - len(it_list): 5
+2013-11-05 11:09:04,238 - dd.dd_res_inv - DEBUG - step 1
+2013-11-05 11:09:04,238 - dd.dd_res_inv - DEBUG - step 1a
+2013-11-05 11:09:04,254 - dd.dd_res_inv - DEBUG - step 2
+2013-11-05 11:09:04,254 - dd.dd_res_inv - INFO - Old rms_no_err: 0.0128183880941
+2013-11-05 11:09:04,254 - dd.dd_res_inv - INFO - New rms_no_err: 0.008073768212
+2013-11-05 11:09:04,254 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.00651074788234
+2013-11-05 11:09:04,254 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.00413723215711
+2013-11-05 11:09:04,255 - dd.dd_res_inv - DEBUG - Computing iteration infos
+2013-11-05 11:09:04,269 - dd.dd_res_inv - INFO - RMS Values of this iteration: (rms, rms_no_err):
+2013-11-05 11:09:04,269 - dd.dd_res_inv - INFO - 0.00752524835139 0.008073768212
+2013-11-05 11:09:04,270 - dd.dd_res_inv - INFO - -----------------------------------------------------
+2013-11-05 11:09:04,270 - dd.dd_res_inv - INFO - Iteration 6
+2013-11-05 11:09:04,270 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:04,270 - dd.dd_res_inv - INFO -      lambda factor/quotient search    
+2013-11-05 11:09:04,270 - dd.dd_res_inv - INFO - ######################################
+2013-11-05 11:09:04,300 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,384 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,477 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,561 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,645 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,729 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,812 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,896 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:04,980 - dd.dd_res_inv - DEBUG - RMS values (RMS, RMS_im, lams)
+2013-11-05 11:09:04,980 - dd.dd_res_inv - DEBUG - [0.14586310294677252, 0.10624956912950657, 0.074531152421075095, 0.025789256541698741, 0.014549984187499181, 0.014116818378821552, 0.018645970304581868, 0.039304918106689492, 0.0080737682120039928]
+2013-11-05 11:09:04,980 - dd.dd_res_inv - DEBUG - [0.0020629023926536697, 0.0014590671643411712, 0.000988391816224747, 0.00029456546362282215, 0.00013825654777975478, 0.00012157143384861645, 0.00017450501618233077, 0.00041843953932103249, 6.2842181856046598e-05]
+2013-11-05 11:09:04,980 - dd.dd_res_inv - DEBUG - Lambdas
+2013-11-05 11:09:04,980 - dd.dd_res_inv - DEBUG - [0.43232392303670042, 0.86464784607340084, 1.7292956921468017, 8.6464784607340075, 17.292956921468015, 432.32392303670042, 864.64784607340084, 8646.478460734008, 86.464784607340079]
+2013-11-05 11:09:04,981 - dd.dd_res_inv - DEBUG - New lambda: 86.4647846073
+2013-11-05 11:09:04,981 - dd.dd_res_inv - DEBUG - ######################################
+2013-11-05 11:09:04,981 - dd.dd_res_inv - DEBUG - Compute inverse step...
+2013-11-05 11:09:05,051 - dd.dd_res_inv - INFO - find_alpha start
+2013-11-05 11:09:05,066 - dd.dd_res_inv - INFO - rms im 0.1 - 0.00413753408125
+2013-11-05 11:09:05,082 - dd.dd_res_inv - INFO - rms im 0.5 - 0.0041387570361
+2013-11-05 11:09:05,097 - dd.dd_res_inv - INFO - rms im 1 - 0.00414031991295
+2013-11-05 11:09:05,097 - dd.dd_res_inv - INFO - best alpha: 0.1
+2013-11-05 11:09:05,097 - dd.dd_res_inv - INFO - find_alpha end
+2013-11-05 11:09:05,098 - dd.dd_res_inv - INFO - Alpha: 0.1
+2013-11-05 11:09:05,098 - dd.dd_res_inv - DEBUG - check_update_before_application
+2013-11-05 11:09:05,098 - dd.dd_res_inv - DEBUG - <type 'instance'>
+2013-11-05 11:09:05,098 - dd.dd_res_inv - DEBUG - len(it_list): 6
+2013-11-05 11:09:05,098 - dd.dd_res_inv - DEBUG - step 1
+2013-11-05 11:09:05,098 - dd.dd_res_inv - DEBUG - step 1a
+2013-11-05 11:09:05,113 - dd.dd_res_inv - DEBUG - step 2
+2013-11-05 11:09:05,113 - dd.dd_res_inv - INFO - Old rms_no_err: 0.008073768212
+2013-11-05 11:09:05,114 - dd.dd_res_inv - INFO - New rms_no_err: 0.00807276914701
+2013-11-05 11:09:05,114 - dd.dd_res_inv - INFO - Old rms_im_no_err: 0.00413723215711
+2013-11-05 11:09:05,114 - dd.dd_res_inv - INFO - New rms_im_np_err: 0.00413753408125
+2013-11-05 11:09:05,115 - dd.dd_res_inv - INFO - Imag RMS increase
+2013-11-05 11:09:05,115 - dd.dd_res_inv - INFO - Breaking before applying update
+2013-11-05 11:09:05,115 - dd.dd_res_inv - INFO - Finished
+2013-11-05 11:09:05,124 - dd.debye decomposition - INFO - =======================================
+2013-11-05 11:09:05,124 - dd.debye decomposition - INFO -      Debye Decomposition finished!     
+2013-11-05 11:09:05,124 - dd.debye decomposition - INFO - =======================================
