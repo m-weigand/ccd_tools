@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ddps.py &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    <title>ddps.py &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="../index.html" />
+    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="../index.html" />
     <link rel="up" title="Fit Routines" href="../fit_routines.html" />
     <link rel="next" title="Output Files" href="../output_formats.html" />
     <link rel="prev" title="Environment variables" href="../environment_vars.html" />
@@ -72,12 +72,14 @@ Options:
                         Min value for m_tot
   --m_tot_max=M_TOT_MAX
                         Max value for m_tot
-  --rho0_min=RHO0_MIN   Min value for rho0
-  --rho0_max=RHO0_MAX   Max value for rho0
   --tau_50_min=TAU_50_MIN
                         Min value for tau_50
   --tau_50_max=TAU_50_MAX
                         Max value for tau_50
+  --tau_peak1_min=TAU_PEAK1_MIN
+                        Min value for tau_peak1
+  --tau_peak1_max=TAU_PEAK1_MAX
+                        Max value for tau_peak1
   --tau_mean_min=TAU_MEAN_MIN
                         Min value for tau_mean
   --tau_mean_max=TAU_MEAN_MAX
@@ -86,14 +88,12 @@ Options:
                         Min value for U_tau
   --U_tau_max=U_TAU_MAX
                         Max value for U_tau
-  --tau_peak1_min=TAU_PEAK1_MIN
-                        Min value for tau_peak1
-  --tau_peak1_max=TAU_PEAK1_MAX
-                        Max value for tau_peak1
   --m_tot_n_min=M_TOT_N_MIN
                         Min value for m_tot_n
   --m_tot_n_max=M_TOT_N_MAX
                         Max value for m_tot_n
+  --rho0_min=RHO0_MIN   Min value for rho0
+  --rho0_max=RHO0_MAX   Max value for rho0
   --filter              Apply filters and save to new directory
   --maskfile=FILE       Mask file for filtering: discard all other pixels
                         (start at 0)
@@ -111,7 +111,7 @@ Options:
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">Time-lapse Debye decomposition routines</a></h1>
+<h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
 
 
@@ -171,7 +171,7 @@ Options:
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2014-2016, Maximilian Weigand.
+      &copy;2014-2017, Maximilian Weigand.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
