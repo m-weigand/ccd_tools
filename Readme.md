@@ -24,6 +24,42 @@ Parts of this code were described in two open-access publications:
 
 [Changelog.md](Changelog.md)
 
+## Documentation
+
+ * Documentation is located in docs/
+ * The sphinx-generated documentation is located in docs/doc
+
+## Roadmap
+
+The following functionality is planned to be implemented in the near future
+(Q1-Q3 2017). After that, new feature will probably only be implemented when
+required. For additional todo-items, please refer to the issues of this project
+and to the file [TODO](TODO).
+
+The current version is 0.8.
+
+### 0.8.1
+
+* first version under the new name 'Cole-Cole decomposition tools' (CCD)
+* first (proper) version uploaded to pypi
+* first Python 3 version
+* first version with a DOI (via Zenoodo)
+* initial homepage with online-documentation
+
+### 0.9
+
+* improve testing framework for **dd_time.py**
+* implement Cole-Cole decomposition (c less than 1) also for conductivity
+  formulation
+* improve Jupyter integration and provide examples
+* provide mybinder-integration
+
+### 1.0
+
+* proof-of-concept web interface
+* implement the addition of a high-frequency EM-Cole-Cole term, decoupled from
+  the other polarization terms
+
 ## Requirements
 
 For requirements to use the ccd tools, please refer to the
@@ -104,42 +140,6 @@ To build the documentation ::
 Setuptools developer guide:
 
 https://pythonhosted.org/setuptools/setuptools.html
-
-## Documentation
-
- * Documentation is located in docs/
- * The sphinx-generated documentation is located in docs/doc
-
-## Roadmap
-
-The following functionality is planned to be implemented in the near future
-(Q1-Q3 2017). After that, new feature will probably only be implemented when
-required. For additional todo-items, please refer to the issues of this project
-and to the file [TODO](TODO).
-
-The current version is 0.8.
-
-### 0.8.1
-
-* first version under the new name 'Cole-Cole decomposition tools' (CCD)
-* first (proper) version uploaded to pypi
-* first Python 3 version
-* first version with a DOI (via Zenoodo)
-* initial homepage with online-documentation
-
-### 0.9
-
-* improve testing framework for **dd_time.py**
-* implement Cole-Cole decomposition (c less than 1) also for conductivity
-  formulation
-* improve Jupyter integration and provide examples
-* provide mybinder-integration
-
-### 1.0
-
-* proof-of-concept web interface
-* implement the addition of a high-frequency EM-Cole-Cole term, decoupled from
-  the other polarization terms
 
 ## Licence
 
