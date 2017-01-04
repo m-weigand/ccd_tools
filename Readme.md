@@ -138,6 +138,8 @@ The current version is 0.8.
 * improve testing framework for **dd_time.py**
 * implement Cole-Cole decomposition (c less than 1) also for conductivity
   formulation
+* improve Jupyter integration and provide examples
+* provide mybinder-integration
 
 ### 1.0
 
