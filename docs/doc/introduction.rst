@@ -37,8 +37,8 @@ Each front-end is accompanied by a post processing tool (*ddps.py*, *ddpt.py*)
 which allows various analysis and postprocessing steps to be applied on
 inversion results. This includes filtering and plotting routines.
 
-Within this documentation, the term "Debye decomposition tools" referes to the
-ready-to-use distribution of the decomposition tools. This distribution is
+Within this documentation, the term "Cole-Cole decomposition tools" referes to
+the ready-to-use distribution of the decomposition tools. This distribution is
 composed of two python subprojects: *geccoinv* and *dd_interfaces*. *geccoinv*
 contains the multi-dimensional inversion framework used for the decomposition
 process, while *dd_interfaces* includes the forward formulation of the

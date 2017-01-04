@@ -54,8 +54,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Time-lapse Debye decomposition routines'
-copyright = u'2014-2016, Maximilian Weigand'
+project = u'Time-lapse Cole-Cole decomposition routines'
+copyright = u'2014-2017, Maximilian Weigand'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -127,6 +127,9 @@ html_sidebars = {
 # documentation.
 html_theme_options = {
     'github_button': False,
+    'font_size': 26,
+    'page_width': '1000px',
+    'body_text_align': 'justify',
 }
 
 # Add any paths that contain custom themes here, relative to this directory.

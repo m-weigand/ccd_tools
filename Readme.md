@@ -20,14 +20,9 @@ Parts of this code were described in two open-access publications:
 
 [2. Weigand and Kemna, 2016, Geophysical Journal International](http://gji.oxfordjournals.org/content/205/3/1414)
 
+## Versions
 
-## Licence
-
-This program is licenced under the GPL3 or later licence. See LICENCE.txt and
-headers of individual files for more information.
-
-Some third-party packages used for the homepage (gh-pages branch) have
-individual licences.
+[Changelog.md](Changelog.md)
 
 ## Requirements
 
@@ -110,8 +105,7 @@ Setuptools developer guide:
 
 https://pythonhosted.org/setuptools/setuptools.html
 
-Documentation
--------------
+## Documentation
 
  * Documentation is located in docs/
  * The sphinx-generated documentation is located in docs/doc
@@ -146,3 +140,12 @@ The current version is 0.8.
 * proof-of-concept web interface
 * implement the addition of a high-frequency EM-Cole-Cole term, decoupled from
   the other polarization terms
+
+## Licence
+
+This program is licenced under the GPL3 or later licence. See LICENCE.txt and
+headers of individual files for more information.
+
+Some third-party packages used for the homepage (gh-pages branch) have
+individual licences.
+
