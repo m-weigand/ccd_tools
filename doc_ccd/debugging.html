@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Profiling and Debugging &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="next" title="Testing and characterization" href="dd_testing_res_inv.html" />
+    <link rel="prev" title="Starting Models" href="starting_models.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="profiling-and-debugging">
+<h1>Profiling and Debugging<a class="headerlink" href="#profiling-and-debugging" title="Permalink to this headline">¶</a></h1>
+<p>Things go wrong. If something goes wrong with memory usage, use the
+<cite>memory_profiler</cite> module (<a class="reference external" href="https://github.com/fabianp/memory_profiler">https://github.com/fabianp/memory_profiler</a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>pip install memory_profiler
+</pre></div>
+</div>
+<p>At least in <em>dd_singly.py</em> there is a commented import line:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">memory_profiler</span>
+</pre></div>
+</div>
+<p>Just add the decorator <cite>&#64;profile</cite> in front of any function to get a
+line-by-line memory usage profile printed to STDOUT.</p>
+<p>To profile the memory increase between subsequent spectra in <strong>dd_single.py</strong>,
+add the decorator to the <cite>fit_one_spectrum</cite> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>@profile
+def fit_one_spectrum(opts):
+</pre></div>
+</div>
+<p>Then run the <cite>dd_single.py</cite> command as usual, but redirect the output to a
+logfile:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>dd_single.py [OPTIONS] | tee logfile
+</pre></div>
+</div>
+<p>Then grep for specific calls:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>grep &quot;run_inversion&quot; logfile
+206     51.9 MiB      3.5 MiB       ND.run_inversion()
+206     54.9 MiB      2.9 MiB       ND.run_inversion()
+206     55.0 MiB      0.1 MiB       ND.run_inversion()
+206     55.1 MiB      0.1 MiB       ND.run_inversion()
+206     55.1 MiB      0.1 MiB       ND.run_inversion()
+206     55.2 MiB      0.1 MiB       ND.run_inversion()
+206     55.2 MiB      0.1 MiB       ND.run_inversion()
+206     55.3 MiB      0.0 MiB       ND.run_inversion()
+206     55.4 MiB      0.1 MiB       ND.run_inversion()
+206     55.4 MiB      0.1 MiB       ND.run_inversion()
+</pre></div>
+</div>
+<p>As a side note, it would be nice to get <cite>pycallgraph</cite> to run:</p>
+<p><a class="reference external" href="http://pycallgraph.slowchop.com/en/master/guide/command_line_usage.html">http://pycallgraph.slowchop.com/en/master/guide/command_line_usage.html</a></p>
+<p>Sidenote: We could also use Travis (<a class="reference external" href="https://travis-ci.org/">https://travis-ci.org/</a>) von continous
+integration.</p>
+<div class="section" id="debugging-notes">
+<h2>Debugging notes<a class="headerlink" href="#debugging-notes" title="Permalink to this headline">¶</a></h2>
+<p>Random collection of notes:</p>
+<ul class="simple">
+<li>We have to save all inputs from the dicts in order to recreate an inversion
+(we need to reconstruct the whole inversion object for that). Therefore we
+should simplify the various dicts involved.</li>
+<li>For each iteration we want:</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Sensitivities</li>
+<li>Resolution matrix (covariance matrix)</li>
+<li>Cumulative sensitivities</li>
+<li>Data covariance matrix</li>
+<li>Model covariance matrix</li>
+</ul>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dd_testing_res_inv.html">Testing and characterization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dd_testing_res_inv.html#interface">Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dd_testing_res_inv.html#fit-quality">Fit quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dd_testing_res_inv.html#no-crash-tests">No crash tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dd_testing_res_inv.html#characterization-synthetic-spectra-one-on-one">Characterization: Synthetic spectra one-on-one</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dd_testing_res_inv.html#multi-term-debye-tests">Multi-term Debye tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Profiling and Debugging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-notes">Debugging notes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dd_testing_res_inv.html">Testing and characterization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="starting_models.html" title="previous chapter">Starting Models</a></li>
+      <li>Next: <a href="dd_testing_res_inv.html" title="next chapter">Testing and characterization</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/debugging.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

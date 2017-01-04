@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lib_dd.models package &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="../index.html" />
+    <link rel="up" title="lib_dd package" href="lib_dd.html" />
+    <link rel="next" title="lib_dd.conductivity package" href="lib_dd.conductivity.html" />
+    <link rel="prev" title="lib_dd.io package" href="lib_dd.io.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lib-dd-models-package">
+<h1>lib_dd.models package<a class="headerlink" href="#lib-dd-models-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lib_dd.models.ccd_res">
+<span id="lib-dd-models-ccd-res-module"></span><h2>lib_dd.models.ccd_res module<a class="headerlink" href="#module-lib_dd.models.ccd_res" title="Permalink to this headline">¶</a></h2>
+<p>Cole-Cole decomposition in resistivities</p>
+<dl class="class">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity">
+<em class="property">class </em><tt class="descclassname">lib_dd.models.ccd_res.</tt><tt class="descname">decomposition_resistivity</tt><big>(</big><em>settings</em><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></tt>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><tt class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></tt></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><tt class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></tt></p>
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.Jacobian">
+<tt class="descname">Jacobian</tt><big>(</big><em>pars_dec</em><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.Jacobian" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">J: (2N) X K array with derivatives.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.convert_parameters">
+<tt class="descname">convert_parameters</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.convert_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert parameters given as (<img class="math" src="../_images/math/687c902d2cf49885cb877f2035f2d5505e0c9e62.png" alt="\rho_0, m_i"/>) to the
+parameterisation used by this class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.convert_pars_back">
+<tt class="descname">convert_pars_back</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.convert_pars_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert parameters given in this parameterisation back to the linear
+state
+Here: From <img class="math" src="../_images/math/7c03c236b09b0c6b280b7cb8426857ca4ccace1b.png" alt="log_{10}(\rho_0), log_{10}(m_i)"/></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.forward">
+<tt class="descname">forward</tt><big>(</big><em>pars_dec</em><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.forward" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pars_dec: [log10(rho0),</strong></p>
+<blockquote>
+<div><p>log10(m_i)]</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">remim: Nx2 array with N the nr of frequencies, and the real and the</p>
+<blockquote class="last">
+<div><p>negative imaginary parts on the second axis</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_dimensions">
+<tt class="descname">get_data_base_dimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict with a description of the data base dimensions. In this
+case we have frequencies and re/im data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_size">
+<tt class="descname">get_data_base_size</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return size of flattened base dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.get_model_base_dimensions">
+<tt class="descname">get_model_base_dimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.get_model_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict with a description of the model base dimensions. In this
+case we have one dimension: the DD parameters (rho0, mi) where m_i
+denotes all chargeability values corresponding to the relaxation times.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_res.decomposition_resistivity.set_settings">
+<tt class="descname">set_settings</tt><big>(</big><em>settings</em><big>)</big><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.set_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the settings and call necessary functions</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib_dd.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lib_dd.models" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="lib_dd.html">lib_dd package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="lib_dd.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.Jacobian">lib_dd.Jacobian module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.base_class">lib_dd.base_class module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.int_pars">lib_dd.int_pars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.interface">lib_dd.interface module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.plot">lib_dd.plot module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.plot_stats">lib_dd.plot_stats module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.starting_parameters">lib_dd.starting_parameters module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.test_functions">lib_dd.test_functions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd.version">lib_dd.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lib_dd.conductivity.html">lib_dd.conductivity package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib_dd.io.html">lib_dd.io package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="lib_dd.html">lib_dd package</a><ul>
+      <li>Previous: <a href="lib_dd.io.html" title="previous chapter">lib_dd.io package</a></li>
+      <li>Next: <a href="lib_dd.conductivity.html" title="next chapter">lib_dd.conductivity package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/api/lib_dd.models.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

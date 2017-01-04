@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="CCD Tools" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The Cole-Cole decomposition tools provide a set of Python programs to fit
+electrical complex resistivity spectra (or Spectral Induced Polarisation, SIP,
+spectra) using a Cole-Cole decomposition scheme (see section <a class="reference internal" href="theory.html"><em>Theory of SIP models</em></a> for
+an theoretical overview of the implemented methods). This also includes the
+popular Debye decomposition scheme. In addition to the independent
+decomposition of one or more spectra, a smoothing regularization can be applied
+between multiple spectra for cases of time-lapse data where only smooth changes
+between subsequent spectra are expected.</p>
+<p>The installation for Windows and Linux is described in the section
+<a class="reference internal" href="installation.html"><em>Installation</em></a>, and the section <a class="reference internal" href="getting_started.html"><em>Getting Started</em></a> provides first
+usage instructions.</p>
+<p>Please note that the Cole-Cole decomposition is, at the moment, only
+implemented for the resistivity case. For the conductivity formulation, only
+the Debye decompositon (<em>c = 1</em>) is implemented.</p>
+<p>If you are looking for a classic Cole-Cole fit using only one or two terms,
+have a look at <a class="reference external" href="https://github.com/m-weigand/Cole-Cole-fit">https://github.com/m-weigand/Cole-Cole-fit</a>.</p>
+<p>Two primary decomposition programs are provided:</p>
+<ul class="simple">
+<li><a class="reference internal" href="programs/dd_single.html"><em>dd_single.py</em></a> fits an arbitrary number of SIP spectra without any
+kind of regularization between the spectra.</li>
+<li><a class="reference internal" href="programs/dd_time.html"><em>dd_time.py</em></a> fits an arbitrary number of time-lapse SIP spectra with a
+regularization on the time axis (separate regularization parameters for
+<img class="math" src="_images/math/02412c6f51954cfa864846e85e0775b2071b9571.png" alt="\rho_0"/> and the chargeabilities <img class="math" src="_images/math/21728519fb5117232be3dab5913f25e4508c8c29.png" alt="m_i"/>)</li>
+</ul>
+<p>See <a class="reference internal" href="fit_routines.html"><em>Fit Routines</em></a> for a complete list of the provided programs, and
+detailed description of the input parameters.</p>
+<p>Each front-end is accompanied by a post processing tool (<em>ddps.py</em>, <em>ddpt.py</em>)
+which allows various analysis and postprocessing steps to be applied on
+inversion results. This includes filtering and plotting routines.</p>
+<p>Within this documentation, the term &#8220;Debye decomposition tools&#8221; referes to the
+ready-to-use distribution of the decomposition tools. This distribution is
+composed of two python subprojects: <em>geccoinv</em> and <em>dd_interfaces</em>. <em>geccoinv</em>
+contains the multi-dimensional inversion framework used for the decomposition
+process, while <em>dd_interfaces</em> includes the forward formulation of the
+Decomposition process, and the frontends used to apply the implemented methods.
+For end-users, it is always recommended to use the &#8220;debye decomposition tools&#8221;,
+if in doubt.</p>
+<p>Feedback, bug reports, and general advice is always welcome. Please use the
+issue tracker on the github pages for communication
+(<a class="reference external" href="https://github.com/m-weigand/ccd_tools/">https://github.com/m-weigand/ccd_tools/</a>).  Before you report a bug, make sure
+to search the existing bugs (issues) for a relevant item.  Also make sure to
+include all necessary information to reproduce the bug. A small example,
+including data set and batch file to trigger the bug, are always helpful!</p>
+<p>Separate repositories are maintained for <em>geccoing</em> and <em>ccd_tools</em> (only
+relevant if you plan on changing the code):</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/m-weigand/ccd_tools">https://github.com/m-weigand/ccd_tools</a></li>
+<li><a class="reference external" href="https://github.com/m-weigand/geccoinv">https://github.com/m-weigand/geccoinv</a></li>
+</ul>
+<p>The Debye decomposition tools (including the components &#8220;DD_Interfaces&#8221; and
+&#8220;geccoinv&#8221;) are  licenced under the GPL 3 or later
+(<a class="reference external" href="https://www.gnu.org/licenses/licenses.html#GPL">https://www.gnu.org/licenses/licenses.html#GPL</a>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are reading this manual as a PDF file, please note that download
+links do not work. Please refer to the corresponding HTML version for these
+links.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">CCD Tools</a></li>
+      <li>Next: <a href="installation.html" title="next chapter">Installation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/introduction.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

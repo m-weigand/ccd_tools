@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Coverage &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="up" title="Theory of SIP models" href="theory.html" />
+    <link rel="next" title="Literature" href="dd_general.html" />
+    <link rel="prev" title="Formulation using the dielectric constant" href="dd_theory_eps.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="coverage">
+<h1>Coverage<a class="headerlink" href="#coverage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><img class="math" src="_images/math/041c943de7a5a310d6816519c228463ce0fc9153.png" alt="Cov_f"/><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Coverage for each frequency: Sum up the sensitivitities of all m-Values for
+each frequency:</p>
+<div class="math">
+<p><img src="_images/math/991aa008c8ed498a9711f6622bd18bec54facfca.png" alt="Cov^{Im}_f(f) = \sum_{i} \left(
+\frac{\partial[-Im(\hat{\rho}(\omega))]}{\partial m_i} \right)"/></p>
+</div></div>
+<div class="section" id="id2">
+<h2><img class="math" src="_images/math/6a53de510ee79ce971ec433c738707ee68c8ac17.png" alt="Cov_m"/><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Coverage for each <img class="math" src="_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/> value: Sum up the sensitivities of all frequencies for each m-value:</p>
+<div class="math">
+<p><img src="_images/math/371b13c26ca791783747c4207cc478aed2090efe.png" alt="Cov^{Im}_m(m_k) = \sum_{j} \left( \frac{[\partial
+-Im(\hat{\rho}(\omega_j))]}{\partial m_k} \right)"/></p>
+</div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="theory.html">Theory of SIP models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="theory_overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory_dd_res.html">Debye decomposition resistivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory_dd_cond.html">Debye decomposition on conductivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory_cc_res.html">Cole-Cole decomposition resistivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory_cc_cond.html">Cole-Cole decomposition conductivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dd_theory_eps.html">Formulation using the dielectric constant</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Coverage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1"><img class="math" src="_images/math/041c943de7a5a310d6816519c228463ce0fc9153.png" alt="Cov_f"/></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2"><img class="math" src="_images/math/6a53de510ee79ce971ec433c738707ee68c8ac17.png" alt="Cov_m"/></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dd_general.html">Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral_parameters.html">Integral Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="theory.html">Theory of SIP models</a><ul>
+      <li>Previous: <a href="dd_theory_eps.html" title="previous chapter">Formulation using the dielectric constant</a></li>
+      <li>Next: <a href="dd_general.html" title="next chapter">Literature</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/dd_coverage.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

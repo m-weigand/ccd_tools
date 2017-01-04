@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cole-Cole decomposition conductivities &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="up" title="Theory of SIP models" href="theory.html" />
+    <link rel="next" title="Formulation using the dielectric constant" href="dd_theory_eps.html" />
+    <link rel="prev" title="Cole-Cole decomposition resistivities" href="theory_cc_res.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cole-cole-decomposition-conductivities">
+<h1>Cole-Cole decomposition conductivities<a class="headerlink" href="#cole-cole-decomposition-conductivities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="complex">
+<h2>complex<a class="headerlink" href="#complex" title="Permalink to this headline">¶</a></h2>
+<p>After Tarasov and Titov, 2013:</p>
+<div class="math">
+<p><img src="_images/math/4dc95ebeb95d56f8423ef1df167eb1950dbf0fc2.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty \left(1 - \sum_k\frac{m_k}{1 + (j
+\omega \tau_k)^c}\right)\\"/></p>
+</div></div>
+<div class="section" id="real-and-imaginary-parts">
+<h2>real and imaginary parts<a class="headerlink" href="#real-and-imaginary-parts" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+<p><img src="_images/math/ea2c55f6792355cd10b735a556ce197a79830246.png" alt="&amp;= \sigma_\infty \left( 1 - \sum_k m_k \frac{1 + (\omega \tau)^c \cos
+\frac{c \pi}{2} - j (\omega \tau)^c \sin \frac{c \pi}{2}}{1 + 2 (\omega
+\tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right)\\
+&amp;= \sigma_\infty \left( 1 - \sum_k m_k \frac{1 + (\omega \tau)^c \cos
+\frac{c \pi}{2}}{1 + 2 (\omega
+\tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right) +
+j \sigma_\infty \sum_k m_k  \frac{(\omega \tau)^c \sin \frac{c \pi}{2}}{1 + 2 (\omega
+\tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}}\\
+\Rightarrow \sigma' &amp;=  \sigma_\infty \left( 1 - \sum_k m_k \frac{1 +
+(\omega \tau)^c \cos \frac{c \pi}{2}}{1 + 2 (\omega \tau)^c \cos \frac{c
+\pi}{2} + (\omega \tau)^{2 c}} \right)\\
+\sigma'' &amp;=     j \sigma_\infty \sum_k m_k  \frac{(\omega \tau)^c \sin
+\frac{c \pi}{2}}{1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega
+\tau)^{2 c}}\\
+m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
+\sigma_0 &amp;= (1 - m) \cdot \sigma_\infty"/></p>
+</div></div>
+<div class="section" id="derivatives">
+<h2>derivatives<a class="headerlink" href="#derivatives" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+<p><img src="_images/math/1096fad8dabd074e7075964f4828b9fe883065fe.png" alt="\frac{\partial \hat{\sigma'}(\omega)}{\partial \sigma_\infty} &amp;= 1 - \sum_k m_k \frac{1 +
+(\omega \tau)^c \cos \frac{c \pi}{2}}{1 + 2 (\omega \tau)^c \cos \frac{c
+\pi}{2} + (\omega \tau)^{2 c}}\\
+\frac{\partial \hat{\sigma'}(\omega)}{\partial m_i} &amp;= -\sigma_\infty \frac{1 +
+(\omega \tau)^c \cos \frac{c \pi}{2}}{1 + 2 (\omega \tau)^c \cos \frac{c
+\pi}{2} + (\omega \tau)^{2 c}}\\
+\frac{\partial \hat{\sigma'}(\omega)}{\partial \tau_k} &amp;=
+\sigma_\infty m_k \left[
+    \frac{c \omega (\omega \tau)^{c - 1} \cos \frac{c \pi}{2}}
+    {1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} -
+    \frac{1 + (\omega \tau)^c \cos \frac{c \pi}{2}}
+    {\left[{1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right]^2} \cdot
+    \frac{2 c \omega (\omega \tau)^{c-1} \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}}{1}
+\right]\\
+\frac{\partial \hat{\sigma'}(\omega)}{\partial c} &amp;=
+\sigma_\infty m_k \left[
+    \frac{\ln(\omega \tau) (\omega \tau)^{c} \sin \frac{c \pi}{2} + (\omega \tau)^c \cos \frac{c \pi}{2} \frac{\pi}{2}}
+    {1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} -
+    \frac{(\omega \tau)^c \sin \frac{c}{\pi}{2}}
+    {\left[{1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right]^2} \right. \cdot\\
+    &amp; \left. \frac{2 \ln (\omega \tau) (\omega \tau)^c \cos \frac{c \pi}{2} - 2 (\omega \tau)^2 \frac{\pi}{2} \sin \frac{c \pi}{2} + 2 \ln(\omega \tau) (\omega \tau)^{2 c}}{1}
+\right]"/></p>
+</div><div class="math">
+<p><img src="_images/math/50a3c25da2ffe4119cdd7a1668f24ace7ab470df.png" alt="\frac{\partial \hat{\sigma}''(\omega)}{\partial \sigma_\infty} &amp;= - \frac{m (\omega
+\tau)^c \sin(\frac{c \pi}{2})}{1 + 2 (\omega \tau)^c \cos(\frac{c \pi}{2}) +
+(\omega \tau)^{2 c}}\\
+\frac{\partial \hat{\sigma''}(\omega)}{\partial m} &amp;= - \sigma_\infty m (\omega
+\tau)^c \frac{sin(\frac{c \pi}{2})}{1 + 2 (\omega \tau)^c \cos(\frac{c
+\pi}{2}) + (\omega \tau)^{2 c}}\\
+\frac{\partial \hat{\sigma''}(\omega)}{\partial \tau} &amp;= \sigma_\infty \frac{-m
+\omega^c c \tau^{c-1} \sin(\frac{c \pi}{2} }{1 + 2 (\omega \tau)^c
+\cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}} +\\
+&amp;\sigma_0 \frac{\left[-m (\omega
+\tau)^c \sin(\frac{c \pi}{2} \right] \cdot \left[ 2 \omega^c c \tau^{c-1}
+\cos(\frac{c \pi}{2}) + 2 c \omega^{2 c} \tau^{2 c - 1}\right]}{\left[1 + 2
+(\omega \tau)^c \cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}\right]^2}\\
+\frac{\partial \hat{\sigma''}(\omega)}{\partial c} &amp;= \sigma_0 \frac{-m
+\sin(\frac{c \pi}{2}) \ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
+\frac{\pi}{2} \cos(\frac{\pi}{2}}{1 + 2 (\omega \tau)^c \cos(\frac{c \pi}{2})
++ (\omega \tau)^{2 c}} +\\
+ &amp;\sigma_0 \frac{\left[-m (\omega \tau)^c \cos(\frac{c
+  \pi}{2}) \right] \cdot \left[ -2 \ln(\omega \tau) (\omega \tau)^c
+  \cos(\frac{c \pi}{2}) + 2 (\omega \tau)^c \frac{\pi}{2} \cos(\frac{c
+  \pi}{2}) \right] + \left[2 \ln(\omega \tau) (\omega \tau)^{2
+  c}\right]}{\left[1 + 2 (\omega \tau)^c \cos(\frac{c \pi}{2}) + (\omega
+  \tau)^{2 c}\right]^2}"/></p>
+</div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="theory.html">Theory of SIP models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="theory_overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory_dd_res.html">Debye decomposition resistivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory_dd_cond.html">Debye decomposition on conductivities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory_cc_res.html">Cole-Cole decomposition resistivities</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Cole-Cole decomposition conductivities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#complex">complex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#real-and-imaginary-parts">real and imaginary parts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#derivatives">derivatives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dd_theory_eps.html">Formulation using the dielectric constant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dd_coverage.html">Coverage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dd_general.html">Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral_parameters.html">Integral Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="theory.html">Theory of SIP models</a><ul>
+      <li>Previous: <a href="theory_cc_res.html" title="previous chapter">Cole-Cole decomposition resistivities</a></li>
+      <li>Next: <a href="dd_theory_eps.html" title="next chapter">Formulation using the dielectric constant</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/theory_cc_cond.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

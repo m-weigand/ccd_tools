@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Starting Models &mdash; Time-lapse Debye decomposition routines 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Time-lapse Debye decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="up" title="Usage and implementation details" href="usage_and_implementation.html" />
+    <link rel="next" title="Profiling and Debugging" href="debugging.html" />
+    <link rel="prev" title="Usage and implementation details" href="usage_and_implementation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="starting-models">
+<h1>Starting Models<a class="headerlink" href="#starting-models" title="Permalink to this headline">¶</a></h1>
+<p>The following methods can be used to determine starting models. A specific
+method can be selected by setting the environment variable
+<strong>DD_STARTING_MODEL</strong> to the corresponding integer number, i.e.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>DD_STARTING_MODEL=3 dd_single.py ...
+</pre></div>
+</div>
+<ul class="simple">
+<li>(<cite>DD_STARTING_MODEL = 1</cite>): Flat starting model</li>
+<li>(<cite>DD_STARTING_MODEL = 2</cite>): [TODO] (Gaussian, center at peak of imaginary part)</li>
+<li>(<cite>DD_STARTING_MODEL = 3</cite>): [TODO] (Frequency decade wise approximation)</li>
+</ul>
+<p>This page describes the implemented starting models</p>
+<div class="section" id="model-1">
+<h2>Model 1<a class="headerlink" href="#model-1" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="model-2">
+<h2>Model 2<a class="headerlink" href="#model-2" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="model-3">
+<h2>Model 3<a class="headerlink" href="#model-3" title="Permalink to this headline">¶</a></h2>
+<p>This starting model heuristic implements the following procedure:</p>
+<ul>
+<li><p class="first">Compute mean values for <img class="math" src="_images/math/6fdbeab957e44528ca6e17c69b3dada9bc291f62.png" alt="\rho''"/> for each data frequency decade.</p>
+</li>
+<li><p class="first">Compute mean log10 relaxation times for each relaxation time decade.</p>
+</li>
+<li><p class="first">Now compute a constant chargeability value for each frequency decade:</p>
+<div class="math">
+<p><img src="_images/math/3cd924051f5f3805385c1e5bfd50e07c38a05db9.png" alt="\rho'' = - \rho_0 \sum_i m_i \frac{\omega \tau_i}{1 + (\omega \tau)^2}\\
+\Rightarrow\\
+\rho'' = - \rho_0 \overline{m} \sum_i \frac{\omega \tau_i}{1 + (\omega \tau_i)^2}\\
+\overline{m} = -\frac{\rho''}{\rho_0} \left[ \sum_i \frac{\omega \tau_i}{1
++ (\omega \tau_i)^2} \right]^{-1}"/></p>
+</div></li>
+<li><p class="first">Use this chargeability value for the relaxation times related to each frequency decade</p>
+</li>
+<li><p class="first">Norm the chargeabilities to 1</p>
+</li>
+<li><p class="first">Sample the <img class="math" src="_images/math/41b3cc5eec0c68ed855ae77c1b5811435092c61e.png" alt="RMS_{Im}"/> values for scaling factors between 0 and 1</p>
+</li>
+<li><p class="first">Choose the value with the lowest rms and take the entries next to it (on the
+scaling factor axis). Then fit a parabola through these three (scale, rms)
+points and determine the minimum of this parabola. Take this minium as the
+final scaling factor. Use 1 as an upper maximum, and a really small value
+above zero as a lower value.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Time-lapse Debye decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Starting Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-1">Model 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-2">Model 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-3">Model 3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#best-practices">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#determining-relaxation-time-ranges">Determining relaxation time ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#creating-synthetic-relaxation-time-distributions">Creating synthetic relaxation time distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#using-the-cole-cole-distribution">Using the Cole-Cole distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="usage_and_implementation.html">Usage and implementation details</a><ul>
+      <li>Previous: <a href="usage_and_implementation.html" title="previous chapter">Usage and implementation details</a></li>
+      <li>Next: <a href="debugging.html" title="next chapter">Profiling and Debugging</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2016, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/starting_models.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
