@@ -26,7 +26,7 @@ Parts of this code were described in two open-access publications:
 
 ## Documentation
 
- * Documentation is located in docs/
+ * [Online version of the docs](https://m-weigand.github.io/ccd_tools/doc_ccd/introduction.html)
  * The sphinx-generated documentation is located in docs/doc
 
 ## Roadmap
@@ -64,12 +64,12 @@ The current version is 0.8.
 
 For requirements to use the ccd tools, please refer to the
 [requirements.txt](requirements.txt). When pip is used, all requirements can be
-installed using: ::
+installed using:
 
 	pip install -r requirements.txt
 
 Additional requirements to build the documentation can be found in the file
-[requirements_doc.txt](requirements_doc.txt), and can be installed using: ::
+[requirements_doc.txt](requirements_doc.txt), and can be installed using:
 
 	pip install -r requirements_doc.txt
 
