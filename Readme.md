@@ -1,8 +1,7 @@
 Cole-Cole decomposition routines
 ================================
 
-Introduction
-------------
+## Introduction
 
 This package contains an implementation of the Cole-Cole decomposition (CCD)
 scheme, which is used in near-surface geophysical applications to describe
@@ -22,8 +21,7 @@ Parts of this code were described in two open-access publications:
 [2. Weigand and Kemna, 2016, Geophysical Journal International](http://gji.oxfordjournals.org/content/205/3/1414)
 
 
-Licence
--------
+## Licence
 
 This program is licenced under the GPL3 or later licence. See LICENCE.txt and
 headers of individual files for more information.
@@ -31,8 +29,7 @@ headers of individual files for more information.
 Some third-party packages used for the homepage (gh-pages branch) have
 individual licences.
 
-Requirements
-------------
+## Requirements
 
 For requirements to use the ccd tools, please refer to the
 [requirements.txt](requirements.txt). When pip is used, all requirements can be
@@ -80,8 +77,7 @@ Under Windows, the program was tested using the 'pythonxy' distribution
 (https://code.google.com/p/pythonxy/).
 
 
-Installation
-------------
+## Installation
 
 Stable versions are released to pipy and can be installed using: ::
 
@@ -110,7 +106,7 @@ To build the documentation ::
     cd docs/doc
     make html
 
-Setuptools Developer Guide:
+Setuptools developer guide:
 
 https://pythonhosted.org/setuptools/setuptools.html
 
@@ -120,16 +116,16 @@ Documentation
  * Documentation is located in docs/
  * The sphinx-generated documentation is located in docs/doc
 
-Roadmap
--------
+## Roadmap
 
 The following functionality is planned to be implemented in the near future
 (Q1-Q3 2017). After that, new feature will probably only be implemented when
 required. For additional todo-items, please refer to the issues of this project
 and to the file [TODO](TODO).
 
-0.8.1
-^^^^^
+The current version is 0.8.
+
+### 0.8.1
 
 * first version under the new name 'Cole-Cole decomposition tools' (CCD)
 * first (proper) version uploaded to pypi
@@ -137,19 +133,14 @@ and to the file [TODO](TODO).
 * first version with a DOI (via Zenoodo)
 * initial homepage with online-documentation
 
-0.9
-^^^
+### 0.9
 
 * improve testing framework for **dd_time.py**
 * implement Cole-Cole decomposition (c less than 1) also for conductivity
   formulation
 
-1.0
-^^^
+### 1.0
 
 * proof-of-concept web interface
 * implement the addition of a high-frequency EM-Cole-Cole term, decoupled from
   the other polarization terms
-
-
-
