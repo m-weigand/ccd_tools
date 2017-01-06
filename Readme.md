@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/m-weigand/ccd_tools.svg?branch=master)](https://travis-ci.org/m-weigand/ccd_tools)
+
 Cole-Cole decomposition routines
 ================================
 
