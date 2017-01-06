@@ -1,6 +1,8 @@
 language: python
 python:
   - "3.4"
+cache:
+  - pip
 before_install:
     - sudo apt-get update -q
     - sudo apt-get build-dep python-numpy python-matplotlib python-scipy -y
