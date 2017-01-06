@@ -14,6 +14,9 @@ In the CCD, spectral induced polarization (SIP) signatures are described by a
 superposition of elementary polarization terms, which are suitably distributed
 to cover at least the frequency range spanned by the measurement data.
 
+For more information, please refer to the homepage of the project:
+[https://m-weigand.github.io/ccd_tools](https://m-weigand.github.io/ccd_tools)
+
 ![example output](docs/example_for_readme/results_3/plot_spec_000_iteration0004.png)
 
 Parts of this code were described in two open-access publications:
@@ -24,7 +27,7 @@ Parts of this code were described in two open-access publications:
 
 ## Versions
 
-[Changelog.md](Changelog.md)
+Please refer to the [Changelog.md](Changelog.md)
 
 ## Documentation
 
@@ -44,8 +47,8 @@ The current version is 0.8.
 
 * first version under the new name 'Cole-Cole decomposition tools' (CCD)
 * first (proper) version uploaded to pypi
-* first Python 3 version
-* first version with a DOI (via Zenoodo)
+* first (proper) Python 3 version
+* first version with a DOI (via Zenodo)
 * initial homepage with online-documentation
 
 ### 0.9
