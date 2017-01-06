@@ -17,15 +17,11 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import re
 import os
 from optparse import OptionParser
 import subprocess
-import shutil
-import sys
+import lib_ccd_test.run_test as ccd_test
 
-#
-all_tests_directory = 'test_results'
 
 # dict with the available binaries, and the corresponding data files
 available_binaries = {
@@ -91,33 +87,6 @@ def handle_cmd_options():
     return options, args
 
 
-def get_test_dir_name(directory, last=False):
-    """
-    Return the name of a test directory format %.2i
-
-    Parameters
-    ----------
-    directory: directory containing all test directories
-    last: Return last existing directory (True) or next free directory (False)
-    """
-
-    # get all directories starting with a number
-    regex = re.compile('^[0-9][0-9]$')
-
-    largest_number = 0
-    for item in os.listdir(directory):
-        if(os.path.isdir(directory + os.sep + item)):
-            result = regex.match(item)
-            if(result is not None):
-                largest_number = max((largest_number, int(item)))
-
-    if(last is False):
-        largest_number += 1
-    new_test_dir = '{0:02}'.format(largest_number)
-    print('New directory: {0}'.format(new_test_dir))
-    return directory + os.sep + new_test_dir
-
-
 def write_pc_infos(fid):
     # get git commit and branch
     git_commit = subprocess.check_output('git log -1 | grep commit',
@@ -149,11 +118,8 @@ def initialize_new_test_dir(options):
         if not os.path.isfile(filename):
             raise Exception('File not found: {0}'.format(filename))
 
-    if(not os.path.isdir(all_tests_directory)):
-        os.makedirs(all_tests_directory)
-
-    # test_dir = get_test_dir_name(all_tests_directory, last=False)
-    # os.makedirs(test_dir)
+    if not os.path.isdir(ccd_test.all_tests_directory):
+        os.makedirs(ccd_test.all_tests_directory)
 
     # write git status and default line
     test_cfg_file = 'test.cfg'
@@ -178,28 +144,6 @@ def initialize_new_test_dir(options):
     print('dd_test.py --record')
 
 
-def get_cmd(testcfg_file):
-    available_binaries = ('dd_single.py', 'dd_time.py')
-    regexes = [re.compile(x) for x in available_binaries]
-
-    # read test.cfg file, fourth line
-    with open(testcfg_file, 'r') as fid:
-        cmd = []
-        add_to_cmd = False
-        # find initial call to dd_single or dd_time
-        for line in fid.readlines():
-            # if the binaries was already found
-            if add_to_cmd:
-                cmd.append(line.strip())
-            # look for the binaries
-            if not line.startswith('#'):
-                for regex in regexes:
-                    if re.search(regex, line) is not None:
-                        cmd.append(line.strip())
-                        add_to_cmd = True
-    return cmd
-
-
 def record_test(test_dir):
     """
     Run a test
@@ -208,7 +152,7 @@ def record_test(test_dir):
     if not os.path.isdir(test_dir):
         os.makedirs(test_dir)
 
-    cmd = get_cmd('test.cfg')
+    cmd = ccd_test.get_cmd('test.cfg')
     cmd += [' -f ../../frequencies.dat ',
             ' --data_file ../../data.dat',
             '--output_format ascii',
@@ -222,52 +166,6 @@ def record_test(test_dir):
     os.chdir(pwd)
 
 
-def run_test(test_dir):
-    """
-    Execute the actual test
-
-    # call dd with stored parameters
-    # execute test snippet
-    # -> the test snippet should yield errors usable by nosetests...
-    """
-    print('Run test')
-    if(os.path.isdir('active_run')):
-        shutil.rmtree('active_run')
-
-    cmd = get_cmd('test.cfg')
-    cmd += ['-f frequencies.dat ',
-            '--data_file data.dat',
-            '-o active_run',
-            '--output_format ascii',
-            ]
-    cmd = ' '.join(cmd)
-
-    # write to bash file for debug purposes
-    with open('active_run.sh', 'w') as fid:
-        fid.write(cmd)
-
-    # subprocess.call(test_cmd, shell=True, stdin=PIPE)
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE)
-    p.wait()
-
-    sys.path.append(os.getcwd())
-    # run the test
-    import test_func
-    test_func.test_regressions(old_result=test_dir, new_result='active_run')
-
-
-def get_test_dir(args, last=False):
-    if(len(args) == 0):
-        test_dir = get_test_dir_name(all_tests_directory, last=last)
-    else:
-        print('Using user defined test directory')
-        test_dir = all_tests_directory + os.sep + args[0]
-        if not os.path.isdir(test_dir):
-            raise Exception(
-                'User supplied directory not found: {0}'.format(test_dir))
-    return test_dir
-
 if __name__ == '__main__':
     options, args = handle_cmd_options()
 
@@ -278,13 +176,13 @@ if __name__ == '__main__':
     if(options.record is True):
         # run checks
         if(not os.path.isfile('test.cfg') or
-           not os.path.isdir(all_tests_directory)):
+           not os.path.isdir(ccd_test.all_tests_directory)):
             raise Exception(
-                'Test directory not initialised! Use the --init option first.')
-        test_dir = get_test_dir(args)
+                'Test directory not initialized! Use the --init option first.')
+        test_dir = ccd_test.get_test_dir(args)
         record_test(test_dir)
 
-    if(options.test is True):
-        test_dir = get_test_dir(args, last=True)
+    if options.test is True:
+        test_dir = ccd_test.get_test_dir(args, last=True)
         print('Testing ', test_dir)
-        run_test(test_dir)
+        ccd_test.run_test(test_dir)

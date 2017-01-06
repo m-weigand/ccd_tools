@@ -44,6 +44,7 @@ if __name__ == '__main__':
               'lib_dd.decomposition',
               'lib_dd.io',
               'lib_dd.config',
+              'lib_ccd_test',
           ],
           scripts=[
               'src/dd_single/dd_single.py',
