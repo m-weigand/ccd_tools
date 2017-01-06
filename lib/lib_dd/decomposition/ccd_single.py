@@ -6,6 +6,7 @@ import ccd_single_stateless as decomp_single_sl
 from multiprocessing import Pool
 import lib_dd.interface as lDDi
 import lib_dd.config.cfg_single as cfg_single
+import lib_dd.io.io_general as iog
 
 
 class ccd_single(object):
@@ -19,6 +20,7 @@ class ccd_single(object):
 
         # this will be filled by self.get_data_dd_single
         self.data = None
+        self.results = None
 
     def fit_data(self):
         """This is the central fit function, which prepares the data, fits each
@@ -85,3 +87,29 @@ class ccd_single(object):
 
         self.data = data
         return data
+
+    def save_to_directory(self, directory=None):
+        """Save the fit results to a directory. The output directory can either
+        be set in the initial configuration object, or directly via the
+        directory parameter
+        """
+        if self.data is None or self.results is None:
+            print('No fit results present!')
+            return
+
+        if directory is not None:
+            outdir = directory
+        else:
+            outdir = os.path.abspath(self.config['output_dir'])
+
+        if not os.path.isdir(outdir):
+            os.makedirs(outdir)
+
+        pwd = os.getcwd()
+        os.chdir(outdir)
+
+        iog.save_fit_results(
+            self.data,
+            self.results
+        )
+        os.chdir(pwd)
