@@ -65,9 +65,42 @@ The current version is 0.8.
 * implement the addition of a high-frequency EM-Cole-Cole term, decoupled from
   the other polarization terms
 
-## Requirements
+## Installation
 
-For requirements to use the ccd tools, please refer to the
+Stable versions are released to pipy and can be installed using:
+
+	pip install ccd_tools
+
+Install the source package using setuptools:
+
+    python setup.py build
+    python setup.py install
+
+The package can also be installed to a user-defined directory:
+
+    export PYTHONUSERBASE=$HOME/inst/pip_installs
+    export PYTHONPATH=$HOME/inst/pip_installs/lib/python3.4/\
+        site-packages/:$PYTHONPATH
+    python setup.py install --user
+    export PATH=$HOME/inst/pip_installs/bin:$PATH
+
+
+For developers:
+
+    python seutp.py develop --user
+
+To build the documentation:
+
+    cd docs/doc
+    make html
+
+setuptools developer guide:
+
+https://pythonhosted.org/setuptools/setuptools.html
+
+## Dependencies
+
+Dependencies for the ccd tools are listed in the file
 [requirements.txt](requirements.txt). When pip is used, all requirements can be
 installed using:
 
@@ -79,7 +112,7 @@ Additional requirements to build the documentation can be found in the file
 	pip install -r requirements_doc.txt
 
 On Debian Linux systems, the following Python packages are required to run the
-Cole-Cole decomposition routines: ::
+Cole-Cole decomposition routines:
 
 	numpy
 	scipy
@@ -92,7 +125,7 @@ In order to build the documentation, the additional packages are required: ::
 	sphinx
 
 Under Debian-related Linux systems, these packages can be installed using the
-commands: ::
+commands:
 
     sudo apt-get install texlive-latex-base texlive-latex-extra\
         texlive-fonts-recommended texlive-fonts-extra dvipng
@@ -100,7 +133,7 @@ commands: ::
         python-setuptools python-nose python-tornado
 
 In order to build the documentation, the following sphinx-related packages must
-be installed: ::
+be installed:
 
     sudo apt-get install python-sphinx
     sudo apt-get install python-sphinx python-sphinxcontrib.blockdiag
@@ -112,40 +145,6 @@ geccoinv and sip_models have to be installed according to their own documentatio
 Under Windows, the program was tested using the 'pythonxy' distribution
 (https://code.google.com/p/pythonxy/).
 
-
-## Installation
-
-Stable versions are released to pipy and can be installed using: ::
-
-	pip install ccd_tools
-
-Install the source package using setuptools: ::
-
-    python setup.py build
-    python setup.py install
-
-The package can also be installed to a user-defined directory: ::
-
-    export PYTHONUSERBASE=$HOME/inst/pip_installs
-    export PYTHONPATH=$HOME/inst/pip_installs/lib/python3.4/\
-        site-packages/:$PYTHONPATH
-    python setup.py install --user
-    export PATH=$HOME/inst/pip_installs/bin:$PATH
-
-
-For developers: ::
-
-    python seutp.py develop --user
-
-To build the documentation ::
-
-    cd docs/doc
-    make html
-
-Setuptools developer guide:
-
-https://pythonhosted.org/setuptools/setuptools.html
-
 ## Licence
 
 This program is licenced under the GPL3 or later licence. See LICENCE.txt and
@@ -153,4 +152,3 @@ headers of individual files for more information.
 
 Some third-party packages used for the homepage (gh-pages branch) have
 individual licences.
-
