@@ -41,15 +41,7 @@ The following functionality is planned to be implemented in the near future
 required. For additional todo-items, please refer to the issues of this project
 and to the file [TODO](TODO).
 
-The current version is 0.8.
-
-### 0.8.1
-
-* first version under the new name 'Cole-Cole decomposition tools' (CCD)
-* first (proper) version uploaded to pypi
-* first (proper) Python 3 version
-* first version with a DOI (via Zenodo)
-* initial homepage with online-documentation
+The current version is 0.8.1
 
 ### 0.9
 
