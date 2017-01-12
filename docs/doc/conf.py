@@ -198,7 +198,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'dd_interfaces_'
+htmlhelp_basename = 'ccd_tools_'
 
 
 # -- Options for LaTeX output -------------------------------------------------
@@ -217,7 +217,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'DebyeDecomposition.tex', u'Debye Decomposition Documentation',
+  ('index', 'DebyeDecomposition.tex', u'Cole-Cole Decomposition Documentation',
    u'Maximilian Weigand', 'manual'),
 ]
 
