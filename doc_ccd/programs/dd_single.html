@@ -63,46 +63,46 @@ Usage: dd_single.py [options]
 
 Options:
   -h, --help            show this help message and exit
-  --fmin=FLOAT          Ignore frequencies below this value (default: None)
-  --tmp                 Create the output in a temporary directory and later
-                        move it later to its destination (default: False)
-  --lambda=INT          Use a fixed lambda (integer) (default: None)
-  -v, --version         Print version information (default: False)
-  --fmax=FLOAT          Ignore frequencies above this value (default: None)
-  -o DIR, --output=DIR  Output directory (default: results)
   --max_it=INT          Maximum number of iterations (default: 20)
-  --ignore=STRING       Frequency ids to ignore, example:12,13,14. Starts with
-                        index 0. (default: None)
-  --norm=FLOAT          Normalize lowest frequency real part to this value
-                        (default: None)
-  --silent              Do not plot any logs to STDOUT (default: False)
-  --data_format=FORMAT  Input data format, possible values are: rmag_rpha,
-                        lnrmag_rpha, log10rmag_rpha, rmag_rpha,  rre_rim
-                        rre_rmim, cmag_cpha, cre_cim, cre_cmim. &quot;r&quot; stands for
-                        resistance/resistivity, and &quot;c&quot; stands for
-                        conductance/conductivity (default: rmag_rpha)
   -c INT, --nr_cores=INT
                         Numer of CPU cores to use (default: 1)
-  --plot_reg_strength   Plot regularization strengths of final iterations
-                        (default: False)
-  -i, --plot_its        Plot spectra of each iteration (default: False)
-  -d FILE, --data_file=FILE
-                        data file (default: data.dat)
-  -n INT, --nr_terms=INT
-                        Number of polarization terms per frequency decade
-                        (default: 20)
+  --data_weighting=SCHEME
+                        Data weighting scheme to use. (default: re_vs_im)
+  --lambda=INT          Use a fixed lambda (integer) (default: None)
   --output_format=STRING
                         Output format(ascii| ascii_audit) (default:
                         ascii_audit)
-  --data_weighting=SCHEME
-                        Data weighting scheme to use. (default: re_vs_im)
-  -f FILE, --frequency_file=FILE
-                        Frequency file (default: frequencies.dat)
+  --silent              Do not plot any logs to STDOUT (default: False)
+  -d FILE, --data_file=FILE
+                        data file (default: data.dat)
+  --tmp                 Create the output in a temporary directory and later
+                        move it later to its destination (default: False)
   --plot_lcurve=INT     Plot the l-curve for a selected iteration. WARNING:
                         This only plots the l-curve and does not use it in the
                         inversion process. Use -1 for last iteration.
                         (default: None)
   -p, --plot            Plot final iterations (default: False)
+  --plot_reg_strength   Plot regularization strengths of final iterations
+                        (default: False)
+  --data_format=FORMAT  Input data format, possible values are: rmag_rpha,
+                        lnrmag_rpha, log10rmag_rpha, rmag_rpha,  rre_rim
+                        rre_rmim, cmag_cpha, cre_cim, cre_cmim. &quot;r&quot; stands for
+                        resistance/resistivity, and &quot;c&quot; stands for
+                        conductance/conductivity (default: rmag_rpha)
+  -f FILE, --frequency_file=FILE
+                        Frequency file (default: frequencies.dat)
+  --fmin=FLOAT          Ignore frequencies below this value (default: None)
+  -n INT, --nr_terms=INT
+                        Number of polarization terms per frequency decade
+                        (default: 20)
+  -v, --version         Print version information (default: False)
+  --norm=FLOAT          Normalize lowest frequency real part to this value
+                        (default: None)
+  --ignore=STRING       Frequency ids to ignore, example:12,13,14. Starts with
+                        index 0. (default: None)
+  -i, --plot_its        Plot spectra of each iteration (default: False)
+  -o DIR, --output=DIR  Output directory (default: results)
+  --fmax=FLOAT          Ignore frequencies above this value (default: None)
   --tausel=STRATEGY     Tau selection strategy: data: Use data frequency
                         limits for tau selection data_ext (default): Extend
                         tau ranges by one frequency decade compared to the

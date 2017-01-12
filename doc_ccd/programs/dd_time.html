@@ -59,66 +59,66 @@
 
 Options:
   -h, --help            show this help message and exit
-  -i, --plot_its        Plot spectra of each iteration (default: False)
-  --times=FILE          Time index file (default: times.dat)
-  --fmin=FLOAT          Ignore frequencies below this value (default: None)
-  --tmp                 Create the output in a temporary directory and later
-                        move it later to its destination (default: False)
-  --tw_rho0             Use time-weighting (only in combination with
-                        --trho0_first_order) (default: False)
+  -o DIR, --output=DIR  Output directory (default: results)
   --tmi_first_order     Use first order smoothing for m_i (instead of second
                         order smoothing) (default: False)
-  --trho0_first_order   Use first order smoothing for rho_0 (instead of second
-                        order smoothing) (default: False)
-  -p, --plot            Plot final iterations (default: False)
-  --max_it=INT          Maximum number of iterations (default: 20)
-  --plot_reg_strength   Plot regularization strengths of final iterations
-                        (default: False)
-  -v, --version         Print version information (default: False)
-  -n INT, --nr_terms=INT
-                        Number of polarization terms per frequency decade
-                        (default: 20)
+  --tmp                 Create the output in a temporary directory and later
+                        move it later to its destination (default: False)
   --trho0_lambda=FLOAT  Fixed time regularization lambda for rho0 (default: 0)
-  --f_lambda=FLOAT      Use a fixed lambda for the tau regularization
-                        (default: None)
-  --tw_mi               Use time-weighting (only in combination with
-                        --tmi_first_order) (default: False)
-  --tm_i_lambda=FLOAT   Fixed time regularization lambda for chargeabilities
-                        m_i (default: 0)
-  --plot_lcurve=INT     Plot the l-curve for a selected iteration. WARNING:
-                        This only plots the l-curve and does not use it in the
-                        inversion process. Use -1 for last iteration.
-                        (default: None)
-  --data_format=FORMAT  Input data format, possible values are: rmag_rpha,
-                        lnrmag_rpha, log10rmag_rpha, rmag_rpha,  rre_rim
-                        rre_rmim, cmag_cpha, cre_cim, cre_cmim. &quot;r&quot; stands for
-                        resistance/resistivity, and &quot;c&quot; stands for
-                        conductance/conductivity (default: rmag_rpha)
-  --lam0=FLOAT          Initial lambda for f-regularization (default: None)
+  --silent              Do not plot any logs to STDOUT (default: False)
   --tausel=STRATEGY     Tau selection strategy: data: Use data frequency
                         limits for tau selection data_ext (default): Extend
                         tau ranges by one frequency decade compared to the
                         &#39;data&#39; strategy. Factors can be set for the low and
                         high frequency by separating with a &#39;,&#39;: LEFT,RIGHT,
                         e.g. &#39;10,100&#39; (default: data_ext)
-  --norm=FLOAT          Normalize lowest frequency real part to this value
-                        (default: None)
-  --ignore=STRING       Frequency ids to ignore, example:12,13,14. Starts with
-                        index 0. (default: None)
-  --ind_lams            Use individual lambdas for f-regularization (default:
-                        False)
-  -f FILE, --frequency_file=FILE
-                        Frequency file (default: frequencies.dat)
-  -d FILE, --data_file=FILE
-                        data file (default: data.dat)
   --data_weighting=SCHEME
                         Data weighting scheme to use. (default: re_vs_im)
-  --fmax=FLOAT          Ignore frequencies above this value (default: None)
+  --times=FILE          Time index file (default: times.dat)
+  --f_lambda=FLOAT      Use a fixed lambda for the tau regularization
+                        (default: None)
+  --max_it=INT          Maximum number of iterations (default: 20)
+  --tm_i_lambda=FLOAT   Fixed time regularization lambda for chargeabilities
+                        m_i (default: 0)
+  -i, --plot_its        Plot spectra of each iteration (default: False)
+  --data_format=FORMAT  Input data format, possible values are: rmag_rpha,
+                        lnrmag_rpha, log10rmag_rpha, rmag_rpha,  rre_rim
+                        rre_rmim, cmag_cpha, cre_cim, cre_cmim. &quot;r&quot; stands for
+                        resistance/resistivity, and &quot;c&quot; stands for
+                        conductance/conductivity (default: rmag_rpha)
+  -f FILE, --frequency_file=FILE
+                        Frequency file (default: frequencies.dat)
+  --plot_lcurve=INT     Plot the l-curve for a selected iteration. WARNING:
+                        This only plots the l-curve and does not use it in the
+                        inversion process. Use -1 for last iteration.
+                        (default: None)
   --output_format=STRING
                         Output format(ascii| ascii_audit) (default:
                         ascii_audit)
-  -o DIR, --output=DIR  Output directory (default: results)
-  --silent              Do not plot any logs to STDOUT (default: False)
+  -v, --version         Print version information (default: False)
+  --lam0=FLOAT          Initial lambda for f-regularization (default: None)
+  --plot_reg_strength   Plot regularization strengths of final iterations
+                        (default: False)
+  --norm=FLOAT          Normalize lowest frequency real part to this value
+                        (default: None)
+  -n INT, --nr_terms=INT
+                        Number of polarization terms per frequency decade
+                        (default: 20)
+  -p, --plot            Plot final iterations (default: False)
+  --fmax=FLOAT          Ignore frequencies above this value (default: None)
+  --ind_lams            Use individual lambdas for f-regularization (default:
+                        False)
+  --tw_mi               Use time-weighting (only in combination with
+                        --tmi_first_order) (default: False)
+  --fmin=FLOAT          Ignore frequencies below this value (default: None)
+  -d FILE, --data_file=FILE
+                        data file (default: data.dat)
+  --trho0_first_order   Use first order smoothing for rho_0 (instead of second
+                        order smoothing) (default: False)
+  --tw_rho0             Use time-weighting (only in combination with
+                        --trho0_first_order) (default: False)
+  --ignore=STRING       Frequency ids to ignore, example:12,13,14. Starts with
+                        index 0. (default: None)
 </pre></div>
 </div>
 </div>

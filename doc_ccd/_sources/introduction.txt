@@ -4,12 +4,12 @@ Introduction
 
 The Cole-Cole decomposition tools provide a set of Python programs to fit
 electrical complex resistivity spectra (or Spectral Induced Polarisation, SIP,
-spectra) using a Cole-Cole decomposition scheme (see section :doc:`theory` for
-an theoretical overview of the implemented methods). This also includes the
-popular Debye decomposition scheme. In addition to the independent
-decomposition of one or more spectra, a smoothing regularization can be applied
-between multiple spectra for cases of time-lapse data where only smooth changes
-between subsequent spectra are expected.
+spectra/signatures) using a Cole-Cole decomposition scheme (see section
+:doc:`theory` for an theoretical overview of the implemented methods). This
+also includes the popular Debye decomposition scheme. In addition to the
+independent decomposition of one or more spectra, a smoothing regularization
+can be applied between multiple spectra for cases of time-lapse data where only
+smooth changes between subsequent measurements in a time series are expected.
 
 The installation for Windows and Linux is described in the section
 :doc:`installation`, and the section :doc:`getting_started` provides first
@@ -37,30 +37,27 @@ Each front-end is accompanied by a post processing tool (*ddps.py*, *ddpt.py*)
 which allows various analysis and postprocessing steps to be applied on
 inversion results. This includes filtering and plotting routines.
 
-Within this documentation, the term "Cole-Cole decomposition tools" referes to
-the ready-to-use distribution of the decomposition tools. This distribution is
-composed of two python subprojects: *geccoinv* and *dd_interfaces*. *geccoinv*
-contains the multi-dimensional inversion framework used for the decomposition
-process, while *dd_interfaces* includes the forward formulation of the
-Decomposition process, and the frontends used to apply the implemented methods.
-For end-users, it is always recommended to use the "debye decomposition tools",
-if in doubt.
+This package depends on two additional python packages, *sip_models* and
+*geccoinv*, developed in separate git repositories. They are, however, integral
+components of the Cole-Cole decomposition routines.
+
+Separate repositories are maintained for *sip_models*, *geccoinv* and
+*ccd_tools*:
+
+* https://github.com/m-weigand/sip_models
+* https://github.com/m-weigand/geccoinv
+* https://github.com/m-weigand/ccd_tools
 
 Feedback, bug reports, and general advice is always welcome. Please use the
 issue tracker on the github pages for communication
 (https://github.com/m-weigand/ccd_tools/).  Before you report a bug, make sure
-to search the existing bugs (issues) for a relevant item.  Also make sure to
-include all necessary information to reproduce the bug. A small example,
-including data set and batch file to trigger the bug, are always helpful!
+to search the existing bugs (issues) for relevant items. Also, make sure to
+include all necessary information to reproduce reported bugs. A small example,
+including data set and batch files to trigger the bug, is always helpful!
 
-Separate repositories are maintained for *geccoing* and *ccd_tools* (only
-relevant if you plan on changing the code):
 
-* https://github.com/m-weigand/ccd_tools
-* https://github.com/m-weigand/geccoinv
-
-The Debye decomposition tools (including the components "DD_Interfaces" and
-"geccoinv") are  licenced under the GPL 3 or later
+The Cole-Cole decomposition tools (including the packages "sip_models" and
+"geccoinv") are licenced under the GPL 3 or later
 (https://www.gnu.org/licenses/licenses.html#GPL).
 
 .. note::
