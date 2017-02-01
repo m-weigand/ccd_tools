@@ -9,7 +9,7 @@ from setuptools import setup
 # to create a windows installer
 
 version_short = '0.8'
-version_long = '0.8.1'
+version_long = '0.8.2'
 # if we are in a git directory, use the last git commit as the version
 
 extra = {}

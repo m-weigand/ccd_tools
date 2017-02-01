@@ -15,3 +15,7 @@
 * first (proper) Python 3 version
 * first version with a DOI (via Zenodo)
 * initial homepage with online-documentation
+
+## 0.8.2
+
+* set starting model heuristic number 3 as default
