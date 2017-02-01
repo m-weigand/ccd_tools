@@ -21,15 +21,17 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 # from memory_profiler import *
 import logging
-logging.basicConfig(level=logging.INFO)
 import os
 import shutil
-from NDimInv.plot_helper import *
-import lib_dd.io.io_general as iog
+
 import lib_dd.config.cfg_single as cfg_single
 import lib_dd.interface as lDDi
+import lib_dd.io.io_general as iog
 # import lib_dd.plot as lDDp
 from lib_dd.decomposition.ccd_single import ccd_single
+from NDimInv.plot_helper import *
+
+logging.basicConfig(level=logging.INFO)
 
 
 # @profile
