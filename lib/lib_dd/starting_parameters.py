@@ -91,11 +91,8 @@ class starting_parameters(object):
         re = spectrum[:, 0]
         mim = spectrum[:, 1]
 
-        if('DD_STARTING_MODEL' in os.environ):
-            starting_model = os.environ['DD_STARTING_MODEL']
-            starting_model = int(starting_model)
-        else:
-            starting_model = 1
+        # the starting model can be set via the environment variable
+        starting_model = int(os.environ('DD_STARTING_MODEL', 3))
 
         if(starting_model == 1):
             # find good flat starting paramaters
