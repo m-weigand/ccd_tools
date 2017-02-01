@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Copyright 2014,2015 Maximilian Weigand
+Copyright 2014-2017 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -177,7 +177,7 @@ def load_frequencies_and_data(options):
         raw_data = np.hstack((part1, part2))
 
     # we always work with the native model data format
-    if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+    if int(os.environ.get('DD_COND', 0)) == 1:
         target_format = "cre_cim"
     else:
         target_format = "rre_rim"
@@ -268,14 +268,14 @@ def prepare_stat_values(raw_values, key, norm_factors):
     if(key == 'rho0' and norm_factors is not None):
         # rho0 is log10
         # renormalize
-        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+        if int(os.environ.get('DD_COND', 0)) == 1:
             values += np.log10(norm_factors).squeeze()
         else:
             values -= np.log10(norm_factors).squeeze()
 
     if(key == 'm_tot_n' and norm_factors is not None):
         # renormalize
-        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+        if int(os.environ.get('DD_COND', 0)) == 1:
             values -= np.log10(norm_factors).squeeze()
         else:
             values += np.log10(norm_factors).squeeze()
