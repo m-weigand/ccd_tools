@@ -89,18 +89,20 @@ def handle_cmd_options():
 
 def write_pc_infos(fid):
     # get git commit and branch
-    git_commit = subprocess.check_output('git log -1 | grep commit',
-                                         shell=True)
+    git_commit = subprocess.check_output(
+        'git log -1 | grep commit',
+        shell=True
+    )
     git_branch = subprocess.check_output('git branch | grep "\*"', shell=True)
     uname = subprocess.check_output('uname -a', shell=True)
     cpu = subprocess.check_output(
         'cat /proc/cpuinfo  | grep "model name" | head -1', shell=True)
     hostname = subprocess.check_output('hostname', shell=True)
-    fid.write(git_commit)
-    fid.write(git_branch)
-    fid.write(uname)
-    fid.write(cpu)
-    fid.write(hostname)
+    fid.write(git_commit.decode('utf-8'))
+    fid.write(git_branch.decode('utf-8'))
+    fid.write(uname.decode('utf-8'))
+    fid.write(cpu.decode('utf-8'))
+    fid.write(hostname.decode('utf-8'))
 
 
 def _get_data_files_for_binary(options):
