@@ -20,19 +20,13 @@ def _get_version_numbers():
     """Return a string containing the version numbers of geccoinv and
     dd_interface. The string is meant to be human readable.
     """
-    try:
-        geccoinv_version = pkg_resources.require('geccoinv')[0].version
-    except pkg_resources.DistributionNotFound:
-        geccoinv_version = pkg_resources.require('dd-tools')[0].version
+    sip_models_version = pkg_resources.require('sip_models')[0].version
+    geccoinv_version = pkg_resources.require('geccoinv')[0].version
+    ccd_tools_version = pkg_resources.require('ccd_tools')[0].version
 
-    try:
-        ccd_tools_version = pkg_resources.require('ccd_tools')[0].version
-    except pkg_resources.DistributionNotFound:
-        ccd_tools_version = pkg_resources.require('dd-tools')[0].version
-
-    versions = ''.join(('geccoinv version: ',
-                        geccoinv_version,
-                        '\n',
-                        'ccd_tools version: ',
-                        ccd_tools_version))
+    versions = ''.join((
+        'sip_models version: ', sip_models_version, '\n',
+        'geccoinv version: ', geccoinv_version, '\n',
+        'ccd_tools version: ', ccd_tools_version, '\n'
+    ))
     return versions
