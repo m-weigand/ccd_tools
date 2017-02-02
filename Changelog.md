@@ -19,3 +19,7 @@
 ## 0.8.2
 
 * set starting model heuristic number 3 as default
+
+## 0.8.3
+
+* fix tests
