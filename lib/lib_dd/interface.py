@@ -273,6 +273,11 @@ def prepare_stat_values(raw_values, key, norm_factors):
         else:
             values -= np.log10(norm_factors).squeeze()
 
+    if(key == 'sigma0' and norm_factors is not None):
+        # sigma0 is log10
+        # renormalize
+        values -= np.log10(norm_factors).squeeze()
+
     if(key == 'm_tot_n' and norm_factors is not None):
         # renormalize
         if int(os.environ.get('DD_COND', 0)) == 1:
@@ -298,7 +303,7 @@ def save_rms_values(rms_list, rms_names):
         if len(names) != rms_all.shape[0]:
             names = [
                 names[0] + '{0}'.format(x) for x in
-                xrange(0, rms_all.shape[0])
+                range(0, rms_all.shape[0])
             ]
         for name, rms in zip(names, rms_all):
             filename = name + key_type + '.dat'
