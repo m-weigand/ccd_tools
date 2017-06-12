@@ -165,8 +165,8 @@ def tau_x(pars, tau, s):
         items = os.environ['DD_TAU_X'].split(';')
         for x in items:
             tau_x, f_x, index = _tau_x(float(x), pars, tau, s)
-            results['tau_x_{0}'.format(float(x)*100)] = tau_x
-            results['f_x_{0}'.format(float(x)*100)] = f_x
+            results['tau_x_{0}'.format(float(x) * 100)] = tau_x
+            results['f_x_{0}'.format(float(x) * 100)] = f_x
     return results
 
 
@@ -203,8 +203,8 @@ def _get_peaks(pars, s):
 
     Parameters
     ----------
-    pars: parameter values corresponding to the rel. times in s (+ rho0 on first
-          index)
+    pars: parameter values corresponding to the rel. times in s (+ rho0 on
+          first index)
     s : log10 relaxation times
 
     Returns
