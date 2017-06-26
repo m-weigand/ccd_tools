@@ -71,6 +71,13 @@ dd_stats['rho0'] = {'filename': 'rho0_results.dat',
                     'reverse': False,
                     'label': r'$\rho_0~[\Omega m]$'
                     }
+dd_stats['sigma0'] = {
+    'filename': 'sigma0_results.dat',
+    'apply_filter': False,
+    'scale': 'linear',
+    'reverse': False,
+    'label': r'$\sigma_0~[S/m]$'
+}
 dd_stats['m_tot_n'] = {'filename': 'm_tot_n_results.dat',
                        'apply_filter': False,
                        'scale': 'linear',
