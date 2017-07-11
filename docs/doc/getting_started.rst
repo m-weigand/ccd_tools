@@ -114,7 +114,7 @@ a Debye decomposition scheme:
 
    frequencies  = np.loadtxt('example1_single/frequencies.dat')
    data  = np.loadtxt('example1_single/data.dat')
-   data = data.reshape((2, data.size / 2)).T
+   data = data.reshape((2, int(data.size / 2))).T
 
    fig, axes = plt.subplots(2, 1)
    ax = axes[0]
@@ -168,7 +168,7 @@ magnitude values (:math:`\Omega m`) corresponding to the frequencies stored in
 *frequencies.dat*. The following N columns represent the corresponding phase
 values.
 
-data.dat 
+data.dat
 (:download:`download data.dat (unix)<example1_single/data.dat>`)
 
 (:download:`download data.dat (Windows)
@@ -267,7 +267,7 @@ Suppose the following spectra belong to a time-lapse SIP measurement:
 
    fig, axes = plt.subplots(2, 1)
    for spectrum in data:
-       subdata = spectrum.reshape((2, spectrum.size / 2)).T
+       subdata = spectrum.reshape((2, int(spectrum.size / 2))).T
        ax = axes[0]
        ax.semilogx(frequencies, subdata[:, 0], '.-', color='k')
        ax = axes[1]
