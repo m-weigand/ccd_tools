@@ -150,7 +150,7 @@ def _prepare_ND_object(data):
     # register data
     for index, subdata in enumerate(data['data']):
         print('Importing time step {0}'.format(index))
-        subdata = subdata.reshape((2, subdata.size / 2)).T
+        subdata = subdata.reshape((2, int(subdata.size / 2))).T
         ND.Data.add_data(
             subdata, data['prep_opts']['data_format'],
             extra=(index, ))
