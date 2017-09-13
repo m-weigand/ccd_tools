@@ -1,19 +1,19 @@
-#!/usr/bin/python
-"""Cole-Cole decomposition in resistivities
+#!/usr/bin/env python
+"""Cole-Cole decomposition in resistivity formulation
 """
 from NDimInv.plot_helper import *
-import os
 import numpy as np
 import NDimInv.model_template as mt
 import lib_dd.base_class as base_class
-# import resistivity
-import sip_models.res.cc as cc_res
 import lib_dd.starting_parameters as starting_parameters
 import lib_dd.plot_stats as plot_stats
 
+# import resistivity formulation
+import sip_models.res.cc as cc_res
+
 
 class decomposition_resistivity(
-   plot_stats._plot_stats,
+    plot_stats._plot_stats,
     base_class.integrated_parameters,
     starting_parameters.starting_parameters,
         mt.model_template):
@@ -45,7 +45,9 @@ class decomposition_resistivity(
         self.tau_data_min = 1 / (2 * np.pi * self.frequencies.max())
         self.tau_data_max = 1 / (2 * np.pi * self.frequencies.min())
 
-        self.tau, self.s, self.tau_f_values = base_class.determine_tau_range(settings)
+        self.tau, self.s, self.tau_f_values = base_class.determine_tau_range(
+            settings
+        )
 
     def convert_parameters(self, pars):
         r"""
@@ -79,7 +81,6 @@ class decomposition_resistivity(
         pars = np.hstack((rho0, m, tau, c))
         return pars
 
-
     def forward(self, pars_dec):
         """
 
@@ -104,16 +105,16 @@ class decomposition_resistivity(
 
     def Jacobian(self, pars_dec):
         """
-        Input parameters
-        ----------------
-        pars_dec: np array containing (log10(rho0), log10(m_i)
+        Parameters
+        ----------
+        pars_dec: numpy.ndarray
+            array containing (log10(rho0), log10(m_i)
 
         Returns
         -------
         J: (2N) X K array with derivatives.
         """
         pars = self._get_full_pars(pars_dec)
-        partials = []
 
         # real part
         real_J = np.concatenate(
@@ -156,6 +157,7 @@ class decomposition_resistivity(
         case we have one dimension: the DD parameters (rho0, mi) where m_i
         denotes all chargeability values corresponding to the relaxation times.
         """
-        M_base_dims = {0: ['rho0_mi', self.tau.size + 1]
-                       }
+        M_base_dims = {
+            0: ['rho0_mi', self.tau.size + 1]
+        }
         return M_base_dims
