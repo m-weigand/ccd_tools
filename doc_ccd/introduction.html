@@ -1,29 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Introduction &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Introduction &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" />
     <link rel="prev" title="CCD Tools" href="index.html" />
    
@@ -46,13 +45,13 @@
 <p>The Cole-Cole decomposition tools provide a set of Python programs to fit
 electrical complex resistivity spectra (or Spectral Induced Polarisation, SIP,
 spectra/signatures) using a Cole-Cole decomposition scheme (see section
-<a class="reference internal" href="theory.html"><em>Theory of SIP models</em></a> for an theoretical overview of the implemented methods). This
+<a class="reference internal" href="theory.html"><span class="doc">Theory of SIP models</span></a> for an theoretical overview of the implemented methods). This
 also includes the popular Debye decomposition scheme. In addition to the
 independent decomposition of one or more spectra, a smoothing regularization
 can be applied between multiple spectra for cases of time-lapse data where only
 smooth changes between subsequent measurements in a time series are expected.</p>
 <p>The installation for Windows and Linux is described in the section
-<a class="reference internal" href="installation.html"><em>Installation</em></a>, and the section <a class="reference internal" href="getting_started.html"><em>Getting Started</em></a> provides first
+<a class="reference internal" href="installation.html"><span class="doc">Installation</span></a>, and the section <a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a> provides first
 usage instructions.</p>
 <p>Please note that the Cole-Cole decomposition is, at the moment, only
 implemented for the resistivity case. For the conductivity formulation, only
@@ -61,13 +60,13 @@ the Debye decompositon (<em>c = 1</em>) is implemented.</p>
 have a look at <a class="reference external" href="https://github.com/m-weigand/Cole-Cole-fit">https://github.com/m-weigand/Cole-Cole-fit</a>.</p>
 <p>Two primary decomposition programs are provided:</p>
 <ul class="simple">
-<li><a class="reference internal" href="programs/dd_single.html"><em>dd_single.py</em></a> fits an arbitrary number of SIP spectra without any
+<li><a class="reference internal" href="programs/dd_single.html"><span class="doc">dd_single.py</span></a> fits an arbitrary number of SIP spectra without any
 kind of regularization between the spectra.</li>
-<li><a class="reference internal" href="programs/dd_time.html"><em>dd_time.py</em></a> fits an arbitrary number of time-lapse SIP spectra with a
+<li><a class="reference internal" href="programs/dd_time.html"><span class="doc">dd_time.py</span></a> fits an arbitrary number of time-lapse SIP spectra with a
 regularization on the time axis (separate regularization parameters for
-<img class="math" src="_images/math/02412c6f51954cfa864846e85e0775b2071b9571.png" alt="\rho_0"/> and the chargeabilities <img class="math" src="_images/math/21728519fb5117232be3dab5913f25e4508c8c29.png" alt="m_i"/>)</li>
+<img class="math" src="_images/math/d5b4a098286d906ca2e61aac7332930bf6898618.png" alt="\rho_0"/> and the chargeabilities <img class="math" src="_images/math/a9850fd3cf70d5ac90a474d257041fe9dcf965e7.png" alt="m_i"/>)</li>
 </ul>
-<p>See <a class="reference internal" href="fit_routines.html"><em>Fit Routines</em></a> for a complete list of the provided programs, and
+<p>See <a class="reference internal" href="fit_routines.html"><span class="doc">Fit Routines</span></a> for a complete list of the provided programs, and
 detailed description of the input parameters.</p>
 <p>Each front-end is accompanied by a post processing tool (<em>ddps.py</em>, <em>ddpt.py</em>)
 which allows various analysis and postprocessing steps to be applied on
@@ -88,8 +87,8 @@ issue tracker on the github pages for communication
 to search the existing bugs (issues) for relevant items. Also, make sure to
 include all necessary information to reproduce reported bugs. A small example,
 including data set and batch files to trigger the bug, is always helpful!</p>
-<p>The Cole-Cole decomposition tools (including the packages &#8220;sip_models&#8221; and
-&#8220;geccoinv&#8221;) are licenced under the GPL 3 or later
+<p>The Cole-Cole decomposition tools (including the packages “sip_models” and
+“geccoinv”) are licenced under the GPL 3 or later
 (<a class="reference external" href="https://www.gnu.org/licenses/licenses.html#GPL">https://www.gnu.org/licenses/licenses.html#GPL</a>).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -103,7 +102,7 @@ links.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -116,7 +115,7 @@ links.</p>
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
@@ -136,17 +135,14 @@ links.</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -157,11 +153,11 @@ links.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/introduction.txt"
+      <a href="_sources/introduction.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

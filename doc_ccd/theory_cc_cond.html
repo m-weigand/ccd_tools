@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Cole-Cole decomposition conductivities &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Cole-Cole decomposition conductivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Theory of SIP models" href="theory.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Formulation using the dielectric constant" href="dd_theory_eps.html" />
     <link rel="prev" title="Cole-Cole decomposition resistivities" href="theory_cc_res.html" />
    
@@ -48,13 +46,13 @@
 <h2>complex<a class="headerlink" href="#complex" title="Permalink to this headline">¶</a></h2>
 <p>After Tarasov and Titov, 2013:</p>
 <div class="math">
-<p><img src="_images/math/4dc95ebeb95d56f8423ef1df167eb1950dbf0fc2.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty \left(1 - \sum_k\frac{m_k}{1 + (j
+<p><img src="_images/math/320bac098881f88c074206263851213919132eca.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty \left(1 - \sum_k\frac{m_k}{1 + (j
 \omega \tau_k)^c}\right)\\"/></p>
 </div></div>
 <div class="section" id="real-and-imaginary-parts">
 <h2>real and imaginary parts<a class="headerlink" href="#real-and-imaginary-parts" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/ea2c55f6792355cd10b735a556ce197a79830246.png" alt="&amp;= \sigma_\infty \left( 1 - \sum_k m_k \frac{1 + (\omega \tau)^c \cos
+<p><img src="_images/math/b045280f2d1f923beafc5425d3f6914426d82e41.png" alt="&amp;= \sigma_\infty \left( 1 - \sum_k m_k \frac{1 + (\omega \tau)^c \cos
 \frac{c \pi}{2} - j (\omega \tau)^c \sin \frac{c \pi}{2}}{1 + 2 (\omega
 \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c}} \right)\\
 &amp;= \sigma_\infty \left( 1 - \sum_k m_k \frac{1 + (\omega \tau)^c \cos
@@ -74,7 +72,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
 <div class="section" id="derivatives">
 <h2>derivatives<a class="headerlink" href="#derivatives" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/1096fad8dabd074e7075964f4828b9fe883065fe.png" alt="\frac{\partial \hat{\sigma'}(\omega)}{\partial \sigma_\infty} &amp;= 1 - \sum_k m_k \frac{1 +
+<p><img src="_images/math/76be87b3562801f024797da76791763305c2917f.png" alt="\frac{\partial \hat{\sigma'}(\omega)}{\partial \sigma_\infty} &amp;= 1 - \sum_k m_k \frac{1 +
 (\omega \tau)^c \cos \frac{c \pi}{2}}{1 + 2 (\omega \tau)^c \cos \frac{c
 \pi}{2} + (\omega \tau)^{2 c}}\\
 \frac{\partial \hat{\sigma'}(\omega)}{\partial m_i} &amp;= -\sigma_\infty \frac{1 +
@@ -97,7 +95,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
     &amp; \left. \frac{2 \ln (\omega \tau) (\omega \tau)^c \cos \frac{c \pi}{2} - 2 (\omega \tau)^2 \frac{\pi}{2} \sin \frac{c \pi}{2} + 2 \ln(\omega \tau) (\omega \tau)^{2 c}}{1}
 \right]"/></p>
 </div><div class="math">
-<p><img src="_images/math/50a3c25da2ffe4119cdd7a1668f24ace7ab470df.png" alt="\frac{\partial \hat{\sigma}''(\omega)}{\partial \sigma_\infty} &amp;= - \frac{m (\omega
+<p><img src="_images/math/648361191dabdb09a5f6174bd1fe5e7b498bf627.png" alt="\frac{\partial \hat{\sigma}''(\omega)}{\partial \sigma_\infty} &amp;= - \frac{m (\omega
 \tau)^c \sin(\frac{c \pi}{2})}{1 + 2 (\omega \tau)^c \cos(\frac{c \pi}{2}) +
 (\omega \tau)^{2 c}}\\
 \frac{\partial \hat{\sigma''}(\omega)}{\partial m} &amp;= - \sigma_\infty m (\omega
@@ -127,7 +125,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -149,7 +147,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
 <li class="toctree-l2"><a class="reference internal" href="theory_dd_res.html">Debye decomposition resistivities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory_dd_cond.html">Debye decomposition on conductivities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory_cc_res.html">Cole-Cole decomposition resistivities</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Cole-Cole decomposition conductivities</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cole-Cole decomposition conductivities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#complex">complex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#real-and-imaginary-parts">real and imaginary parts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#derivatives">derivatives</a></li>
@@ -178,17 +176,14 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -199,11 +194,11 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/theory_cc_cond.txt"
+      <a href="_sources/theory_cc_cond.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

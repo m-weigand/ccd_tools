@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>lib_dd.decomposition package &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>lib_dd.decomposition package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="../index.html" />
-    <link rel="up" title="lib_dd package" href="lib_dd.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lib_dd.io package" href="lib_dd.io.html" />
     <link rel="prev" title="lib_dd.config package" href="lib_dd.config.html" />
    
@@ -51,35 +49,40 @@
 <span id="lib-dd-decomposition-ccd-single-module"></span><h2>lib_dd.decomposition.ccd_single module<a class="headerlink" href="#module-lib_dd.decomposition.ccd_single" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib_dd.decomposition.ccd_single.ccd_single">
-<em class="property">class </em><tt class="descclassname">lib_dd.decomposition.ccd_single.</tt><tt class="descname">ccd_single</tt><big>(</big><em>config=None</em><big>)</big><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<em class="property">class </em><code class="descclassname">lib_dd.decomposition.ccd_single.</code><code class="descname">ccd_single</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Cole-Cole decomposition object</p>
 <dl class="method">
 <dt id="lib_dd.decomposition.ccd_single.ccd_single.fit_data">
-<tt class="descname">fit_data</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.fit_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.fit_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the central fit function, which prepares the data, fits each
 spectrum, plots (if requested), and then saves the results.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.decomposition.ccd_single.ccd_single.get_data_dd_single">
-<tt class="descname">get_data_dd_single</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.get_data_dd_single" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data_dd_single</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.get_data_dd_single" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load frequencies and data and return a data dict</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>options: cmd options</strong></p>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>options</strong> (<em>cmd options</em>) – </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data: dict with entries &#8220;raw_data&#8221;, &#8220;cr_data&#8221;, &#8220;options&#8221;, &#8220;inv_opts&#8221;,</p>
-<blockquote class="last">
-<div><p>&#8220;prep_opts&#8221;</p>
-</div></blockquote>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>data</strong> – “prep_opts”</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict with entries “raw_data”, “cr_data”, “options”, “inv_opts”,</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.decomposition.ccd_single.ccd_single.save_to_directory">
+<code class="descname">save_to_directory</code><span class="sig-paren">(</span><em>directory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.save_to_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the fit results to a directory. The output directory can either
+be set in the initial configuration object, or directly via the
+directory parameter</p>
 </dd></dl>
 
 </dd></dl>
@@ -91,12 +94,12 @@ spectrum, plots (if requested), and then saves the results.</p>
 in the ccd_single object</p>
 <dl class="function">
 <dt id="lib_dd.decomposition.ccd_single_stateless.call_fit_functions">
-<tt class="descclassname">lib_dd.decomposition.ccd_single_stateless.</tt><tt class="descname">call_fit_functions</tt><big>(</big><em>fit_data</em>, <em>ND</em><big>)</big><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.call_fit_functions" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.decomposition.ccd_single_stateless.</code><code class="descname">call_fit_functions</code><span class="sig-paren">(</span><em>fit_data</em>, <em>ND</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.call_fit_functions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum">
-<tt class="descclassname">lib_dd.decomposition.ccd_single_stateless.</tt><tt class="descname">fit_one_spectrum</tt><big>(</big><em>fit_data</em><big>)</big><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.decomposition.ccd_single_stateless.</code><code class="descname">fit_one_spectrum</code><span class="sig-paren">(</span><em>fit_data</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit one spectrum</p>
 </dd></dl>
 
@@ -110,7 +113,7 @@ in the ccd_single object</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -166,17 +169,14 @@ in the ccd_single object</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -187,11 +187,11 @@ in the ccd_single object</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../_sources/api/lib_dd.decomposition.txt"
+      <a href="../_sources/api/lib_dd.decomposition.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

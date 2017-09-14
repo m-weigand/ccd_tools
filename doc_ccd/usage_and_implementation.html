@@ -1,29 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Usage and implementation details &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Usage and implementation details &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Starting Models" href="starting_models.html" />
     <link rel="prev" title="Inversion and implementation details" href="inversion.html" />
    
@@ -58,85 +57,85 @@
 <p>The following procedure is recommended for new data sets and focuses on
 inversions using <em>dd_single.py</em> and <em>dd_time.py</em>:</p>
 <ul>
-<li><p class="first">Initially invert with variable <img class="math" src="_images/math/1ab0134b6e0837594649c75a2ed83cfd85a2d03d.png" alt="\lambda"/> values for the frequency
+<li><p class="first">Initially invert with variable <img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/> values for the frequency
 regularization</p>
 </li>
 <li><p class="first">Fine-tune with a fixed lambda (this in general yields more robust results and
 makes results comparable)</p>
 </li>
 <li><p class="first">Usually the third starting model yields the most robust results:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>DD_STARTING_MODEL=3 dd_single.py ...
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">...</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Normalisation can help... :</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>dd_single.py --norm 10
+<li><p class="first">Normalisation can help… :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">norm</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">For time regularization: here only a fixed lambda can be used. Start with a
 small value and take a look at the maximum regularization strength for the
 time-regularization. The regularization strength is automatically plotted
-when the <tt class="docutils literal"><span class="pre">--plot</span></tt> option is enabled.</p>
+when the <code class="docutils literal"><span class="pre">--plot</span></code> option is enabled.</p>
 </li>
 <li><p class="first">while the structure of the input files is fixed, the data format can be
-changed using the <tt class="docutils literal"><span class="pre">--data_format</span></tt> option. Thus a conversion from
+changed using the <code class="docutils literal"><span class="pre">--data_format</span></code> option. Thus a conversion from
 conductivities to resistivities and vice versa is not necessary, as well as a
 conversion between real/imaginary part and magnitude/phase format.</p>
 </li>
-<li><p class="first">the <tt class="docutils literal"><span class="pre">--tmp</span></tt> option can improve execution speed on conventional hard
-drives (for SSDs there shouldn&#8217;t be any improvement)</p>
+<li><p class="first">the <code class="docutils literal"><span class="pre">--tmp</span></code> option can improve execution speed on conventional hard
+drives (for SSDs there shouldn’t be any improvement)</p>
 </li>
 </ul>
 </div>
 <div class="section" id="normalization">
 <h2>Normalization<a class="headerlink" href="#normalization" title="Permalink to this headline">¶</a></h2>
-<p>The DD is linear in <img class="math" src="_images/math/91f2fff7de29316a079d6b54e9d9244423f701e6.png" alt="\rho_0/\sigma_\infty"/>, as as such data can be
+<p>The DD is linear in <img class="math" src="_images/math/ac94cfcb695f488fb585333add7812d673843108.png" alt="\rho_0/\sigma_\infty"/>, as as such data can be
 normalized both in magnitude/phase, or real and imaginary parts:</p>
 <div class="math">
-<p><img src="_images/math/d2b1ab85fb7613cd9aaf0e84e4d920dc00052011.png" alt="\rho'_{norm} &amp;= A \cdot \rho'\\
+<p><img src="_images/math/7de6124dad2ce1c4a3f0e533454775170bdc32f8.png" alt="\rho'_{norm} &amp;= A \cdot \rho'\\
    \rho''_{norm} &amp;= A \cdot \rho''\\
    \rho'(\omega)_{norm} &amp;= A \cdot \left(\rho_0 -  \rho_0 \sum_{i=1}^N m_i
 \frac{(\omega \tau_i)^2}{1 + (\omega \tau_i)^2}\right)\\
    \rho''(\omega)_{norm} &amp;= A \cdot \left(- \rho_0 \sum_{i=1}^N m_i \frac{(\omega
 \tau_k)}{1 + (\omega \tau_k)^2} \right)"/></p>
 </div><p>The factor A is determined by norming the lowest frequency
-<img class="math" src="_images/math/a00794ea987e5d434606fbfa7d9657db1bc17121.png" alt="\rho'|\sigma'"/> value to the target value B given by the <cite>&#8211;norm</cite> switch:</p>
+<img class="math" src="_images/math/fb87c936448ed61fb024f611e69ed7de54a4bc7d.png" alt="\rho'|\sigma'"/> value to the target value B given by the <cite>–norm</cite> switch:</p>
 <div class="math">
-<p><img src="_images/math/b1c5ab66747ae5077f31cc201184d25425033f7d.png" alt="A = \frac{B}{\rho'/\sigma'}"/></p>
+<p><img src="_images/math/7d819cb41df0d01c202bce313d2e569fc48eef83.png" alt="A = \frac{B}{\rho'/\sigma'}"/></p>
 </div></div>
 <div class="section" id="determining-relaxation-time-ranges">
 <h2>Determining relaxation time ranges<a class="headerlink" href="#determining-relaxation-time-ranges" title="Permalink to this headline">¶</a></h2>
-<p>The following approach to select <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values is called &#8216;data&#8217;</p>
+<p>The following approach to select <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values is called ‘data’</p>
 <p>For forward modelling and inversions there is always the question of which
 range of relaxation times to consider. To answer this we consider the typical
 frequency range of measurements from 1 mHz to 50 kHz. By considering one-term
-debye models we can compute the minimum and maximum <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values using
+debye models we can compute the minimum and maximum <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values using
 the formula:</p>
 <div class="math">
-<p><img src="_images/math/ebff9d16bc79cfc3c802f5d84d7bf15ad527d230.png" alt="\tau_{peak} = \frac{1}{2 \pi f_{peak}}\\
+<p><img src="_images/math/cdce1695ea538fed5bbb9efae2d51e057eedb15b.png" alt="\tau_{peak} = \frac{1}{2 \pi f_{peak}}\\
 \tau_{min}(0.001~Hz) &amp;= 159.15~s\\
 \tau_{max}(1e5~Hz) &amp;= 1.5915e-06~s"/></p>
-</div><p>For the implementation the number of <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values <img class="math" src="_images/math/7d8be97b6d12abd0e0823e7b51cbe8f5e4063ce7.png" alt="N_D"/> per decade
-is specified. The maximum <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/>-interval corresponds to the frequency
-range <img class="math" src="_images/math/f41ecf803bfa78f0c31efecab92d8646922ade98.png" alt="[1e-3~s, 1e5~s]"/>. Now compute the total number <img class="math" src="_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/> of
-<img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values using the formula</p>
+</div><p>For the implementation the number of <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values <img class="math" src="_images/math/0fc750f1c2b3c40da15072422e9dc14ea01238bc.png" alt="N_D"/> per decade
+is specified. The maximum <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>-interval corresponds to the frequency
+range <img class="math" src="_images/math/13b89966da842f80e9f57d76be101b4d9df4e4f3.png" alt="[1e-3~s, 1e5~s]"/>. Now compute the total number <img class="math" src="_images/math/f4170ed8938b79490d8923857962695514a8e4cb.png" alt="N"/> of
+<img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values using the formula</p>
 <div class="math">
-<p><img src="_images/math/6c9f4bc8ece44ca0de4648e89316cc59a26fb080.png" alt="N = |log_{10}(f_{min}) - log_{10}(f_{max})| \cdot N_D"/></p>
+<p><img src="_images/math/3da7ac50ef45651ae03a5c70993566353e2938f9.png" alt="N = |log_{10}(f_{min}) - log_{10}(f_{max})| \cdot N_D"/></p>
 </div><div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The maximum frequency range considered here spans exactly 8 decades. Thus
 no rounding needs to take place.</p>
 </div>
-<p>The pool of possible <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values is now created by</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">N_D</span><span class="p">)</span>
+<p>The pool of possible <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values is now created by</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">N_D</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values for a real data set will now be selected from this
+<p>The <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values for a real data set will now be selected from this
 pool, depending on the minimum and maximum frequency of the data set. This
-procedure ensures that always the same <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values are used
+procedure ensures that always the same <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values are used
 independently from the minimum and maximum data frequencies. However, the
-<img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values will still be dependend on <img class="math" src="_images/math/7d8be97b6d12abd0e0823e7b51cbe8f5e4063ce7.png" alt="N_D"/>!</p>
+<img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values will still be dependend on <img class="math" src="_images/math/0fc750f1c2b3c40da15072422e9dc14ea01238bc.png" alt="N_D"/>!</p>
 <p>(<a class="reference external" href=".//usage_and_implementation-1.py">Source code</a>, <a class="reference external" href=".//usage_and_implementation-1.png">png</a>, <a class="reference external" href=".//usage_and_implementation-1.hires.png">hires.png</a>, <a class="reference external" href=".//usage_and_implementation-1.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/usage_and_implementation-1.png" src="_images/usage_and_implementation-1.png" />
@@ -145,19 +144,19 @@ independently from the minimum and maximum data frequencies. However, the
 <div class="figure">
 <img alt="_images/usage_and_implementation-2.png" src="_images/usage_and_implementation-2.png" />
 </div>
-<p>The following approach to selecting <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values is called &#8216;data_ext&#8217;.</p>
+<p>The following approach to selecting <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values is called ‘data_ext’.</p>
 <p>This approach adds one frequency decade to each of the frequency limits of the
-data prior to converting those limits to <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values.</p>
+data prior to converting those limits to <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values.</p>
 </div>
 <div class="section" id="creating-synthetic-relaxation-time-distributions">
 <h2>Creating synthetic relaxation time distributions<a class="headerlink" href="#creating-synthetic-relaxation-time-distributions" title="Permalink to this headline">¶</a></h2>
-<p>The <img class="math" src="_images/math/54e7b88931659de229c9cb4465c1a35cad90f605.png" alt="\tau_i"/> distribution is determined by the frequencies of the data
+<p>The <img class="math" src="_images/math/b80430baf1b059d0097bc9081abca3b1e0a74287.png" alt="\tau_i"/> distribution is determined by the frequencies of the data
 and number of values per frequency decade set by the user. For synthetic
-studies or benchmarks we need to set the corresponding <img class="math" src="_images/math/5a113e0072f0e1471a7b30dbc3f03e6609e1b11b.png" alt="g_i"/> values for
+studies or benchmarks we need to set the corresponding <img class="math" src="_images/math/79b19012e472bb27f43701fee56fde3495013f17.png" alt="g_i"/> values for
 those relaxation times. We do this either by explicitly setting those
 relaxation times for a small number of terms (usually one to three in
 correspondence to the Cole-Cole/Debye model), or by addition of one or more
-log-normal distributions to the <img class="math" src="_images/math/5a113e0072f0e1471a7b30dbc3f03e6609e1b11b.png" alt="g_i"/> distribution.</p>
+log-normal distributions to the <img class="math" src="_images/math/79b19012e472bb27f43701fee56fde3495013f17.png" alt="g_i"/> distribution.</p>
 <p>(<a class="reference external" href=".//usage_and_implementation-3.py">Source code</a>, <a class="reference external" href=".//usage_and_implementation-3.png">png</a>, <a class="reference external" href=".//usage_and_implementation-3.hires.png">hires.png</a>, <a class="reference external" href=".//usage_and_implementation-3.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="_images/usage_and_implementation-3.png" src="_images/usage_and_implementation-3.png" />
@@ -195,7 +194,7 @@ peak in the RTD is due to regularisation smoothing.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -214,7 +213,7 @@ peak in the RTD is due to regularisation smoothing.</p>
 <li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Usage and implementation details</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage and implementation details</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="starting_models.html">Starting Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#best-practices">Best practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#normalization">Normalization</a></li>
@@ -236,17 +235,14 @@ peak in the RTD is due to regularisation smoothing.</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -257,11 +253,11 @@ peak in the RTD is due to regularisation smoothing.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/usage_and_implementation.txt"
+      <a href="_sources/usage_and_implementation.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

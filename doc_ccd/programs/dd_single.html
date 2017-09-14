@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>dd_single.py &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>dd_single.py &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="../index.html" />
-    <link rel="up" title="Fit Routines" href="../fit_routines.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Environment variables" href="../environment_vars.html" />
     <link rel="prev" title="Fit Routines" href="../fit_routines.html" />
    
@@ -63,25 +61,34 @@ Usage: dd_single.py [options]
 
 Options:
   -h, --help            show this help message and exit
-  --max_it=INT          Maximum number of iterations (default: 20)
-  -c INT, --nr_cores=INT
-                        Numer of CPU cores to use (default: 1)
-  --data_weighting=SCHEME
-                        Data weighting scheme to use. (default: re_vs_im)
-  --lambda=INT          Use a fixed lambda (integer) (default: None)
+  --silent              Do not plot any logs to STDOUT (default: False)
+  -v, --version         Print version information (default: False)
+  -d FILE, --data_file=FILE
+                        data file (default: data.dat)
+  -p, --plot            Plot final iterations (default: False)
+  -i, --plot_its        Plot spectra of each iteration (default: False)
+  --tausel=STRATEGY     Tau selection strategy: data: Use data frequency
+                        limits for tau selection data_ext (default): Extend
+                        tau ranges by one frequency decade compared to the
+                        &#39;data&#39; strategy. Factors can be set for the low and
+                        high frequency by separating with a &#39;,&#39;: LEFT,RIGHT,
+                        e.g. &#39;10,100&#39; (default: data_ext)
   --output_format=STRING
                         Output format(ascii| ascii_audit) (default:
                         ascii_audit)
-  --silent              Do not plot any logs to STDOUT (default: False)
-  -d FILE, --data_file=FILE
-                        data file (default: data.dat)
-  --tmp                 Create the output in a temporary directory and later
-                        move it later to its destination (default: False)
-  --plot_lcurve=INT     Plot the l-curve for a selected iteration. WARNING:
-                        This only plots the l-curve and does not use it in the
-                        inversion process. Use -1 for last iteration.
+  -f FILE, --frequency_file=FILE
+                        Frequency file (default: frequencies.dat)
+  --ignore=STRING       Frequency ids to ignore, example:12,13,14. Starts with
+                        index 0. (default: None)
+  --lambda=INT          Use a fixed lambda (integer) (default: None)
+  -o DIR, --output=DIR  Output directory (default: results)
+  --max_it=INT          Maximum number of iterations (default: 20)
+  -n INT, --nr_terms=INT
+                        Number of polarization terms per frequency decade
+                        (default: 20)
+  --norm=FLOAT          Normalize lowest frequency real part to this value
                         (default: None)
-  -p, --plot            Plot final iterations (default: False)
+  --fmax=FLOAT          Ignore frequencies above this value (default: None)
   --plot_reg_strength   Plot regularization strengths of final iterations
                         (default: False)
   --data_format=FORMAT  Input data format, possible values are: rmag_rpha,
@@ -89,26 +96,17 @@ Options:
                         rre_rmim, cmag_cpha, cre_cim, cre_cmim. &quot;r&quot; stands for
                         resistance/resistivity, and &quot;c&quot; stands for
                         conductance/conductivity (default: rmag_rpha)
-  -f FILE, --frequency_file=FILE
-                        Frequency file (default: frequencies.dat)
+  --data_weighting=SCHEME
+                        Data weighting scheme to use. (default: re_vs_im)
   --fmin=FLOAT          Ignore frequencies below this value (default: None)
-  -n INT, --nr_terms=INT
-                        Number of polarization terms per frequency decade
-                        (default: 20)
-  -v, --version         Print version information (default: False)
-  --norm=FLOAT          Normalize lowest frequency real part to this value
+  -c INT, --nr_cores=INT
+                        Numer of CPU cores to use (default: 1)
+  --plot_lcurve=INT     Plot the l-curve for a selected iteration. WARNING:
+                        This only plots the l-curve and does not use it in the
+                        inversion process. Use -1 for last iteration.
                         (default: None)
-  --ignore=STRING       Frequency ids to ignore, example:12,13,14. Starts with
-                        index 0. (default: None)
-  -i, --plot_its        Plot spectra of each iteration (default: False)
-  -o DIR, --output=DIR  Output directory (default: results)
-  --fmax=FLOAT          Ignore frequencies above this value (default: None)
-  --tausel=STRATEGY     Tau selection strategy: data: Use data frequency
-                        limits for tau selection data_ext (default): Extend
-                        tau ranges by one frequency decade compared to the
-                        &#39;data&#39; strategy. Factors can be set for the low and
-                        high frequency by separating with a &#39;,&#39;: LEFT,RIGHT,
-                        e.g. &#39;10,100&#39; (default: data_ext)
+  --tmp                 Create the output in a temporary directory and later
+                        move it later to its destination (default: False)
 </pre></div>
 </div>
 </div>
@@ -119,7 +117,7 @@ Options:
 <p class="last">Beware of the chargeability distribution at the frequency edges: Here the
 distribution is often dominated by the starting model due to low
 sensitivities. However it is advisable to add one frequency decade in
-<img class="math" src="../_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values to the edges.</p>
+<img class="math" src="../_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values to the edges.</p>
 </div>
 <span class="target" id="ref-dd-single-best-pract"></span></div>
 </div>
@@ -128,7 +126,7 @@ sensitivities. However it is advisable to add one frequency decade in
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -145,7 +143,7 @@ sensitivities. However it is advisable to add one frequency decade in
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../fit_routines.html">Fit Routines</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">dd_single.py</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">dd_single.py</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../environment_vars.html">Environment variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
@@ -174,17 +172,14 @@ sensitivities. However it is advisable to add one frequency decade in
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -195,11 +190,11 @@ sensitivities. However it is advisable to add one frequency decade in
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../_sources/programs/dd_single.txt"
+      <a href="../_sources/programs/dd_single.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

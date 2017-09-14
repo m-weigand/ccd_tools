@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Formulation using the dielectric constant &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Formulation using the dielectric constant &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Theory of SIP models" href="theory.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Coverage" href="dd_coverage.html" />
     <link rel="prev" title="Cole-Cole decomposition conductivities" href="theory_cc_cond.html" />
    
@@ -46,28 +44,28 @@
 <h1>Formulation using the dielectric constant<a class="headerlink" href="#formulation-using-the-dielectric-constant" title="Permalink to this headline">¶</a></h1>
 <p>Böttcher and Bordewijk, page 40:</p>
 <div class="math">
-<p><img src="_images/math/3713418c371463414eb7c011e8915cc182f8ad17.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
+<p><img src="_images/math/4a0768b60efd48c2947ec414b09a13ce05241890.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
 \int_0^\infty \frac{g(\tau)}{1 + i \omega \tau} d\tau\\
 &amp;\text{with}\\
 &amp;\int_0^\infty g(\tau) d\tau = 1"/></p>
-</div><p>For a <img class="math" src="_images/math/4e1f45f9449550ac5731962a866c8a2704234479.png" alt="g(\tau) = \delta(\tau - \tau_1)"/> it follows (see eqs. 8.182 in
+</div><p>For a <img class="math" src="_images/math/772affd57f47442828778af7c6f7fe74de63982e.png" alt="g(\tau) = \delta(\tau - \tau_1)"/> it follows (see eqs. 8.182 in
 B&amp;B):</p>
 <div class="math">
-<p><img src="_images/math/89c18a1169e601c17b776bf206f18d2dd2d75842.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
+<p><img src="_images/math/d01eb439c6259124e98f9ed63f104664e3fbb02a.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
 \frac{g(\tau)}{1 + i \omega \tau_1}"/></p>
 </div><p>For multiple relaxation times in a discrete case (8.187 in B&amp;W):</p>
 <div class="math">
-<p><img src="_images/math/ef848791cb98018ccaf0cc8631852d7b9270dca9.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
+<p><img src="_images/math/42ba1edb091d4b3f3d575f53ff51ba09f1fcd3c7.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
 \sum_k \frac{g_k}{1 + i \omega \tau_k}\\
 &amp;\text{with}\\
 &amp;\sum_k g_k = 1"/></p>
 </div><div class="section" id="transformation-to-conductivity">
 <h2>Transformation to conductivity<a class="headerlink" href="#transformation-to-conductivity" title="Permalink to this headline">¶</a></h2>
-<p>Tarasov and Titov substitute <img class="math" src="_images/math/19bc0073dde1bcd1a8e6a32b251e80cced668f04.png" alt="\epsilon"/> for <img class="math" src="_images/math/2298cf1485084afe72757a9c8483af49a138d81f.png" alt="\sigma"/> (they cite the
+<p>Tarasov and Titov substitute <img class="math" src="_images/math/65d19c66c148d5016c6a89d26486bf6d1966ded1.png" alt="\epsilon"/> for <img class="math" src="_images/math/011e5790a6c33043ceadca81d9657dde6c61d769.png" alt="\sigma"/> (they cite the
 electrostatic analogy and the formulation for dielectric materials with
 losses):</p>
 <div class="math">
-<p><img src="_images/math/65ffd2b28a31183dd10a83a070b26e66272a190d.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty + (\sigma - \sigma_\infty)
+<p><img src="_images/math/548a6ca4fa696bc2d3fff37dfc4e4ed38cf307c3.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty + (\sigma - \sigma_\infty)
 \int_0^{\infty} \frac{g(\tau)}{1 + i \omega \tau} d\tau\\
 &amp;\text{with}:\\
 &amp;\int_0^{\infty} g(\tau) d\tau"/></p>
@@ -78,7 +76,7 @@ losses):</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -101,7 +99,7 @@ losses):</p>
 <li class="toctree-l2"><a class="reference internal" href="theory_dd_cond.html">Debye decomposition on conductivities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory_cc_res.html">Cole-Cole decomposition resistivities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory_cc_cond.html">Cole-Cole decomposition conductivities</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Formulation using the dielectric constant</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Formulation using the dielectric constant</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#transformation-to-conductivity">Transformation to conductivity</a></li>
 </ul>
 </li>
@@ -127,17 +125,14 @@ losses):</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -148,11 +143,11 @@ losses):</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/dd_theory_eps.txt"
+      <a href="_sources/dd_theory_eps.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

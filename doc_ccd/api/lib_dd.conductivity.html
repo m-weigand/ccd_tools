@@ -1,32 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>lib_dd.conductivity package &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>lib_dd.conductivity package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="../index.html" />
-    <link rel="up" title="API" href="../api.html" />
-    <link rel="next" title="lib_dd.io package" href="lib_dd.io.html" />
-    <link rel="prev" title="lib_dd.models package" href="lib_dd.models.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lib_dd.config package" href="lib_dd.config.html" />
+    <link rel="prev" title="lib_dd package" href="lib_dd.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -52,22 +50,22 @@
 <p>Template class for models</p>
 <dl class="class">
 <dt id="lib_dd.conductivity.model.dd_conductivity">
-<em class="property">class </em><tt class="descclassname">lib_dd.conductivity.model.</tt><tt class="descname">dd_conductivity</tt><big>(</big><em>settings</em><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></tt>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><tt class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></tt></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><tt class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></tt></p>
+<em class="property">class </em><code class="descclassname">lib_dd.conductivity.model.</code><code class="descname">dd_conductivity</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></code></p>
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.Jacobian">
-<tt class="descname">Jacobian</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.Jacobian" title="Permalink to this definition">¶</a></dt>
+<code class="descname">Jacobian</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.Jacobian" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Jacobian corresponding to the forward response. The
-Jacobian has the dimensions <img class="math" src="../_images/math/39a16b596460798af3c55518d009a80c88ad29eb.png" alt="B \times D \times M"/></p>
+Jacobian has the dimensions <img class="math" src="../_images/math/49230ed3d5ec434b66dfb526a283e29a458bdaf3.png" alt="B \times D \times M"/></p>
 <p>TODO: Check the return dimensions</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.compute_par_stats">
-<tt class="descname">compute_par_stats</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.compute_par_stats" title="Permalink to this definition">¶</a></dt>
+<code class="descname">compute_par_stats</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.compute_par_stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a given parameter set (i.e. a fit result), compute relevant
-statistical values such as <img class="math" src="../_images/math/cf807299163b7f2f1075652a5654fa01a913b541.png" alt="m_{tot}"/>, <img class="math" src="../_images/math/330327f487670066f60abab01973c2179896a7c6.png" alt="m_{tot}^n"/>,
-<img class="math" src="../_images/math/d0df8391d7fbbf710147c128592efc92d63cf0a5.png" alt="\tau_{50}"/>, <img class="math" src="../_images/math/7285541d7106a4f1a35d9af243a2b0c593e3de17.png" alt="\tau_{mean}"/>, <img class="math" src="../_images/math/85ac97cba924681d8968c336d3567393b249e588.png" alt="\tau_{peak}"/></p>
+statistical values such as <img class="math" src="../_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>, <img class="math" src="../_images/math/543990fbd10f06e4d6ecc1e279835ed0866163a8.png" alt="m_{tot}^n"/>,
+<img class="math" src="../_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/>, <img class="math" src="../_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/>, <img class="math" src="../_images/math/3832ca1fb48efaa53b58192b903354685e62e042.png" alt="\tau_{peak}"/></p>
 <p>This is the way to compute any secondary results based on the fit
 results.</p>
 <p>Store in self.stat_pars = dict()</p>
@@ -75,32 +73,29 @@ results.</p>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.convert_parameters">
-<tt class="descname">convert_parameters</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.convert_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">convert_parameters</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.convert_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from linear to the actually used scale</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.convert_pars_back">
-<tt class="descname">convert_pars_back</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.convert_pars_back" title="Permalink to this definition">¶</a></dt>
+<code class="descname">convert_pars_back</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.convert_pars_back" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from log10 to linear</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.forward">
-<tt class="descname">forward</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the forward response in base dimensions</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pars: [log10(sigma_infty), log10(m_i)]</strong></p>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars</strong> (<em>[</em><em>log10</em><em>(</em><em>sigma_infty</em><em>)</em><em>, </em><em>log10</em><em>(</em><em>m_i</em><em>)</em><em>]</em>) – </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">response: Nx2 array, first axis denotes frequencies, seconds real and</p>
-<blockquote class="last">
-<div><p>imaginary parts</p>
-</div></blockquote>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>response</strong> – imaginary parts</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Nx2 array, first axis denotes frequencies, seconds real and</td>
 </tr>
 </tbody>
 </table>
@@ -108,13 +103,15 @@ results.</p>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.get_data_base_dimensions">
-<tt class="descname">get_data_base_dimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.get_data_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.get_data_base_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Return a dict with a description of the data base dimensions. In this</p>
-<p class="last">case we have frequencies and re/im data</p>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><em>Return a dict with a description of the data base dimensions. In this</em></li>
+<li><em>case we have frequencies and re/im data</em></li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -123,13 +120,13 @@ results.</p>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.get_data_base_size">
-<tt class="descname">get_data_base_size</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.get_data_base_size" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data_base_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.get_data_base_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usually you do not need to modify this.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.get_model_base_dimensions">
-<tt class="descname">get_model_base_dimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.get_model_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_model_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.get_model_base_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dict with a description of the model base dimensions. In
 this case we have one dimension: the DD parameters (rho0, mi) where m_i
 denotes all chargeability values corresponding to the relaxation times.</p>
@@ -137,7 +134,7 @@ denotes all chargeability values corresponding to the relaxation times.</p>
 
 <dl class="method">
 <dt id="lib_dd.conductivity.model.dd_conductivity.set_settings">
-<tt class="descname">set_settings</tt><big>(</big><em>settings</em><big>)</big><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.set_settings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_settings</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.conductivity.model.dd_conductivity.set_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the settings and call necessary functions</p>
 </dd></dl>
 
@@ -153,7 +150,7 @@ denotes all chargeability values corresponding to the relaxation times.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -190,7 +187,7 @@ denotes all chargeability values corresponding to the relaxation times.</p>
 <li class="toctree-l3"><a class="reference internal" href="lib_dd.html#module-lib_dd">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">lib_dd.conductivity package</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">lib_dd.conductivity package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-lib_dd.conductivity.model">lib_dd.conductivity.model module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-lib_dd.conductivity">Module contents</a></li>
@@ -206,23 +203,22 @@ denotes all chargeability values corresponding to the relaxation times.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API</a><ul>
-      <li>Previous: <a href="lib_dd.models.html" title="previous chapter">lib_dd.models package</a></li>
-      <li>Next: <a href="lib_dd.io.html" title="next chapter">lib_dd.io package</a></li>
+  <li><a href="lib_dd.html">lib_dd package</a><ul>
+      <li>Previous: <a href="lib_dd.html" title="previous chapter">lib_dd package</a></li>
+      <li>Next: <a href="lib_dd.config.html" title="next chapter">lib_dd.config package</a></li>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -233,11 +229,11 @@ denotes all chargeability values corresponding to the relaxation times.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../_sources/api/lib_dd.conductivity.txt"
+      <a href="../_sources/api/lib_dd.conductivity.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

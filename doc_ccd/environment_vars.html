@@ -1,32 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Environment variables &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Environment variables &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="dd_time.py" href="programs/dd_time.html" />
-    <link rel="next" title="ddps.py" href="programs/ddps.html" />
-    <link rel="prev" title="dd_time.py" href="programs/dd_time.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dd_time.py" href="programs/dd_time.html" />
+    <link rel="prev" title="dd_single.py" href="programs/dd_single.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -47,7 +45,7 @@
 <p><em>dd_single.py</em> and <em>dd_time.py</em> recognize the following environment variables:</p>
 <ul>
 <li><p class="first"><strong>DD_COND</strong>: Switch between the resistivity (<strong>DD_COND=0</strong>, default) and conductivity
-(<strong>DD_COND=1</strong>) model formulations. See <a class="reference internal" href="theory.html"><em>Theory of SIP models</em></a> for more information on
+(<strong>DD_COND=1</strong>) model formulations. See <a class="reference internal" href="theory.html"><span class="doc">Theory of SIP models</span></a> for more information on
 the formulations.</p>
 </li>
 <li><p class="first"><strong>DD_STARTING_MODEL</strong>: Switch between different heuristics to generate the
@@ -57,12 +55,12 @@ starting models. Valid values are 1 (default), 2, 3</p>
 <em>c</em> value. Values larger than 0 and smaller, or equal to, 1 are valid.
 Default is 1 (the Debye decomposition).</p>
 </li>
-<li><p class="first"><strong>DD_TAU_X</strong>: Sets the cumulative relaxation times <img class="math" src="_images/math/a8951fd2fd567355af4138f8ad026e31b8ca7251.png" alt="\tau_x"/> which shall
+<li><p class="first"><strong>DD_TAU_X</strong>: Sets the cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> which shall
 be computed. The string separates the requested percentages as fractions with
-&#8216;;&#8217; characters.</p>
+‘;’ characters.</p>
 <p>For example, the following call to <strong>dd_single</strong> computes the 20%, 35%, and 60%
 percentiles of the RTD:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>DD_TAU_X=&quot;0.2;0.35;0.6&quot; dd_single.py
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_TAU_X</span><span class="o">=</span><span class="s2">&quot;0.2;0.35;0.6&quot;</span> <span class="n">dd_single</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
 </li>
@@ -77,21 +75,21 @@ MiKTex install. On by default on Linux, off by default on Windows.</p>
 <h2>Usage Windows<a class="headerlink" href="#usage-windows" title="Permalink to this headline">¶</a></h2>
 <p>In Windows batch file (<strong>.bat</strong>), environment variables are set using the <em>set</em>
 command:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>set VARIABLE=VALUE
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">VARIABLE</span><span class="o">=</span><span class="n">VALUE</span>
 </pre></div>
 </div>
 <p>For example, to enable the conductivity model, a <strong>.bat</strong> file could start like
 this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>set DD_COND=1
-dd_single.py ...
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">...</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="usage-linux">
 <h2>Usage Linux<a class="headerlink" href="#usage-linux" title="Permalink to this headline">¶</a></h2>
 <p>Environment variables can be set using the command <strong>export</strong>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>export DD_COND=1
-export DD_STARTING_MODEL=3
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">export</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -101,7 +99,7 @@ export DD_STARTING_MODEL=3
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -118,14 +116,9 @@ export DD_STARTING_MODEL=3
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="fit_routines.html">Fit Routines</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="programs/dd_single.html">dd_single.py</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="">Environment variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="programs/dd_single.html#command-line-options">Command line options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="programs/dd_single.html#usage-examples">Usage Examples</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="programs/dd_single.html">dd_single.py</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="programs/dd_time.html">dd_time.py</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="">Environment variables</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Environment variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="programs/dd_time.html#command-line-options">Command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="programs/dd_time.html#regularisation-parameters">Regularisation Parameters</a></li>
 </ul>
@@ -146,25 +139,22 @@ export DD_STARTING_MODEL=3
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="fit_routines.html">Fit Routines</a><ul>
-  <li><a href="programs/dd_time.html">dd_time.py</a><ul>
-      <li>Previous: <a href="programs/dd_time.html" title="previous chapter">dd_time.py</a></li>
-      <li>Next: <a href="programs/ddps.html" title="next chapter">ddps.py</a></li>
+  <li><a href="programs/dd_single.html">dd_single.py</a><ul>
+      <li>Previous: <a href="programs/dd_single.html" title="previous chapter">dd_single.py</a></li>
+      <li>Next: <a href="programs/dd_time.html" title="next chapter">dd_time.py</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -175,11 +165,11 @@ export DD_STARTING_MODEL=3
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/environment_vars.txt"
+      <a href="_sources/environment_vars.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Debye decomposition on conductivities &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Debye decomposition on conductivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Theory of SIP models" href="theory.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Cole-Cole decomposition resistivities" href="theory_cc_res.html" />
     <link rel="prev" title="Debye decomposition resistivities" href="theory_dd_res.html" />
    
@@ -48,7 +46,7 @@
 <h2>complex<a class="headerlink" href="#complex" title="Permalink to this headline">¶</a></h2>
 <p>After Tarasov and Titov, 2013:</p>
 <div class="math">
-<p><img src="_images/math/f5e8d4f74f487a0e54634f87aeab4e36c6f10271.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty \left(1 - \sum_i\frac{m_i}{1 + (j
+<p><img src="_images/math/abf8018153cc178b9ca2c230ae38e73df9386c4d.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty \left(1 - \sum_i\frac{m_i}{1 + (j
 \omega \tau_i)}\right)\\
 m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
 \sigma_0 &amp;= (1 - m) \cdot \sigma_\infty\\
@@ -59,7 +57,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
 <div class="section" id="real-and-imaginary-parts">
 <h2>real and imaginary parts<a class="headerlink" href="#real-and-imaginary-parts" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/56966f0ac98382a1c2972d9f5c54cfcb17f64e70.png" alt="\sigma'(\omega) &amp;= \sigma_\infty \left[1 - \sum_k m_k \frac{1}{1 + \omega^2
+<p><img src="_images/math/e37a5510af3d6520b5d450cbfca965aada1a2fda.png" alt="\sigma'(\omega) &amp;= \sigma_\infty \left[1 - \sum_k m_k \frac{1}{1 + \omega^2
 \tau_k^2}  \right] \\
 \sigma''(\omega) &amp;= -\sigma_\infty \sum_k m_k \frac{\omega \tau_k}{1 +
 \omega^2 \tau_k^2}"/></p>
@@ -67,7 +65,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
 <div class="section" id="derivatives">
 <h2>derivatives<a class="headerlink" href="#derivatives" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/31a49d1a6b06e7e83ce4d75307b9536098276520.png" alt="\frac{\partial \sigma'(\omega)}{\partial \sigma_\infty} &amp;= 1 - \sum_k m_k
+<p><img src="_images/math/490dac4df6bd12ea78db4ca5483cd00003fad557.png" alt="\frac{\partial \sigma'(\omega)}{\partial \sigma_\infty} &amp;= 1 - \sum_k m_k
 \frac{1}{1 + \omega^2 \tau_k^2}\\
 \frac{\partial \sigma'(\omega)}{\partial m_k} &amp;= - \sigma_\infty \frac{1}{1
 + \omega^2 \tau_k^2}\\
@@ -82,7 +80,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -102,7 +100,7 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
 <li class="toctree-l1 current"><a class="reference internal" href="theory.html">Theory of SIP models</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="theory_overview.html">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory_dd_res.html">Debye decomposition resistivities</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Debye decomposition on conductivities</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Debye decomposition on conductivities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#complex">complex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#real-and-imaginary-parts">real and imaginary parts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#derivatives">derivatives</a></li>
@@ -133,17 +131,14 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -154,11 +149,11 @@ m &amp;= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/theory_dd_cond.txt"
+      <a href="_sources/theory_dd_cond.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

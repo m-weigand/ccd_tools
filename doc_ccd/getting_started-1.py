@@ -5,7 +5,7 @@ import numpy as np
 
 frequencies  = np.loadtxt('example1_single/frequencies.dat')
 data  = np.loadtxt('example1_single/data.dat')
-data = data.reshape((2, data.size / 2)).T
+data = data.reshape((2, int(data.size / 2))).T
 
 fig, axes = plt.subplots(2, 1)
 ax = axes[0]

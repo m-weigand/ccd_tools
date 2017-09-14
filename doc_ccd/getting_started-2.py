@@ -8,7 +8,7 @@ data  = np.loadtxt('example2_time/data/data.dat')
 
 fig, axes = plt.subplots(2, 1)
 for spectrum in data:
-    subdata = spectrum.reshape((2, spectrum.size / 2)).T
+    subdata = spectrum.reshape((2, int(spectrum.size / 2))).T
     ax = axes[0]
     ax.semilogx(frequencies, subdata[:, 0], '.-', color='k')
     ax = axes[1]

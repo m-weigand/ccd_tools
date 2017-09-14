@@ -1,32 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>ddps.py &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>ddps.py &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="../index.html" />
-    <link rel="up" title="Fit Routines" href="../fit_routines.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Output Files" href="../output_formats.html" />
-    <link rel="prev" title="Environment variables" href="../environment_vars.html" />
+    <link rel="prev" title="dd_time.py" href="dd_time.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -68,12 +66,22 @@ Options:
   --plot_to_grid        Plot results to grid
   --elem=ELEM_FILE      elem.dat file (default: elem.dat)
   --elec=ELEC_FILE      elec.dat file (default: elec.dat)
+  --U_tau_min=U_TAU_MIN
+                        Min value for U_tau
+  --U_tau_max=U_TAU_MAX
+                        Max value for U_tau
+  --sigma0_min=SIGMA0_MIN
+                        Min value for sigma0
+  --sigma0_max=SIGMA0_MAX
+                        Max value for sigma0
+  --m_tot_n_min=M_TOT_N_MIN
+                        Min value for m_tot_n
+  --m_tot_n_max=M_TOT_N_MAX
+                        Max value for m_tot_n
   --tau_50_min=TAU_50_MIN
                         Min value for tau_50
   --tau_50_max=TAU_50_MAX
                         Max value for tau_50
-  --rho0_min=RHO0_MIN   Min value for rho0
-  --rho0_max=RHO0_MAX   Max value for rho0
   --tau_peak1_min=TAU_PEAK1_MIN
                         Min value for tau_peak1
   --tau_peak1_max=TAU_PEAK1_MAX
@@ -82,18 +90,12 @@ Options:
                         Min value for tau_mean
   --tau_mean_max=TAU_MEAN_MAX
                         Max value for tau_mean
-  --m_tot_n_min=M_TOT_N_MIN
-                        Min value for m_tot_n
-  --m_tot_n_max=M_TOT_N_MAX
-                        Max value for m_tot_n
-  --U_tau_min=U_TAU_MIN
-                        Min value for U_tau
-  --U_tau_max=U_TAU_MAX
-                        Max value for U_tau
   --m_tot_min=M_TOT_MIN
                         Min value for m_tot
   --m_tot_max=M_TOT_MAX
                         Max value for m_tot
+  --rho0_min=RHO0_MIN   Min value for rho0
+  --rho0_max=RHO0_MAX   Max value for rho0
   --filter              Apply filters and save to new directory
   --maskfile=FILE       Mask file for filtering: discard all other pixels
                         (start at 0)
@@ -109,7 +111,7 @@ Options:
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -128,7 +130,7 @@ Options:
 <li class="toctree-l1 current"><a class="reference internal" href="../fit_routines.html">Fit Routines</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="dd_single.html">dd_single.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dd_time.html">dd_time.py</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">ddps.py</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ddps.py</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command line options</a></li>
 </ul>
 </li>
@@ -147,23 +149,20 @@ Options:
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../fit_routines.html">Fit Routines</a><ul>
-      <li>Previous: <a href="../environment_vars.html" title="previous chapter">Environment variables</a></li>
+      <li>Previous: <a href="dd_time.html" title="previous chapter">dd_time.py</a></li>
       <li>Next: <a href="../output_formats.html" title="next chapter">Output Files</a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -174,11 +173,11 @@ Options:
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../_sources/programs/ddps.txt"
+      <a href="../_sources/programs/ddps.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Cole-Cole decomposition resistivities &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Cole-Cole decomposition resistivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Theory of SIP models" href="theory.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Cole-Cole decomposition conductivities" href="theory_cc_cond.html" />
     <link rel="prev" title="Debye decomposition on conductivities" href="theory_dd_cond.html" />
    
@@ -47,13 +45,13 @@
 <div class="section" id="complex">
 <h2>complex<a class="headerlink" href="#complex" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/5bf435be1ad1b81b90c2ff39a501e5a7334c037f.png" alt="\hat{\rho}(\omega) &amp;= \rho_0 \left[ 1 - \sum_k m_k \left(1 - \frac{1}{1 +
+<p><img src="_images/math/bd5c5e2c200ad9033f13d77f918fa8f6248bf33f.png" alt="\hat{\rho}(\omega) &amp;= \rho_0 \left[ 1 - \sum_k m_k \left(1 - \frac{1}{1 +
 (j \omega \tau_k)^c} \right) \right]"/></p>
 </div></div>
 <div class="section" id="real-and-imaginary-parts">
 <h2>real and imaginary parts<a class="headerlink" href="#real-and-imaginary-parts" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/a31b7865622a6a27ba6a56da38cfddc4387f401b.png" alt="\rho'(\omega) &amp;= \rho_0 \cdot \left(1 - m \frac{ (\omega \tau)^{c}
+<p><img src="_images/math/8a72265b9cb921ae3f3134880c492414cc2700e0.png" alt="\rho'(\omega) &amp;= \rho_0 \cdot \left(1 - m \frac{ (\omega \tau)^{c}
 \left(cos(\frac{c \pi}{2}) + (\omega \tau)^{c}\right)}{1 + 2 (\omega
 \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}\right)\\
 \rho''(\omega) &amp;= m \frac{ - \rho_0 (\omega \tau)^{c} sin(\frac{c
@@ -62,7 +60,7 @@
 <div class="section" id="derivatives">
 <h2>derivatives<a class="headerlink" href="#derivatives" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/dd29d259333fac95b1c1e7a3bebaa69d7b213a5d.png" alt="\frac{\partial \hat{\rho'}(\omega)}{\partial \rho_0} &amp;= 1 - \frac{m (\omega
+<p><img src="_images/math/419f301554f77a17456b81c60a01f064fe26461a.png" alt="\frac{\partial \hat{\rho'}(\omega)}{\partial \rho_0} &amp;= 1 - \frac{m (\omega
 \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^c}{1 + 2 (\omega \tau)^c
 cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}\\
 \frac{\partial \hat{\rho'}(\omega)}{\partial m} &amp;= - \rho_0 m (\omega \tau)^c
@@ -86,7 +84,7 @@ ln(\omega \tau) (\omega \tau)^c cos(\frac{c \pi}{2}) + m (\omega\tau)^c
 ln(\omega \tau) (\omega \tau)^{2 c}\right]}{\left[1 + 2 (\omega \tau)^c
 cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}\right]^2}"/></p>
 </div><div class="math">
-<p><img src="_images/math/9b39f8b9acfd47c92354887ea5de5c5638ca0b39.png" alt="\frac{\partial \hat{\rho}''(\omega)}{\partial \rho_0} &amp;= - \frac{m (\omega
+<p><img src="_images/math/72bf0dd0cbb84535e8cd2fb9c1cbfa804942e3b0.png" alt="\frac{\partial \hat{\rho}''(\omega)}{\partial \rho_0} &amp;= - \frac{m (\omega
 \tau)^c sin(\frac{c \pi}{2})}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) +
 (\omega \tau)^{2 c}}\\
 \frac{\partial \hat{\rho''}(\omega)}{\partial m} &amp;= - \rho_0 m (\omega
@@ -116,7 +114,7 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -137,7 +135,7 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
 <li class="toctree-l2"><a class="reference internal" href="theory_overview.html">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory_dd_res.html">Debye decomposition resistivities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory_dd_cond.html">Debye decomposition on conductivities</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Cole-Cole decomposition resistivities</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cole-Cole decomposition resistivities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#complex">complex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#real-and-imaginary-parts">real and imaginary parts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#derivatives">derivatives</a></li>
@@ -167,17 +165,14 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -188,11 +183,11 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/theory_cc_res.txt"
+      <a href="_sources/theory_cc_res.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

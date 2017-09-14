@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Windows &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Windows &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Installation" href="installation.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Linux" href="install_linux.html" />
     <link rel="prev" title="Installation" href="installation.html" />
    
@@ -68,7 +66,7 @@ distribution.</p>
 <a class="reference internal image-reference" href="_images/file_explorer.png"><img alt="_images/file_explorer.png" src="_images/file_explorer.png" style="width: 390.0px; height: 52.65px;" /></a>
 </li>
 <li><p class="first">The following screenshots show the steps of the setup wizard. Usually all
-presets can be accepted by clicking on the &#8216;next&#8217; button.</p>
+presets can be accepted by clicking on the ‘next’ button.</p>
 <a class="reference internal image-reference" href="_images/setup1.png"><img alt="_images/setup1.png" src="_images/setup1.png" style="width: 330.2px; height: 258.05px;" /></a>
 <a class="reference internal image-reference" href="_images/setup2.png"><img alt="_images/setup2.png" src="_images/setup2.png" style="width: 333.45px; height: 259.35px;" /></a>
 <a class="reference internal image-reference" href="_images/setup3.png"><img alt="_images/setup3.png" src="_images/setup3.png" style="width: 333.45px; height: 260.0px;" /></a>
@@ -87,7 +85,7 @@ extension.</p>
 <li><p class="first">Find the file <strong>fix_registry_windows.py</strong> that resides in the root directory
 of the zip-archive (or the extracted directory). Note that sometimes the file
 extension <em>.py</em> is not shown.  Right click on the file, and select
-&#8220;Open with&#8221;.</p>
+“Open with”.</p>
 <a class="reference internal image-reference" href="_images/setup5.png"><img alt="_images/setup5.png" src="_images/setup5.png" style="width: 495.95px; height: 191.1px;" /></a>
 </li>
 <li><p class="first">The following dialog in Windows 7 looks like:</p>
@@ -96,16 +94,16 @@ extension <em>.py</em> is not shown.  Right click on the file, and select
 <li><p class="first">The Windows 8.1 version looks like this:</p>
 <a class="reference internal image-reference" href="_images/open_with_01.png"><img alt="_images/open_with_01.png" src="_images/open_with_01.png" style="width: 239.85px; height: 128.70000000000002px;" /></a>
 </li>
-<li><p class="first">Click on &#8216;More options&#8217; to expand the window:</p>
+<li><p class="first">Click on ‘More options’ to expand the window:</p>
 <a class="reference internal image-reference" href="_images/setup6.png"><img alt="_images/setup6.png" src="_images/setup6.png" style="width: 236.6px; height: 296.40000000000003px;" /></a>
 </li>
-<li><p class="first">Check the box &#8220;Use this app for all .py files&#8221;. Scroll down and click on
-&#8220;Look for another app on this PC&#8221; at the bottom:</p>
+<li><p class="first">Check the box “Use this app for all .py files”. Scroll down and click on
+“Look for another app on this PC” at the bottom:</p>
 <a class="reference internal image-reference" href="_images/setup7.png"><img alt="_images/setup7.png" src="_images/setup7.png" style="width: 245.05px; height: 296.40000000000003px;" /></a>
 </li>
 <li><p class="first">A file-open dialog appears. Select the python.exe binary in the Anaconda
 installation directory (in this example <strong>C:\UsersMaximilian\Anaconda</strong>),
-and click &#8220;open&#8221;.</p>
+and click “open”.</p>
 <a class="reference internal image-reference" href="_images/setup8.png"><img alt="_images/setup8.png" src="_images/setup8.png" style="width: 309.40000000000003px; height: 423.15000000000003px;" /></a>
 </li>
 <li><p class="first">The icon next to all Python (.py) files should now show the Python logo:</p>
@@ -132,7 +130,7 @@ archive file to a new directory:</p>
 <li><p class="first">We provide a MSI-Installation file called <strong>dd_tools_0.5.4.win.amd64.msi</strong>
 (the version number can vary). Execute this installer by double clicking on
 it, and follow the installation instructions (usually all preset settings can
-be accepted by clicking &#8216;next&#8217;).</p>
+be accepted by clicking ‘next’).</p>
 <img alt="_images/setup02.png" src="_images/setup02.png" />
 </li>
 <li><p class="first">After the installation, open the following subdirectory in the extracted
@@ -178,12 +176,12 @@ Subsequent calls should be much faster!</p>
 <ul>
 <li><p class="first">We experienced some Problems with Anaconda 2.4 on Windows 64-bit with the
 mock-module missing:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>pkg_resources.DistributionNotFound: The &#39;mock&#39; distribution was not found and is
- required by matplotlib
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">DistributionNotFound</span><span class="p">:</span> <span class="n">The</span> <span class="s1">&#39;mock&#39;</span> <span class="n">distribution</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">found</span> <span class="ow">and</span> <span class="ow">is</span>
+ <span class="n">required</span> <span class="n">by</span> <span class="n">matplotlib</span>
 </pre></div>
 </div>
 <p>Open the Anaconda command prompt an execute:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>pip install mock
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">mock</span>
 </pre></div>
 </div>
 </li>
@@ -207,7 +205,7 @@ it in order to implement the fixes.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -222,7 +220,7 @@ it in order to implement the fixes.</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="installation.html">Installation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">Windows</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Windows</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#installing-the-anaconda-python-distribution">Installing the Anaconda Python distribution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-the-dd-tools">Installing the DD tools</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optional-installing-miktex">(optional) Installing MiKTex</a></li>
@@ -252,17 +250,14 @@ it in order to implement the fixes.</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -273,11 +268,11 @@ it in order to implement the fixes.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/install_windows.txt"
+      <a href="_sources/install_windows.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

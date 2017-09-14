@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>lib_dd.io package &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>lib_dd.io package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="../index.html" />
-    <link rel="up" title="API" href="../api.html" />
-    <link rel="prev" title="lib_dd.conductivity package" href="lib_dd.conductivity.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lib_dd.models package" href="lib_dd.models.html" />
+    <link rel="prev" title="lib_dd.decomposition package" href="lib_dd.decomposition.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -52,14 +51,14 @@
 <p>This is the default output format</p>
 <dl class="function">
 <dt id="lib_dd.io.ascii.save_base_results">
-<tt class="descclassname">lib_dd.io.ascii.</tt><tt class="descname">save_base_results</tt><big>(</big><em>final_iterations</em>, <em>data</em><big>)</big><a class="headerlink" href="#lib_dd.io.ascii.save_base_results" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.ascii.</code><code class="descname">save_base_results</code><span class="sig-paren">(</span><em>final_iterations</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.ascii.save_base_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save data files that are shared between
 dd_single.py/dd_time.py/dd_space_time.py</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.io.ascii.save_data">
-<tt class="descclassname">lib_dd.io.ascii.</tt><tt class="descname">save_data</tt><big>(</big><em>data</em>, <em>NDlist</em><big>)</big><a class="headerlink" href="#lib_dd.io.ascii.save_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.ascii.</code><code class="descname">save_data</code><span class="sig-paren">(</span><em>data</em>, <em>NDlist</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.ascii.save_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save fit results to the current directory</p>
 </dd></dl>
 
@@ -68,22 +67,22 @@ dd_single.py/dd_time.py/dd_space_time.py</p>
 <span id="lib-dd-io-ascii-audit-module"></span><h2>lib_dd.io.ascii_audit module<a class="headerlink" href="#module-lib_dd.io.ascii_audit" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lib_dd.io.ascii_audit.save_data">
-<tt class="descclassname">lib_dd.io.ascii_audit.</tt><tt class="descname">save_data</tt><big>(</big><em>data</em>, <em>norm_factors</em>, <em>final_iterations</em><big>)</big><a class="headerlink" href="#lib_dd.io.ascii_audit.save_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.ascii_audit.</code><code class="descname">save_data</code><span class="sig-paren">(</span><em>data</em>, <em>norm_factors</em>, <em>final_iterations</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.ascii_audit.save_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.io.ascii_audit.save_frequency_data">
-<tt class="descclassname">lib_dd.io.ascii_audit.</tt><tt class="descname">save_frequency_data</tt><big>(</big><em>final_iterations</em>, <em>data</em>, <em>header</em><big>)</big><a class="headerlink" href="#lib_dd.io.ascii_audit.save_frequency_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.ascii_audit.</code><code class="descname">save_frequency_data</code><span class="sig-paren">(</span><em>final_iterations</em>, <em>data</em>, <em>header</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.ascii_audit.save_frequency_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.io.ascii_audit.save_integrated_parameters">
-<tt class="descclassname">lib_dd.io.ascii_audit.</tt><tt class="descname">save_integrated_parameters</tt><big>(</big><em>final_iterations</em>, <em>data</em>, <em>header</em><big>)</big><a class="headerlink" href="#lib_dd.io.ascii_audit.save_integrated_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.ascii_audit.</code><code class="descname">save_integrated_parameters</code><span class="sig-paren">(</span><em>final_iterations</em>, <em>data</em>, <em>header</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.ascii_audit.save_integrated_parameters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.io.ascii_audit.save_results">
-<tt class="descclassname">lib_dd.io.ascii_audit.</tt><tt class="descname">save_results</tt><big>(</big><em>data</em>, <em>NDlist</em><big>)</big><a class="headerlink" href="#lib_dd.io.ascii_audit.save_results" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.ascii_audit.</code><code class="descname">save_results</code><span class="sig-paren">(</span><em>data</em>, <em>NDlist</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.ascii_audit.save_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save fit results to the current directory</p>
 </dd></dl>
 
@@ -92,7 +91,7 @@ dd_single.py/dd_time.py/dd_space_time.py</p>
 <span id="lib-dd-io-helper-module"></span><h2>lib_dd.io.helper module<a class="headerlink" href="#module-lib_dd.io.helper" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lib_dd.io.helper.save_f">
-<tt class="descclassname">lib_dd.io.helper.</tt><tt class="descname">save_f</tt><big>(</big><em>fid</em>, <em>final_iterations</em>, <em>norm_factors</em><big>)</big><a class="headerlink" href="#lib_dd.io.helper.save_f" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.helper.</code><code class="descname">save_f</code><span class="sig-paren">(</span><em>fid</em>, <em>final_iterations</em>, <em>norm_factors</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.helper.save_f" title="Permalink to this definition">¶</a></dt>
 <dd><p>write model response directly in a file handler</p>
 <p>Also save forward response format to f_format.dat</p>
 </dd></dl>
@@ -102,17 +101,16 @@ dd_single.py/dd_time.py/dd_space_time.py</p>
 <span id="lib-dd-io-io-general-module"></span><h2>lib_dd.io.io_general module<a class="headerlink" href="#module-lib_dd.io.io_general" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lib_dd.io.io_general.save_fit_results">
-<tt class="descclassname">lib_dd.io.io_general.</tt><tt class="descname">save_fit_results</tt><big>(</big><em>data</em>, <em>NDobj</em><big>)</big><a class="headerlink" href="#lib_dd.io.io_general.save_fit_results" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.io.io_general.</code><code class="descname">save_fit_results</code><span class="sig-paren">(</span><em>data</em>, <em>NDobj</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.io.io_general.save_fit_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save results of all DD fits to files</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data:</strong></p>
-<p><strong>NDobj: one or more ND objects. This is either a ND object, or list of ND</strong></p>
-<blockquote class="last">
-<div><p>objects</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> – </li>
+<li><strong>NDobj</strong> (<em>one</em><em> or </em><em>more ND objects. This is either a ND object</em><em>, or </em><em>list of ND</em>) – objects</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -129,7 +127,7 @@ dd_single.py/dd_time.py/dd_space_time.py</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -167,7 +165,7 @@ dd_single.py/dd_time.py/dd_space_time.py</p>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lib_dd.conductivity.html">lib_dd.conductivity package</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">lib_dd.io package</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">lib_dd.io package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-lib_dd.io.ascii">lib_dd.io.ascii module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-lib_dd.io.ascii_audit">lib_dd.io.ascii_audit module</a></li>
@@ -185,22 +183,22 @@ dd_single.py/dd_time.py/dd_space_time.py</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API</a><ul>
-      <li>Previous: <a href="lib_dd.conductivity.html" title="previous chapter">lib_dd.conductivity package</a></li>
+  <li><a href="lib_dd.html">lib_dd package</a><ul>
+      <li>Previous: <a href="lib_dd.decomposition.html" title="previous chapter">lib_dd.decomposition package</a></li>
+      <li>Next: <a href="lib_dd.models.html" title="next chapter">lib_dd.models package</a></li>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -211,11 +209,11 @@ dd_single.py/dd_time.py/dd_space_time.py</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../_sources/api/lib_dd.io.txt"
+      <a href="../_sources/api/lib_dd.io.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

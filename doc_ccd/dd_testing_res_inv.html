@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Testing and characterization &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Testing and characterization &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Profiling and Debugging" href="debugging.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API" href="api.html" />
     <link rel="prev" title="Profiling and Debugging" href="debugging.html" />
    
@@ -69,8 +67,8 @@ the (end-user) usage of this API will be tested.</p>
 <p>These tests do not concern themselves with the results of certain fits. The
 only goal of these tests is to not crash during the exection.</p>
 <p>The test can be executed in the CMD by the commands:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd src/interface/tests/NoCrashTests
-nosetests -s -v test_cases.py
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">src</span><span class="o">/</span><span class="n">interface</span><span class="o">/</span><span class="n">tests</span><span class="o">/</span><span class="n">NoCrashTests</span>
+<span class="n">nosetests</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">v</span> <span class="n">test_cases</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
 </div>
@@ -79,19 +77,19 @@ nosetests -s -v test_cases.py
 <p>The test/characterization matrix consists of the following values:</p>
 <ul class="simple">
 <li>RMS, RMS_re, RMS_im</li>
-<li><img class="math" src="_images/math/380e060c35211c6a80aff7dc74a01e65149cec4a.png" alt="\rho_0^{orig} - \rho_0^{fit}"/></li>
-<li><img class="math" src="_images/math/5d32997cd0afbe5c70b821086a3a88d2c6772690.png" alt="g_i^{orig} - g_i^{fit}"/></li>
+<li><img class="math" src="_images/math/c02d34052a43ce0bbdcc0a3ab389ff5ef404bd13.png" alt="\rho_0^{orig} - \rho_0^{fit}"/></li>
+<li><img class="math" src="_images/math/4746810955090b4beeda2ba63bde7f8707d3ea59.png" alt="g_i^{orig} - g_i^{fit}"/></li>
 </ul>
 <p>Those criteria are tested for the following scenarios (based upon the synthetic
 specutrum described above):</p>
 <ul>
-<li><p class="first">Vary the number of <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> from 1 to 1000 (in logarithmic spacing)</p>
+<li><p class="first">Vary the number of <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> from 1 to 1000 (in logarithmic spacing)</p>
 </li>
-<li><p class="first">Vary <img class="math" src="_images/math/02412c6f51954cfa864846e85e0775b2071b9571.png" alt="\rho_0"/> between 1 and 10000 <img class="math" src="_images/math/89fa366d9068144cc82964d3c682d06c51b129d1.png" alt="\Omega m"/> (in logarithmic spacing)</p>
+<li><p class="first">Vary <img class="math" src="_images/math/d5b4a098286d906ca2e61aac7332930bf6898618.png" alt="\rho_0"/> between 1 and 10000 <img class="math" src="_images/math/63aa8639fa10609f8e940bb48be6707930b596c2.png" alt="\Omega m"/> (in logarithmic spacing)</p>
 </li>
 <li><p class="first">Vary the overall level of the chargebility values by factors of 0.01, 0.1, 10, 100, 1000 (in comparison to the initial model)</p>
 </li>
-<li><p class="first">Vary the mean values of the <img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/>-peaks as follows (original <img class="math" src="_images/math/18719e8cdd28e514390a9bd15b5904a3661d93b8.png" alt="(0, -4.5)"/>):</p>
+<li><p class="first">Vary the mean values of the <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>-peaks as follows (original <img class="math" src="_images/math/eb74e256f6dbbe78654166d79e7a07bc25c8dd74.png" alt="(0, -4.5)"/>):</p>
 <blockquote>
 <div><ul class="simple">
 <li>(0, -3), (0, -2), (0, -1)</li>
@@ -112,7 +110,7 @@ specutrum described above):</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -134,7 +132,7 @@ specutrum described above):</p>
 <li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="debugging.html">Profiling and Debugging</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="debugging.html#debugging-notes">Debugging notes</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="">Testing and characterization</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Testing and characterization</a></li>
 </ul>
 </li>
 </ul>
@@ -153,17 +151,14 @@ specutrum described above):</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -174,11 +169,11 @@ specutrum described above):</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/dd_testing_res_inv.txt"
+      <a href="_sources/dd_testing_res_inv.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

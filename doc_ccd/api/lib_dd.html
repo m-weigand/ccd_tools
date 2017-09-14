@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>lib_dd package &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>lib_dd package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="../index.html" />
-    <link rel="up" title="API" href="../api.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lib_dd.conductivity package" href="lib_dd.conductivity.html" />
     <link rel="prev" title="API" href="../api.html" />
    
@@ -106,30 +104,29 @@ Jacobian implementation for a Debye-Decomposition style function
 Resistivity formulation</p>
 <dl class="function">
 <dt id="lib_dd.Jacobian.Jacobian">
-<tt class="descclassname">lib_dd.Jacobian.</tt><tt class="descname">Jacobian</tt><big>(</big><em>omega</em>, <em>pars</em>, <em>s</em>, <em>partials</em><big>)</big><a class="headerlink" href="#lib_dd.Jacobian.Jacobian" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.Jacobian.</code><code class="descname">Jacobian</code><span class="sig-paren">(</span><em>omega</em>, <em>pars</em>, <em>s</em>, <em>partials</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.Jacobian.Jacobian" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the Jacobian matrix for a given set of parameters m and
-relaxation times s (<img class="math" src="../_images/math/9ad3cdda48f165cf5cabe47e5906bc81e72a65bf.png" alt="s = log_{10}(\tau)"/>).</p>
+relaxation times s (<img class="math" src="../_images/math/1877d750070e5d95c7c45148424faca9a0cb21b3.png" alt="s = log_{10}(\tau)"/>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>omega</strong> : Angular frequencies <img class="math" src="../_images/math/19c4b958525e11c0821c4768d3cac5fb235bbb8e.png" alt="2 \cdot \pi \cdot f"/></p>
-<p><strong>pars</strong> : <img class="math" src="../_images/math/02412c6f51954cfa864846e85e0775b2071b9571.png" alt="\rho_0"/> and <img class="math" src="../_images/math/21728519fb5117232be3dab5913f25e4508c8c29.png" alt="m_i"/> values in the parmeterisation</p>
-<blockquote>
-<div><p>(linear,log10) of the provided partials</p>
-</div></blockquote>
-<p><strong>s:  :math:`tau` values in log10</strong></p>
-<p><strong>partials</strong> : List of the four partial derivative functions</p>
-<blockquote>
-<div><p><img class="math" src="../_images/math/945fc4bb3d3cde06b07c546c3441ff4102be3e18.png" alt="\frac{\partial Re}{\partial \rho0}, \frac{\partial
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>omega</strong> (Angular frequencies <img class="math" src="../_images/math/ffa3a3a70fff9512c7e3e242d4f27e0689b542a8.png" alt="2 \cdot \pi \cdot f"/>) – </li>
+<li><strong>pars</strong> (<img class="math" src="../_images/math/d5b4a098286d906ca2e61aac7332930bf6898618.png" alt="\rho_0"/> and <img class="math" src="../_images/math/a9850fd3cf70d5ac90a474d257041fe9dcf965e7.png" alt="m_i"/> values in the parmeterisation) – (linear,log10) of the provided partials</li>
+<li><strong>s</strong> (<img class="math" src="../_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values in log10) – </li>
+<li><strong>partials</strong> (<em>List of the four partial derivative functions</em>) – <img class="math" src="../_images/math/c69eb43b3620221ff934c5260447aaacefe9b195.png" alt="\frac{\partial Re}{\partial \rho0}, \frac{\partial
 Re}{\partial m_i}, \frac{\partial -Im}{\partial \rho0},
-\frac{\partial -Im}{\partial m_i}"/></p>
-</div></blockquote>
+\frac{\partial -Im}{\partial m_i}"/></li>
+</ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The derivatives of d Re(rho)/d g_i and d -Im(rho)d g_i in form of a</p>
-<p>2*K x P matrix (K = number of frequencies), (P = number of model</p>
-<p class="last">parameters)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>The derivatives of d Re(rho)/d g_i and d -Im(rho)d g_i in form of a</em></li>
+<li><em>2*K x P matrix (K = number of frequencies), (P = number of model</em></li>
+<li><em>parameters)</em></li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -151,12 +148,12 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.<
 with this program.  If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
 <dl class="function">
 <dt id="lib_dd.base_class.determine_tau_range">
-<tt class="descclassname">lib_dd.base_class.</tt><tt class="descname">determine_tau_range</tt><big>(</big><em>settings</em><big>)</big><a class="headerlink" href="#lib_dd.base_class.determine_tau_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the tau values depending on the settings &#8216;Nd&#8217;, &#8216;tau_values&#8217;
-and &#8216;tau_sel&#8217; in the dict &#8216;settings&#8217;</p>
+<code class="descclassname">lib_dd.base_class.</code><code class="descname">determine_tau_range</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.determine_tau_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the tau values depending on the settings ‘Nd’, ‘tau_values’
+and ‘tau_sel’ in the dict ‘settings’</p>
 <dl class="docutils">
 <dt>Tau values can be set by using one of the following strings in</dt>
-<dd><p class="first">self.settings[&#8216;tausel&#8217;]:</p>
+<dd><p class="first">self.settings[‘tausel’]:</p>
 <blockquote class="last">
 <div>data
 data_ext
@@ -171,19 +168,24 @@ factor_left,</div></blockquote>
 
 <dl class="function">
 <dt id="lib_dd.base_class.get_tau_values_for_data">
-<tt class="descclassname">lib_dd.base_class.</tt><tt class="descname">get_tau_values_for_data</tt><big>(</big><em>frequencies</em>, <em>Nd</em>, <em>factor_left=1</em>, <em>factor_right=1</em><big>)</big><a class="headerlink" href="#lib_dd.base_class.get_tau_values_for_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the <img class="math" src="../_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values corresponding to the frequency range of
+<code class="descclassname">lib_dd.base_class.</code><code class="descname">get_tau_values_for_data</code><span class="sig-paren">(</span><em>frequencies</em>, <em>Nd</em>, <em>factor_left=1</em>, <em>factor_right=1</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.get_tau_values_for_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <img class="math" src="../_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values corresponding to the frequency range of
 the data set.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>Nd</strong> : number of <img class="math" src="../_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> values per decade</p>
-<p><strong>factor_left</strong> : factor to divide to the lower limit by</p>
-<p><strong>factor_right</strong> : factor to multiply to the upper limit</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Nd</strong> (number of <img class="math" src="../_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values per decade) – </li>
+<li><strong>factor_left</strong> (<em>factor to divide to the lower limit by</em>) – </li>
+<li><strong>factor_right</strong> (<em>factor to multiply to the upper limit</em>) – </li>
+</ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tau,s with <img class="math" src="../_images/math/9ad3cdda48f165cf5cabe47e5906bc81e72a65bf.png" alt="s = log_{10}(\tau)"/></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tau,s with <img class="math" src="../_images/math/1877d750070e5d95c7c45148424faca9a0cb21b3.png" alt="s = log_{10}(\tau)"/></p>
 </td>
 </tr>
 </tbody>
@@ -192,22 +194,24 @@ the data set.</p>
 
 <dl class="class">
 <dt id="lib_dd.base_class.integrated_parameters">
-<em class="property">class </em><tt class="descclassname">lib_dd.base_class.</tt><tt class="descname">integrated_parameters</tt><a class="headerlink" href="#lib_dd.base_class.integrated_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<em class="property">class </em><code class="descclassname">lib_dd.base_class.</code><code class="descname">integrated_parameters</code><a class="headerlink" href="#lib_dd.base_class.integrated_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Computation of integrated paramters. This class is not meant to be used
-alone, it is meant to be inherited by &#8216;dd_resistivity_skeleton&#8217;</p>
+alone, it is meant to be inherited by ‘dd_resistivity_skeleton’</p>
 <dl class="method">
 <dt id="lib_dd.base_class.integrated_parameters.compute_par_stats">
-<tt class="descname">compute_par_stats</tt><big>(</big><em>pars</em><big>)</big><a class="headerlink" href="#lib_dd.base_class.integrated_parameters.compute_par_stats" title="Permalink to this definition">¶</a></dt>
+<code class="descname">compute_par_stats</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.integrated_parameters.compute_par_stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a given parameter set (i.e. a fit result), compute relevant
-statistical values such das <img class="math" src="../_images/math/cf807299163b7f2f1075652a5654fa01a913b541.png" alt="m_{tot}"/>, <img class="math" src="../_images/math/330327f487670066f60abab01973c2179896a7c6.png" alt="m_{tot}^n"/>,
-<img class="math" src="../_images/math/d0df8391d7fbbf710147c128592efc92d63cf0a5.png" alt="\tau_{50}"/>, <img class="math" src="../_images/math/7285541d7106a4f1a35d9af243a2b0c593e3de17.png" alt="\tau_{mean}"/>, <img class="math" src="../_images/math/85ac97cba924681d8968c336d3567393b249e588.png" alt="\tau_{peak}"/></p>
+statistical values such das <img class="math" src="../_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>, <img class="math" src="../_images/math/543990fbd10f06e4d6ecc1e279835ed0866163a8.png" alt="m_{tot}^n"/>,
+<img class="math" src="../_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/>, <img class="math" src="../_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/>, <img class="math" src="../_images/math/3832ca1fb48efaa53b58192b903354685e62e042.png" alt="\tau_{peak}"/></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>stat_pars</strong> : dict containing the computed parameters</p>
-<p class="last">Also store stat_pars in self.stat_pars</p>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>stat_pars</strong> (<em>dict containing the computed parameters</em>)</li>
+<li><em>Also store stat_pars in self.stat_pars</em></li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -218,11 +222,11 @@ statistical values such das <img class="math" src="../_images/math/cf807299163b7
 
 <dl class="class">
 <dt id="lib_dd.base_class.starting_pars_3">
-<em class="property">class </em><tt class="descclassname">lib_dd.base_class.</tt><tt class="descname">starting_pars_3</tt><big>(</big><em>re</em>, <em>mim</em>, <em>frequencies</em>, <em>taus</em><big>)</big><a class="headerlink" href="#lib_dd.base_class.starting_pars_3" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<em class="property">class </em><code class="descclassname">lib_dd.base_class.</code><code class="descname">starting_pars_3</code><span class="sig-paren">(</span><em>re</em>, <em>mim</em>, <em>frequencies</em>, <em>taus</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.starting_pars_3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="lib_dd.base_class.starting_pars_3.estimate">
-<tt class="descname">estimate</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#lib_dd.base_class.starting_pars_3.estimate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">estimate</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.starting_pars_3.estimate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine a starting model by creating frequency-decade wise mean
 values of mim and then computing a fixed chargeability value for each
 frequency decade.</p>
@@ -230,12 +234,12 @@ frequency decade.</p>
 
 <dl class="method">
 <dt id="lib_dd.base_class.starting_pars_3.get_bins">
-<tt class="descname">get_bins</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.base_class.starting_pars_3.get_bins" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_bins</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.starting_pars_3.get_bins" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.base_class.starting_pars_3.get_sec_data">
-<tt class="descname">get_sec_data</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.base_class.starting_pars_3.get_sec_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_sec_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.starting_pars_3.get_sec_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -258,83 +262,82 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
 <p>pars: linear representation of parameters</p>
 <dl class="function">
 <dt id="lib_dd.int_pars.U_tau">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">U_tau</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.U_tau" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">U_tau</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.U_tau" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute uniformity parameter similar to Nordsiek and Weller, 2008:
-<img class="math" src="../_images/math/6064683564fc0f28d881ef63cc55bdc91aee91bd.png" alt="U_{\tau} = \frac{\tau_{60}}{\tau_{10}}"/></p>
+<img class="math" src="../_images/math/56ed0abf9f8e5380adb0b44b9bee15e5e8a0c7ce.png" alt="U_{\tau} = \frac{\tau_{60}}{\tau_{10}}"/></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.decade_loadings">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">decade_loadings</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.decade_loadings" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">decade_loadings</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.decade_loadings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the chargeability sum for each frequency decade. Store in linear
 scale.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.m_data">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">m_data</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.m_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">m_data</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.m_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.m_tot">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">m_tot</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.m_tot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">m_tot</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.m_tot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.m_tot_n">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">m_tot_n</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.m_tot_n" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">m_tot_n</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.m_tot_n" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.rho0">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">rho0</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.rho0" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">rho0</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.rho0" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.tau_50">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">tau_50</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.tau_50" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">tau_50</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.tau_50" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.tau_arithmetic">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">tau_arithmetic</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.tau_arithmetic" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">tau_arithmetic</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.tau_arithmetic" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.tau_geometric">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">tau_geometric</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.tau_geometric" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">tau_geometric</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.tau_geometric" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.tau_max">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">tau_max</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.tau_max" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">tau_max</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.tau_max" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.tau_mean">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">tau_mean</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.tau_mean" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">tau_mean</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.tau_mean" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.tau_peaks">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">tau_peaks</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.tau_peaks" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">tau_peaks</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.tau_peaks" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.int_pars.tau_x">
-<tt class="descclassname">lib_dd.int_pars.</tt><tt class="descname">tau_x</tt><big>(</big><em>pars</em>, <em>tau</em>, <em>s</em><big>)</big><a class="headerlink" href="#lib_dd.int_pars.tau_x" title="Permalink to this definition">¶</a></dt>
-<dd><p>Arbitrary cumultative <img class="math" src="../_images/math/a8951fd2fd567355af4138f8ad026e31b8ca7251.png" alt="\tau_x"/> values can be computed using the
+<code class="descclassname">lib_dd.int_pars.</code><code class="descname">tau_x</code><span class="sig-paren">(</span><em>pars</em>, <em>tau</em>, <em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.int_pars.tau_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arbitrary cumultative <img class="math" src="../_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> values can be computed using the
 environment variable DD_TAU_X: The string separates the requested
-percentages as fractions with &#8216;;&#8217; characters.</p>
-<p>Example:</p>
-<blockquote>
-<div>DD_TAU_X=&#8221;0.2;0.35;0.6&#8221;</div></blockquote>
+percentages as fractions with ‘;’ characters.</p>
+<p class="rubric">Example</p>
+<p>DD_TAU_X=”0.2;0.35;0.6”</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-lib_dd.interface">
 <span id="lib-dd-interface-module"></span><h2>lib_dd.interface module<a class="headerlink" href="#module-lib_dd.interface" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2014,2015 Maximilian Weigand</p>
+<p>Copyright 2014-2017 Maximilian Weigand</p>
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -348,21 +351,21 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
 dd_time, dd_space_time.</p>
 <dl class="function">
 <dt id="lib_dd.interface.aggregate_dicts">
-<tt class="descclassname">lib_dd.interface.</tt><tt class="descname">aggregate_dicts</tt><big>(</big><em>iteration_list</em>, <em>dict_name</em><big>)</big><a class="headerlink" href="#lib_dd.interface.aggregate_dicts" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.interface.</code><code class="descname">aggregate_dicts</code><span class="sig-paren">(</span><em>iteration_list</em>, <em>dict_name</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.aggregate_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a given list of NDimInv iterations, aggregate the dictionaries with
-name &#8216;dict_name&#8217; (Iteration.dict_name) and return on dict containing the
+name ‘dict_name’ (Iteration.dict_name) and return on dict containing the
 values of all iterations as lists.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.interface.create_output_dir">
-<tt class="descclassname">lib_dd.interface.</tt><tt class="descname">create_output_dir</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#lib_dd.interface.create_output_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.interface.</code><code class="descname">create_output_dir</code><span class="sig-paren">(</span><em>options</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.create_output_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the output directory</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.interface.get_command">
-<tt class="descclassname">lib_dd.interface.</tt><tt class="descname">get_command</tt><big>(</big><big>)</big><a class="headerlink" href="#lib_dd.interface.get_command" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.interface.</code><code class="descname">get_command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.get_command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a string with the full command call, including environment
 variables.</p>
 <p>Environment variables are exported in separate lines</p>
@@ -370,7 +373,7 @@ variables.</p>
 
 <dl class="function">
 <dt id="lib_dd.interface.load_frequencies_and_data">
-<tt class="descclassname">lib_dd.interface.</tt><tt class="descname">load_frequencies_and_data</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#lib_dd.interface.load_frequencies_and_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.interface.</code><code class="descname">load_frequencies_and_data</code><span class="sig-paren">(</span><em>options</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.load_frequencies_and_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load frequencies and data from options.frequency_file and
 options.data_file. Apply certain processing steps such as:</p>
 <blockquote>
@@ -383,17 +386,12 @@ options.data_file. Apply certain processing steps such as:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>options: object as created by optparse (e.g. provided by dd_single.py or</strong></p>
-<blockquote>
-<div><p>dd_time.py)</p>
-</div></blockquote>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>options</strong> (<em>object as created by optparse</em><em> (</em><em>e.g. provided by dd_single.py or</em>) – dd_time.py)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data: data dict</p>
-<p>options: the options object can be changed by this function, e.g. when the</p>
-<blockquote class="last">
-<div><p>data type is changed.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>data</strong> (<em>data dict</em>)</li>
+<li><strong>options</strong> (<em>the options object can be changed by this function, e.g. when the</em>) – data type is changed.</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -402,7 +400,7 @@ options.data_file. Apply certain processing steps such as:</p>
 
 <dl class="function">
 <dt id="lib_dd.interface.prepare_stat_values">
-<tt class="descclassname">lib_dd.interface.</tt><tt class="descname">prepare_stat_values</tt><big>(</big><em>raw_values</em>, <em>key</em>, <em>norm_factors</em><big>)</big><a class="headerlink" href="#lib_dd.interface.prepare_stat_values" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.interface.</code><code class="descname">prepare_stat_values</code><span class="sig-paren">(</span><em>raw_values</em>, <em>key</em>, <em>norm_factors</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.prepare_stat_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare stat_pars for saving to disc.</p>
 <p>This included renormalization or padding for specific keys.</p>
 <p>Divide the statistical parameter rho0 by norm_factors and multiply m_tot_n
@@ -411,11 +409,9 @@ by them.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">values: NxM array, with N the number of spectra, and M the number of</p>
-<blockquote class="last">
-<div><p>parameters</p>
-</div></blockquote>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>values</strong> – parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">NxM array, with N the number of spectra, and M the number of</td>
 </tr>
 </tbody>
 </table>
@@ -423,13 +419,13 @@ by them.</p>
 
 <dl class="function">
 <dt id="lib_dd.interface.save_rms_values">
-<tt class="descclassname">lib_dd.interface.</tt><tt class="descname">save_rms_values</tt><big>(</big><em>rms_list</em>, <em>rms_names</em><big>)</big><a class="headerlink" href="#lib_dd.interface.save_rms_values" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.interface.</code><code class="descname">save_rms_values</code><span class="sig-paren">(</span><em>rms_list</em>, <em>rms_names</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.save_rms_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the RMS values to the corresponding filenames</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.interface.save_stat_pars">
-<tt class="descclassname">lib_dd.interface.</tt><tt class="descname">save_stat_pars</tt><big>(</big><em>stat_pars</em>, <em>norm_factors=None</em><big>)</big><a class="headerlink" href="#lib_dd.interface.save_stat_pars" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.interface.</code><code class="descname">save_stat_pars</code><span class="sig-paren">(</span><em>stat_pars</em>, <em>norm_factors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.save_stat_pars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves to current working directy.</p>
 </dd></dl>
 
@@ -448,21 +444,21 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.<
 with this program.  If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
 <dl class="class">
 <dt id="lib_dd.plot.plot_iteration">
-<em class="property">class </em><tt class="descclassname">lib_dd.plot.</tt><tt class="descname">plot_iteration</tt><a class="headerlink" href="#lib_dd.plot.plot_iteration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<em class="property">class </em><code class="descclassname">lib_dd.plot.</code><code class="descname">plot_iteration</code><a class="headerlink" href="#lib_dd.plot.plot_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>This class defines an override function for the default plot function of
 the Iteration class. The new plot function is aware of the Debye
 Decomposition approach and will plot more information (i.e. the RTD)</p>
 <p>In addition, it will renormalise data if necessary.</p>
 <dl class="class">
 <dt id="lib_dd.plot.plot_iteration.figure_environment">
-<em class="property">class </em><tt class="descname">figure_environment</tt><big>(</big><em>it</em>, <em>filename</em>, <em>keep_plot</em>, <em>nr_spectra</em><big>)</big><a class="headerlink" href="#lib_dd.plot.plot_iteration.figure_environment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<em class="property">class </em><code class="descname">figure_environment</code><span class="sig-paren">(</span><em>it</em>, <em>filename</em>, <em>keep_plot</em>, <em>nr_spectra</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.plot.plot_iteration.figure_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.plot.plot_iteration.plot">
-<tt class="descclassname">plot_iteration.</tt><tt class="descname">plot</tt><big>(</big><em>it</em>, <em>filename</em>, <em>keep_plot=False</em>, <em>norm_factors=None</em><big>)</big><a class="headerlink" href="#lib_dd.plot.plot_iteration.plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>it</em>, <em>filename</em>, <em>keep_plot=False</em>, <em>norm_factors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.plot.plot_iteration.plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -475,23 +471,23 @@ Decomposition approach and will plot more information (i.e. the RTD)</p>
 <span id="lib-dd-starting-parameters-module"></span><h2>lib_dd.starting_parameters module<a class="headerlink" href="#module-lib_dd.starting_parameters" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib_dd.starting_parameters.starting_parameters">
-<em class="property">class </em><tt class="descclassname">lib_dd.starting_parameters.</tt><tt class="descname">starting_parameters</tt><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<em class="property">class </em><code class="descclassname">lib_dd.starting_parameters.</code><code class="descname">starting_parameters</code><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters">
-<tt class="descname">estimate_starting_parameters</tt><big>(</big><em>spectrum</em><big>)</big><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">estimate_starting_parameters</code><span class="sig-paren">(</span><em>spectrum</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_1">
-<tt class="descname">estimate_starting_parameters_1</tt><big>(</big><em>re</em>, <em>mim</em><big>)</big><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_1" title="Permalink to this definition">¶</a></dt>
+<code class="descname">estimate_starting_parameters_1</code><span class="sig-paren">(</span><em>re</em>, <em>mim</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Heuristic 1 to generate a suitable starting distribution for a fit</p>
-<p>TODO: Florsch et al. 2014 has a name for this kind of heuristic...</p>
+<p>TODO: Florsch et al. 2014 has a name for this kind of heuristic…</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_2">
-<tt class="descname">estimate_starting_parameters_2</tt><big>(</big><em>re</em>, <em>mim</em><big>)</big><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_2" title="Permalink to this definition">¶</a></dt>
+<code class="descname">estimate_starting_parameters_2</code><span class="sig-paren">(</span><em>re</em>, <em>mim</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Try to find good starting parameters using a gaussian m-distribution.</p>
 <p>This should only work well if we have only one peak in the data
 (imaginary/phase)</p>
@@ -499,7 +495,7 @@ Decomposition approach and will plot more information (i.e. the RTD)</p>
 
 <dl class="method">
 <dt id="lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_3">
-<tt class="descname">estimate_starting_parameters_3</tt><big>(</big><em>re</em>, <em>mim</em><big>)</big><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_3" title="Permalink to this definition">¶</a></dt>
+<code class="descname">estimate_starting_parameters_3</code><span class="sig-paren">(</span><em>re</em>, <em>mim</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_3" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -519,38 +515,31 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.<
 with this program.  If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
 <dl class="function">
 <dt id="lib_dd.test_functions.assert_single_t_rms_pos_change">
-<tt class="descclassname">lib_dd.test_functions.</tt><tt class="descname">assert_single_t_rms_pos_change</tt><big>(</big><em>rms_old_result</em>, <em>rms_new_result</em>, <em>allowed_percentage</em><big>)</big><a class="headerlink" href="#lib_dd.test_functions.assert_single_t_rms_pos_change" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.test_functions.</code><code class="descname">assert_single_t_rms_pos_change</code><span class="sig-paren">(</span><em>rms_old_result</em>, <em>rms_new_result</em>, <em>allowed_percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.test_functions.assert_single_t_rms_pos_change" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrap assertTrue statements around the function</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.test_functions.single_t_rms_pos_change">
-<tt class="descclassname">lib_dd.test_functions.</tt><tt class="descname">single_t_rms_pos_change</tt><big>(</big><em>rms_old_result</em>, <em>rms_new_result</em>, <em>allowed_percentage</em><big>)</big><a class="headerlink" href="#lib_dd.test_functions.single_t_rms_pos_change" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.test_functions.</code><code class="descname">single_t_rms_pos_change</code><span class="sig-paren">(</span><em>rms_old_result</em>, <em>rms_new_result</em>, <em>allowed_percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.test_functions.single_t_rms_pos_change" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process one spectrum as described in the documentation of t_rms_pos_change</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>rms_old_result</strong> : list/array with 3 entries containing the RMS-values from</p>
-<blockquote>
-<div><p>the last recorded dd fit: Overall RMS, Real part RMS,
-Imaginary part RMS</p>
-</div></blockquote>
-<p><strong>rms_new_result</strong> : list/array with 3 entries containing the RMS-values from</p>
-<blockquote>
-<div><p>the test  dd fit: Overall RMS, Real part RMS,
-Imaginary part RMS</p>
-</div></blockquote>
-<p><strong>allowed_percentage</strong> : one percentage value for the allowed change</p>
-<blockquote>
-<div><p>between old and new result.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rms_old_result</strong> (<em>list/array with 3 entries containing the RMS-values from</em>) – the last recorded dd fit: Overall RMS, Real part RMS,
+Imaginary part RMS</li>
+<li><strong>rms_new_result</strong> (<em>list/array with 3 entries containing the RMS-values from</em>) – the test  dd fit: Overall RMS, Real part RMS,
+Imaginary part RMS</li>
+<li><strong>allowed_percentage</strong> (<em>one percentage value for the allowed change</em>) – between old and new result.</li>
+</ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>rms_within_limit</strong> : list with 3 bool entries; True for values within the</p>
-<blockquote class="last">
-<div><p>allow percentage change, False for a larger deviation</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>rms_within_limit</strong> – allow percentage change, False for a larger deviation</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list with 3 bool entries; True for values within the</p>
 </td>
 </tr>
 </tbody>
@@ -559,20 +548,19 @@ Imaginary part RMS</p>
 
 <dl class="function">
 <dt id="lib_dd.test_functions.t_rms_pos_change">
-<tt class="descclassname">lib_dd.test_functions.</tt><tt class="descname">t_rms_pos_change</tt><big>(</big><em>old_result</em>, <em>new_result</em>, <em>allowed_percentage</em><big>)</big><a class="headerlink" href="#lib_dd.test_functions.t_rms_pos_change" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.test_functions.</code><code class="descname">t_rms_pos_change</code><span class="sig-paren">(</span><em>old_result</em>, <em>new_result</em>, <em>allowed_percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.test_functions.t_rms_pos_change" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test for positive rms changes</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>old_result: dd directory containing the old run</strong></p>
-<p><strong>new_rusult: dd directory containing the new run</strong></p>
-<p><strong>allowed_percentage: percentage threshold for positive changes.</strong></p>
-<blockquote class="last">
-<div><p>If this variable is a list of length three the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>old_result</strong> (<em>dd directory containing the old run</em>) – </li>
+<li><strong>new_rusult</strong> (<em>dd directory containing the new run</em>) – </li>
+<li><strong>allowed_percentage</strong> (<em>percentage threshold for positive changes.</em>) – If this variable is a list of length three the
 values will be treated as rms, rms_re, rms_im
-thresholds</p>
-</div></blockquote>
+thresholds</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -581,41 +569,41 @@ thresholds</p>
 
 <dl class="class">
 <dt id="lib_dd.test_functions.tcolors">
-<em class="property">class </em><tt class="descclassname">lib_dd.test_functions.</tt><tt class="descname">tcolors</tt><a class="headerlink" href="#lib_dd.test_functions.tcolors" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<em class="property">class </em><code class="descclassname">lib_dd.test_functions.</code><code class="descname">tcolors</code><a class="headerlink" href="#lib_dd.test_functions.tcolors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.ENDC">
-<tt class="descname">ENDC</tt><em class="property"> = '\x1b[0m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.ENDC" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ENDC</code><em class="property"> = '\x1b[0m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.ENDC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.FAIL">
-<tt class="descname">FAIL</tt><em class="property"> = '\x1b[91m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.FAIL" title="Permalink to this definition">¶</a></dt>
+<code class="descname">FAIL</code><em class="property"> = '\x1b[91m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.FAIL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.GRAY">
-<tt class="descname">GRAY</tt><em class="property"> = '\x1b[37m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.GRAY" title="Permalink to this definition">¶</a></dt>
+<code class="descname">GRAY</code><em class="property"> = '\x1b[37m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.GRAY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.HEADER">
-<tt class="descname">HEADER</tt><em class="property"> = '\x1b[95m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.HEADER" title="Permalink to this definition">¶</a></dt>
+<code class="descname">HEADER</code><em class="property"> = '\x1b[95m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.HEADER" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.OKBLUE">
-<tt class="descname">OKBLUE</tt><em class="property"> = '\x1b]94m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.OKBLUE" title="Permalink to this definition">¶</a></dt>
+<code class="descname">OKBLUE</code><em class="property"> = '\x1b]94m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.OKBLUE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.OKGREEN">
-<tt class="descname">OKGREEN</tt><em class="property"> = '\x1b[92m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.OKGREEN" title="Permalink to this definition">¶</a></dt>
+<code class="descname">OKGREEN</code><em class="property"> = '\x1b[92m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.OKGREEN" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.WARNING">
-<tt class="descname">WARNING</tt><em class="property"> = '\x1b[93m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.WARNING" title="Permalink to this definition">¶</a></dt>
+<code class="descname">WARNING</code><em class="property"> = '\x1b[93m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.WARNING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -644,7 +632,7 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -666,7 +654,7 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
 <li class="toctree-l1"><a class="reference internal" href="../usage_and_implementation.html">Usage and implementation details</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../debugging.html">Profiling and Debugging</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">lib_dd package</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">lib_dd package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-lib_dd.Jacobian">lib_dd.Jacobian module</a></li>
@@ -698,17 +686,14 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -719,11 +704,11 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../_sources/api/lib_dd.txt"
+      <a href="../_sources/api/lib_dd.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

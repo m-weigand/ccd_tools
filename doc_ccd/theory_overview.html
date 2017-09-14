@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Overview &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Overview &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Theory of SIP models" href="theory.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Mathematical helper terms" href="theory_helper.html" />
     <link rel="prev" title="Theory of SIP models" href="theory.html" />
    
@@ -44,7 +42,7 @@
             
   <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<div><img height="520" src="_images/blockdiag-3731612c4fe5ee1e2f7b99e5e3966e6807de14fa.png" width="832" /></div><p>Within the scope of this project, the models used to described (i.e. fit) SIP
+<div><img height="520" src="_images/blockdiag-ae194b2bb9c425d5f1b5fe308193022068e89516.png" width="832" /></div><p>Within the scope of this project, the models used to described (i.e. fit) SIP
 signatures are divided in formulations using the resistivity and the
 conductivity. Within these categories, signatures can either be described by
 one term following the Cole-Cole model, or by a superposition of Cole-Cole
@@ -52,7 +50,7 @@ terms (i.e. a distribution of Cole-Cole models over the frequency/relaxation
 time range). The process of determining the various parameters (weights) for
 such a distribution is called a decomposition. The decomposition is then
 further subdivided in the Debye decomposition with a fixed <em>c</em> value of 1.0,
-and the general case for a values of <img class="math" src="_images/math/ca7a1579dfebd38cc43f4f6793dda7bd49314b52.png" alt="c \in [0, 1)"/>. This structure is
+and the general case for a values of <img class="math" src="_images/math/27aa03f3e64294a034cf889e7c12b25369cf7576.png" alt="c \in [0, 1)"/>. This structure is
 mirrored for the conductivity case.</p>
 <div class="toctree-wrapper compound">
 <ul>
@@ -65,7 +63,7 @@ mirrored for the conductivity case.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -83,7 +81,7 @@ mirrored for the conductivity case.</p>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="theory.html">Theory of SIP models</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">Overview</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Overview</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="theory_helper.html">Mathematical helper terms</a></li>
 </ul>
 </li>
@@ -114,17 +112,14 @@ mirrored for the conductivity case.</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -135,11 +130,11 @@ mirrored for the conductivity case.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/theory_overview.txt"
+      <a href="_sources/theory_overview.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

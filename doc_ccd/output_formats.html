@@ -1,30 +1,28 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Output Files &mdash; Time-lapse Cole-Cole decomposition routines 0.8.0 documentation</title>
-    
+    <title>Output Files &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.0',
+        VERSION:     '0.8.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Time-lapse Cole-Cole decomposition routines 0.8.0 documentation" href="index.html" />
-    <link rel="up" title="Fit Routines" href="fit_routines.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Theory of SIP models" href="theory.html" />
     <link rel="prev" title="ddps.py" href="programs/ddps.html" />
    
@@ -45,7 +43,7 @@
   <div class="section" id="output-files">
 <h1>Output Files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h1>
 <p>The following sections describe the output files of the various formats.
-Formats can be changed using the <strong>&#8211;output_format</strong> switch.</p>
+Formats can be changed using the <strong>–output_format</strong> switch.</p>
 <div class="section" id="ascii-audit-format">
 <h2>ascii_audit format<a class="headerlink" href="#ascii-audit-format" title="Permalink to this headline">¶</a></h2>
 <p>This output format saves fit results to ASCII text files. Each text file
@@ -56,7 +54,7 @@ created, and mix-ups of results can be prevented.</p>
 <p>This is the default output format.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Can be enabled using the <strong>&#8211;output_format ascii_audit</strong> switch</p>
+<p class="last">Can be enabled using the <strong>–output_format ascii_audit</strong> switch</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -68,16 +66,16 @@ for new decompositions!</p>
 <h3>header<a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h3>
 <p>Each output file consists of two parts: the header (four lines), and the data
 part (the rest of the file). The header looks like this</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span># id:30ffcd8e-2b75-48f9-acc4-3f93c9c0d48e
-# 20150730_14h:32m
-# /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat\
-    -d data/data.dat -o results_time --f_lambda 50\
-    --tmi_first_order --tm_i_lambda 5000 --plot
-# covf
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># id:30ffcd8e-2b75-48f9-acc4-3f93c9c0d48e</span>
+<span class="c1"># 20150730_14h:32m</span>
+<span class="c1"># /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat\</span>
+    <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results_time</span> <span class="o">--</span><span class="n">f_lambda</span> <span class="mi">50</span>\
+    <span class="o">--</span><span class="n">tmi_first_order</span> <span class="o">--</span><span class="n">tm_i_lambda</span> <span class="mi">5000</span> <span class="o">--</span><span class="n">plot</span>
+<span class="c1"># covf</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>the &#8216;#&#8217; character indicates a non-data line</li>
+<li>the ‘#’ character indicates a non-data line</li>
 <li>the first line contains a unique id, which is generated for each run of
 either <strong>dd_single.py</strong> or <strong>dd_time.py</strong>. This id changes also for repeated
 runs of the same settings!</li>
@@ -94,7 +92,7 @@ results/</li>
 <div class="section" id="files">
 <h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
 <p>A typical result directory in this format contains the following files</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>|-- covf.dat
+<div class="highlight-default"><div class="highlight"><pre><span></span>|-- covf.dat
 |-- covm.dat
 |-- data.dat
 |-- errors.dat
@@ -120,7 +118,7 @@ of covf.</li>
 <ul class="simple">
 <li><em>covm.dat</em>: Parameter coverage values for all spectra. Each line contains the
 data for one spectrum, with M columns corresponding to the M model parameters
-(i.e. <img class="math" src="_images/math/02412c6f51954cfa864846e85e0775b2071b9571.png" alt="\rho_0"/> and the <img class="math" src="_images/math/21728519fb5117232be3dab5913f25e4508c8c29.png" alt="m_i"/> values).</li>
+(i.e. <img class="math" src="_images/math/d5b4a098286d906ca2e61aac7332930bf6898618.png" alt="\rho_0"/> and the <img class="math" src="_images/math/a9850fd3cf70d5ac90a474d257041fe9dcf965e7.png" alt="m_i"/> values).</li>
 </ul>
 <ul class="simple">
 <li><em>data.dat</em> contains the input data saved in the format used by the chosen
@@ -133,7 +131,7 @@ either the resistivities, or the conductivities.</li>
 </ul>
 <ul class="simple">
 <li><em>errors.dat</em>: Stores the data weighting errors from the matrix
-<img class="math" src="_images/math/288d4c8a243e6afc4a80bf6c686098a4645535fd.png" alt="\underline{\underline{W}}_d"/>.</li>
+<img class="math" src="_images/math/cc74b92764ca403b21b4dc5d9ceb78f0719ef3dc.png" alt="\underline{\underline{W}}_d"/>.</li>
 </ul>
 <ul class="simple">
 <li>The forward response of the final iteration is stored in <em>f.dat</em>. Each row
@@ -151,7 +149,7 @@ primarily for debug purposes)</li>
 <li><em>lams_and_nr_its.dat</em>:</li>
 <li><em>m_i.dat</em>: RTDs for all spectra. Each line contains the RTD of one spectrum.</li>
 <li><em>normalization_factors.dat</em>: Normalisation factors used (will only be created
-if the <cite>&#8211;norm</cite> option was activated.</li>
+if the <cite>–norm</cite> option was activated.</li>
 </ul>
 <ul class="simple">
 <li><em>tau.dat</em>: stores the relaxation times used for decomposition</li>
@@ -172,10 +170,10 @@ of files. No, or only very limited, headers are provided. This format can make
 postprocessing easy, but should only be used if really necessary.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">can be enabled using the <strong>&#8211;output_format ascii</strong> switch</p>
+<p class="last">can be enabled using the <strong>–output_format ascii</strong> switch</p>
 </div>
 <p>A typical result directory in this format contains the following files</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>results/
+<div class="highlight-default"><div class="highlight"><pre><span></span>results/
 |-- command.dat
 |-- data.dat
 |-- data_format.dat
@@ -242,10 +240,10 @@ the conductivity formulation is used, real parts of the conductivities are
 stored here. Correspondingly, the second N columns contain imaginary parts of
 either the resistivities, or the conductivities.</li>
 <li><em>data_format.dat</em> contains the data format in the format usable with the
-<tt class="docutils literal"><span class="pre">--data_format</span></tt> command line option (usually <strong>cre_cim</strong>).</li>
+<code class="docutils literal"><span class="pre">--data_format</span></code> command line option (usually <strong>cre_cim</strong>).</li>
 <li><dl class="first docutils">
 <dt>Frequencies and corresponding angular frequencies (</dt>
-<dd><img class="math" src="_images/math/96e9bdf91c1565ba3e2016979cfc169a00162327.png" alt="\omega = 2 \cdot \pi \cdot f"/>) are stored in the files
+<dd><img class="math" src="_images/math/16cc506d5187af73241d0c841eff7b1cf7667337.png" alt="\omega = 2 \cdot \pi \cdot f"/>) are stored in the files
 <em>frequencies.dat</em> and <em>omega.dat</em>.</dd>
 </dl>
 </li>
@@ -254,7 +252,7 @@ either the resistivities, or the conductivities.</li>
 options. This file is mainly for debugging purposes, and needed to recreated
 inversion objects from fit results.</li>
 <li><em>rho_normalizations.dat</em> contains normalization factors if the option
-<tt class="docutils literal"><span class="pre">--norm_mag</span></tt> was used.</li>
+<code class="docutils literal"><span class="pre">--norm_mag</span></code> was used.</li>
 </ul>
 <p><em>dd_time.py</em> only:</p>
 <ul class="simple">
@@ -277,12 +275,12 @@ with <cite>ddps.py</cite></li>
 <div class="section" id="primary-fit-results">
 <h3>Primary fit results<a class="headerlink" href="#primary-fit-results" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p class="first"><img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> and <img class="math" src="_images/math/9ad3cdda48f165cf5cabe47e5906bc81e72a65bf.png" alt="s = log_{10}(\tau)"/> values are stored in the files
+<li><p class="first"><img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> and <img class="math" src="_images/math/1877d750070e5d95c7c45148424faca9a0cb21b3.png" alt="s = log_{10}(\tau)"/> values are stored in the files
 <em>tau.dat</em> and <em>s.dat</em>, respectively.</p>
 </li>
 <li><p class="first">The regularization parameters of the last iterations are stored in the file
 <em>lambdas.dat</em>, one per line:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="mf">1.000000000000000021e-03</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.000000000000000021e-03</span>
 <span class="mf">1.000000000000000056e-01</span>
 </pre></div>
 </div>
@@ -335,7 +333,7 @@ correspond to real part and imaginary part of resistivity, respectively. The
 </table>
 <blockquote>
 <div><div class="math">
-<p><img src="_images/math/01a32d462ab99932a62f24fb5d284ad87b14f857.png" alt="RMS_{\text{no error}} = \sqrt{\frac{1}{N} \sum_i^N d_i - f_i(m)}\\
+<p><img src="_images/math/3e7ebf2ae7e7db4756ab65cb4048fdb816241c2b.png" alt="RMS_{\text{no error}} = \sqrt{\frac{1}{N} \sum_i^N d_i - f_i(m)}\\
 RMS_{\text{with error}} = \sqrt{\frac{1}{N} \sum_i^N \frac{d_i - f_i(m)}{\epsilon_i}}"/></p>
 </div></div></blockquote>
 </li>
@@ -344,7 +342,7 @@ RMS_{\text{with error}} = \sqrt{\frac{1}{N} \sum_i^N \frac{d_i - f_i(m)}{\epsilo
 </ul>
 <ul class="simple">
 <li><em>errors.dat</em>: Stores the data weighting errors from the matrix
-<img class="math" src="_images/math/288d4c8a243e6afc4a80bf6c686098a4645535fd.png" alt="\underline{\underline{W}}_d"/>.</li>
+<img class="math" src="_images/math/cc74b92764ca403b21b4dc5d9ceb78f0719ef3dc.png" alt="\underline{\underline{W}}_d"/>.</li>
 <li>Normalization factors are stored in <em>normalization_factors.dat</em></li>
 </ul>
 <ul class="simple">
@@ -371,61 +369,61 @@ number of parameters):</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><em>m_i_results.dat</em></td>
-<td><img class="math" src="_images/math/36a542a2113e8a14f72bb1edb25e3dd56830ab0c.png" alt="m(\tau_i)"/></td>
+<td><img class="math" src="_images/math/7e2c424d5cef59d3d8f7c72f35f579a4ddd088c6.png" alt="m(\tau_i)"/></td>
 </tr>
 <tr class="row-odd"><td><em>m_tot_n_results.dat</em></td>
-<td><img class="math" src="_images/math/b89dab26f8d414284379446cee395c9a1eb6cfa7.png" alt="log_{10}(m_{tot}^n)"/></td>
+<td><img class="math" src="_images/math/27d7eeef9055e4eff11fed2534eede8614a41860.png" alt="log_{10}(m_{tot}^n)"/></td>
 </tr>
 <tr class="row-even"><td><em>m_tot_results.dat</em></td>
-<td><img class="math" src="_images/math/b89dab26f8d414284379446cee395c9a1eb6cfa7.png" alt="log_{10}(m_{tot}^n)"/></td>
+<td><img class="math" src="_images/math/27d7eeef9055e4eff11fed2534eede8614a41860.png" alt="log_{10}(m_{tot}^n)"/></td>
 </tr>
 <tr class="row-odd"><td><em>rho0_results.dat</em></td>
-<td><img class="math" src="_images/math/355d471f865590f4cf7f3dfb7487d2f7da49c98b.png" alt="log_{10}(\rho_0)"/></td>
+<td><img class="math" src="_images/math/69f93970308706d09c4d456b8033d30aff0e20d3.png" alt="log_{10}(\rho_0)"/></td>
 </tr>
 <tr class="row-even"><td><em>tau_50_results.dat</em></td>
-<td><img class="math" src="_images/math/e3069e0c292760709cfc2d96513e99309e433171.png" alt="log_{10}(\tau_{50})"/></td>
+<td><img class="math" src="_images/math/a7bde68b654a3f9ad77c719b21b615217a559c1e.png" alt="log_{10}(\tau_{50})"/></td>
 </tr>
 <tr class="row-odd"><td><em>tau_mean_results.dat</em></td>
-<td><img class="math" src="_images/math/f08ca5aa3ae88a56935d1681754b707435f072da.png" alt="log_{10}(\tau_{mean})"/></td>
+<td><img class="math" src="_images/math/eb372a73cd5f7e95cbc8712832e44f2dd6ab60da.png" alt="log_{10}(\tau_{mean})"/></td>
 </tr>
 <tr class="row-even"><td><em>tau_arithmetic_results.dat</em></td>
-<td><img class="math" src="_images/math/290814767e232e07130f41d4ec0bbe28e4cbec62.png" alt="log_{10}(\tau_{arithmetic})"/></td>
+<td><img class="math" src="_images/math/220be2e6df2459dde6d5f7dffea83cedcf022f04.png" alt="log_{10}(\tau_{arithmetic})"/></td>
 </tr>
 <tr class="row-odd"><td><em>tau_geometric_results.dat</em></td>
-<td><img class="math" src="_images/math/8845c0c4f5dbbc3af41bd216cc8c8d8e966f5388.png" alt="log_{10}(\tau_{geometric})"/></td>
+<td><img class="math" src="_images/math/b8c2eadb972f1868088a6708689bca40c961b09a.png" alt="log_{10}(\tau_{geometric})"/></td>
 </tr>
 <tr class="row-even"><td><em>tau_peak1_results.dat</em></td>
-<td><img class="math" src="_images/math/7465301a08bedf78b964ba83d93a136599aa50f7.png" alt="log_{10}(\tau_{peak}^1)"/></td>
+<td><img class="math" src="_images/math/5d147c6d585d9f3c8ce98fc58533dee76fa3354d.png" alt="log_{10}(\tau_{peak}^1)"/></td>
 </tr>
 <tr class="row-odd"><td><em>tau_peak2_results.dat</em></td>
-<td><img class="math" src="_images/math/af550d6749b23a63ed7f9aad9137b79c6f1513b1.png" alt="log_{10}(\tau_{peak}^2)"/></td>
+<td><img class="math" src="_images/math/dfc776dc3dd72944147420f448f762e5f96ae062.png" alt="log_{10}(\tau_{peak}^2)"/></td>
 </tr>
 <tr class="row-even"><td><em>tau_peaks_all_results.dat</em></td>
-<td><img class="math" src="_images/math/00d0823a9fbc46a5f688625e8bb0e7e782e6d1ad.png" alt="log_{10}(\tau_{peak}^i)"/></td>
+<td><img class="math" src="_images/math/4db87ebb98f912535b506d60e83ffdab58340d54.png" alt="log_{10}(\tau_{peak}^i)"/></td>
 </tr>
 <tr class="row-odd"><td><em>tau_x_*.dat</em></td>
-<td><img class="math" src="_images/math/034b447b75f654cb5acdef9cdd26c548227adc1a.png" alt="log_{10}(\tau_x)"/>; see description below</td>
+<td><img class="math" src="_images/math/2ba9ed8b8a4d676187ea5bc7f41e0c84b98e5383.png" alt="log_{10}(\tau_x)"/>; see description below</td>
 </tr>
 <tr class="row-even"><td><em>tau_max.dat</em></td>
-<td><img class="math" src="_images/math/d9e99c35d3632bb156b7aca0e93cd78a148a10e8.png" alt="\tau"/> corresponding to max. chargeability. First occurence.</td>
+<td><img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> corresponding to max. chargeability. First occurence.</td>
 </tr>
 <tr class="row-odd"><td><em>U_tau_results.dat</em></td>
-<td>Uniformity parameter <img class="math" src="_images/math/6064683564fc0f28d881ef63cc55bdc91aee91bd.png" alt="U_{\tau} = \frac{\tau_{60}}{\tau_{10}}"/></td>
+<td>Uniformity parameter <img class="math" src="_images/math/56ed0abf9f8e5380adb0b44b9bee15e5e8a0c7ce.png" alt="U_{\tau} = \frac{\tau_{60}}{\tau_{10}}"/></td>
 </tr>
 <tr class="row-even"><td><em>f_50_results.dat</em></td>
-<td>frequency corresponding to <img class="math" src="_images/math/d0df8391d7fbbf710147c128592efc92d63cf0a5.png" alt="\tau_{50}"/></td>
+<td>frequency corresponding to <img class="math" src="_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/></td>
 </tr>
 <tr class="row-odd"><td><em>f_mean_results.dat</em></td>
-<td>frequency corresponding to <img class="math" src="_images/math/7285541d7106a4f1a35d9af243a2b0c593e3de17.png" alt="\tau_{mean}"/></td>
+<td>frequency corresponding to <img class="math" src="_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/></td>
 </tr>
 <tr class="row-even"><td><em>f_peak1_results.dat</em></td>
-<td>frequency corresponding to <img class="math" src="_images/math/167deff453a6f91985fea0763e4ef16911902c3c.png" alt="\tau_{peak}^1"/></td>
+<td>frequency corresponding to <img class="math" src="_images/math/b4613866303dcd8ce79e5e0c2bb68939727eb4b1.png" alt="\tau_{peak}^1"/></td>
 </tr>
 <tr class="row-odd"><td><em>f_peak2_results.dat</em></td>
-<td>frequency corresponding to <img class="math" src="_images/math/44328c6e110937d47787515522548e5eb10be8f3.png" alt="\tau_{peak}^2"/></td>
+<td>frequency corresponding to <img class="math" src="_images/math/e11ea4a790e4d6a0978dc21b84e14111c0ca0d36.png" alt="\tau_{peak}^2"/></td>
 </tr>
 <tr class="row-even"><td><em>f_peaks_all_results.dat</em></td>
-<td>frequency corresponding to all peaks <img class="math" src="_images/math/15ce794cb71893db512fee5b58a1e2511f47a46d.png" alt="\tau_{peak}^N"/></td>
+<td>frequency corresponding to all peaks <img class="math" src="_images/math/01a001926e0650d7c599b276f1a300472d88c5b6.png" alt="\tau_{peak}^N"/></td>
 </tr>
 <tr class="row-odd"><td><em>covf_results.dat</em></td>
 <td>coverage frequencies (N columns)</td>
@@ -435,7 +433,7 @@ number of parameters):</p>
 </tr>
 </tbody>
 </table>
-<p>Integral parameters are explained in the section <a class="reference internal" href="integral_parameters.html#int-pars"><em>Integral Parameters</em></a>.</p>
+<p>Integral parameters are explained in the section <a class="reference internal" href="integral_parameters.html#int-pars"><span class="std std-ref">Integral Parameters</span></a>.</p>
 </div>
 </div>
 </div>
@@ -444,7 +442,7 @@ number of parameters):</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
 
@@ -464,7 +462,7 @@ number of parameters):</p>
 <li class="toctree-l2"><a class="reference internal" href="programs/dd_single.html">dd_single.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="programs/dd_time.html">dd_time.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="programs/ddps.html">ddps.py</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Output Files</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Output Files</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ascii-audit-format">ascii_audit format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ascii-format">ascii format</a></li>
 </ul>
@@ -489,17 +487,14 @@ number of parameters):</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -510,11 +505,11 @@ number of parameters):</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/output_formats.txt"
+      <a href="_sources/output_formats.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
