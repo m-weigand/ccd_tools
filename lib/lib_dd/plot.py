@@ -16,96 +16,101 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
-from NDimInv.plot_helper import *
+import NDimInv.plot_helper
+plt, mpl = NDimInv.plot_helper.setup()
 import numpy as np
 import sip_formats.convert as sip_convert
 
 
 class plot_iteration():
-    """
-    This class defines an override function for the default plot function of
-    the Iteration class. The new plot function is aware of the Debye
+    """ This class defines an override function for the default plot function
+    of the Iteration class. The new plot function is aware of the Cole-Cole
     Decomposition approach and will plot more information (i.e. the RTD)
 
     In addition, it will renormalise data if necessary.
     """
-    def plot(self, it, filename, keep_plot=False, norm_factors=None):
+    def plot(self, it, norm_factors=None):
         try:
             if norm_factors is None:
                 self.norm_factors = 1.0
             else:
                 self.norm_factors = norm_factors
-            self._plot(it, filename, keep_plot)
+            self._plot(it)
         except Exception as e:
             print('Exception in plot routine', e)
 
-    class figure_environment(object):
-        def __init__(self, it, filename, keep_plot, nr_spectra):
-            self.nr_spectra = nr_spectra
-            self.filename = filename
-            self.it = it
-            self.keep_plot = keep_plot
+        return self.fig
 
-        def __enter__(self):
-            space_top = 1.2
-            size_x = 14
-            size_y = 2 * self.nr_spectra + space_top
+    def create_figure(self):
+        space_top = 1.2
+        size_x = 14
+        size_y = 2 * self.nr_spectra + space_top
 
-            fig, axes = plt.subplots(self.nr_spectra, 5,
-                                     figsize=(size_x, size_y))
-            self.top_margin = (size_y - space_top) / float(size_y)
-            axes = np.atleast_2d(axes)
-            self.fig = fig
-            self.axes = axes
-            return fig, axes
+        fig, axes = plt.subplots(
+            self.nr_spectra, 5,
+            figsize=(size_x, size_y)
+        )
+        self.top_margin = (size_y - space_top) / float(size_y)
+        axes = np.atleast_2d(axes)
+        self.fig = fig
+        self.axes = axes
+        return fig, axes
 
-        def __exit__(self, type, value, traceback):
-            ax = self.axes[0, 0]
-            title = 'Debye Decomposition, iteration {0}'.format(self.it.nr)
-            ax.annotate(title, xy=(0.0, 1.00), xytext=(15, -30),
-                        textcoords='offset points', xycoords='figure fraction')
-            dd_c = 'c = {0}'.format(os.environ.get('DD_C', '1.0'))
-            if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-                model_title = 'conductivity model'
-            else:
-                model_title = 'resistivity model'
-            print 'dd_c', dd_c
-            model_title += ', {0}'.format(dd_c)
-            ax.annotate(model_title, xy=(1.0, 1.0), xytext=(-160, -30),
-                        textcoords='offset points', xycoords='figure fraction')
+    def finalize_fig(self):
+        ax = self.axes[0, 0]
+        title = 'Cole-Cole decomposition, iteration {0}'.format(self.it.nr)
+        ax.annotate(
+            title,
+            xy=(0.0, 1.00),
+            xytext=(15, -30),
+            textcoords='offset points',
+            xycoords='figure fraction'
+        )
+        dd_c = 'c = {0}'.format(os.environ.get('DD_C', '1.0'))
+        if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
+            model_title = 'conductivity model'
+        else:
+            model_title = 'resistivity model'
+        print('dd_c', dd_c)
+        model_title += ', {0}'.format(dd_c)
+        ax.annotate(
+            model_title,
+            xy=(1.0, 1.0),
+            xytext=(-160, -30),
+            textcoords='offset points',
+            xycoords='figure fraction',
+        )
 
-            self.fig.tight_layout()
-            self.fig.subplots_adjust(top=self.top_margin)
-            self.fig.savefig(self.filename, dpi=150)
-            if not self.keep_plot:
-                # clean up
-                self.fig.clf()
-                plt.close(self.fig)
-                del(self.fig)
+        self.fig.tight_layout()
+        self.fig.subplots_adjust(top=self.top_margin)
 
-    def _plot(self, it, filename, keep_plot):
+    def _plot(self, it):
         """Plot one or more spectra
         """
+        self.it = it
+
         D = it.Data.D / self.norm_factors
         M = it.Model.convert_to_M(it.m)
         # renormalize here? why do we compuate the forward solution again?
         F = it.Model.F(M) / self.norm_factors
         extra_size = int(
             np.sum([x[1][1] for x in it.Data.extra_dims.iteritems()]))
-        nr_spectra = max(1, extra_size)
+        self.nr_spectra = max(1, extra_size)
 
-        with self.figure_environment(it, filename, keep_plot, nr_spectra) as\
-                (fig, axes):
-            # iterate over spectra
-            for nr, (d, m) in enumerate(it.Model.DM_iterator()):
-                self._plot_rre_rim(nr, axes[nr, 0:2], D[d], F[d], it)
-                self._plot_rmag_rpha(nr, axes[nr, 2:4], D[d], F[d], it)
-                self._plot_rtd(nr, axes[nr, 4], M[m], it)
-                ax1 = axes[nr, 0].twinx()
-                ax2 = axes[nr, 1].twinx()
-                self._plot_cre_cim(nr, [ax1, ax2], D[d], F[d], it)
+        fig, axes = self.create_figure()
 
-    def _plot_rtd(self, nr,  ax, m, it):
+        # iterate over spectra
+        for nr, (d, m) in enumerate(it.Model.DM_iterator()):
+            self._plot_rre_rim(nr, axes[nr, 0:2], D[d], F[d], it)
+            self._plot_rmag_rpha(nr, axes[nr, 2:4], D[d], F[d], it)
+            self._plot_rtd(nr, axes[nr, 4], M[m], it)
+            ax1 = axes[nr, 0].twinx()
+            ax2 = axes[nr, 1].twinx()
+            self._plot_cre_cim(nr, [ax1, ax2], D[d], F[d], it)
+
+        self.finalize_fig()
+
+    def _plot_rtd(self, nr, ax, m, it):
         ax.semilogx(it.Data.obj.tau, m[1:], '.-', color='k')
         ax.set_xlim(it.Data.obj.tau.min(), it.Data.obj.tau.max())
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=5))
@@ -138,17 +143,21 @@ class plot_iteration():
             else:
                 # individual lambdas
                 title_string += '{0} '.format(
-                    lam[m_indices[nr],  m_indices[nr]])
+                    lam[m_indices[nr], m_indices[nr]])
         ax.set_title(title_string)
 
     def _plot_rmag_rpha(self, nr, axes, orig_data, fit_data, it):
-        rmag_rpha_orig = sip_convert.convert(it.Data.obj.data_format,
-                                             'rmag_rpha',
-                                             orig_data)
+        rmag_rpha_orig = sip_convert.convert(
+            it.Data.obj.data_format,
+            'rmag_rpha',
+            orig_data
+        )
 
-        rmag_rpha_fit = sip_convert.convert(it.Data.obj.data_format,
-                                            'rmag_rpha',
-                                            fit_data)
+        rmag_rpha_fit = sip_convert.convert(
+            it.Data.obj.data_format,
+            'rmag_rpha',
+            fit_data
+        )
 
         frequencies = it.Data.obj.frequencies
 
