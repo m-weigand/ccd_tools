@@ -10,7 +10,7 @@ doi:10.1016/j.cageo.2015.09.021, (`Download PDF at`
 
 BibTex code:
 
-.. code-block: bibtex
+.. code-block:: bibtex
 
     @Article{     Weigand.ea.2016.CaG,
       title     = {Debye decomposition of time-lapse spectral induced
