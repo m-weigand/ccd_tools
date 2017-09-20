@@ -20,8 +20,9 @@
 
 * python setup.py register -r https://testpypi.python.org/pypi
 * python setup.py sdist
-* sign with pgp: gpg --detach-sign -a sip_models-0.1.0.tar.gz
-* twine upload -r pypitest dist/dd_interface-0.8.0.tar.gz
+* sign with pgp:
+gpg --detach-sign -a dist/ccd_
+* twine upload -r pypitest dist/ccd_
 
 * install with pip install -i https://testpypi.python.org/simple sip_models dd_interface
 
