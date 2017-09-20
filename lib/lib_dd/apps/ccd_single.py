@@ -35,7 +35,9 @@ class ccd_single_app(object):
 
         # data statistics
         summary.append('')
-        summary.append('number of SIP spectra: {0}'.format(self.data.shape[0]))
+        summary.append('number of SIP spectra: {0}'.format(
+            np.atleast_2d(self.data).shape[0])
+        )
 
         summary.append('<hr />')
         display(HTML('<h2>Data summary</h2>'))
@@ -109,14 +111,16 @@ class ccd_single_app(object):
 
         w_normalization.observe(use_norm_change)
         self.widgets = {
-            'type_formulation': w_condres,
-            'lambda': w_lambda,
-            'run': w_run,
-            'c_selection': w_c,
-            'use_normalization': w_normalization,
-            'norm_value': w_norm_value,
-            'generate_plot': w_generate_plot,
-            'generate_output': w_generate_output,
+            '00_type_formulation': w_condres,
+            '01_lambda': w_lambda,
+            '02_c_selection': w_c,
+            '03_use_normalization': w_normalization,
+            '04_norm_value': w_norm_value,
+            # output settings
+            '80_generate_plot': w_generate_plot,
+            '81_generate_output': w_generate_output,
+            # run button
+            '99_run': w_run,
         }
 
         self.vbox = widgets.VBox(
@@ -128,22 +132,22 @@ class ccd_single_app(object):
         display(HTML('<hr />'))
 
     def run_ccd(self, button):
-        print('running CCd')
+        print('running CCD')
         print('lambda', self.widgets['lambda'].value)
         # set environment variables
-        os.environ['DD_COND'] = self.widgets['type_formulation'].value
+        os.environ['DD_COND'] = self.widgets['00_type_formulation'].value
         os.environ['DD_C'] = '{0:.2f}'.format(
-            self.widgets['c_selection'].value
+            self.widgets['02_c_selection'].value
         )
 
         # set options using this dict-like object
         config = cfg_single.cfg_single()
         config['frequency_file'] = self.frequencies
         config['data_file'] = self.data
-        config['fixed_lambda'] = int(self.widgets['lambda'].value)
+        config['fixed_lambda'] = int(self.widgets['01_lambda'].value)
 
-        if self.widgets['use_normalization'].value is True:
-            config['norm'] = self.widgets['norm_value'].value
+        if self.widgets['03_use_normalization'].value is True:
+            config['norm'] = self.widgets['04_norm_value'].value
 
         # generate a ccd object
         ccd_obj = ccd_single.ccd_single(config)
@@ -153,12 +157,12 @@ class ccd_single_app(object):
 
         # extract the last iteration
         last_it = ccd_obj.results[0].iterations[-1]
-        if self.widgets['generate_plot'].value is True:
+        if self.widgets['81_generate_plot'].value is True:
             print('plotting ... this may take a while')
             _ = last_it.plot()
             _
 
-        if self.widgets['generate_output'].value is True:
+        if self.widgets['81_generate_output'].value is True:
             outdir = 'output'
             if os.path.isdir(outdir):
                 shutil.rmtree(outdir)
