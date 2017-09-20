@@ -83,6 +83,11 @@ class ccd_single_app(object):
             disabled=False,
             style=style,
         )
+        help_normalization = widgets.HTML(
+            value='<a href="https://m-weigand.github.io/ccd_tools/doc_ccd/' +
+            'usage_and_implementation.html#normalization" ' +
+            'target="_blank">Help</a>',
+        )
         w_norm_value = widgets.FloatText(
             value=10,
             step=1,
@@ -90,6 +95,15 @@ class ccd_single_app(object):
             disabled=True,
             style=style,
         )
+        hbox_norm = widgets.HBox(
+            children=[
+                w_normalization,
+                w_norm_value,
+                help_normalization,
+            ],
+        )
+
+        # output options
         w_generate_plot = widgets.Checkbox(
             value=True,
             description='Generate plot',
@@ -98,13 +112,21 @@ class ccd_single_app(object):
         w_generate_it_plots = widgets.Checkbox(
             value=False,
             description='Generate plots for all iterations',
-            disabled=False
+            disabled=True,
         )
         w_generate_output = widgets.Checkbox(
             value=True,
             description='Generate output for download',
             disabled=False
         )
+        hbox_output = widgets.HBox(
+            [
+                w_generate_plot,
+                w_generate_it_plots,
+                w_generate_output,
+            ]
+        )
+
         w_run.on_click(self.run_ccd)
 
         def use_norm_change(change):
@@ -121,6 +143,7 @@ class ccd_single_app(object):
             '02_c_selection': w_c,
             '03_use_normalization': w_normalization,
             '04_norm_value': w_norm_value,
+            '05_help_normalization': help_normalization,
             # output settings
             '80_generate_plot': w_generate_plot,
             '81_generate_output': w_generate_output,
@@ -129,11 +152,23 @@ class ccd_single_app(object):
             '99_run': w_run,
         }
 
-        self.vbox = widgets.VBox(
-            [self.widgets[key] for key in sorted(self.widgets.keys())]
+        header = widgets.HTML(
+            value='<h3>Settings</h3>'
         )
 
-    def show_app(self):
+        self.vbox = widgets.VBox([
+            header,
+            w_condres,
+            w_lambda,
+            w_c,
+            hbox_norm,
+            hbox_output,
+            w_run,
+        ]
+            # [self.widgets[key] for key in sorted(self.widgets.keys())]
+        )
+
+    def show(self):
         display(self.vbox)
         display(HTML('<hr />'))
 
