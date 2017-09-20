@@ -66,7 +66,7 @@ class ccd_single_app(object):
         )
         w_c = widgets.FloatSlider(
             value=0.5,
-            min=0,
+            min=0.1,
             max=1.0,
             step=0.1,
             description='C-value:',
@@ -157,7 +157,7 @@ class ccd_single_app(object):
 
         # extract the last iteration
         last_it = ccd_obj.results[0].iterations[-1]
-        if self.widgets['81_generate_plot'].value is True:
+        if self.widgets['80_generate_plot'].value is True:
             print('plotting ... this may take a while')
             _ = last_it.plot()
             _
@@ -172,4 +172,4 @@ class ccd_single_app(object):
                 'output', format='zip', root_dir='output/', verbose=True
             )
 
-            display(HTML('<a href="output.zip">Download results</a>'))
+            display(HTML('<a href="output.zip" download>Download results</a>'))
