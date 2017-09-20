@@ -13,9 +13,9 @@ version_long = '0.8.3'
 # if we are in a git directory, use the last git commit as the version
 
 extra = {}
-if sys.version_info >= (3,):
-    print('V3')
-    extra['use_2to3'] = True
+# if sys.version_info >= (3,):
+#     print('V3')
+#     extra['use_2to3'] = True
 
 if __name__ == '__main__':
     setup(name='ccd_tools',
@@ -24,7 +24,7 @@ if __name__ == '__main__':
           author='Maximilian Weigand',
           author_email='mweigand@geo.uni-bonn.de',
           url='https://github.com/m-weigand/ccd_tools',
-          licence='GPL-3',
+          license='GPL-3',
           keywords=['SIP, Cole-Cole model, Debye decomposition'],
           classifiers=[
               # "Development Status :: 5 - Production/Stable",
@@ -40,6 +40,7 @@ if __name__ == '__main__':
           package_dir={'': 'lib'},
           packages=[
               'lib_dd',
+              'lib_dd.apps',
               'lib_dd.models',
               'lib_dd.conductivity',
               'lib_dd.decomposition',

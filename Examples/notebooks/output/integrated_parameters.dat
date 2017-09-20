@@ -1,5 +1,0 @@
-# id:8ac1a335-d150-405f-9f52-62a9337ac808
-# 20170920_09h:41m
-# /home/mweigand/.virtualenvs/crtomo/lib/python3.4/site-packages/ipykernel_launcher.py -f /run/user/545/jupyter/kernel-3224dda2-742e-42cf-a554-5518333c92dc.json
-#U_tau decade_bins decade_bins-1 decade_bins-2 decade_bins-3 decade_bins-4 decade_bins-5 decade_bins-6 decade_loadings decade_loadings-1 decade_loadings-2 decade_loadings-3 decade_loadings-4 decade_loadings-5 f_50 f_arithmetic f_geometric f_max f_mean f_peak1 f_peak2 f_peaks_all m_tot m_tot_n rho0 tau_50 tau_arithmetic tau_geometric tau_max tau_mean tau_peak1 tau_peak2 tau_peaks_all
-20.049344 0.010000 0.100000 1.000000 10.000000 100.000000 1000.000000 10000.000000 0.012095 0.046764 0.198194 0.465448 0.226091 1023.529462 42.346493 1.701939 35.649241 0.010495 35.649241 37.734333 nan 37.734333 -2.010062 -3.010079 1.000016 -2.424997 -1.029124 -2.350230 1.180819 -2.350230 -2.374917 nan -2.374917
