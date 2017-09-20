@@ -133,7 +133,7 @@ class ccd_single_app(object):
 
     def run_ccd(self, button):
         print('running CCD')
-        print('lambda', self.widgets['lambda'].value)
+        print('lambda', self.widgets['01_lambda'].value)
         # set environment variables
         os.environ['DD_COND'] = self.widgets['00_type_formulation'].value
         os.environ['DD_C'] = '{0:.2f}'.format(
