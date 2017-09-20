@@ -155,7 +155,7 @@ class dd_conductivity(
         """Usually you do not need to modify this.
         """
         size = sum([x[1][1] for x in
-                    self.get_data_base_dimensions().iteritems()])
+                    self.get_data_base_dimensions().items()])
         return size
 
     def get_data_base_dimensions(self):

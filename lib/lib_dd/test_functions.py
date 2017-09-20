@@ -63,7 +63,7 @@ def t_rms_pos_change(old_result, new_result, allowed_percentage):
                  'rms_part2_no_err.dat')
     """
 
-    for rms_key, rms_files in equivalent_rms_files.iteritems():
+    for rms_key, rms_files in equivalent_rms_files.items():
         print('Testing key {0}'.format(rms_key))
         base_old = old_result + os.sep + 'results/stats_and_rms/'
         filename_old = [base_old + x for x in rms_files if

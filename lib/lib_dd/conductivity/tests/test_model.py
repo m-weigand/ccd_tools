@@ -47,7 +47,7 @@ def test_forward():
     pars = np.hstack((np.log10(sigmai), m_ddc))
     numerg_left = ddc.forward(pars)
 
-    index = np.argmin(np.abs(ddc.tau - tau_min)) 
+    index = np.argmin(np.abs(ddc.tau - tau_min))
     tau_left = ddc.tau[index]
     m_ddc *= 0
     m_ddc += -10
@@ -128,7 +128,7 @@ def get_num_re():
     Jfunc = ndt.Jacobian(ffunc_re, order=4)
     Jt_re = Jfunc(pars)
 
-    print 'Approximation', Jt_re.shape
+    print('Approximation', Jt_re.shape)
     return Jt_re
 
 Jt_re = get_num_re()
@@ -141,20 +141,20 @@ def get_num_im():
     return Jt_im
 
 def test_der():
-    for i in xrange(0, 20):
-        print 'frequency index', i
-        for j in xrange(0, 2): # re/im
+    for i in range(0, 20):
+        print('frequency index', i)
+        for j in range(0, 2): # re/im
             f = lambda x0: ddc.forward(np.hstack((x0, m0[1:])))[i, j]
             fder = ndt.Derivative(f)
             print fder(m0[0]), J[i + (j * 20),0], (fder(m0[0]) - J[i + (j * 20), 0])
 
 def test_der2():
     diffs = []
-    for z in xrange(1, 162):
+    for z in range(1, 162):
         print 'z', z
-        for i in xrange(0, 20):
-            print 'frequency index', i
-            for j in xrange(0, 2):
+        for i in range(0, 20):
+            print('frequency index', i)
+            for j in range(0, 2):
                 f = lambda x0: ddc.forward(np.hstack((m0[0:z], x0, m0[z+1:])))[i, j]
                 fder = ndt.Derivative(f)
                 #print fder(m0[1]), J[i + (j*20), z], fder(m0[1])- J[i + (j*20), z]fder(m0[1])- J[i + (j*20), z]

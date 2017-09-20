@@ -94,7 +94,7 @@ class plot_iteration():
         # renormalize here? why do we compuate the forward solution again?
         F = it.Model.F(M) / self.norm_factors
         extra_size = int(
-            np.sum([x[1][1] for x in it.Data.extra_dims.iteritems()]))
+            np.sum([x[1][1] for x in it.Data.extra_dims.items()]))
         self.nr_spectra = max(1, extra_size)
 
         fig, axes = self.create_figure()
@@ -133,7 +133,6 @@ class plot_iteration():
         ax.set_xlabel(r'$\tau~[s]$')
         ax.set_ylabel(r'$log_{10}(m)$')
 
-        # print lambda value in title
         title_string = r'$\lambda:$ '
         for lam in it.lams:
             if(type(lam) == list):

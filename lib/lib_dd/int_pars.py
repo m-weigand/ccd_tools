@@ -275,7 +275,6 @@ def tau_peaks(pars, tau, s):
         results['tau_peaks_all'] = s_peaks
         results['f_peaks_all'] = f_peaks
     except Exception:
-        # print ('Error computing tau_peaks: ', e)
         for nr in range(1, 3):
             key = '_peak{0}'.format(nr)
             results['tau' + key] = np.nan

@@ -168,10 +168,7 @@ def save_integrated_parameters(final_iterations, data, header):
         values = lDDi.prepare_stat_values(raw_values, key, norm_factors)
 
         if key not in black_list:
-            # print key, values, values.shape
-            # print values.shape
             for nr, value in enumerate(values.T):
-                # print key, value, value.shape
                 postfix = ''
                 if nr > 0:
                     postfix = '-{0}'.format(nr)

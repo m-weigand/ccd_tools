@@ -257,7 +257,6 @@ class starting_pars_3():
                     # data_mean_tau
                     if(f_data_mean <= 0):
                         f_data_mean = self.data_mean_tau
-                    # print 'f_data_mean', f_data_mean
 
                     f_data_means.append(f_data_mean)
                     fbins.append((bins[bin_nr - 1], bins[bin_nr]))
@@ -281,14 +280,6 @@ class starting_pars_3():
         frequency decade.
         """
         # print('Start determining initial parameters')
-
-        # print 'summary'
-        #  print 'data un-determined tau range min: {0} - {1}'.format(
-        #     min_tau_bin, min_tau_bin_fl)
-        # print 'data determined tau range min: {0} - {1}'.format(
-        #     minbin, maxbin)
-        # print 'data un-determined tau range max: {0} - {1}'.format(
-        #     max_tau_bin_fl, max_tau_bin)
 
         # compute bins
         self.get_bins()
@@ -315,7 +306,6 @@ class starting_pars_3():
             tau_bins = 1 / (2 * np.pi * sec_data[key][2])
             tau_digi = np.digitize(self.tau, tau_bins)
             for nr, bin_nr in enumerate(range(1, tau_bins.size)):
-                # print 'check for bin nr', bin_nr
                 tau_indices = np.where(tau_digi == bin_nr)[0]
                 # compute the chargeability for this tau span
                 # we work wiht mim, therefore no minus sign
@@ -326,7 +316,6 @@ class starting_pars_3():
                     term += 1 / (w * self.tau[i] /
                                  (1 + (w * self.tau[i]) ** 2))
                 m_dec *= term
-                # print 'm_dec', m_dec
 
                 chargeabilities[tau_indices] = m_dec  # sec_data[key][1][nr]
                 ersatz += 1
@@ -355,10 +344,8 @@ class starting_pars_3():
             m_list.append(chargeabilities * scale)
             pars_linear = np.hstack((self.rho0, chargeabilities * scale))
             pars = obj.convert_parameters(pars_linear)
-            # print pars
             re_mim = obj.forward(pars)
             mim_f = re_mim[:, 1]
-            # print re_f, mim_f
             mim_list.append(mim_f)
             # compute rms_mim
             rms_mim = np.sqrt((1.0 / float(self.mim.size)) *
@@ -474,9 +461,7 @@ class starting_pars_3():
 
             # scales vs. rms_mim
             ax = axes[3]
-            # print 'scales', scales
             if(not np.all(np.isnan(rms_list))):
-                # print 'rms_list', rms_list
                 ax.loglog(scales, rms_list, '.-')
 
                 scale_range = np.linspace(0, 1, 30)
@@ -562,7 +547,7 @@ class integrated_parameters():
                         'tau_geometric': int_pars.tau_geometric,
                         'decade_loadings': int_pars.decade_loadings
                         }
-        for key, func in int_par_keys.iteritems():
+        for key, func in int_par_keys.items():
             result = func(pars_data, tau_data, s_data)
             if(isinstance(result, dict)):
                 stat_pars.update(result)

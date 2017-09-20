@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # pylint: disable=unused-wildcard-import,wildcard-import
-"""
-Cole-Cole decomposition interface for spectral induced polarization data. One
-or more spectra can be fitted using a Debye decomposition approach.
+""" Cole-Cole decomposition interface for spectral induced polarization data.
+One or more spectra can be fitted using a Debye decomposition approach.
 
-Copyright 2014,2015,2016 Maximilian Weigand
+Copyright 2014-2017 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
