@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import numpy as np
 import lib_dd.colecole as colecole
-from NDimInv.plot_helper import *
+# from NDimInv.plot_helper import *
 
 frequencies = np.logspace(-3, 4, 40)
 fin = np.hstack((frequencies, frequencies))

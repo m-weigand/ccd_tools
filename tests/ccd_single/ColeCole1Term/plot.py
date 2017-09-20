@@ -1,6 +1,5 @@
-#!/usr/bin/python
-"""
-Create 3D plots for each variation
+#!/usr/bin/env python
+""" Create 3D plots for each variation
 """
 from NDimInv.plot_helper import *
 from mpl_toolkits.mplot3d import Axes3D
@@ -42,8 +41,8 @@ def plot_variation(var_dir):
     print('Plotting', var_dir)
     nd_data = get_nd_data(var_dir)
     cc_orig = np.loadtxt(var_dir + '/set001/colecole.pars')
-    print cc_orig
-    print nd_data
+    print(cc_orig)
+    print(nd_data)
 
     fig = plt.figure()
     axes = [fig.add_subplot(2, 2, nr, projection='3d') for nr in range(0, 4)]

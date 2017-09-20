@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 """
@@ -93,10 +93,11 @@ def generate_dataset(omega, lrho0, ls, lm_strength):
     # second value: nr of items to generate
 
     # third: default
-    axes = {1: ('nr_tau', 3, 10),
-            0: ('rho0', 4, 100),
-            2: ('m_level', 5, 1)
-            }
+    # axes = {
+    #     1: ('nr_tau', 3, 10),
+    #     0: ('rho0', 4, 100),
+    #     2: ('m_level', 5, 1)
+    # }
 
     exit()
     nr_tests = 4   # number of test values for rho0 and strenght, respectively

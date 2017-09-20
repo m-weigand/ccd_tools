@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-cd src/dd_single/tests/Fitquality
+cd tests/
 nosetests -s -v

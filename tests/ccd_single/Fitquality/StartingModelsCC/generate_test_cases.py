@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Generate multiple SIP spectra by varying the Cole-Cole parameters m, tau, and c

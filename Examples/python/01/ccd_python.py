@@ -29,3 +29,4 @@ print('stat_pars', last_it.stat_pars)
 
 # save to directory
 ccd_obj.save_to_directory()
+last_it.plot()

@@ -1,6 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import numpy as np
-from NDimInv.plot_helper import *
+import NDimInv.plot_helper
+plt, mpl = NDimInv.plot_helper.setup()
 import lib_cc2.cc as cc
 
 frequencies = np.logspace(-3, 4, 40)

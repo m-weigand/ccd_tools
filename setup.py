@@ -29,7 +29,8 @@ if __name__ == '__main__':
           classifiers=[
               # "Development Status :: 5 - Production/Stable",
               "Development Status :: 4 - Beta",
-              "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+              "License :: OSI Approved :: GNU Lesser General Public License " +
+              "v3 (LGPLv3)",
               "Programming Language :: Python :: 3.4",
               "Intended Audience :: Science/Research",
           ],

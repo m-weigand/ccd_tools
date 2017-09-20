@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Execute to run single Cole-Cole term characterization
@@ -39,6 +39,7 @@ class cls_settings():
             dirname = self.datadir + os.sep + item
             if(not os.path.isdir(dirname)):
                 os.makedirs(dirname)
+
 
 settings = cls_settings()
 
@@ -146,11 +147,11 @@ def plot_results_small(test_cases):
     Only plot selected results
     """
     for case in test_cases:
-        print case
+        print(case)
         # read in original cc parmaters
         cc_orig = np.loadtxt(case[0] + os.sep + 'colecole.pars')
         for outdir in sorted(glob.glob(case[0] + os.sep + 'dd_output*')):
-            print outdir
+            print(outdir)
             prefix = outdir + os.sep
             rho0 = np.loadtxt(prefix + 'stats_and_rms/rho0_results.dat')
             mtotn = np.loadtxt(prefix + 'stats_and_rms/m_tot_n_results.dat')
@@ -241,7 +242,9 @@ def plot_results_small(test_cases):
             for ax in axes.flatten()[2:]:
                 xlim = ax.get_xlim()
                 ylim = ax.get_ylim()
-                xylim = (np.min((xlim[0], ylim[0])), np.max((xlim[1], ylim[1])))
+                xylim = (
+                    np.min((xlim[0], ylim[0])), np.max((xlim[1], ylim[1]))
+                )
                 ax.set_xlim(xylim)
                 ax.set_ylim(xylim)
                 ax.set_aspect('equal')

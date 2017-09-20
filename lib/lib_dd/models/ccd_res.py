@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """Cole-Cole decomposition in resistivity formulation
 """
-from NDimInv.plot_helper import *
+import NDimInv.plot_helper
+plt, mpl = NDimInv.plot_helper.setup()
 import numpy as np
 import NDimInv.model_template as mt
 import lib_dd.base_class as base_class

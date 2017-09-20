@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import numpy as np
-from NDimInv.plot_helper import *
+# from NDimInv.plot_helper import *
 import NDimInv.colecole as colecole
 import shutil
 shutil

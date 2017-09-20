@@ -1,6 +1,5 @@
-#!/usr/bin/python
-"""
-Generate sample SIP-Spectrum
+#!/usr/bin/env python
+""" Generate sample SIP-Spectrum
 """
 import numpy as np
 import lib_dd.colecole as CC

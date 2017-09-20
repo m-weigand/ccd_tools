@@ -1,7 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Run with
+""" Run with
 
 nosetests test_dd_data.py -s -v
 """
@@ -115,9 +114,9 @@ def _check_rho0(directory, dd_dir):
 
     rho0_diff = np.abs(initial_cc_pars.rho0 - 10 ** intpars['rho0']) / \
         initial_cc_pars.rho0
-    print 'rho0 orig', initial_cc_pars.rho0
-    print 'rho0 recovered', 10 ** intpars['rho0']
-    print 'rho0_diff (relative, percentage)', rho0_diff * 1e2
+    print('rho0 orig', initial_cc_pars.rho0)
+    print('rho0 recovered', 10 ** intpars['rho0'])
+    print('rho0_diff (relative, percentage)', rho0_diff * 1e2)
     # we only allow for 2 percent variation
     assert_true(rho0_diff < 0.02)
 
@@ -133,7 +132,6 @@ def apply_checks(directory, settings_data, settings_dd):
 
 
 def run_batch(directory):
-    print 'run_bash'
     pwd = os.getcwd()
     os.chdir(directory)
     p = subprocess.Popen('bash run_dd.sh', shell=True,
@@ -185,6 +183,7 @@ def test_generator():
                     'model: {0} norm: {1} data_format {2}'.format(
                         model, norm, data_format)
                 yield fn, model, norm, lam, data_format
+
 
 if __name__ == '__main__':
     test_generator()
