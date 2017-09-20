@@ -95,6 +95,11 @@ class ccd_single_app(object):
             description='Generate plot',
             disabled=False
         )
+        w_generate_it_plots = widgets.Checkbox(
+            value=False,
+            description='Generate plots for all iterations',
+            disabled=False
+        )
         w_generate_output = widgets.Checkbox(
             value=True,
             description='Generate output for download',
@@ -119,6 +124,7 @@ class ccd_single_app(object):
             # output settings
             '80_generate_plot': w_generate_plot,
             '81_generate_output': w_generate_output,
+            '82_generate_it_plots': w_generate_it_plots,
             # run button
             '99_run': w_run,
         }
@@ -145,6 +151,8 @@ class ccd_single_app(object):
         config['frequency_file'] = self.frequencies
         config['data_file'] = self.data
         config['fixed_lambda'] = int(self.widgets['01_lambda'].value)
+
+        config['plot_it_spectra'] = self.widgets['82_generate_it_plots'].value
 
         if self.widgets['03_use_normalization'].value is True:
             config['norm'] = self.widgets['04_norm_value'].value
