@@ -1,21 +1,19 @@
 #!/usr/bin/env python
-# import sys
+import os
+import glob
 from setuptools import setup
-# from setuptools import find_packages
-# find_packages
-
-# under windows, run
-# python.exe setup.py bdist --format msi
-# to create a windows installer
 
 version_short = '0.8'
 version_long = '0.8.10'
-# if we are in a git directory, use the last git commit as the version
 
-extra = {}
-# if sys.version_info >= (3,):
-#     print('V3')
-#     extra['use_2to3'] = True
+# generate entry points
+entry_points = {'console_scripts': []}
+scripts = [os.path.basename(script)[0:-3] for script in glob.glob('src/*.py')]
+for script in scripts:
+    print(script)
+    entry_points['console_scripts'].append(
+        '{0} = {0}:main'.format(script)
+    )
 
 if __name__ == '__main__':
     setup(name='ccd_tools',
@@ -37,7 +35,11 @@ if __name__ == '__main__':
           # find_packages() somehow does not work under Win7 when creating a
           # msi # installer
           # packages=find_packages(),
-          package_dir={'': 'lib'},
+          package_dir={
+              '': 'src',
+              'lib_dd': 'lib/lib_dd',
+              'lib_ccd_test': 'lib/lib_ccd_test',
+          },
           packages=[
               'lib_dd',
               'lib_dd.apps',
@@ -48,8 +50,9 @@ if __name__ == '__main__':
               'lib_dd.config',
               'lib_ccd_test',
           ],
+          entry_points=entry_points,
+          py_modules=scripts,
           scripts=[
-              'src/dd_single/dd_single.py',
               'src/dd_time/dd_time.py',
               'src/dd_space_time/dd_space_time.py',
               'src/dd_test/dd_test.py',
@@ -66,5 +69,4 @@ if __name__ == '__main__':
               'geccoinv',
               'sip_models',
           ],
-          **extra
           )
