@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys
+# import sys
 from setuptools import setup
 # from setuptools import find_packages
 # find_packages
@@ -9,7 +9,7 @@ from setuptools import setup
 # to create a windows installer
 
 version_short = '0.8'
-version_long = '0.8.3'
+version_long = '0.8.4'
 # if we are in a git directory, use the last git commit as the version
 
 extra = {}
