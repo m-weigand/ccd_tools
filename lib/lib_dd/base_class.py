@@ -18,7 +18,8 @@ import logging
 
 import numpy as np
 
-from NDimInv.plot_helper import *
+import NDimInv.plot_helper
+plt, mpl = NDimInv.plot_helper.setup()
 import lib_dd.int_pars as int_pars
 
 logger = logging.getLogger('lib_dd.main')

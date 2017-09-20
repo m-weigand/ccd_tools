@@ -2,7 +2,9 @@
 Test the conductivity formulation of the Debye decomposition
 """
 import numpy as np
-from NDimInv.plot_helper import *
+import NDimInv.plot_helper
+plt, mpl = NDimInv.plot_helper.setup()
+
 mpl.rcParams['font.size'] = 8.0
 import lib_dd.conductivity.model as lDDc
 
