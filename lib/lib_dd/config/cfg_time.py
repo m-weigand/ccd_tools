@@ -1,4 +1,4 @@
-import cfg_base
+import lib_dd.config.cfg_base as cfg_base
 
 
 class cfg_time(cfg_base.cfg_base):

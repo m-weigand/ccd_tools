@@ -1,10 +1,10 @@
-#!/usr/bin/python
 # *-* coding: utf-8 *-*
 from optparse import OptionParser
-import lib_dd.version as version
-import NDimInv.data_weighting as data_weighting
 import platform
 import os
+
+import lib_dd.version as version
+import NDimInv.data_weighting as data_weighting
 
 
 class cfg_base(dict):

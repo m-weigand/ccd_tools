@@ -18,7 +18,7 @@ from NDimInv.plot_helper import *
 import logging
 import numpy as np
 import os
-import int_pars
+import lib_dd.int_pars as int_pars
 
 logger = logging.getLogger('lib_dd.main')
 
@@ -208,17 +208,20 @@ class starting_pars_3():
         if(self.min_tau_bin_fl is None):
             self.bins_tau_lowf = None
         else:
-            self.bins_tau_lowf = np.logspace(self.min_tau_bin, self.minbin,
-                                             (self.minbin - self.min_tau_bin)
-                                             + 1)
-        self.bins_inside_f = np.logspace(self.minbin, self.maxbin,
-                                         (self.maxbin - self.minbin) + 1)
+            self.bins_tau_lowf = np.logspace(
+                self.min_tau_bin, self.minbin,
+                (self.minbin - self.min_tau_bin) + 1
+            )
+        self.bins_inside_f = np.logspace(
+            self.minbin, self.maxbin, (self.maxbin - self.minbin) + 1
+        )
         if(self.max_tau_bin_fl is None):
             self.bins_tau_highf = None
         else:
-            self.bins_tau_highf = np.logspace(self.maxbin, self.max_tau_bin,
-                                              (self.max_tau_bin - self.maxbin)
-                                              + 1)
+            self.bins_tau_highf = np.logspace(
+                self.maxbin, self.max_tau_bin,
+                (self.max_tau_bin - self.maxbin) + 1
+            )
 
     def get_sec_data(self):
         sec_data = {}
