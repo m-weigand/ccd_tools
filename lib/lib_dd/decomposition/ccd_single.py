@@ -2,7 +2,7 @@
 
 """
 import os
-import ccd_single_stateless as decomp_single_sl
+import lib_dd.decomposition.ccd_single_stateless as decomp_single_sl
 from multiprocessing import Pool
 import lib_dd.interface as lDDi
 import lib_dd.config.cfg_single as cfg_single
