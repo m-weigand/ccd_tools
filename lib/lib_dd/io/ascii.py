@@ -4,10 +4,12 @@ This is the default output format
 """
 import os
 import json
+
 import numpy as np
+
 import lib_dd.version as version
 import lib_dd.interface as lDDi
-import helper
+import lib_dd.io.helper as helper
 
 
 def save_base_results(final_iterations, data):

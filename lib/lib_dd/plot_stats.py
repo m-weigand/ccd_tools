@@ -1,5 +1,7 @@
-from NDimInv.plot_helper import *
 import numpy as np
+
+from NDimInv.plot_helper import *
+
 
 class _plot_stats(object):
 

@@ -3,16 +3,16 @@ stateless code part of the ccd_single decomposition. Everthing else is located
 in the ccd_single object
 """
 import os
+import gc
+import numpy as np
+
 import NDimInv
 import NDimInv.regs as RegFuncs
 import NDimInv.reg_pars as LamFuncs
-import gc
 import lib_dd.plot as lDDp
 import sip_formats.convert as sip_converter
 import lib_dd.conductivity.model as cond_model
 from lib_dd.models import ccd_res
-
-import numpy as np
 
 
 def _filter_nan_values(frequencies, cr_spectrum):

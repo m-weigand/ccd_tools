@@ -1,8 +1,8 @@
+""" Template class for models
 """
-Template class for models
-"""
-import lib_dd.base_class as base_class
 import numpy as np
+
+import lib_dd.base_class as base_class
 import NDimInv.model_template as mt
 import lib_dd.starting_parameters as starting_parameters
 import lib_dd.plot_stats as plot_stats
@@ -41,7 +41,9 @@ class dd_conductivity(
         self.tau_data_min = 1 / (2 * np.pi * self.frequencies.max())
         self.tau_data_max = 1 / (2 * np.pi * self.frequencies.min())
 
-        self.tau, self.s, self.tau_f_values = base_class.determine_tau_range(settings)
+        self.tau, self.s, self.tau_f_values = base_class.determine_tau_range(
+            settings
+        )
 
     def convert_parameters(self, pars):
         """Convert from linear to the actually used scale

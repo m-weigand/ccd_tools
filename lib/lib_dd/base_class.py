@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Copyright 2014,2015 Maximilian Weigand
+""" Copyright 2014-2017 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -14,10 +13,12 @@ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from NDimInv.plot_helper import *
-import logging
-import numpy as np
 import os
+import logging
+
+import numpy as np
+
+from NDimInv.plot_helper import *
 import lib_dd.int_pars as int_pars
 
 logger = logging.getLogger('lib_dd.main')

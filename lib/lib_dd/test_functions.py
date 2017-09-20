@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Copyright 2014,2015 Maximilian Weigand
+""" Copyright 2014-2017 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -15,6 +14,7 @@ You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import numpy as np
 from nose.tools import *
 

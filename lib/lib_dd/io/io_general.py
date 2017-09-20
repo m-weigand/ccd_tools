@@ -1,5 +1,5 @@
-import ascii
-import ascii_audit
+import lib_dd.io.ascii as ascii
+import lib_dd.io.ascii_audit as ascii_audit
 
 
 def _make_list(obj):

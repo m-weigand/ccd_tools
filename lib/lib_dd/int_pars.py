@@ -1,6 +1,5 @@
-"""
 # -*- coding: utf-8 -*-
-Copyright 2014,2015 Maximilian Weigand
+""" Copyright 2014-2017 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -19,6 +18,7 @@ Integrated parameters
 pars: linear representation of parameters
 """
 import os
+
 import numpy as np
 import scipy.signal as sp
 

@@ -1,8 +1,9 @@
 """Cole-Cole decomposition in conductivity formulation
 """
+import numpy as np
+
 import NDimInv.plot_helper
 plt, mpl = NDimInv.plot_helper.setup()
-import numpy as np
 import NDimInv.model_template as mt
 import lib_dd.base_class as base_class
 import lib_dd.starting_parameters as starting_parameters

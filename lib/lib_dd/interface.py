@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Copyright 2014-2017 Maximilian Weigand
+""" Copyright 2014-2017 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -21,7 +20,9 @@ dd_time, dd_space_time.
 import sys
 import os
 import tempfile
+
 import numpy as np
+
 import sip_formats.convert as SC
 # ## general helper functions ###
 

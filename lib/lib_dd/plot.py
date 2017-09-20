@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Copyright 2014,2015 Maximilian Weigand
+""" Copyright 2014-2017 Maximilian Weigand
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -16,9 +15,10 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
+import numpy as np
+
 import NDimInv.plot_helper
 plt, mpl = NDimInv.plot_helper.setup()
-import numpy as np
 import sip_formats.convert as sip_convert
 
 
