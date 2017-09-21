@@ -56,16 +56,16 @@ class decomposition_conductivity(
 
     def convert_parameters(self, pars):
         r""" Convert parameters given as (:math:`\rho_0, m_i`) to the
-        parameterisation used by this class.
+        parameterization used by this class.
         """
         pars_converted = np.empty_like(pars)
         pars_converted[:] = np.log10(pars[:])
         return pars_converted
 
     def convert_pars_back(self, pars):
-        r""" Convert parameters given in this parameterisation back to the
+        r""" Convert parameters given in this parameterization back to the
         linear state
-        Here: From :math:`log_{10}(\rho_0), log_{10}(m_i)`
+        Here: From :math:`log_{10}(\sigma_\infty), log_{10}(m_i)`
         """
         pars_converted = np.empty_like(pars)
         pars_converted[:] = 10 ** pars[:]
@@ -73,7 +73,7 @@ class decomposition_conductivity(
 
     def _get_full_pars(self, pars_dec):
         # prepare Cole-Cole parameters
-        rho0 = 10**pars_dec[0][np.newaxis]
+        sigmai = 10**pars_dec[0][np.newaxis]
         m = 10 ** pars_dec[1:]
         tau = self.tau
         if m.size != tau.size:
@@ -81,7 +81,7 @@ class decomposition_conductivity(
 
         c = np.ones_like(m) * self.settings['c']
 
-        pars = np.hstack((rho0, m, tau, c))
+        pars = np.hstack((sigmai, m, tau, c))
         return pars
 
     def forward(self, pars_dec):
@@ -89,14 +89,14 @@ class decomposition_conductivity(
 
         Parameters
         ----------
-        pars_dec: [log10(rho0),
-                   log10(m_i)]
+        pars_dec: or numpy.ndarray
+            [log10(sigma_infty), log10(m_i)]
 
         Returns
         -------
-        remim: Nx2 array
-            with N the nr of frequencies, and the real and the
-               negative imaginary parts on the second axis
+        remim: Nx2 numpy.ndarray
+            with N the nr of frequencies, and the real and the negative
+            imaginary parts on the second axis
 
         """
         pars = self._get_full_pars(pars_dec)
@@ -110,11 +110,12 @@ class decomposition_conductivity(
         Parameters
         ----------
         pars_dec: numpy.ndarray
-            array containing (log10(rho0), log10(m_i)
+            array containing (log10(sigma_infty), log10(m_i)
 
         Returns
         -------
-        J: (2N) X K array with derivatives.
+        J: (2N) X K numpy.ndarray
+            containing derivatives.
         """
         pars = self._get_full_pars(pars_dec)
 
