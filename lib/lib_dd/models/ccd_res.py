@@ -70,6 +70,10 @@ class decomposition_resistivity(
         return pars_converted
 
     def _get_full_pars(self, pars_dec):
+        """convert the parameters to linear scale and return full Cole-Cole
+        parameters sets (in contrast to the reduced decomposition parameter
+        set)
+        """
         # prepare Cole-Cole parameters
         rho0 = 10**pars_dec[0][np.newaxis]
         m = 10 ** pars_dec[1:]
@@ -83,18 +87,19 @@ class decomposition_resistivity(
         return pars
 
     def forward(self, pars_dec):
-        """
+        """Forward response of this model
 
         Parameters
         ----------
-        pars_dec: [log10(rho0),
-                   log10(m_i)]
+        pars_dec: list
+            [log10(rho0), log10(m_i)], with m_i a vector of the chargabilities
 
         Returns
         -------
 
-        remim: Nx2 array with N the nr of frequencies, and the real and the
-               negative imaginary parts on the second axis
+        remim: Nx2 numpy.ndarray
+            array with N the nr of frequencies, and the real and the negative
+            imaginary parts on the second axis
 
         """
         pars = self._get_full_pars(pars_dec)
@@ -136,9 +141,8 @@ class decomposition_resistivity(
         return J
 
     def get_data_base_dimensions(self):
-        """
-        Return a dict with a description of the data base dimensions. In this
-        case we have frequencies and re/im data
+        """ Return a dict with a description of the data base dimensions. In
+        this case we have frequencies and re/im data
         """
         if(self.D_base_dims is None):
             self.D_base_dims = {0: ['frequency', self.frequencies.size],
@@ -147,15 +151,13 @@ class decomposition_resistivity(
         return self.D_base_dims
 
     def get_data_base_size(self):
-        """
-        Return size of flattened base dimensions
+        """ Return size of flattened base dimensions
         """
         return self.frequencies.size * 2
 
     def get_model_base_dimensions(self):
-        """
-        Return a dict with a description of the model base dimensions. In this
-        case we have one dimension: the DD parameters (rho0, mi) where m_i
+        """ Return a dict with a description of the model base dimensions. In
+        this case we have one dimension: the DD parameters (rho0, mi) where m_i
         denotes all chargeability values corresponding to the relaxation times.
         """
         M_base_dims = {
