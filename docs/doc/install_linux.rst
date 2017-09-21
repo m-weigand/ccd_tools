@@ -1,6 +1,119 @@
 Linux
 =====
 
+Python - general
+----------------
+
+Install a Python 3 environment, e.g. Anaconda or Virtualenv, and make sure the following packages are installed:
+  
+     * numpy, matplotlib, pandas, sphinx
+
+For the case of missing packages you can either use conda (provided the
+Anaconda stack was installed) ::
+
+      conda install numpy matplotlib scipy pandas sphinx
+
+or pip ::
+
+      pip install numpy matplotlib scipy pandas sphinx
+
+How to setup Anaconda
+^^^^^^^^^^^^^^^^^^^^^
+
+Anaconda can be downloaded here: https://www.anaconda.com/download/
+An installation guide for Linux (and for other platforms) can be found here: https://docs.anaconda.com/anaconda/install/linux
+
+
+How to setup Virtualenv
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Virtualenv is a tool to create isolated Python environments.
+
+Creat a virtual environment ::
+
+	mkvirtualenv --python /usr/bin/python3 NAME
+
+with *NAME* as the name of your virtual environment. For e.g. CRTomo tool you can set *NAME* to *crtomo* or for EDF to *edf*.
+Open your virtual environment with ::
+
+	workon *NAME*
+
+.. todo::
+	
+	Edit: How to install Virtualenv
+
+Setup a working directory
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create the directory: */home/USERNAME/ccd-tools* and subdirectories for the different git repositiries.
+
+
+How to use the Git repository
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An installation guide for Git can be found here: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+Install git and get yourself familiar with the following git commands:
+
+     * git clone
+     * git pull / git push
+     * git add
+     * git commit
+     * git branch
+     * git checkout 
+     * git merge
+
+Simply clone the following repositories (private from M. Weigand)::
+
+    	git clone ssh://git@ssh.geo.uni-bonn.de:4422/mweigand/ccd_tools.git
+    	git clone ssh://git@ssh.geo.uni-bonn.de:4422/mweigand/sip_models.git
+	git clone ssh://git@ssh.geo.uni-bonn.de:4422/mweigand/geccoinv.git
+
+into the corresponding folder */home/USERNAME/ccd-tools*.
+
+Getting Started: CCD-tools with Anaconda
+----------------------------------------
+
+.. todo::
+	
+	Edit: Installation of ccd with Anaconda
+
+
+Getting Started: CCD-tools with Virtualenv
+------------------------------------------
+
+Python, Virtualenv and Git
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Install Python, Virtualenv and Git as described above.
+2. Create a working directory and clone the Git repositories into the corresponding folder.
+3. Create a virtual environment (named *ccd-tools*), using the following commands: ::
+
+	mkvirtualenv --python /usr/bin/python3 ccd-tools
+	pip install --upgrade pip
+	workon ccd-tools
+
+Installation of ccd-tools and required packages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. To install geccoinv, go to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
+	
+	pip install -U pip
+    	pip install -r requirements.txt
+	python setup.py install
+
+2. To install sip-models, go to the corresponding directory *.../ccd-tools/sip_models* and use the following commands: ::
+	
+	pip install -r requirements.txt
+	python setup.py install
+
+3. To install ccd-tools, go to the corresponding directory *.../ccd-tools/ccd_tools* and use the following commands: ::
+	
+	pip install -r requirements.txt
+	python setup.py install
+
+Old installation guide
+----------------------
+
 The *setuptools* distribution tools to manage the installation procedure:
 
 ::
