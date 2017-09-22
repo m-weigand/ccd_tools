@@ -312,7 +312,7 @@ class cfg_base(dict):
 
     def get_cmd_parser(self):
         parser = OptionParser()
-        for key in self.cfg.keys():
+        for key in sorted(self.cfg.keys()):
             helptext = ''.join((
                 self.cfg[key].help_text,
                 ' (default: ',
