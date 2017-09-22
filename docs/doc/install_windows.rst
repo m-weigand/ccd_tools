@@ -7,6 +7,51 @@ The installation for the Windows operating system consists of the following step
 * (optional) Installation of the MiKTex Latex distribution (under Windows,
   Latex support is disabled by default, and has to be activated using the
   corresponding environment variable).
+* Installation of the ccd_tools (via pip install)
+* Installation of Git for installation of ccd_tools from local source.
+
+There are multiple suitable Python distributions to choose from. At the moment
+the Anaconda distribution is recommended: https://www.anaconda.com/download/ (use
+Python 3.6, 64 bit)
+
+Anaconda installation
+---------------------
+
+Download Anaconda (Python 3.6 version) here:https://www.anaconda.com/download/
+and follwow the installation instructions.
+In addition, a installation guide can be found here: https://docs.anaconda.com/anaconda/install/windows.html
+
+Git installation
+----------------
+
+Download Git for Windows from: https://git-for-windows.github.io
+You can choose from Git BASH and Git GUI.
+
+Alternative Git GUIS: https://git-scm.com/download/gui/windows
+
+Adding SSH-Key: https://gitlab.geo.uni-bonn.de:443/help/ssh/README
+
+(Optional) MIKTEX
+-----------------
+
+Installing ccd_tools
+--------------------
+
+via pip install
+^^^^^^^^^^^^^^^
+
+via local source
+^^^^^^^^^^^^^^^^
+
+OLD
+===
+
+The installation for the Windows operating system consists of the following steps:
+
+* Installation of a suitable Python distribution
+* (optional) Installation of the MiKTex Latex distribution (under Windows,
+  Latex support is disabled by default, and has to be activated using the
+  corresponding environment variable).
 * Installation of the Debye decomposition tools
 
 There are multiple suitable Python distributions to choose from. At the moment
