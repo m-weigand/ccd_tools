@@ -10,6 +10,7 @@ import NDimInv.plot_helper
 plt, mpl = NDimInv.plot_helper.setup()
 import lib_dd.decomposition.ccd_single as ccd_single
 import lib_dd.config.cfg_single as cfg_single
+import lib_dd.plot
 
 
 class ccd_single_app(object):
@@ -235,18 +236,24 @@ class ccd_single_app(object):
             description='Range of tau values:',
             style=self.style,
         )
-        w_tausel_ind_left = widgets.IntText(
+        w_tausel_ind_left = widgets.SelectionSlider(
+            options=[1, 10, 100, 1000],
             value=100,
             description='left:',
-            disabled=True,
-            visible=False,
+            disabled=False,
+            continuous_update=False,
+            orientation='horizontal',
+            readout=True
         )
         w_tausel_ind_left.layout.visibility = 'hidden'
-        w_tausel_ind_right = widgets.IntText(
+        w_tausel_ind_right = widgets.SelectionSlider(
+            options=[1, 10, 100, 1000],
             value=100,
             description='right:',
-            disabled=True,
-            visible=False,
+            disabled=False,
+            continuous_update=False,
+            orientation='horizontal',
+            readout=True
         )
         w_tausel_ind_right.layout.visibility = 'hidden'
 
@@ -533,6 +540,7 @@ class ccd_single_app(object):
         else:
             tausel_opt = w_tausel.value
         config['tausel'] = tausel_opt
+        print('tausel', tausel_opt)
 
         if self.widgets['use_norm'].value is True:
             config['norm'] = self.widgets['norm_value'].value
@@ -548,9 +556,10 @@ class ccd_single_app(object):
         if self.widgets['generate_plot'].value is True:
             print('plotting ... this may take a while')
             # don't show in notebook
-            plt.ioff()
-            _ = last_it.plot()
-            _
+            # plt.ioff()
+            # _ = last_it.plot()
+            # _
+            self._plot(last_it)
 
         if self.widgets['generate_output'].value is True:
             outdir = 'output'
@@ -563,3 +572,34 @@ class ccd_single_app(object):
             )
 
             display(HTML('<a href="output.zip" download>Download results</a>'))
+
+    def _plot(self, it):
+        print('TODO: supply norm factors')
+
+        obj = lib_dd.plot.plot_iteration()
+
+        norm_factors = 1
+        D = it.Data.D / norm_factors
+        M = it.Model.convert_to_M(it.m)
+        # renormalize here? why do we compuate the forward solution again?
+        F = it.Model.F(M) / norm_factors
+        # extra_size = int(
+        #     np.sum([x[1][1] for x in it.Data.extra_dims.items()])
+        # )
+        # nr_spectra = max(1, extra_size)
+
+        mpl.rcParams['figure.dpi'] = 250
+        fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
+
+        # iterate over spectra
+        for nr, (d, m) in enumerate(it.Model.DM_iterator()):
+            obj._plot_rre_rim(nr, axes, D[d], F[d], it)
+            # self._plot_rmag_rpha(nr, axes[nr, 2:4], D[d], F[d], it)
+            # self._plot_rtd(nr, axes[nr, 4], M[m], it)
+            ax1 = axes[0].twinx()
+            ax2 = axes[1].twinx()
+            obj._plot_cre_cim(nr, [ax1, ax2], D[d], F[d], it)
+        fig.tight_layout()
+        fig.subplots_adjust(top=0.7)
+
+
