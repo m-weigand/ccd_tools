@@ -519,8 +519,20 @@ class ccd_single_app(object):
         config['frequency_file'] = self.frequencies
         config['data_file'] = self.data
         config['fixed_lambda'] = int(self.widgets['lambda'].value)
-
         config['plot_it_spectra'] = self.widgets['generate_it_plots'].value
+
+        # tausel
+        w_tausel = self.widgets['tausel']
+        w_tausel_ind_left = self.widgets['tausel_left']
+        w_tausel_ind_right = self.widgets['tausel_right']
+        if w_tausel.value == 'individual':
+            tausel_opt = '{0},{1}'.format(
+                w_tausel_ind_left.value,
+                w_tausel_ind_right.value,
+            )
+        else:
+            tausel_opt = w_tausel.value
+        config['tausel'] = tausel_opt
 
         if self.widgets['use_norm'].value is True:
             config['norm'] = self.widgets['norm_value'].value
