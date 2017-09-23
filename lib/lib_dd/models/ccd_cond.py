@@ -142,10 +142,11 @@ class decomposition_conductivity(
         Return a dict with a description of the data base dimensions. In this
         case we have frequencies and re/im data
         """
-        if(self.D_base_dims is None):
-            self.D_base_dims = {0: ['frequency', self.frequencies.size],
-                                1: ['rre_rmim', 2]
-                                }
+        if self.D_base_dims is None:
+            self.D_base_dims = {
+                0: ['frequency', self.frequencies.size],
+                1: ['cre_cim', 2]
+            }
         return self.D_base_dims
 
     def get_data_base_size(self):
