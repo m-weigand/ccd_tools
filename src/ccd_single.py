@@ -64,10 +64,6 @@ def main():
 
     # move temp directory to output directory
     if options['use_tmp']:
-        if os.path.isdir(outdir_real):
-            print('WARNING: Output directory already exists')
-            print('The new inversion can be found here:')
-            print((options['output_dir'] + os.sep + os.path.basename(outdir)))
         shutil.move(options['output_dir'], outdir_real)
 
     # logger.info('=======================================')

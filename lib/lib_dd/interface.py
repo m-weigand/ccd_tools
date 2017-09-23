@@ -14,8 +14,8 @@ You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-Functions common to the Cole-Cole decomposition implementations dd_single,
-dd_time, dd_space_time.
+Functions common to the Cole-Cole decomposition implementations ccd_single,
+ccd_time.
 """
 import sys
 import os
@@ -28,8 +28,7 @@ import sip_formats.convert as SC
 
 
 def create_output_dir(options):
-    """
-    Create the output directory
+    """ Create the output directory
     """
     # store the final output directory
     outdir = options['output_dir']
