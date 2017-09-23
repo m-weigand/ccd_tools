@@ -140,9 +140,10 @@ class plot_iteration():
             if(isinstance(lam, float) or isinstance(lam, int)):
                 title_string += '{0} '.format(lam)
             else:
+                pass
                 # individual lambdas
-                title_string += '{0} '.format(
-                    lam[m_indices[nr], m_indices[nr]])
+                # title_string += '{0} '.format(
+                #     lam[m_indices[nr], m_indices[nr]])
         ax.set_title(title_string)
 
     def _plot_rmag_rpha(self, nr, axes, orig_data, fit_data, it):
