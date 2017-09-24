@@ -38,6 +38,12 @@ class ccd_single_app(object):
         if disabled:
             logging.disable(100)
 
+    def enable_logger(self):
+        logging.disable(logging.NOTSET)
+
+    def disable_logger(self):
+        logging.disable(100)
+
     def print_data_summary(self):
         """Print a summary of the data, e.g., number of frequencies, min/max
         values
@@ -448,14 +454,15 @@ class ccd_single_app(object):
         self.widgets['norm_value'] = w_norm_value
         self.items.append(hb_norm)
 
-    def _add_advanced_toggle(self):
+    def _add_toggles(self):
         w_advanced = widgets.ToggleButton(
             value=True,
             description='Show advanced options',
             disabled=False,
             button_style='',
             tooltip='',
-            icon='check'
+            icon='check',
+            style=self.style,
         )
 
         def toggle_advanced(change):
@@ -467,11 +474,26 @@ class ccd_single_app(object):
                     # simple mode
                     self.containers['hb_norm'].layout.visibility = 'hidden'
 
+        w_show_output = widgets.ToggleButton(
+            value=False,
+            description='Show output',
+            disabled=False,
+            button_style='',
+            tooltip='',
+            # icon='check'
+            style=self.style,
+        )
+
+        hb_toggles = widgets.HBox(
+            children=[w_advanced, w_show_output],
+        )
+
         w_advanced.observe(toggle_advanced)
-        self.items.append(w_advanced)
+        self.widgets['nb_show_output'] = w_show_output
+        self.items.append(hb_toggles)
 
     def _init_app_widgets(self):
-        self._add_advanced_toggle()
+        self._add_toggles()
         self._add_dformat_selection()
         self._add_condres_selection()
         self._add_lambda()
@@ -523,6 +545,10 @@ class ccd_single_app(object):
         """Based on the GUI input, generate a configuration for the CCD and run
         it
         """
+        if self.widgets['nb_show_output'].value is True:
+            self.enable_logger()
+        else:
+            self.disable_logger()
         logging.info('running CCD')
         # set environment variables
         os.environ['DD_COND'] = self.widgets['type_formulation'].value
@@ -570,11 +596,15 @@ class ccd_single_app(object):
             # plt.ioff()
             # _ = last_it.plot()
             # _
-            self._plot(last_it)
+            for spectrum in ccd_obj.results:
+                last_it = spectrum.iterations[-1]
+                self._plot(last_it)
 
         if self.widgets['generate_lcurve'].value is True:
-            # config['plot_lambda'] = -1
-            last_it.plot_lcurve()
+            for spectrum in ccd_obj.results:
+                last_it = spectrum.iterations[-1]
+                # config['plot_lambda'] = -1
+                last_it.plot_lcurve()
 
         if self.widgets['generate_reg_strength'].value is True:
             logging.info('TODO: plot reg strength')
