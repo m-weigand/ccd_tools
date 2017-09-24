@@ -72,7 +72,7 @@ class plot_iteration():
             model_title = 'conductivity model'
         else:
             model_title = 'resistivity model'
-        logging.info('dd_c', dd_c)
+        logging.info('dd_c: {0}'.format(dd_c))
         model_title += ', {0}'.format(dd_c)
         ax.annotate(
             model_title,
