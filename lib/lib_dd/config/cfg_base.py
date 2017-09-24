@@ -1,4 +1,5 @@
 # *-* coding: utf-8 *-*
+import logging
 from optparse import OptionParser
 import platform
 import os
@@ -365,7 +366,7 @@ class cfg_base(dict):
 
         # print version information if requested
         if options.version:
-            print(version._get_version_numbers())
+            logging.info(version._get_version_numbers())
             exit()
 
         # update the self-dict with the new values
@@ -416,8 +417,11 @@ class cfg_base(dict):
         for attr in base_files + additional_files:
             filename = self[attr]
             if not os.path.isfile(filename):
-                print(('Filename not found for attribute {0}: {1}'.format(
-                    attr, filename)))
+                logging.info(
+                    'Filename not found for attribute {0}: {1}'.format(
+                        attr, filename
+                    )
+                )
                 none_missing = False
         else:
             if not none_missing:
