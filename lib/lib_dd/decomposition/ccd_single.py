@@ -3,6 +3,7 @@
 """
 import os
 from multiprocessing import Pool
+import logging
 
 import lib_dd.decomposition.ccd_single_stateless as decomp_single_sl
 import lib_dd.interface as lDDi
@@ -36,12 +37,12 @@ class ccd_single(object):
 
         # fit
         if(self.data['prep_opts']['nr_cores'] == 1):
-            print('single processing')
+            logging.info('single processing')
             # single processing
             results = list(map(decomp_single_sl.fit_one_spectrum, fit_datas))
         else:
             # multi processing
-            print('multi processing')
+            logging.info('multi processing')
             p = Pool(self.data['prep_opts']['nr_cores'])
             results = p.map(decomp_single_sl.fit_one_spectrum, fit_datas)
 
@@ -95,7 +96,7 @@ class ccd_single(object):
         directory parameter
         """
         if self.data is None or self.results is None:
-            print('No fit results present!')
+            logging.info('No fit results present!')
             return
 
         if directory is not None:
