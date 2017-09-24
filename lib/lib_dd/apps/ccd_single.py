@@ -77,7 +77,7 @@ class ccd_single_app(object):
                 'cre_cim',
                 'cre_cmim',
             ],
-            value='rre_rim',
+            value='rmag_rpha',
             description='Input data format:',
             style=self.style,
         )
@@ -313,7 +313,7 @@ class ccd_single_app(object):
             disabled=False
         )
         w_generate_output = widgets.Checkbox(
-            value=True,
+            value=False,
             description='Generate output for download',
             disabled=False
         )
