@@ -2,6 +2,7 @@
 stateless code part of the ccd_single decomposition. Everthing else is located
 in the ccd_single object
 """
+import logging
 import os
 import gc
 import numpy as np
@@ -146,8 +147,11 @@ def fit_one_spectrum(fit_data):
     """
     Fit one spectrum
     """
-    print('Fitting spectrum {0} of {1}'.format(fit_data['nr'],
-                                               fit_data['nr_of_spectra']))
+    logging.info(
+        'Fitting spectrum {0} of {1}'.format(
+            fit_data['nr'], fit_data['nr_of_spectra']
+        )
+    )
     ND = _prepare_ND_object(fit_data)
 
     # run the inversion
@@ -195,10 +199,10 @@ def call_fit_functions(fit_data, ND):
     # run plot functions in output directory
     pwd = os.getcwd()
     os.chdir(fit_data['outdir'])
-    print('Changing to: {0}'.format(fit_data['outdir']))
+    logging.info('Changing to: {0}'.format(fit_data['outdir']))
 
     if(fit_data['prep_opts']['plot']):
-        print('Plotting final iteration')
+        logging.info('Plotting final iteration')
         ND.iterations[-1].plot(
             filename='iteration',
             norm_factors=fit_data['inv_opts']['norm_factors']
@@ -215,5 +219,7 @@ def call_fit_functions(fit_data, ND):
             it.plot()
 
     if(fit_data['prep_opts']['plot_lambda'] is not None):
-        ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve()
+        ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve(
+            write_output=True
+        )
     os.chdir(pwd)
