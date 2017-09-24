@@ -1,5 +1,6 @@
 # jupyter notebook app for ccd_single
 import os
+import logging
 import shutil
 
 import ipywidgets as widgets
@@ -14,7 +15,8 @@ import lib_dd.plot
 
 
 class ccd_single_app(object):
-    def __init__(self, frequency_file, data_file):
+    def __init__(self, frequency_file, data_file, no_logging=False):
+        self._setup_logger(disabled=no_logging)
         self.style = {'description_width': 'initial'}
         self.frequencies = np.loadtxt(frequency_file)
         self.data = np.loadtxt(data_file)
@@ -30,6 +32,11 @@ class ccd_single_app(object):
         # we generate links to the online documentation. To simplify things,
         # use the url-prefix from here
         self.url = 'https://m-weigand.github.io/ccd_tools/doc_ccd/'
+
+    def _setup_logger(self, disabled=False):
+        logging.basicConfig(level=logging.INFO)
+        if disabled:
+            logging.disable(100)
 
     def print_data_summary(self):
         """Print a summary of the data, e.g., number of frequencies, min/max
@@ -82,7 +89,7 @@ class ccd_single_app(object):
         hb_dformat = widgets.HBox(
             children=[w_dformat, h_dformat]
         )
-        self.widgets['-01_data_format'] = w_dformat
+        self.widgets['data_format'] = w_dformat
         self.items.append(hb_dformat)
 
     def _add_condres_selection(self):
@@ -293,7 +300,7 @@ class ccd_single_app(object):
         w_generate_it_plots = widgets.Checkbox(
             value=False,
             description='Generate plots for all iterations',
-            disabled=True,
+            disabled=False,
         )
         w_generate_lcurve = widgets.Checkbox(
             value=False,
@@ -329,6 +336,8 @@ class ccd_single_app(object):
         self.widgets['generate_plot'] = w_generate_plot
         self.widgets['generate_output'] = w_generate_output
         self.widgets['generate_it_plots'] = w_generate_it_plots
+        self.widgets['generate_lcurve'] = w_generate_lcurve
+        self.widgets['generate_reg_strength'] = w_generate_reg_strength
 
         self.items.append(hb_output)
 
@@ -376,7 +385,7 @@ class ccd_single_app(object):
 
     def _add_c(self):
         w_c = widgets.FloatSlider(
-            value=0.5,
+            value=1.0,
             min=0.1,
             max=1.0,
             step=0.1,
@@ -514,7 +523,7 @@ class ccd_single_app(object):
         """Based on the GUI input, generate a configuration for the CCD and run
         it
         """
-        print('running CCD')
+        logging.info('running CCD')
         # set environment variables
         os.environ['DD_COND'] = self.widgets['type_formulation'].value
         os.environ['DD_C'] = '{0:.2f}'.format(
@@ -527,6 +536,9 @@ class ccd_single_app(object):
         config['data_file'] = self.data
         config['fixed_lambda'] = int(self.widgets['lambda'].value)
         config['plot_it_spectra'] = self.widgets['generate_it_plots'].value
+        config['max_iterations'] = self.widgets['max_its'].value
+        config['nr_terms_decade'] = self.widgets['nr_terms'].value
+        config['data_format'] = self.widgets['data_format'].value
 
         # tausel
         w_tausel = self.widgets['tausel']
@@ -540,7 +552,6 @@ class ccd_single_app(object):
         else:
             tausel_opt = w_tausel.value
         config['tausel'] = tausel_opt
-        print('tausel', tausel_opt)
 
         if self.widgets['use_norm'].value is True:
             config['norm'] = self.widgets['norm_value'].value
@@ -554,12 +565,22 @@ class ccd_single_app(object):
         # extract the last iteration
         last_it = ccd_obj.results[0].iterations[-1]
         if self.widgets['generate_plot'].value is True:
-            print('plotting ... this may take a while')
+            logging.info('plotting ... this may take a while')
             # don't show in notebook
             # plt.ioff()
             # _ = last_it.plot()
             # _
             self._plot(last_it)
+
+        if self.widgets['generate_lcurve'].value is True:
+            # config['plot_lambda'] = -1
+            last_it.plot_lcurve()
+
+        if self.widgets['generate_reg_strength'].value is True:
+            logging.info('TODO: plot reg strength')
+
+        if self.widgets['generate_it_plots'].value is True:
+            logging.info('TODO: plot all iterations')
 
         if self.widgets['generate_output'].value is True:
             outdir = 'output'
@@ -574,7 +595,7 @@ class ccd_single_app(object):
             display(HTML('<a href="output.zip" download>Download results</a>'))
 
     def _plot(self, it):
-        print('TODO: supply norm factors')
+        logging.info('TODO: supply norm factors')
 
         obj = lib_dd.plot.plot_iteration()
 
