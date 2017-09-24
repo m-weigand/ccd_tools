@@ -16,6 +16,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import numpy as np
+import logging
 
 import NDimInv.plot_helper
 plt, mpl = NDimInv.plot_helper.setup()
@@ -37,7 +38,7 @@ class plot_iteration():
                 self.norm_factors = norm_factors
             self._plot(it)
         except Exception as e:
-            print('Exception in plot routine', e)
+            logging.info('Exception in plot routine', e)
 
         return self.fig
 
@@ -71,7 +72,7 @@ class plot_iteration():
             model_title = 'conductivity model'
         else:
             model_title = 'resistivity model'
-        print('dd_c', dd_c)
+        logging.info('dd_c', dd_c)
         model_title += ', {0}'.format(dd_c)
         ax.annotate(
             model_title,
