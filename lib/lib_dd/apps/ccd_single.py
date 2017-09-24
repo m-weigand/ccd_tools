@@ -610,17 +610,27 @@ class ccd_single_app(object):
         # nr_spectra = max(1, extra_size)
 
         mpl.rcParams['figure.dpi'] = 250
-        fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
-
         # iterate over spectra
         for nr, (d, m) in enumerate(it.Model.DM_iterator()):
+            # plot spectrum
+            fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
             obj._plot_rre_rim(nr, axes, D[d], F[d], it)
             # self._plot_rmag_rpha(nr, axes[nr, 2:4], D[d], F[d], it)
-            # self._plot_rtd(nr, axes[nr, 4], M[m], it)
             ax1 = axes[0].twinx()
             ax2 = axes[1].twinx()
             obj._plot_cre_cim(nr, [ax1, ax2], D[d], F[d], it)
-        fig.tight_layout()
-        fig.subplots_adjust(top=0.7)
+            fig.tight_layout()
+            fig.subplots_adjust(top=0.7)
 
+            # plot spectrum rmag_rpha
+            fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
+            obj._plot_rmag_rpha(nr, axes, D[d], F[d], it)
+            ax1 = axes[0].twinx()
+            ax2 = axes[1].twinx()
+            fig.tight_layout()
+            fig.subplots_adjust(top=0.7)
 
+            # plot rtd
+            fig, axes = plt.subplots(1, 1, figsize=(10 / 2.54, 5 / 2.54))
+            obj._plot_rtd(nr, axes, M[m], it)
+            fig.tight_layout()
