@@ -30,10 +30,9 @@ from lib_dd.decomposition.ccd_single import ccd_single
 
 logging.basicConfig(level=logging.INFO)
 
-
 # @profile
 def main():
-    print('Cole-Cole decomposition, no time regularization')
+    logging.info('Cole-Cole decomposition, no time regularization')
 
     options = cfg_single.cfg_single()
     options.parse_cmd_arguments()
