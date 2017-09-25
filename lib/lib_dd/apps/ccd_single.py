@@ -3,6 +3,7 @@ import os
 import logging
 import shutil
 
+import ipywidgets
 import ipywidgets as widgets
 from IPython.core.display import display, HTML
 import numpy as np
@@ -187,7 +188,10 @@ class ccd_single_app(object):
             children=[vb_fignore, ]
         )
         accordion.set_title(0, 'Ignore frequencies')
-        accordion.selected_index = None
+        if ipywidgets.__version__[0] == '6':
+            accordion.selected_index = -1
+        else:
+            accordion.selected_index = None
 
         self.widgets['fignore'] = f_ign
         self.items.append(accordion)
