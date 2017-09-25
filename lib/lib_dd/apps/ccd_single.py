@@ -142,6 +142,7 @@ class ccd_single_app(object):
         self.widgets['fmin'] = w_fmin
         self.widgets['fmax'] = w_fmax
         self.items.append(hb_fminmax)
+        self.containers['fminmax'] = hb_fminmax
 
         def fminmax_change(change):
             if change['name'] == 'value':
@@ -168,7 +169,7 @@ class ccd_single_app(object):
         for i in range(0, self.frequencies.size):
             wid = widgets.Checkbox(
                 value=True,
-                description='{0:.2f} Hz'.format(self.frequencies[i]),
+                description='{0:.3f} Hz'.format(self.frequencies[i]),
                 disabled=False,
                 # width=50,
             )
@@ -190,6 +191,7 @@ class ccd_single_app(object):
 
         self.widgets['fignore'] = f_ign
         self.items.append(accordion)
+        self.containers['fignore'] = accordion
 
     def _add_max_its(self):
         w_max_its = widgets.IntSlider(
@@ -215,6 +217,7 @@ class ccd_single_app(object):
         )
         self.widgets['max_its'] = w_max_its
         self.items.append(hb_max_its)
+        self.containers['hb_max_its'] = hb_max_its
 
     def _add_nr_terms(self):
         w_nr_terms = widgets.IntText(
@@ -470,9 +473,15 @@ class ccd_single_app(object):
                 if change['new'] is True:
                     # advanced mode
                     self.containers['hb_norm'].layout.visibility = 'visible'
+                    self.containers['hb_max_its'].layout.visibility = 'visible'
+                    self.containers['fignore'].layout.visibility = 'visible'
+                    self.containers['fminmax'].layout.visibility = 'visible'
                 else:
                     # simple mode
                     self.containers['hb_norm'].layout.visibility = 'hidden'
+                    self.containers['hb_max_its'].layout.visibility = 'hidden'
+                    self.containers['fignore'].layout.visibility = 'hidden'
+                    self.containers['fminmax'].layout.visibility = 'hidden'
 
         w_show_output = widgets.ToggleButton(
             value=False,
@@ -566,6 +575,19 @@ class ccd_single_app(object):
         config['nr_terms_decade'] = self.widgets['nr_terms'].value
         config['data_format'] = self.widgets['data_format'].value
 
+        config['data_fmin'] = self.widgets['fmin'].value
+        config['data_fmax'] = self.widgets['fmax'].value
+
+        ignores_raw = self.widgets['fignore']
+        ignores = ['{0}'.format(
+            nr
+        ) for nr, x in enumerate(ignores_raw) if x.value is False]
+        if len(ignores) == 0:
+            ign_str = None
+        else:
+            ign_str = ','.join(ignores)
+        config['ignore_frequencies'] = ign_str
+
         # tausel
         w_tausel = self.widgets['tausel']
         w_tausel_ind_left = self.widgets['tausel_left']
@@ -603,11 +625,12 @@ class ccd_single_app(object):
         if self.widgets['generate_lcurve'].value is True:
             for spectrum in ccd_obj.results:
                 last_it = spectrum.iterations[-1]
-                # config['plot_lambda'] = -1
                 last_it.plot_lcurve()
 
         if self.widgets['generate_reg_strength'].value is True:
-            logging.info('TODO: plot reg strength')
+            for spectrum in ccd_obj.results:
+                last_it = spectrum.iterations[-1]
+                last_it.plot_reg_strengths()
 
         if self.widgets['generate_it_plots'].value is True:
             logging.info('TODO: plot all iterations')
