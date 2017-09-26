@@ -47,6 +47,22 @@ Installing ccd_tools
 via pip install
 ^^^^^^^^^^^^^^^
 
+Stable versions of ccd-tools are released to pipy.
+Open the Anaconda prompt (a terminal window should appear) and install ccd_tools, using the following command: ::
+
+    pip install ccd_tools
+
+The following Python packages are required and already part of the Anaconda distribution: ::
+    
+    numpy
+    scipy
+    matplotlib
+
+In addition, the folliwing Python packages are also required and part of the ccd-tools installation via 'pip install': ::
+
+    geccoinv
+    sip_models
+
 via local source
 ^^^^^^^^^^^^^^^^
 
