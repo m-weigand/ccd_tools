@@ -4,7 +4,7 @@ Windows
 The installation for the Windows operating system consists of the following steps:
 
 * Installation of a suitable Python distribution
-* (optional) Installation of the MiKTex Latex distribution (under Windows,
+* (optional) Installation of the MiKTeX Latex distribution (under Windows,
   Latex support is disabled by default, and has to be activated using the
   corresponding environment variable).
 * Installation of the ccd_tools (via pip install)
@@ -17,7 +17,7 @@ Python 3.6, 64 bit)
 Anaconda installation
 ---------------------
 
-Download Anaconda (Python 3.6 version) here:https://www.anaconda.com/download/
+Download Anaconda (Python 3.6 version) here: https://www.anaconda.com/download/
 and follwow the installation instructions.
 In addition, a installation guide can be found here: https://docs.anaconda.com/anaconda/install/windows.html
 
@@ -31,8 +31,15 @@ Alternative Git GUIS: https://git-scm.com/download/gui/windows
 
 Adding SSH-Key: https://gitlab.geo.uni-bonn.de:443/help/ssh/README
 
-(Optional) MIKTEX
+(Optional) MiKTeX
 -----------------
+
+MiKTeX is an implementation of the TeX typsetting system and used here as part of the plotting routines for lables.
+To install the basic MiKTeX system on Windows, download and run the following installer:
+
+    * https://miktex.org/download
+
+A detailed installation tutorial can be found here: https://miktex.org/howto/install-miktex
 
 Installing ccd_tools
 --------------------
