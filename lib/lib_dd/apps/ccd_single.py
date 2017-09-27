@@ -5,6 +5,7 @@ import shutil
 
 import ipywidgets
 import ipywidgets as widgets
+import IPython
 from IPython.core.display import display, HTML
 import numpy as np
 
@@ -244,6 +245,7 @@ class ccd_single_app(object):
         )
         self.widgets['nr_terms'] = w_nr_terms
         self.items.append(hb_nr_terms)
+        self.containers['nr_terms'] = hb_nr_terms
 
     def _add_tausel(self):
         w_tausel = widgets.Dropdown(
@@ -292,6 +294,7 @@ class ccd_single_app(object):
         self.widgets['tausel_left'] = w_tausel_ind_left
         self.widgets['tausel_right'] = w_tausel_ind_right
         self.items.append(hb_tausel)
+        self.containers['tausel'] = hb_tausel
 
         def tausel_change(change):
             if change['name'] == 'value':
@@ -378,6 +381,7 @@ class ccd_single_app(object):
         )
         self.widgets['data_weighting'] = w_data_weighting
         self.items.append(hb_data_weighting)
+        self.containers['data_weighting'] = hb_data_weighting
 
     def _add_lambda(self):
         w_lambda = widgets.IntText(
@@ -470,35 +474,44 @@ class ccd_single_app(object):
             tooltip='',
             icon='check',
             style=self.style,
+            layout=widgets.Layout(width='50%'),
         )
 
         def toggle_advanced(change):
             if change['name'] == 'value':
+                keys = [
+                    'hb_norm',
+                    'hb_max_its',
+                    'fignore',
+                    'fminmax',
+                    'nr_terms',
+                    'data_weighting',
+                    'tausel',
+                ]
                 if change['new'] is True:
                     # advanced mode
-                    self.containers['hb_norm'].layout.visibility = 'visible'
-                    self.containers['hb_max_its'].layout.visibility = 'visible'
-                    self.containers['fignore'].layout.visibility = 'visible'
-                    self.containers['fminmax'].layout.visibility = 'visible'
+                    for key in keys:
+                        self.containers[key].layout.visibility = 'visible'
                 else:
-                    # simple mode
-                    self.containers['hb_norm'].layout.visibility = 'hidden'
-                    self.containers['hb_max_its'].layout.visibility = 'hidden'
-                    self.containers['fignore'].layout.visibility = 'hidden'
-                    self.containers['fminmax'].layout.visibility = 'hidden'
+                    for key in keys:
+                        self.containers[key].layout.visibility = 'hidden'
 
         w_show_output = widgets.ToggleButton(
-            value=False,
+            value=True,
             description='Show output',
             disabled=False,
             button_style='',
             tooltip='',
             # icon='check'
             style=self.style,
+            layout=widgets.Layout(width='50%'),
         )
 
         hb_toggles = widgets.HBox(
             children=[w_advanced, w_show_output],
+            layout=widgets.Layout(
+                width='80%',
+            )
         )
 
         w_advanced.observe(toggle_advanced)
@@ -527,8 +540,22 @@ class ccd_single_app(object):
             layout=widgets.Layout(width='50%', height='80px')
         )
         w_run.on_click(self.run_ccd)
+
+        w_clear = widgets.Button(
+            description='Clear cell',
+            layout=widgets.Layout(width='50%', height='80px'),
+        )
+
+        def clear_cell(button):
+            IPython.display.clear_output()
+
+        w_clear.on_click(clear_cell)
+
         hb_run = widgets.HBox(
-            children=[w_run, ],
+            children=[
+                w_run,
+                w_clear,
+            ],
             layout=widgets.Layout(
                 width='100%',
                 align_items='center'
@@ -561,6 +588,8 @@ class ccd_single_app(object):
         if self.widgets['nb_show_output'].value is True:
             self.enable_logger()
         else:
+            # show at least this note
+            print('Running CCD')
             self.disable_logger()
         logging.info('running CCD')
         # set environment variables
@@ -650,6 +679,7 @@ class ccd_single_app(object):
             )
 
             display(HTML('<a href="output.zip" download>Download results</a>'))
+        print('finished')
 
     def _plot(self, it):
         logging.info('TODO: supply norm factors')
