@@ -17,6 +17,7 @@ Python 3.6, 64 bit)
 Anaconda installation
 ---------------------
 
+Anaconda is a Python distribution, simplifying package management and using the conda package management system.
 Download Anaconda (Python 3.6 version) here: https://www.anaconda.com/download/
 and follwow the installation instructions.
 In addition, a installation guide can be found here: https://docs.anaconda.com/anaconda/install/windows.html
@@ -24,12 +25,26 @@ In addition, a installation guide can be found here: https://docs.anaconda.com/a
 Git installation
 ----------------
 
+From our Git repositories you can download the required Python packages, to use them as local source.
+To use Git as a version control system and to clone the Git repository, you need to download and install Git to your computer as well as a Git account.
+
 Download Git for Windows from: https://git-for-windows.github.io
 You can choose from Git BASH and Git GUI.
 
-Alternative Git GUIS: https://git-scm.com/download/gui/windows
+There are also some more alternative Git GUIS avalible: https://git-scm.com/download/gui/windows
 
+Before cloning a Git repository to your local device the first time, you have to add your SSH authentication key to your Git account.
 Adding SSH-Key: https://gitlab.geo.uni-bonn.de:443/help/ssh/README
+
+For using the Git BASH, get yourself familiar with the following git commands:
+
+    * git clone
+    * git pull / git push
+    * git add
+    * git commit
+    * git branch
+    * git checkout
+    * git merge
 
 (Optional) MiKTeX
 -----------------
@@ -52,19 +67,77 @@ Open the Anaconda prompt (a terminal window should appear) and install ccd_tools
 
     pip install ccd_tools
 
-The following Python packages are required and already part of the Anaconda distribution: ::
+The following Python packages are required and already part of the Anaconda distribution:
     
-    numpy
-    scipy
-    matplotlib
+    * numpy
+    * scipy
+    * matplotlib
 
-In addition, the folliwing Python packages are also required and part of the ccd-tools installation via 'pip install': ::
+In addition, the folliwing Python packages are also required and part of the ccd-tools installation via 'pip install':
 
-    geccoinv
-    sip_models
+    * geccoinv
+    * sip_models
 
-via local source
-^^^^^^^^^^^^^^^^
+via local source (Git clone)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Create a working directory, e.g. *.../users/USERNAME/ccd-tools*.
+2. Right click the folder and choose *Git Bash Here*, a terminal window should appear.
+3. Clone the required Git repositories, using the following commands: ::
+
+    git clone https://github.com/m-weigand/sip_models.git
+    git clone https://github.com/m-weigand/geccoinv.git
+    git clone https://github.com/m-weigand/ccd_tools.git    
+
+4. Open the Anaconda prompt (a terminal window should appear).
+5. To install geccoinv, navigate within the Anaconda promt to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
+(to navigate within the Anaconda promt, use the 'cd' command)    
+    pip install -U pip
+    pip install -r requirements.txt
+    python setup.py install 
+
+6. To install sip-models, navigate within the Anaconda promt to the corresponding directory .../ccd-tools/sip_models and use the following commands: ::
+
+    pip install -r requirements.txt
+    python setup.py install
+
+7. To install ccd-tools, navigate within the Anaconda promt to the corresponding directory .../ccd-tools/ccd_tools and use the following commands: ::
+
+    pip install -r requirements.txt
+    python setup.py install
+
+via local source (Zip download)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Create a working directory, e.g. *.../users/USERNAME/ccd-tools*.
+2. Download the required Git repositories to your working directory:
+
+    https://github.com/m-weigand/sip_models/archive/master.zip
+    https://github.com/m-weigand/geccoinv/archive/master.zip
+    https://github.com/m-weigand/ccd_tools/archive/master.zip
+
+3. Unzip the ZIP-files and create the following subdirectories:
+
+    *.../ccd-tools/sip_models*
+    *.../ccd-tools/geccoinv*
+    *.../ccd-tools/ccd_tools*
+
+4. Open the Anaconda prompt (a terminal window should appear).
+5. To install geccoinv, navigate within the Anaconda promt to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
+    
+    pip install -U pip
+    pip install -r requirements.txt
+    python setup.py install 
+
+6. To install sip-models, navigate within the Anaconda promt to the corresponding directory .../ccd-tools/sip_models and use the following commands: ::
+
+    pip install -r requirements.txt
+    python setup.py install
+
+7. To install ccd-tools, navigate within the Anaconda promt to the corresponding directory .../ccd-tools/ccd_tools and use the following commands: ::
+
+    pip install -r requirements.txt
+    python setup.py install
 
 OLD
 ===
