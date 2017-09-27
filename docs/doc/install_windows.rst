@@ -50,9 +50,7 @@ For using the Git BASH, get yourself familiar with the following git commands:
 -----------------
 
 MiKTeX is an implementation of the TeX typsetting system and used here as part of the plotting routines for lables.
-To install the basic MiKTeX system on Windows, download and run the following installer:
-
-    * https://miktex.org/download
+To install the basic MiKTeX system on Windows, download and run the following installer: https://miktex.org/download
 
 A detailed installation tutorial can be found here: https://miktex.org/howto/install-miktex
 
@@ -91,10 +89,12 @@ via local source (Git clone)
 
 4. Open the Anaconda prompt (a terminal window should appear).
 5. To install geccoinv, navigate within the Anaconda promt to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
-(to navigate within the Anaconda promt, use the 'cd' command)    
+    
     pip install -U pip
     pip install -r requirements.txt
     python setup.py install 
+
+(to navigate within the Anaconda promt, use the 'cd' command.)
 
 6. To install sip-models, navigate within the Anaconda promt to the corresponding directory .../ccd-tools/sip_models and use the following commands: ::
 
@@ -112,15 +112,15 @@ via local source (Zip download)
 1. Create a working directory, e.g. *.../users/USERNAME/ccd-tools*.
 2. Download the required Git repositories to your working directory:
 
-    https://github.com/m-weigand/sip_models/archive/master.zip
-    https://github.com/m-weigand/geccoinv/archive/master.zip
-    https://github.com/m-weigand/ccd_tools/archive/master.zip
+    * https://github.com/m-weigand/sip_models/archive/master.zip
+    * https://github.com/m-weigand/geccoinv/archive/master.zip
+    * https://github.com/m-weigand/ccd_tools/archive/master.zip
 
 3. Unzip the ZIP-files and create the following subdirectories:
 
-    *.../ccd-tools/sip_models*
-    *.../ccd-tools/geccoinv*
-    *.../ccd-tools/ccd_tools*
+    * *.../ccd-tools/sip_models*
+    * *.../ccd-tools/geccoinv*
+    * *.../ccd-tools/ccd_tools*
 
 4. Open the Anaconda prompt (a terminal window should appear).
 5. To install geccoinv, navigate within the Anaconda promt to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
