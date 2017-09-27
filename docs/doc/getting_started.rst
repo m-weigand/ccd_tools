@@ -55,7 +55,7 @@ be: ::
     REM However, using the character "^" at the end of a line indicates a multiline command.
     REM Use this to structure commands for an better overview.
 
-    dd_single.py -f frequencies.dat -d data.dat ^
+    ccd_single -f frequencies.dat -d data.dat ^
      -n 20 -o results ^
      --tausel data_ext ^
      --nr_cores=1 --plot
@@ -78,7 +78,7 @@ a decomposition call is: ::
 
     # multi-line commands use the character "\" to indicate a continuation over
     # multiple lines:
-    dd_single.py -f frequencies.dat -d data.dat \
+    ccd_single -f frequencies.dat -d data.dat \
      -n 20 -o results \
      --tausel data_ext \
      --nr_cores=1 --plot
@@ -86,7 +86,7 @@ a decomposition call is: ::
 Environment variables can also be set only for a given command by prepending
 the assignment before the command::
 
-    DD_COND=0 DD_STARTING_MODEL=3 dd_single.py -f frequencies.dat -d data.dat \
+    DD_COND=0 DD_STARTING_MODEL=3 ccd_single -f frequencies.dat -d data.dat \
      -n 20 -o results \
      --tausel data_ext \
      --nr_cores=1 --plot
@@ -197,7 +197,7 @@ The spectrum can now be fitted to a Debye decomposition using the command
 (:download:`download linux shell file<example1_single/run_dd1.sh>`)
 (:download:`download Windows shell file<example1_single/run_dd1.bat>`): ::
 
-    dd_single.py -f frequencies.dat -d data.dat -o results1/
+    ccd_single -f frequencies.dat -d data.dat -o results1/
 
 This call uses a line search to find an optimal lambda value, and saves fit
 results in the directory **results1/**.
@@ -210,7 +210,7 @@ creates these plots afterwards (output files are named **spec_*.png**: ::
 In addition, the last iteration can directly be plotted by **dd_time.py** by
 using the option `- -plot`::
 
-    dd_single.py -f frequencies.dat -d data.dat -o results1/ --plot
+    ccd_single -f frequencies.dat -d data.dat -o results1/ --plot
 
 .. image:: example1_single/results1/plot_spec_000_iteration0005.png
     :align: center
@@ -223,11 +223,11 @@ environment variable **DD_STARTING_MODEL**):
 Windows (:download:`download Windows batch file<example1_single/run_dd2.bat>`): ::
 
     set DD_STARTING_MODEL=3
-    dd_single.py -f frequencies.dat -d data.dat -o results2 --plot --lambda 10
+    ccd_single -f frequencies.dat -d data.dat -o results2 --plot --lambda 10
 
 Unix (:download:`download linux shell file<example1_single/run_dd2.sh>`)::
 
-    DD_STARTING_MODEL=3 dd_single.py -f frequencies.dat -d data.dat -o results2\
+    DD_STARTING_MODEL=3 ccd_single -f frequencies.dat -d data.dat -o results2\
      --plot --lambda 10
 
 .. image:: example1_single/results2/plot_spec_000_iteration0005.png
@@ -240,11 +240,11 @@ Windows (:download:`download Windows batch file<example1_single/run_dd3.bat>`): 
     set DD_STARTING_MODEL=3
     set DD_COND=1
 
-    dd_single.py -f frequencies.dat -d data.dat -o results --plot --lambda 10
+    ccd_single -f frequencies.dat -d data.dat -o results --plot --lambda 10
 
 Linux (:download:`download linux shell file<example1_single/run_dd3.sh>`): ::
 
-    DD_STARTING_MODEL=3 DD_COND=1 dd_single.py -f frequencies.dat -d data.dat\
+    DD_STARTING_MODEL=3 DD_COND=1 ccd_single -f frequencies.dat -d data.dat\
      -o results3 --plot --lambda 10 --norm 10
 
 .. image:: example1_single/results3/plot_spec_000_iteration0003.png
@@ -331,7 +331,7 @@ run_no_time.bat<example2_time/run_no_time.bat>`)::
 Important are the **--f_lambda**, **--tm_i_lambda**, and **--trho0_lambda**
 switches, which control the various regularisation strategies. For more
 information, please refer to the list of options for *dd_time.py*:
-:doc:`programs/dd_time`.
+:doc:`programs/ccd_time`.
 
 The resulting directory listing now should look like this (with either the .bat
 or the .sh file): ::

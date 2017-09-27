@@ -1,7 +1,7 @@
-dd_single.py
-------------
+ccd_single
+----------
 
-*dd_single.py* is used to fit one or multiple SIP spectra using the Debye (or
+*ccd_single* is used to fit one or multiple SIP spectra using the Debye (or
 Cole-Cole) decomposition scheme. No smoothing regularization between the
 spectra is applied.
 

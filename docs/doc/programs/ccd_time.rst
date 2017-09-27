@@ -1,5 +1,5 @@
-dd_time.py
-==========
+ccd_time
+========
 
 .. toctree::
 
@@ -8,7 +8,7 @@ dd_time.py
 Command line options
 --------------------
 
-.. program-output:: dd_time.py -h
+.. program-output:: ccd_time -h
 
 
 Regularisation Parameters
@@ -31,6 +31,6 @@ dominant. The resulting temporal evolution of :math:`m_{tot}^n` for both cases
 is shown in (b) and the corresponding RTDs for time step 10 are shown in c and
 d, respectively. Although the temporal evolution of :math:`m_{tot}^n` is very
 similar in both cases, a too strong time regularisation effectively neutralises
-the frequency regularisation and leads to a highly fluctuating RTD (c). 
+the frequency regularisation and leads to a highly fluctuating RTD (c).
 
 (figure taken from ``src/dd_single/characterisation/TooMuchTimeReg``).
