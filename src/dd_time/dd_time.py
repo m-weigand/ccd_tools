@@ -290,7 +290,7 @@ def call_fit_functions(data, ND):
         ND.iterations[data['prep_opts']['plot_lambda']].plot_lcurve()
 
 
-if __name__ == '__main__':
+def main():
     options = cfg_time.cfg_time()
     options.parse_cmd_arguments()
 
@@ -305,3 +305,7 @@ if __name__ == '__main__':
     fit_data(data)
     # go back to initial working directory
     os.chdir(pwd)
+
+
+if __name__ == '__main__':
+    main()
