@@ -53,7 +53,6 @@ if __name__ == '__main__':
           entry_points=entry_points,
           py_modules=scripts,
           scripts=[
-              'src/dd_time/dd_time.py',
               'src/dd_space_time/dd_space_time.py',
               'src/dd_test/dd_test.py',
               'src/ddps/ddps.py',
