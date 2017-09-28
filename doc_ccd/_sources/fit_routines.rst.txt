@@ -9,8 +9,8 @@ Three fit routines are provided with specialised input/output configurations:
 Each fit routine can use one of the following kernels (i.e., models) to
 describe the SIP spectra:
 
-* Resistivity Debye decomposition
-* Conductivity Debye decomposition
+* Resistivity Cole-Cole decomposition
+* Conductivity Cole-Cole decomposition
 
 .. toctree::
     :maxdepth: 1
@@ -18,5 +18,3 @@ describe the SIP spectra:
     programs/ccd_single
     programs/ccd_time
     programs/ddps
-    output_formats
-

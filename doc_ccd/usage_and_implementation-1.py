@@ -1,4 +1,5 @@
-from NDimInv.plot_helper import *
+import NDimInv.plot_helper
+plt, mpl = NDimInv.plot_helper.setup()
 import numpy as np
 import sys
 import lib_dd

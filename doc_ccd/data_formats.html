@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Output Files &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
+    <title>Input Data files &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Theory of SIP models" href="theory.html" />
-    <link rel="prev" title="ddps.py" href="programs/ddps.html" />
+    <link rel="next" title="Starting Models" href="starting_models.html" />
+    <link rel="prev" title="Usage and implementation details" href="usage_and_implementation.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -40,7 +40,94 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="output-files">
+  <div class="section" id="input-data-files">
+<h1>Input Data files<a class="headerlink" href="#input-data-files" title="Permalink to this headline">¶</a></h1>
+<p>You need a frequency file which contains the frequencies, each in a seperate
+line, in ascending order:</p>
+<p>frequency.dat (<a class="reference download internal" href="_downloads/frequencies.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
+<span class="pre">(unix)</span></code></a>)
+(<a class="reference download internal" href="_downloads/frequencies1.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
+<span class="pre">(Windows)</span></code></a>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">0.0010</span>
+<span class="mf">0.0018</span>
+<span class="mf">0.0032</span>
+<span class="mf">0.0056</span>
+<span class="mf">0.0100</span>
+<span class="mf">0.0178</span>
+<span class="mf">0.0316</span>
+<span class="mf">0.0562</span>
+<span class="mf">0.1000</span>
+<span class="mf">0.1778</span>
+<span class="mf">0.3162</span>
+<span class="mf">0.5623</span>
+<span class="mf">1.0000</span>
+<span class="mf">1.7783</span>
+<span class="mf">3.1623</span>
+<span class="mf">5.6234</span>
+<span class="mf">10.0000</span>
+<span class="mf">17.7828</span>
+<span class="mf">31.6228</span>
+<span class="mf">56.2341</span>
+<span class="mf">100.0000</span>
+<span class="mf">177.8279</span>
+<span class="mf">316.2278</span>
+<span class="mf">562.3413</span>
+<span class="mf">1000.0000</span>
+</pre></div>
+</div>
+<p>Complex resistivity spectra are provided using a data file which holds a
+spectrum in each line. Columns are separated by space and values are linear
+both for magnitude and phase values. The first N columns correspond to the
+magnitude values (<img class="math" src="_images/math/63aa8639fa10609f8e940bb48be6707930b596c2.png" alt="\Omega m"/>) corresponding to the frequencies stored in
+<em>frequencies.dat</em>. The following N columns represent the corresponding phase
+values.</p>
+<p>data.dat
+(<a class="reference download internal" href="_downloads/data.dat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">data.dat</span> <span class="pre">(unix)</span></code></a>)</p>
+<p>(<a class="reference download internal" href="_downloads/data1.dat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">data.dat</span> <span class="pre">(Windows)</span></code></a>)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">49.345594</span> <span class="mf">49.120225</span> <span class="mf">48.860658</span> <span class="mf">48.589371</span> <span class="mf">48.333505</span> <span class="mf">48.113950</span> <span class="mf">47.939222</span>\
+<span class="mf">47.807051</span> <span class="mf">47.709583</span> <span class="mf">47.637735</span> <span class="mf">47.583349</span> <span class="mf">47.539704</span> <span class="mf">47.501267</span> <span class="mf">47.463162</span>\
+<span class="mf">47.420588</span> <span class="mf">47.368190</span> <span class="mf">47.299354</span> <span class="mf">47.205358</span> <span class="mf">47.074354</span> <span class="mf">46.890271</span> <span class="mf">46.632118</span>\
+<span class="mf">46.274900</span> <span class="mf">45.794402</span> <span class="mf">45.178163</span> <span class="mf">44.441082</span> <span class="o">-</span><span class="mf">10.526822</span> <span class="o">-</span><span class="mf">12.095446</span> <span class="o">-</span><span class="mf">13.004975</span>\
+<span class="o">-</span><span class="mf">12.999086</span> <span class="o">-</span><span class="mf">12.088092</span> <span class="o">-</span><span class="mf">10.544173</span> <span class="o">-</span><span class="mf">8.744458</span> <span class="o">-</span><span class="mf">7.007706</span> <span class="o">-</span><span class="mf">5.526119</span> <span class="o">-</span><span class="mf">4.380307</span>\
+<span class="o">-</span><span class="mf">3.584099</span> <span class="o">-</span><span class="mf">3.124956</span> <span class="o">-</span><span class="mf">2.990678</span> <span class="o">-</span><span class="mf">3.184856</span> <span class="o">-</span><span class="mf">3.735642</span> <span class="o">-</span><span class="mf">4.701107</span> <span class="o">-</span><span class="mf">6.172278</span>\
+<span class="o">-</span><span class="mf">8.272438</span> <span class="o">-</span><span class="mf">11.148023</span> <span class="o">-</span><span class="mf">14.941904</span> <span class="o">-</span><span class="mf">19.734922</span> <span class="o">-</span><span class="mf">25.441545</span> <span class="o">-</span><span class="mf">31.665354</span>\
+<span class="o">-</span><span class="mf">37.581057</span> <span class="o">-</span><span class="mf">41.99903</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The previous listing for the data.dat file contains only one line. For
+display purposes, line breaks were introduced, and indicated by ‘'
+characters.</p>
+</div>
+<div class="section" id="input-data-formats">
+<h2>input data formats<a class="headerlink" href="#input-data-formats" title="Permalink to this headline">¶</a></h2>
+<p>Input data in <cite>data.dat</cite> can be specified in various formats (internally
+converted using the sip_formats.convert) module:</p>
+<ul class="simple">
+<li><em>lnrmag_rpha</em>: The first N columns are resistivity magnitudes in the natural
+logarithm; the second N columns contain resistivity phase values (mrad)</li>
+<li><em>log10rmag_rpha</em>: The first N columns are resistivity magnitudes in the
+base-10 logarithm; the second N columns contain resistivity phase values
+(mrad)</li>
+<li><em>rmag_rpha</em>: The first N columns are linear resistivity magnitudes; the
+second N columns contain resistivity phase values (mrad)</li>
+<li><em>rre_rim</em>: The first N columns contain resistivity real parts; the second N
+columns contain resistivity imaginary parts</li>
+<li><em>rre_rmim</em>: The first N columns contain resistivity real parts; the second N
+columns contain the negative of resistivity imaginary parts</li>
+<li><em>cmag_cpha</em>: The first N columns contain conductivity magnitudes, the second N
+columns contain conductivity phase values</li>
+<li><em>cre_cim</em>: The first N columns contain conductivity real parts; the second N
+columns contain conductivity imaginary parts</li>
+<li><em>cre_cmim</em>: The first N columns contain conductivity real parts; the second N
+columns contain the negative of conductivity imaginary parts</li>
+</ul>
+<p>N is the number of frequencies. Specify the data format using the
+<strong>–data_format</strong> command line option.</p>
+</div>
+</div>
+<div class="section" id="output-files">
 <h1>Output Files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h1>
 <p>The following sections describe the output files of the various formats.
 Formats can be changed using the <strong>–output_format</strong> switch.</p>
@@ -458,20 +545,27 @@ number of parameters):</p>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="fit_routines.html">Fit Routines</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="programs/ccd_single.html">ccd_single</a></li>
-<li class="toctree-l2"><a class="reference internal" href="programs/ccd_time.html">ccd_time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="programs/ddps.html">ddps.py</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Output Files</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Input Data files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#input-data-formats">input data formats</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output-files">Output Files</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ascii-audit-format">ascii_audit format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ascii-format">ascii format</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="starting_models.html">Starting Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#best-practices">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#determining-relaxation-time-ranges">Determining relaxation time ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#using-the-cole-cole-distribution">Using the Cole-Cole distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#creating-synthetic-relaxation-time-distributions">Creating synthetic relaxation time distributions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
@@ -480,9 +574,9 @@ number of parameters):</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-  <li><a href="fit_routines.html">Fit Routines</a><ul>
-      <li>Previous: <a href="programs/ddps.html" title="previous chapter">ddps.py</a></li>
-      <li>Next: <a href="theory.html" title="next chapter">Theory of SIP models</a></li>
+  <li><a href="usage_and_implementation.html">Usage and implementation details</a><ul>
+      <li>Previous: <a href="usage_and_implementation.html" title="previous chapter">Usage and implementation details</a></li>
+      <li>Next: <a href="starting_models.html" title="next chapter">Starting Models</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -509,7 +603,7 @@ number of parameters):</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/output_formats.rst.txt"
+      <a href="_sources/data_formats.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

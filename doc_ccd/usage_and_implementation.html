@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Starting Models" href="starting_models.html" />
+    <link rel="next" title="Input Data files" href="data_formats.html" />
     <link rel="prev" title="Inversion and implementation details" href="inversion.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -44,6 +44,25 @@
 <h1>Usage and implementation details<a class="headerlink" href="#usage-and-implementation-details" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="data_formats.html">Input Data files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_formats.html#input-data-formats">input data formats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_formats.html#output-files">Output Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_formats.html#ascii-audit-format">ascii_audit format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_formats.html#header">header</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_formats.html#files">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_formats.html#ascii-format">ascii format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_formats.html#input-data">Input data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_formats.html#filter-results">Filter results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_formats.html#primary-fit-results">Primary fit results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_formats.html#integral-parameters">Integral parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="starting_models.html">Starting Models</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="starting_models.html#model-1">Model 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="starting_models.html#model-2">Model 2</a></li>
@@ -55,7 +74,7 @@
 <div class="section" id="best-practices">
 <h2>Best practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h2>
 <p>The following procedure is recommended for new data sets and focuses on
-inversions using <em>dd_single.py</em> and <em>dd_time.py</em>:</p>
+inversions using <em>ccd_single</em> and <em>ccd_time</em>:</p>
 <ul>
 <li><p class="first">Initially invert with variable <img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/> values for the frequency
 regularization</p>
@@ -68,8 +87,8 @@ makes results comparable)</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Normalisation can help… :</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">norm</span> <span class="mi">10</span>
+<li><p class="first">Normalization can help… :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">--</span><span class="n">norm</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </li>
@@ -90,7 +109,7 @@ drives (for SSDs there shouldn’t be any improvement)</p>
 </div>
 <div class="section" id="normalization">
 <h2>Normalization<a class="headerlink" href="#normalization" title="Permalink to this headline">¶</a></h2>
-<p>The DD is linear in <img class="math" src="_images/math/ac94cfcb695f488fb585333add7812d673843108.png" alt="\rho_0/\sigma_\infty"/>, as as such data can be
+<p>The CDD is linear in <img class="math" src="_images/math/ac94cfcb695f488fb585333add7812d673843108.png" alt="\rho_0/\sigma_\infty"/>, as as such data can be
 normalized both in magnitude/phase, or real and imaginary parts:</p>
 <div class="math">
 <p><img src="_images/math/7de6124dad2ce1c4a3f0e533454775170bdc32f8.png" alt="\rho'_{norm} &amp;= A \cdot \rho'\\
@@ -148,6 +167,28 @@ independently from the minimum and maximum data frequencies. However, the
 <p>This approach adds one frequency decade to each of the frequency limits of the
 data prior to converting those limits to <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values.</p>
 </div>
+<div class="section" id="using-the-cole-cole-distribution">
+<h2>Using the Cole-Cole distribution<a class="headerlink" href="#using-the-cole-cole-distribution" title="Permalink to this headline">¶</a></h2>
+<p>A single-termin Cole-Cole spectrum with c = 0.5 was fitted using kernel
+functions of c = (0.3, 0.5, 0.7, and 1.0).</p>
+<ul>
+<li><p class="first">c = 0.3:</p>
+<p>The kernel function is too wide to fit the response:</p>
+<img alt="_images/plot_spec_000_iteration0001.png" src="_images/plot_spec_000_iteration0001.png" />
+</li>
+<li><p class="first">c = 0.5</p>
+<p>The kernel function has the same slope as the response. Any widening of the
+peak in the RTD is due to regularisation smoothing.</p>
+<img alt="_images/plot_spec_000_iteration0012.png" src="_images/plot_spec_000_iteration0012.png" />
+</li>
+<li><p class="first">c = 0.7</p>
+<img alt="_images/plot_spec_000_iteration0004.png" src="_images/plot_spec_000_iteration0004.png" />
+</li>
+<li><p class="first">c = 1.0</p>
+<img alt="_images/plot_spec_000_iteration00041.png" src="_images/plot_spec_000_iteration00041.png" />
+</li>
+</ul>
+</div>
 <div class="section" id="creating-synthetic-relaxation-time-distributions">
 <h2>Creating synthetic relaxation time distributions<a class="headerlink" href="#creating-synthetic-relaxation-time-distributions" title="Permalink to this headline">¶</a></h2>
 <p>The <img class="math" src="_images/math/b80430baf1b059d0097bc9081abca3b1e0a74287.png" alt="\tau_i"/> distribution is determined by the frequencies of the data
@@ -166,27 +207,6 @@ log-normal distributions to the <img class="math" src="_images/math/79b19012e472
 <div class="figure">
 <img alt="_images/usage_and_implementation-4.png" src="_images/usage_and_implementation-4.png" />
 </div>
-</div>
-<div class="section" id="using-the-cole-cole-distribution">
-<h2>Using the Cole-Cole distribution<a class="headerlink" href="#using-the-cole-cole-distribution" title="Permalink to this headline">¶</a></h2>
-<p>A single-termin Cole-Cole spectrum with c = 0.5 was fitted using kernel functions of c = (0.3, 0.5, 0.7, and 1.0).</p>
-<ul>
-<li><p class="first">c = 0.3:</p>
-<p>The kernel function is too wide to fit the response:</p>
-<img alt="_images/plot_spec_000_iteration0001.png" src="_images/plot_spec_000_iteration0001.png" />
-</li>
-<li><p class="first">c = 0.5</p>
-<p>The kernel function has the same slope as the response. Any widening of the
-peak in the RTD is due to regularisation smoothing.</p>
-<img alt="_images/plot_spec_000_iteration0012.png" src="_images/plot_spec_000_iteration0012.png" />
-</li>
-<li><p class="first">c = 0.7</p>
-<img alt="_images/plot_spec_000_iteration0004.png" src="_images/plot_spec_000_iteration0004.png" />
-</li>
-<li><p class="first">c = 1.0</p>
-<img alt="_images/plot_spec_000_iteration00041.png" src="_images/plot_spec_000_iteration00041.png" />
-</li>
-</ul>
 </div>
 </div>
 
@@ -214,12 +234,14 @@ peak in the RTD is due to regularisation smoothing.</p>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory of SIP models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage and implementation details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_formats.html">Input Data files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_formats.html#output-files">Output Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="starting_models.html">Starting Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#best-practices">Best practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#normalization">Normalization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#determining-relaxation-time-ranges">Determining relaxation time ranges</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-synthetic-relaxation-time-distributions">Creating synthetic relaxation time distributions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-cole-cole-distribution">Using the Cole-Cole distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-synthetic-relaxation-time-distributions">Creating synthetic relaxation time distributions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Profiling and Debugging</a></li>
@@ -231,7 +253,7 @@ peak in the RTD is due to regularisation smoothing.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="inversion.html" title="previous chapter">Inversion and implementation details</a></li>
-      <li>Next: <a href="starting_models.html" title="next chapter">Starting Models</a></li>
+      <li>Next: <a href="data_formats.html" title="next chapter">Input Data files</a></li>
   </ul></li>
 </ul>
 </div>
