@@ -542,7 +542,7 @@ class ccd_single_app(object):
         w_run.on_click(self.run_ccd)
 
         w_clear = widgets.Button(
-            description='Clear cell',
+            description='Reset app',
             layout=widgets.Layout(width='50%', height='80px'),
         )
 
