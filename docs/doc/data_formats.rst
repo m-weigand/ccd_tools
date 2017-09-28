@@ -1,3 +1,99 @@
+Input Data files
+^^^^^^^^^^^^^^^^
+
+You need a frequency file which contains the frequencies, each in a seperate
+line, in ascending order:
+
+frequency.dat (:download:`Download frequencies.dat
+(unix)<example1_single/frequencies.dat>`)
+(:download:`Download frequencies.dat
+(Windows)<example1_single/data_windows/frequencies.dat>`): ::
+
+    0.0010
+    0.0018
+    0.0032
+    0.0056
+    0.0100
+    0.0178
+    0.0316
+    0.0562
+    0.1000
+    0.1778
+    0.3162
+    0.5623
+    1.0000
+    1.7783
+    3.1623
+    5.6234
+    10.0000
+    17.7828
+    31.6228
+    56.2341
+    100.0000
+    177.8279
+    316.2278
+    562.3413
+    1000.0000
+
+Complex resistivity spectra are provided using a data file which holds a
+spectrum in each line. Columns are separated by space and values are linear
+both for magnitude and phase values. The first N columns correspond to the
+magnitude values (:math:`\Omega m`) corresponding to the frequencies stored in
+*frequencies.dat*. The following N columns represent the corresponding phase
+values.
+
+data.dat
+(:download:`download data.dat (unix)<example1_single/data.dat>`)
+
+(:download:`download data.dat (Windows)
+<example1_single/data_windows/data.dat>`)
+
+::
+
+    49.345594 49.120225 48.860658 48.589371 48.333505 48.113950 47.939222\
+    47.807051 47.709583 47.637735 47.583349 47.539704 47.501267 47.463162\
+    47.420588 47.368190 47.299354 47.205358 47.074354 46.890271 46.632118\
+    46.274900 45.794402 45.178163 44.441082 -10.526822 -12.095446 -13.004975\
+    -12.999086 -12.088092 -10.544173 -8.744458 -7.007706 -5.526119 -4.380307\
+    -3.584099 -3.124956 -2.990678 -3.184856 -3.735642 -4.701107 -6.172278\
+    -8.272438 -11.148023 -14.941904 -19.734922 -25.441545 -31.665354\
+    -37.581057 -41.99903
+
+
+
+.. note::
+
+    The previous listing for the data.dat file contains only one line. For
+    display purposes, line breaks were introduced, and indicated by '\\'
+    characters.
+
+input data formats
+""""""""""""""""""
+
+Input data in `data.dat` can be specified in various formats (internally
+converted using the sip_formats.convert) module:
+
+* *lnrmag_rpha*: The first N columns are resistivity magnitudes in the natural
+  logarithm; the second N columns contain resistivity phase values (mrad)
+* *log10rmag_rpha*: The first N columns are resistivity magnitudes in the
+  base-10 logarithm; the second N columns contain resistivity phase values
+  (mrad)
+* *rmag_rpha*: The first N columns are linear resistivity magnitudes; the
+  second N columns contain resistivity phase values (mrad)
+* *rre_rim*: The first N columns contain resistivity real parts; the second N
+  columns contain resistivity imaginary parts
+* *rre_rmim*: The first N columns contain resistivity real parts; the second N
+  columns contain the negative of resistivity imaginary parts
+* *cmag_cpha*: The first N columns contain conductivity magnitudes, the second N
+  columns contain conductivity phase values
+* *cre_cim*: The first N columns contain conductivity real parts; the second N
+  columns contain conductivity imaginary parts
+* *cre_cmim*: The first N columns contain conductivity real parts; the second N
+  columns contain the negative of conductivity imaginary parts
+
+N is the number of frequencies. Specify the data format using the
+**--data_format** command line option.
+
 Output Files
 ^^^^^^^^^^^^
 

@@ -3,13 +3,14 @@ Usage and implementation details
 
 .. toctree::
 
+    data_formats
     starting_models
 
 Best practices
 --------------
 
 The following procedure is recommended for new data sets and focuses on
-inversions using *dd_single.py* and *dd_time.py*:
+inversions using *ccd_single* and *ccd_time*:
 
 * Initially invert with variable :math:`\lambda` values for the frequency
   regularization
@@ -19,9 +20,9 @@ inversions using *dd_single.py* and *dd_time.py*:
 
     DD_STARTING_MODEL=3 dd_single.py ...
 
-* Normalisation can help... : ::
+* Normalization can help... : ::
 
-    dd_single.py --norm 10
+    ccd_single --norm 10
 
 * For time regularization: here only a fixed lambda can be used. Start with a
   small value and take a look at the maximum regularization strength for the
@@ -40,7 +41,7 @@ inversions using *dd_single.py* and *dd_time.py*:
 Normalization
 -------------
 
-The DD is linear in :math:`\rho_0/\sigma_\infty`, as as such data can be
+The CDD is linear in :math:`\rho_0/\sigma_\infty`, as as such data can be
 normalized both in magnitude/phase, or real and imaginary parts:
 
 .. math::
@@ -105,7 +106,8 @@ independently from the minimum and maximum data frequencies. However, the
 
 .. plot::
 
-    from NDimInv.plot_helper import *
+    import NDimInv.plot_helper
+    plt, mpl = NDimInv.plot_helper.setup()
     import numpy as np
     import sys
     import lib_dd
@@ -164,7 +166,8 @@ independently from the minimum and maximum data frequencies. However, the
 
 .. plot::
 
-   from NDimInv.plot_helper import *
+   import NDimInv.plot_helper
+   plt, mpl = NDimInv.plot_helper.setup()
    import numpy as np
    import lib_dd
 
@@ -224,6 +227,33 @@ The following approach to selecting :math:`\tau` values is called 'data_ext'.
 
 This approach adds one frequency decade to each of the frequency limits of the
 data prior to converting those limits to :math:`\tau` values.
+
+Using the Cole-Cole distribution
+--------------------------------
+
+A single-termin Cole-Cole spectrum with c = 0.5 was fitted using kernel
+functions of c = (0.3, 0.5, 0.7, and 1.0).
+
+* c = 0.3:
+
+  The kernel function is too wide to fit the response:
+
+  .. image:: Fit_responses/results_ddc_0.3/plot_spec_000_iteration0001.png
+
+* c = 0.5
+
+  The kernel function has the same slope as the response. Any widening of the
+  peak in the RTD is due to regularisation smoothing.
+
+  .. image:: Fit_responses/results_ddc_0.5/plot_spec_000_iteration0012.png
+
+* c = 0.7
+
+  .. image:: Fit_responses/results_ddc_0.7/plot_spec_000_iteration0004.png
+
+* c = 1.0
+
+  .. image:: Fit_responses/results_ddc_1.0/plot_spec_000_iteration0004.png
 
 Creating synthetic relaxation time distributions
 ------------------------------------------------
@@ -356,30 +386,4 @@ Normally distributed noise can then be added to this spectrum:
    fig.subplots_adjust(hspace=0.3, wspace=0.4)
    fig.show()
 
-
-Using the Cole-Cole distribution
---------------------------------
-
-A single-termin Cole-Cole spectrum with c = 0.5 was fitted using kernel functions of c = (0.3, 0.5, 0.7, and 1.0).
-
-* c = 0.3:
-
-  The kernel function is too wide to fit the response:
-
-  .. image:: Fit_responses/results_ddc_0.3/plot_spec_000_iteration0001.png
-
-* c = 0.5
-
-  The kernel function has the same slope as the response. Any widening of the
-  peak in the RTD is due to regularisation smoothing.
-
-  .. image:: Fit_responses/results_ddc_0.5/plot_spec_000_iteration0012.png
-
-* c = 0.7
-
-  .. image:: Fit_responses/results_ddc_0.7/plot_spec_000_iteration0004.png
-
-* c = 1.0
-
-  .. image:: Fit_responses/results_ddc_1.0/plot_spec_000_iteration0004.png
 
