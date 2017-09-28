@@ -32,9 +32,13 @@ real and imaginary parts
     m &= \frac{\sigma_\infty - \sigma_0}{\sigma_\infty}\\
     \sigma_0 &= (1 - m) \cdot \sigma_\infty
 
+partial derivatives
+-------------------
 
-derivatives
------------
+There are partial derivatives of the real and the imaginary part respect to all variables.
+
+real parts
+^^^^^^^^^^
 
 .. math::
 
@@ -61,6 +65,9 @@ derivatives
         & \left. \frac{2 \ln (\omega \tau) (\omega \tau)^c \cos \frac{c \pi}{2} - 2 (\omega \tau)^2 \frac{\pi}{2} \sin \frac{c \pi}{2} + 2 \ln(\omega \tau) (\omega \tau)^{2 c}}{1}
     \right]
 
+imaginary parts
+^^^^^^^^^^^^^^^
+
 .. math::
 
     \frac{\partial \hat{\sigma}''(\omega)}{\partial \sigma_\infty} &= - \frac{m (\omega
@@ -86,3 +93,12 @@ derivatives
       \pi}{2}) \right] + \left[2 \ln(\omega \tau) (\omega \tau)^{2
       c}\right]}{\left[1 + 2 (\omega \tau)^c \cos(\frac{c \pi}{2}) + (\omega
       \tau)^{2 c}\right]^2}
+
+Partial derivatives respect to :math:`log_{10}(x)`:
+---------------------------------------------------
+
+There are also partial derivatives of the real and the imaginary part respect to the common logarithm of all variables:
+
+.. math::
+
+     \frac{\partial F(X)}{\partial log_{10}(x)} &= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)
