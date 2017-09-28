@@ -29,11 +29,11 @@ class ccd_single_app(object):
         self.containers = {}
         self.vbox = None
         self.print_data_summary()
-        self._init_app_widgets()
 
         # we generate links to the online documentation. To simplify things,
         # use the url-prefix from here
         self.url = 'https://m-weigand.github.io/ccd_tools/doc_ccd/'
+        self._init_app_widgets()
 
     def _setup_logger(self, disabled=False):
         logging.basicConfig(level=logging.INFO)
@@ -72,6 +72,12 @@ class ccd_single_app(object):
         display(HTML('<h2>Data summary</h2>'))
         display(HTML('<br />'.join(summary)))
 
+    def _help_url(self, postfix):
+        help_str = '<a href="{0}/{1}"'.format(
+            self.url, postfix
+        ) + ' target="_blank">Help</a>'
+        return help_str
+
     def _add_dformat_selection(self):
         w_dformat = widgets.Dropdown(
             options=[
@@ -90,9 +96,7 @@ class ccd_single_app(object):
             style=self.style,
         )
         h_dformat = widgets.HTML(
-            value='<a href="https://m-weigand.github.io/ccd_tools/doc_ccd/' +
-            'usage_and_implementation.html#" ' +
-            'target="_blank">Help</a>',
+            value=self._help_url('data_formats.html#input-data-formats')
         )
         hb_dformat = widgets.HBox(
             children=[w_dformat, h_dformat]
