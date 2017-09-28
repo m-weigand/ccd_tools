@@ -3,8 +3,8 @@ Fit Routines
 
 Three fit routines are provided with specialised input/output configurations:
 
-* Fiting of separate sepctra (1D) :doc:`programs/dd_single`
-* Fitting of time-regularized spectra (2D) :doc:`programs/dd_time`
+* Fiting of separate sepctra (1D) :doc:`programs/ccd_single`
+* Fitting of time-regularized spectra (2D) :doc:`programs/ccd_time`
 
 Each fit routine can use one of the following kernels (i.e., models) to
 describe the SIP spectra:
@@ -15,8 +15,8 @@ describe the SIP spectra:
 .. toctree::
     :maxdepth: 1
 
-    programs/dd_single
-    programs/dd_time
+    programs/ccd_single
+    programs/ccd_time
     programs/ddps
     output_formats
 

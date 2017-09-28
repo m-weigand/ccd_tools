@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+    lib_dd.apps
     lib_dd.conductivity
     lib_dd.config
     lib_dd.decomposition

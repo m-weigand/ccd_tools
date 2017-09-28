@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>lib_dd package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
+    <title>lib_dd package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.3',
+        VERSION:     '0.8.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="lib_dd.conductivity package" href="lib_dd.conductivity.html" />
+    <link rel="next" title="lib_dd.apps package" href="lib_dd.apps.html" />
     <link rel="prev" title="API" href="../api.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -46,6 +46,12 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="lib_dd.apps.html">lib_dd.apps package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib_dd.apps.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib_dd.apps.html#module-lib_dd.apps.ccd_single">lib_dd.apps.ccd_single module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib_dd.apps.html#module-lib_dd.apps">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lib_dd.conductivity.html">lib_dd.conductivity package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib_dd.conductivity.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib_dd.conductivity.html#module-lib_dd.conductivity.model">lib_dd.conductivity.model module</a></li>
@@ -78,6 +84,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib_dd.models.html">lib_dd.models package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib_dd.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib_dd.models.html#module-lib_dd.models.ccd_cond">lib_dd.models.ccd_cond module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib_dd.models.html#module-lib_dd.models.ccd_em_res">lib_dd.models.ccd_em_res module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib_dd.models.html#module-lib_dd.models.ccd_res">lib_dd.models.ccd_res module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib_dd.models.html#module-lib_dd.models">Module contents</a></li>
 </ul>
@@ -90,7 +98,7 @@
 </div>
 <div class="section" id="module-lib_dd.Jacobian">
 <span id="lib-dd-jacobian-module"></span><h2>lib_dd.Jacobian module<a class="headerlink" href="#module-lib_dd.Jacobian" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2014,2015 Maximilian Weigand</p>
+<p>Copyright 2014-2017 Maximilian Weigand</p>
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -136,7 +144,7 @@ Re}{\partial m_i}, \frac{\partial -Im}{\partial \rho0},
 </div>
 <div class="section" id="module-lib_dd.base_class">
 <span id="lib-dd-base-class-module"></span><h2>lib_dd.base_class module<a class="headerlink" href="#module-lib_dd.base_class" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2014,2015 Maximilian Weigand</p>
+<p>Copyright 2014-2017 Maximilian Weigand</p>
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -247,8 +255,7 @@ frequency decade.</p>
 </div>
 <div class="section" id="module-lib_dd.int_pars">
 <span id="lib-dd-int-pars-module"></span><h2>lib_dd.int_pars module<a class="headerlink" href="#module-lib_dd.int_pars" title="Permalink to this headline">¶</a></h2>
-<p># -<em>- coding: utf-8 -</em>-
-Copyright 2014,2015 Maximilian Weigand</p>
+<p>Copyright 2014-2017 Maximilian Weigand</p>
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -347,8 +354,8 @@ ANY WARRANTY without even the implied warranty of MERCHANTABILITY or FITNESS
 FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p>
 <p>You should have received a copy of the GNU General Public License along
 with this program.  If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
-<p>Functions common to the Cole-Cole decomposition implementations dd_single,
-dd_time, dd_space_time.</p>
+<p>Functions common to the Cole-Cole decomposition implementations ccd_single,
+ccd_time.</p>
 <dl class="function">
 <dt id="lib_dd.interface.aggregate_dicts">
 <code class="descclassname">lib_dd.interface.</code><code class="descname">aggregate_dicts</code><span class="sig-paren">(</span><em>iteration_list</em>, <em>dict_name</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.interface.aggregate_dicts" title="Permalink to this definition">¶</a></dt>
@@ -432,7 +439,7 @@ by them.</p>
 </div>
 <div class="section" id="module-lib_dd.plot">
 <span id="lib-dd-plot-module"></span><h2>lib_dd.plot module<a class="headerlink" href="#module-lib_dd.plot" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2014,2015 Maximilian Weigand</p>
+<p>Copyright 2014-2017 Maximilian Weigand</p>
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -446,19 +453,23 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
 <dt id="lib_dd.plot.plot_iteration">
 <em class="property">class </em><code class="descclassname">lib_dd.plot.</code><code class="descname">plot_iteration</code><a class="headerlink" href="#lib_dd.plot.plot_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>This class defines an override function for the default plot function of
-the Iteration class. The new plot function is aware of the Debye
+<p>This class defines an override function for the default plot function
+of the Iteration class. The new plot function is aware of the Cole-Cole
 Decomposition approach and will plot more information (i.e. the RTD)</p>
 <p>In addition, it will renormalise data if necessary.</p>
-<dl class="class">
-<dt id="lib_dd.plot.plot_iteration.figure_environment">
-<em class="property">class </em><code class="descname">figure_environment</code><span class="sig-paren">(</span><em>it</em>, <em>filename</em>, <em>keep_plot</em>, <em>nr_spectra</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.plot.plot_iteration.figure_environment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-</dd></dl>
+<dl class="method">
+<dt id="lib_dd.plot.plot_iteration.create_figure">
+<code class="descname">create_figure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.plot.plot_iteration.create_figure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.plot.plot_iteration.finalize_fig">
+<code class="descname">finalize_fig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.plot.plot_iteration.finalize_fig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.plot.plot_iteration.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><em>it</em>, <em>filename</em>, <em>keep_plot=False</em>, <em>norm_factors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.plot.plot_iteration.plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>it</em>, <em>norm_factors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.plot.plot_iteration.plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -503,7 +514,7 @@ Decomposition approach and will plot more information (i.e. the RTD)</p>
 </div>
 <div class="section" id="module-lib_dd.test_functions">
 <span id="lib-dd-test-functions-module"></span><h2>lib_dd.test_functions module<a class="headerlink" href="#module-lib_dd.test_functions" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2014,2015 Maximilian Weigand</p>
+<p>Copyright 2014-2017 Maximilian Weigand</p>
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -611,7 +622,7 @@ thresholds</li>
 </div>
 <div class="section" id="module-lib_dd.version">
 <span id="lib-dd-version-module"></span><h2>lib_dd.version module<a class="headerlink" href="#module-lib_dd.version" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2014,2015 Maximilian Weigand</p>
+<p>Copyright 2014-2017 Maximilian Weigand</p>
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -681,7 +692,7 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API</a><ul>
       <li>Previous: <a href="../api.html" title="previous chapter">API</a></li>
-      <li>Next: <a href="lib_dd.conductivity.html" title="next chapter">lib_dd.conductivity package</a></li>
+      <li>Next: <a href="lib_dd.apps.html" title="next chapter">lib_dd.apps package</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -704,7 +715,7 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

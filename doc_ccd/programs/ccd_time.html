@@ -1,0 +1,224 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ccd_time &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.11',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ddps.py" href="ddps.html" />
+    <link rel="prev" title="Environment variables" href="../environment_vars.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ccd-time">
+<h1>ccd_time<a class="headerlink" href="#ccd-time" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../environment_vars.html">Environment variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../environment_vars.html#usage-windows">Usage Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environment_vars.html#usage-linux">Usage Linux</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command line options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-text"><div class="highlight"><pre><span></span>Usage: ccd_time [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -d FILE, --data_file=FILE
+                        data file (default: data.dat)
+  --fmax=FLOAT          Ignore frequencies above this value (default: None)
+  --fmin=FLOAT          Ignore frequencies below this value (default: None)
+  --data_format=FORMAT  Input data format, possible values are: rmag_rpha,
+                        lnrmag_rpha, log10rmag_rpha, rmag_rpha,  rre_rim
+                        rre_rmim, cmag_cpha, cre_cim, cre_cmim. &quot;r&quot; stands for
+                        resistance/resistivity, and &quot;c&quot; stands for
+                        conductance/conductivity (default: rmag_rpha)
+  --data_weighting=SCHEME
+                        Data weighting scheme to use. (default: re_vs_im)
+  --lam0=FLOAT          Initial lambda for f-regularization (default: None)
+  --f_lambda=FLOAT      Use a fixed lambda for the tau regularization
+                        (default: None)
+  -f FILE, --frequency_file=FILE
+                        Frequency file (default: frequencies.dat)
+  --ignore=STRING       Frequency ids to ignore, example:12,13,14. Starts with
+                        index 0. (default: None)
+  --ind_lams            Use individual lambdas for f-regularization (default:
+                        False)
+  --max_it=INT          Maximum number of iterations (default: 20)
+  --norm=FLOAT          Normalize lowest frequency real part to this value
+                        (default: None)
+  -n INT, --nr_terms=INT
+                        Number of polarization terms per frequency decade
+                        (default: 20)
+  -o DIR, --output=DIR  Output directory (default: results)
+  --output_format=STRING
+                        Output format(ascii| ascii_audit) (default:
+                        ascii_audit)
+  -i, --plot_its        Plot spectra of each iteration (default: False)
+  --plot_lcurve=INT     Plot the l-curve for a selected iteration. WARNING:
+                        This only plots the l-curve and does not use it in the
+                        inversion process. Use -1 for last iteration.
+                        (default: None)
+  --plot_reg_strength   Plot regularization strengths of final iterations
+                        (default: False)
+  -p, --plot            Plot final iterations (default: False)
+  --silent              Do not plot any logs to STDOUT (default: False)
+  --tausel=STRATEGY     Tau selection strategy: data: Use data frequency
+                        limits for tau selection data_ext (default): Extend
+                        tau ranges by one frequency decade compared to the
+                        &#39;data&#39; strategy. Factors can be set for the low and
+                        high frequency by separating with a &#39;,&#39;: LEFT,RIGHT,
+                        e.g. &#39;10,100&#39; (default: data_ext)
+  --tm_i_lambda=FLOAT   Fixed time regularization lambda for chargeabilities
+                        m_i (default: 0)
+  --trho0_lambda=FLOAT  Fixed time regularization lambda for rho0 (default: 0)
+  --tw_mi               Use time-weighting (only in combination with
+                        --tmi_first_order) (default: False)
+  --tw_rho0             Use time-weighting (only in combination with
+                        --trho0_first_order) (default: False)
+  --times=FILE          Time index file (default: times.dat)
+  --tmi_first_order     Use first order smoothing for m_i (instead of second
+                        order smoothing) (default: False)
+  --trho0_first_order   Use first order smoothing for rho_0 (instead of second
+                        order smoothing) (default: False)
+  --tmp                 Create the output in a temporary directory and later
+                        move it later to its destination (default: False)
+  -v, --version         Print version information (default: False)
+</pre></div>
+</div>
+</div>
+<div class="section" id="regularisation-parameters">
+<h2>Regularisation Parameters<a class="headerlink" href="#regularisation-parameters" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/fig7_too_much_time_reg.png"><img alt="../_images/fig7_too_much_time_reg.png" class="align-center" src="../_images/fig7_too_much_time_reg.png" style="width: 864.0px; height: 540.0px;" /></a>
+<p>The selection of appropriate regularisation parameter values is a non-trivial
+task for ill-posed inverse problems. In the present case this particularly
+holds for the time regularisation, which competes with the frequency
+regularisation. The figure shows an example which highlights the importance of
+appropriately balancing frequency and time regularisations. Unimodal SIP
+responses were generated using the Cole-Cole model with increasing
+chargeability over time (a). Based on these data, DDs were performed using two
+different time regularisations: one characterised by reasonably balanced time
+and frequency regularisation parameters, and one where time regularisation was
+dominant. The resulting temporal evolution of <img class="math" src="../_images/math/543990fbd10f06e4d6ecc1e279835ed0866163a8.png" alt="m_{tot}^n"/> for both cases
+is shown in (b) and the corresponding RTDs for time step 10 are shown in c and
+d, respectively. Although the temporal evolution of <img class="math" src="../_images/math/543990fbd10f06e4d6ecc1e279835ed0866163a8.png" alt="m_{tot}^n"/> is very
+similar in both cases, a too strong time regularisation effectively neutralises
+the frequency regularisation and leads to a highly fluctuating RTD (c).</p>
+<p>(figure taken from <code class="docutils literal"><span class="pre">src/dd_single/characterisation/TooMuchTimeReg</span></code>).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../fit_routines.html">Fit Routines</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ccd_single.html">ccd_single</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ccd_time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../environment_vars.html">Environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regularisation-parameters">Regularisation Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ddps.html">ddps.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output_formats.html">Output Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../fit_routines.html">Fit Routines</a><ul>
+      <li>Previous: <a href="../environment_vars.html" title="previous chapter">Environment variables</a></li>
+      <li>Next: <a href="ddps.html" title="next chapter">ddps.py</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2017, Maximilian Weigand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/programs/ccd_time.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

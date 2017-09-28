@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting Started &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
+    <title>Getting Started &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.3',
+        VERSION:     '0.8.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -50,7 +50,7 @@ and provides two detailed usage examples.</p>
 </div>
 <div class="section" id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
-<div><a class="reference internal image-reference" href="_images/blockdiag-ead2734275e0210ca3aaa69187a7c1b0b6190c6c.png"><img height="132.0" src="_images/blockdiag-ead2734275e0210ca3aaa69187a7c1b0b6190c6c.png" width="1126.4" /></a></div><p>Given one or more SIP spectra in form of a frequency file and a data file, the
+<div><a class="reference internal image-reference" href="_images/blockdiag-7d82348beda5d0f35228eaf46477ffca0f3d8cd2.png"><img height="132.0" src="_images/blockdiag-7d82348beda5d0f35228eaf46477ffca0f3d8cd2.png" width="1126.4" /></a></div><p>Given one or more SIP spectra in form of a frequency file and a data file, the
 decomposition commands could be called directly. However, given the large
 number of possible command line options (and environment variables), it is
 recommended to create a batch file with the command call. This ensures
@@ -81,7 +81,7 @@ be:</p>
 <span class="n">REM</span> <span class="n">However</span><span class="p">,</span> <span class="n">using</span> <span class="n">the</span> <span class="n">character</span> <span class="s2">&quot;^&quot;</span> <span class="n">at</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">a</span> <span class="n">line</span> <span class="n">indicates</span> <span class="n">a</span> <span class="n">multiline</span> <span class="n">command</span><span class="o">.</span>
 <span class="n">REM</span> <span class="n">Use</span> <span class="n">this</span> <span class="n">to</span> <span class="n">structure</span> <span class="n">commands</span> <span class="k">for</span> <span class="n">an</span> <span class="n">better</span> <span class="n">overview</span><span class="o">.</span>
 
-<span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">^</span>
+<span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">^</span>
  <span class="o">-</span><span class="n">n</span> <span class="mi">20</span> <span class="o">-</span><span class="n">o</span> <span class="n">results</span> <span class="o">^</span>
  <span class="o">--</span><span class="n">tausel</span> <span class="n">data_ext</span> <span class="o">^</span>
  <span class="o">--</span><span class="n">nr_cores</span><span class="o">=</span><span class="mi">1</span> <span class="o">--</span><span class="n">plot</span>
@@ -104,7 +104,7 @@ a decomposition call is:</p>
 
 <span class="c1"># multi-line commands use the character &quot;\&quot; to indicate a continuation over</span>
 <span class="c1"># multiple lines:</span>
-<span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> \
+<span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> \
  <span class="o">-</span><span class="n">n</span> <span class="mi">20</span> <span class="o">-</span><span class="n">o</span> <span class="n">results</span> \
  <span class="o">--</span><span class="n">tausel</span> <span class="n">data_ext</span> \
  <span class="o">--</span><span class="n">nr_cores</span><span class="o">=</span><span class="mi">1</span> <span class="o">--</span><span class="n">plot</span>
@@ -112,7 +112,7 @@ a decomposition call is:</p>
 </div>
 <p>Environment variables can also be set only for a given command by prepending
 the assignment before the command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_COND</span><span class="o">=</span><span class="mi">0</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> \
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_COND</span><span class="o">=</span><span class="mi">0</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> \
  <span class="o">-</span><span class="n">n</span> <span class="mi">20</span> <span class="o">-</span><span class="n">o</span> <span class="n">results</span> \
  <span class="o">--</span><span class="n">tausel</span> <span class="n">data_ext</span> \
  <span class="o">--</span><span class="n">nr_cores</span><span class="o">=</span><span class="mi">1</span> <span class="o">--</span><span class="n">plot</span>
@@ -197,7 +197,7 @@ characters.</p>
 <p>The spectrum can now be fitted to a Debye decomposition using the command
 (<a class="reference download internal" href="_downloads/run_dd1.sh" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>)
 (<a class="reference download internal" href="_downloads/run_dd1.bat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>This call uses a line search to find an optimal lambda value, and saves fit
@@ -209,7 +209,7 @@ creates these plots afterwards (output files are named <strong>spec_*.png</stron
 </div>
 <p>In addition, the last iteration can directly be plotted by <strong>dd_time.py</strong> by
 using the option <cite>- -plot</cite>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span> <span class="o">--</span><span class="n">plot</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span> <span class="o">--</span><span class="n">plot</span>
 </pre></div>
 </div>
 <img alt="_images/plot_spec_000_iteration0005.png" class="align-center" src="_images/plot_spec_000_iteration0005.png" />
@@ -218,11 +218,11 @@ using the option <cite>- -plot</cite>:</p>
 environment variable <strong>DD_STARTING_MODEL</strong>):</p>
 <p>Windows (<a class="reference download internal" href="_downloads/run_dd2.bat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">batch</span> <span class="pre">file</span></code></a>):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span>
-<span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results2</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
+<span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results2</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
 </pre></div>
 </div>
 <p>Unix (<a class="reference download internal" href="_downloads/run_dd2.sh" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results2</span>\
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results2</span>\
  <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
 </pre></div>
 </div>
@@ -232,11 +232,11 @@ environment variable <strong>DD_STARTING_MODEL</strong>):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span>
 <span class="nb">set</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span>
 
-<span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
+<span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
 </pre></div>
 </div>
 <p>Linux (<a class="reference download internal" href="_downloads/run_dd3.sh" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span> <span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span>\
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span>\
  <span class="o">-</span><span class="n">o</span> <span class="n">results3</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span> <span class="o">--</span><span class="n">norm</span> <span class="mi">10</span>
 </pre></div>
 </div>
@@ -298,7 +298,7 @@ file for Linux:</p>
 <p>Important are the <strong>–f_lambda</strong>, <strong>–tm_i_lambda</strong>, and <strong>–trho0_lambda</strong>
 switches, which control the various regularisation strategies. For more
 information, please refer to the list of options for <em>dd_time.py</em>:
-<a class="reference internal" href="programs/dd_time.html"><span class="doc">dd_time.py</span></a>.</p>
+<a class="reference internal" href="programs/ccd_time.html"><span class="doc">ccd_time</span></a>.</p>
 <p>The resulting directory listing now should look like this (with either the .bat
 or the .sh file):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>.
@@ -386,7 +386,7 @@ directory <strong>results/</strong>, with the plot file <strong>plot_times_itera
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

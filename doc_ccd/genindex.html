@@ -6,13 +6,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Index &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
+    <title>Index &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.3',
+        VERSION:     '0.8.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -82,6 +82,8 @@
 </li>
       <li><a href="api/lib_dd.decomposition.html#lib_dd.decomposition.ccd_single.ccd_single">ccd_single (class in lib_dd.decomposition.ccd_single)</a>
 </li>
+      <li><a href="api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app">ccd_single_app (class in lib_dd.apps.ccd_single)</a>
+</li>
       <li><a href="api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base">cfg_base (class in lib_dd.config.cfg_base)</a>
 </li>
       <li><a href="api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base.cfg_obj">cfg_base.cfg_obj (class in lib_dd.config.cfg_base)</a>
@@ -92,26 +94,36 @@
 </li>
       <li><a href="api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base.check_input_files">check_input_files() (lib_dd.config.cfg_base.cfg_base method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.html#lib_dd.base_class.integrated_parameters.compute_par_stats">compute_par_stats() (lib_dd.base_class.integrated_parameters method)</a>
 
       <ul>
         <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.compute_par_stats">(lib_dd.conductivity.model.dd_conductivity method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.convert_parameters">convert_parameters() (lib_dd.conductivity.model.dd_conductivity method)</a>
 
       <ul>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.convert_parameters">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_parameters">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.convert_parameters">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
       <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.convert_pars_back">convert_pars_back() (lib_dd.conductivity.model.dd_conductivity method)</a>
 
       <ul>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.convert_pars_back">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_pars_back">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.convert_pars_back">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
+      <li><a href="api/lib_dd.html#lib_dd.plot.plot_iteration.create_figure">create_figure() (lib_dd.plot.plot_iteration method)</a>
+</li>
       <li><a href="api/lib_dd.html#lib_dd.interface.create_output_dir">create_output_dir() (in module lib_dd.interface)</a>
 </li>
   </ul></td>
@@ -124,11 +136,17 @@
 </li>
       <li><a href="api/lib_dd.html#lib_dd.int_pars.decade_loadings">decade_loadings() (in module lib_dd.int_pars)</a>
 </li>
+      <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity">decomposition_conductivity (class in lib_dd.models.ccd_cond)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity">decomposition_em_resistivity (class in lib_dd.models.ccd_em_res)</a>
+</li>
       <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity">decomposition_resistivity (class in lib_dd.models.ccd_res)</a>
 </li>
       <li><a href="api/lib_dd.html#lib_dd.base_class.determine_tau_range">determine_tau_range() (in module lib_dd.base_class)</a>
+</li>
+      <li><a href="api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.disable_logger">disable_logger() (lib_dd.apps.ccd_single.ccd_single_app method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -136,14 +154,16 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.enable_logger">enable_logger() (lib_dd.apps.ccd_single.ccd_single_app method)</a>
+</li>
       <li><a href="api/lib_dd.html#lib_dd.test_functions.tcolors.ENDC">ENDC (lib_dd.test_functions.tcolors attribute)</a>
 </li>
       <li><a href="api/lib_dd.html#lib_dd.base_class.starting_pars_3.estimate">estimate() (lib_dd.base_class.starting_pars_3 method)</a>
 </li>
-      <li><a href="api/lib_dd.html#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters">estimate_starting_parameters() (lib_dd.starting_parameters.starting_parameters method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lib_dd.html#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters">estimate_starting_parameters() (lib_dd.starting_parameters.starting_parameters method)</a>
+</li>
       <li><a href="api/lib_dd.html#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_1">estimate_starting_parameters_1() (lib_dd.starting_parameters.starting_parameters method)</a>
 </li>
       <li><a href="api/lib_dd.html#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_2">estimate_starting_parameters_2() (lib_dd.starting_parameters.starting_parameters method)</a>
@@ -158,15 +178,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.html#lib_dd.test_functions.tcolors.FAIL">FAIL (lib_dd.test_functions.tcolors attribute)</a>
 </li>
+      <li><a href="api/lib_dd.html#lib_dd.plot.plot_iteration.finalize_fig">finalize_fig() (lib_dd.plot.plot_iteration method)</a>
+</li>
       <li><a href="api/lib_dd.decomposition.html#lib_dd.decomposition.ccd_single.ccd_single.fit_data">fit_data() (lib_dd.decomposition.ccd_single.ccd_single method)</a>
+</li>
+      <li><a href="api/lib_dd.decomposition.html#lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum">fit_one_spectrum() (in module lib_dd.decomposition.ccd_single_stateless)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/lib_dd.decomposition.html#lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum">fit_one_spectrum() (in module lib_dd.decomposition.ccd_single_stateless)</a>
-</li>
       <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.forward">forward() (lib_dd.conductivity.model.dd_conductivity method)</a>
 
       <ul>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.forward">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.forward">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.forward">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
@@ -185,12 +211,20 @@
       <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.get_data_base_dimensions">get_data_base_dimensions() (lib_dd.conductivity.model.dd_conductivity method)</a>
 
       <ul>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.get_data_base_dimensions">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_dimensions">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_dimensions">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
       <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.get_data_base_size">get_data_base_size() (lib_dd.conductivity.model.dd_conductivity method)</a>
 
       <ul>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.get_data_base_size">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_size">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_size">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
@@ -201,6 +235,10 @@
       <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.get_model_base_dimensions">get_model_base_dimensions() (lib_dd.conductivity.model.dd_conductivity method)</a>
 
       <ul>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.get_model_base_dimensions">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_model_base_dimensions">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.get_model_base_dimensions">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
@@ -237,6 +275,10 @@
       <ul>
         <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.Jacobian">(lib_dd.conductivity.model.dd_conductivity method)</a>
 </li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.Jacobian">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.Jacobian">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.Jacobian">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
@@ -247,6 +289,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.html#module-lib_dd">lib_dd (module)</a>
+</li>
+      <li><a href="api/lib_dd.apps.html#module-lib_dd.apps">lib_dd.apps (module)</a>
+</li>
+      <li><a href="api/lib_dd.apps.html#module-lib_dd.apps.ccd_single">lib_dd.apps.ccd_single (module)</a>
 </li>
       <li><a href="api/lib_dd.html#module-lib_dd.base_class">lib_dd.base_class (module)</a>
 </li>
@@ -287,6 +333,10 @@
       <li><a href="api/lib_dd.html#module-lib_dd.Jacobian">lib_dd.Jacobian (module)</a>
 </li>
       <li><a href="api/lib_dd.models.html#module-lib_dd.models">lib_dd.models (module)</a>
+</li>
+      <li><a href="api/lib_dd.models.html#module-lib_dd.models.ccd_cond">lib_dd.models.ccd_cond (module)</a>
+</li>
+      <li><a href="api/lib_dd.models.html#module-lib_dd.models.ccd_em_res">lib_dd.models.ccd_em_res (module)</a>
 </li>
       <li><a href="api/lib_dd.models.html#module-lib_dd.models.ccd_res">lib_dd.models.ccd_res (module)</a>
 </li>
@@ -342,9 +392,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.html#lib_dd.plot.plot_iteration">plot_iteration (class in lib_dd.plot)</a>
 </li>
-      <li><a href="api/lib_dd.html#lib_dd.plot.plot_iteration.figure_environment">plot_iteration.figure_environment (class in lib_dd.plot)</a>
-</li>
       <li><a href="api/lib_dd.html#lib_dd.interface.prepare_stat_values">prepare_stat_values() (in module lib_dd.interface)</a>
+</li>
+      <li><a href="api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.print_data_summary">print_data_summary() (lib_dd.apps.ccd_single.ccd_single_app method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -353,6 +403,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.html#lib_dd.int_pars.rho0">rho0() (in module lib_dd.int_pars)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.run_ccd">run_ccd() (lib_dd.apps.ccd_single.ccd_single_app method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -380,18 +434,24 @@
 </li>
       <li><a href="api/lib_dd.html#lib_dd.interface.save_rms_values">save_rms_values() (in module lib_dd.interface)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.html#lib_dd.interface.save_stat_pars">save_stat_pars() (in module lib_dd.interface)</a>
 </li>
       <li><a href="api/lib_dd.decomposition.html#lib_dd.decomposition.ccd_single.ccd_single.save_to_directory">save_to_directory() (lib_dd.decomposition.ccd_single.ccd_single method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.set_settings">set_settings() (lib_dd.conductivity.model.dd_conductivity method)</a>
 
       <ul>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.set_settings">(lib_dd.models.ccd_cond.decomposition_conductivity method)</a>
+</li>
+        <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.set_settings">(lib_dd.models.ccd_em_res.decomposition_em_resistivity method)</a>
+</li>
         <li><a href="api/lib_dd.models.html#lib_dd.models.ccd_res.decomposition_resistivity.set_settings">(lib_dd.models.ccd_res.decomposition_resistivity method)</a>
 </li>
       </ul></li>
+      <li><a href="api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.show">show() (lib_dd.apps.ccd_single.ccd_single_app method)</a>
+</li>
       <li><a href="api/lib_dd.html#lib_dd.test_functions.single_t_rms_pos_change">single_t_rms_pos_change() (in module lib_dd.test_functions)</a>
 </li>
       <li><a href="api/lib_dd.config.html#lib_dd.config.cfg_single.cfg_single.split_options">split_options() (lib_dd.config.cfg_single.cfg_single method)</a>
@@ -505,7 +565,7 @@
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

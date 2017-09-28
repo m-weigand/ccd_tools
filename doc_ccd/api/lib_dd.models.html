@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>lib_dd.models package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.3 documentation</title>
+    <title>lib_dd.models package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.3',
+        VERSION:     '0.8.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,6 +43,191 @@
 <h1>lib_dd.models package<a class="headerlink" href="#lib-dd-models-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lib_dd.models.ccd_cond">
+<span id="lib-dd-models-ccd-cond-module"></span><h2>lib_dd.models.ccd_cond module<a class="headerlink" href="#module-lib_dd.models.ccd_cond" title="Permalink to this headline">¶</a></h2>
+<p>Cole-Cole decomposition in conductivity formulation</p>
+<dl class="class">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity">
+<em class="property">class </em><code class="descclassname">lib_dd.models.ccd_cond.</code><code class="descname">decomposition_conductivity</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></code></p>
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.Jacobian">
+<code class="descname">Jacobian</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.Jacobian" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars_dec</strong> (<em>numpy.ndarray</em>) – array containing (log10(sigma_infty), log10(m_i)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>J</strong> – containing derivatives.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(2N) X K numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.convert_parameters">
+<code class="descname">convert_parameters</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.convert_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert parameters given as (<img class="math" src="../_images/math/90fbb956016b6e0ca52057cbd32189c7faee071d.png" alt="\rho_0, m_i"/>) to the
+parameterization used by this class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.convert_pars_back">
+<code class="descname">convert_pars_back</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.convert_pars_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert parameters given in this parameterization back to the
+linear state
+Here: From <img class="math" src="../_images/math/cdee566703617f6d81c3203699af2f59aca3a42e.png" alt="log_{10}(\sigma_\infty), log_{10}(m_i)"/></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.forward" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars_dec</strong> (<em>or numpy.ndarray</em>) – [log10(sigma_infty), log10(m_i)]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>remim</strong> – with N the nr of frequencies, and the real and the negative
+imaginary parts on the second axis</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Nx2 numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.get_data_base_dimensions">
+<code class="descname">get_data_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.get_data_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict with a description of the data base dimensions. In this
+case we have frequencies and re/im data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.get_data_base_size">
+<code class="descname">get_data_base_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.get_data_base_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return size of flattened base dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.get_model_base_dimensions">
+<code class="descname">get_model_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.get_model_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict with a description of the model base dimensions. In this
+case we have one dimension: the DD parameters (rho0, mi) where m_i
+denotes all chargeability values corresponding to the relaxation times.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_cond.decomposition_conductivity.set_settings">
+<code class="descname">set_settings</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.set_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the settings and call necessary functions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>settings</strong> (<em>dict</em>) – contains settings of the decomposition kernel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib_dd.models.ccd_em_res">
+<span id="lib-dd-models-ccd-em-res-module"></span><h2>lib_dd.models.ccd_em_res module<a class="headerlink" href="#module-lib_dd.models.ccd_em_res" title="Permalink to this headline">¶</a></h2>
+<p>Cole-Cole decomposition in resistivity formulation, including a
+high-frequency EM Cole-Cole term</p>
+<dl class="class">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity">
+<em class="property">class </em><code class="descclassname">lib_dd.models.ccd_em_res.</code><code class="descname">decomposition_em_resistivity</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></code></p>
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.Jacobian">
+<code class="descname">Jacobian</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.Jacobian" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars_dec</strong> (<em>numpy.ndarray</em>) – array containing (log10(rho0), log10(m_i)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>J</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(2N) X K array with derivatives.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_parameters">
+<code class="descname">convert_parameters</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert parameters given as (<img class="math" src="../_images/math/90fbb956016b6e0ca52057cbd32189c7faee071d.png" alt="\rho_0, m_i"/>) to the
+parameterization used by this class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_pars_back">
+<code class="descname">convert_pars_back</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_pars_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert parameters given in this parameterization back to the
+linear state</p>
+<p>Here: From <img class="math" src="../_images/math/08f1c13919db1eacf757482404086fc32a07907a.png" alt="log_{10}(\rho_0), log_{10}(m_i)"/></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward response of this model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars_dec</strong> (<em>list</em>) – [log10(rho0), log10(m_i), m_m, tau_em, c_em], with m_i a vector of
+the chargabilities</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>remim</strong> – array with N the nr of frequencies, and the real and the negative
+imaginary parts on the second axis</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Nx2 numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_dimensions">
+<code class="descname">get_data_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict with a description of the data base dimensions. In
+this case we have frequencies and re/im data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_size">
+<code class="descname">get_data_base_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return size of flattened base dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_model_base_dimensions">
+<code class="descname">get_model_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_model_base_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict with a description of the model base dimensions. In
+this case we have one dimension: the DD parameters (rho0, mi) where m_i
+denotes all chargeability values corresponding to the relaxation times.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.set_settings">
+<code class="descname">set_settings</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.set_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the settings and call necessary functions</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-lib_dd.models.ccd_res">
 <span id="lib-dd-models-ccd-res-module"></span><h2>lib_dd.models.ccd_res module<a class="headerlink" href="#module-lib_dd.models.ccd_res" title="Permalink to this headline">¶</a></h2>
@@ -86,15 +271,17 @@ Here: From <img class="math" src="../_images/math/08f1c13919db1eacf757482404086f
 <dl class="method">
 <dt id="lib_dd.models.ccd_res.decomposition_resistivity.forward">
 <code class="descname">forward</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.forward" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Forward response of this model</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars_dec</strong> (<em>[</em><em>log10</em><em>(</em><a class="reference internal" href="lib_dd.html#lib_dd.int_pars.rho0" title="lib_dd.int_pars.rho0"><em>rho0</em></a><em>)</em><em>,</em>) – log10(m_i)]</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars_dec</strong> (<em>list</em>) – [log10(rho0), log10(m_i)], with m_i a vector of the chargabilities</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>remim</strong> – negative imaginary parts on the second axis</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>remim</strong> – array with N the nr of frequencies, and the real and the negative
+imaginary parts on the second axis</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Nx2 array with N the nr of frequencies, and the real and the</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Nx2 numpy.ndarray</td>
 </tr>
 </tbody>
 </table>
@@ -103,8 +290,8 @@ Here: From <img class="math" src="../_images/math/08f1c13919db1eacf757482404086f
 <dl class="method">
 <dt id="lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_dimensions">
 <code class="descname">get_data_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.get_data_base_dimensions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dict with a description of the data base dimensions. In this
-case we have frequencies and re/im data</p>
+<dd><p>Return a dict with a description of the data base dimensions. In
+this case we have frequencies and re/im data</p>
 </dd></dl>
 
 <dl class="method">
@@ -116,8 +303,8 @@ case we have frequencies and re/im data</p>
 <dl class="method">
 <dt id="lib_dd.models.ccd_res.decomposition_resistivity.get_model_base_dimensions">
 <code class="descname">get_model_base_dimensions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.get_model_base_dimensions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dict with a description of the model base dimensions. In this
-case we have one dimension: the DD parameters (rho0, mi) where m_i
+<dd><p>Return a dict with a description of the model base dimensions. In
+this case we have one dimension: the DD parameters (rho0, mi) where m_i
 denotes all chargeability values corresponding to the relaxation times.</p>
 </dd></dl>
 
@@ -212,7 +399,7 @@ denotes all chargeability values corresponding to the relaxation times.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

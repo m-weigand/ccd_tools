@@ -24,9 +24,9 @@ have a look at https://github.com/m-weigand/Cole-Cole-fit.
 
 Two primary decomposition programs are provided:
 
-* :doc:`programs/dd_single` fits an arbitrary number of SIP spectra without any
+* :doc:`programs/ccd_single` fits an arbitrary number of SIP spectra without any
   kind of regularization between the spectra.
-* :doc:`programs/dd_time` fits an arbitrary number of time-lapse SIP spectra with a
+* :doc:`programs/ccd_time` fits an arbitrary number of time-lapse SIP spectra with a
   regularization on the time axis (separate regularization parameters for
   :math:`\rho_0` and the chargeabilities :math:`m_i`)
 

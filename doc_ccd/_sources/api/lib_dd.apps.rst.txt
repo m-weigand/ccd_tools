@@ -1,0 +1,22 @@
+lib\_dd\.apps package
+=====================
+
+Submodules
+----------
+
+lib\_dd\.apps\.ccd\_single module
+---------------------------------
+
+.. automodule:: lib_dd.apps.ccd_single
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lib_dd.apps
+    :members:
+    :undoc-members:
+    :show-inheritance:
