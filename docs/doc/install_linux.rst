@@ -125,8 +125,45 @@ B) Installation of ccd-tools and required packages via local source
     pip install -r requirements.txt
     python setup.py install
 
+Getting Started: ccd-tools with Jupyter Notebooks and Virtualenv
+----------------------------------------------------------------
+
+Installing Jupyter Notebook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Install Python and Virtualenv, create a virtual environment and install ccd-tools as described above (A or B, both possible)
+2. Enter your virtual environment and install Jupyter Notebooks, using the following commands: ::
+
+    pip3 install --upgrade pip
+    pip3 install jupyter
+
+3. Install and enable the Jupyter Widget JavaScript library, using the following commands: ::
+
+    pip install ipywidgets
+    jupyter nbextension enable --py widgetsnbextension --sys-prefix
+
+Starting the Notebook Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Navigate to the Notebook example directory *.../ccd-tools/ccd_tools/Examples/notebooks* and open Jupyter Notebooks: ::
+
+    jupyter notebook
+
+This will print some information about the notebook server in your terminal, including the URL of the web application (by default, http://localhost:8888)
+It will then open your default web browser to this URL.
+When the notebook opens in your browser, you will see the Notebook Dashboard, which will show a list of the notebooks, files, and subdirectories in the directory where the notebook server was started:
+
+    *.../ccd-tools/ccd_tools/Examples/notebooks*
+
+Using the Notebooks
+^^^^^^^^^^^^^^^^^^^
+
+.. todo::
+	
+    Edit: Insert a guide with screenshots
+
 Old installation guide
-----------------------
+======================
 
 The *setuptools* distribution tools to manage the installation procedure:
 
