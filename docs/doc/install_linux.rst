@@ -125,6 +125,17 @@ B) Installation of ccd-tools and required packages via local source
     pip install -r requirements.txt
     python setup.py install
 
+Using a user-defined directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The package can also be installed to a user-defined directory: ::
+
+    export PYTHONUSERBASE=$HOME/inst/pip_installs
+    export PYTHONPATH=$HOME/inst/pip_installs/lib/python3.4/\
+        site-packages/:$PYTHONPATH
+    python setup.py install --user
+    export PATH=$HOME/inst/pip_installs/bin:$PAT
+
 Getting Started: ccd-tools with Jupyter Notebooks and Virtualenv
 ----------------------------------------------------------------
 
@@ -161,6 +172,20 @@ Using the Notebooks
 .. todo::
 	
     Edit: Insert a guide with screenshots
+
+Supplementary installation instructions
+---------------------------------------
+
+Installation for developers: ::
+
+    python seutp.py develop --user
+
+To build the documentation: ::
+
+    cd docs/doc
+    make html
+
+setuptools developer guide: https://pythonhosted.org/setuptools/setuptools.html
 
 Old installation guide
 ======================
