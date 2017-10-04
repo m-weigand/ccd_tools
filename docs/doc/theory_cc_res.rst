@@ -20,12 +20,13 @@ real and imaginary parts
     \rho''(\omega) &= m \frac{ - \rho_0 (\omega \tau)^{c} sin(\frac{c
     \pi}{2})}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}
 
-
-
-
-derivatives
+partial derivatives
 -----------
 
+There are partial derivatives of the real and the imaginary part respect to all variables.
+
+real parts
+^^^^^^^^^^
 .. math::
 
     \frac{\partial \hat{\rho'}(\omega)}{\partial \rho_0} &= 1 - \frac{m (\omega
@@ -51,6 +52,9 @@ derivatives
     \pi}{2}) + 2 (\omega \tau)^c \frac{\pi}{2} cos(\frac{c \pi}{2} + 2
     ln(\omega \tau) (\omega \tau)^{2 c}\right]}{\left[1 + 2 (\omega \tau)^c
     cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}\right]^2}
+
+imaginary parts
+^^^^^^^^^^^^^^^
 
 .. math::
 
@@ -78,3 +82,11 @@ derivatives
       c}\right]}{\left[1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega
       \tau)^{2 c}\right]^2}
 
+Partial derivatives respect to :math:`log_{10}(x)`:
+---------------------------------------------------
+
+There are also partial derivatives of the real and the imaginary part respect to the common logarithm of all variables:
+
+.. math::
+
+     \frac{\partial F(X)}{\partial log_{10}(x)} &= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)
