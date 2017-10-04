@@ -64,7 +64,7 @@ The current version is 0.8.1
 
 ## Installation
 
-Detailed [installation guide](https://m-weigand.github.io/ccd_tools/doc_ccd/introduction.html) 
+Detailed [installation guide](https://m-weigand.github.io/ccd_tools/doc_ccd/installation.html) 
 for Windows and Linux.
 
 Stable versions are released to pipy and can be installed using:
@@ -105,19 +105,19 @@ Python, the Jupyter Notebook, and all needed packages for ccd-tools.
 
 Use the following installation steps:
 
-    * Download [Anaconda](https://www.anaconda.com/download/#linux) with Python
-     3 version (currently Python 3.6).
+* Download [Anaconda](https://www.anaconda.com/download/#linux) with Python
+3 version (currently Python 3.6).
 
-    * Install the version of Anaconda which you downloaded, following the instr
-    uctions on the download page.
+* Install the version of Anaconda which you downloaded, following the instr
+uctions on the download page.
 
-    * To install ccd-tools, open the Anaconda prompt and use the following command: 
+* To install ccd-tools, open the Anaconda prompt and use the following command: 
 
-        pip install ccd_tools
+    pip install ccd_tools
     
-    * To run the Notebook within the Anaconda prompt, navigate to the notebook directory and use:
+* To run the Notebook within the Anaconda prompt, navigate to the notebook directory and use:
 
-        jupyter notebook
+    jupyter notebook
 
 This will print some information about the notebook server in your terminal, 
 including the URL of the web application (by default, http://localhost:8888).
