@@ -113,11 +113,12 @@ uctions on the download page.
 
 * To install ccd-tools, open the Anaconda prompt and use the following command: 
 
-    pip install ccd_tools
+    
+    `pip install ccd_tools`
     
 * To run the Notebook within the Anaconda prompt, navigate to the notebook directory and use:
 
-    jupyter notebook
+    `jupyter notebook`
 
 This will print some information about the notebook server in your terminal, 
 including the URL of the web application (by default, http://localhost:8888).
