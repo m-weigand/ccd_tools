@@ -52,6 +52,15 @@ model equations:
     2 c \omega (\omega \tau)^{c -1} \cos \frac{c \pi}{2} + 2 c (\omega \tau)^{2
     c - 1} \omega
 
+Partial derivatives respect to :math:`log_{10}(x)`:
+
+.. math::
+
+    \frac{\partial y}{\partial x} &= \frac{\partial y}{\partial u} \cdot \frac{\partial u}{\partial x}\\
+    \frac{\partial F(X)}{\partial x} &= \frac{\partial F(X)}{\partial log_{10}(x)} \cdot \frac{\partial log_{10}(x)}{\partial x}\\
+    \frac{\partial F(X)}{\partial x} &= \frac{\partial F(X)}{\partial log_{10}(x)} \cdot \frac{1}{x \cdot log(x)}\\
+    \Rightarrow \frac{\partial F(X)}{\partial log_{10}(x)} &= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)
+
 Remember:
 
 * :math:`\frac{\partial}{\partial x} \cdot 10^x = log_e(10) 10^x`

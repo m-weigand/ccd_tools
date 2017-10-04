@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Cole-Cole decomposition resistivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
+    <title>Cole-Cole decomposition resistivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.11',
+        VERSION:     '0.8.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -57,8 +57,11 @@
 \rho''(\omega) &amp;= m \frac{ - \rho_0 (\omega \tau)^{c} sin(\frac{c
 \pi}{2})}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}"/></p>
 </div></div>
-<div class="section" id="derivatives">
-<h2>derivatives<a class="headerlink" href="#derivatives" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="partial-derivatives">
+<h2>partial derivatives<a class="headerlink" href="#partial-derivatives" title="Permalink to this headline">¶</a></h2>
+<p>There are partial derivatives of the real and the imaginary part respect to all variables.</p>
+<div class="section" id="real-parts">
+<h3>real parts<a class="headerlink" href="#real-parts" title="Permalink to this headline">¶</a></h3>
 <div class="math">
 <p><img src="_images/math/419f301554f77a17456b81c60a01f064fe26461a.png" alt="\frac{\partial \hat{\rho'}(\omega)}{\partial \rho_0} &amp;= 1 - \frac{m (\omega
 \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^c}{1 + 2 (\omega \tau)^c
@@ -83,7 +86,10 @@ ln(\omega \tau) (\omega \tau)^c cos(\frac{c \pi}{2}) + m (\omega\tau)^c
 \pi}{2}) + 2 (\omega \tau)^c \frac{\pi}{2} cos(\frac{c \pi}{2} + 2
 ln(\omega \tau) (\omega \tau)^{2 c}\right]}{\left[1 + 2 (\omega \tau)^c
 cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}\right]^2}"/></p>
-</div><div class="math">
+</div></div>
+<div class="section" id="imaginary-parts">
+<h3>imaginary parts<a class="headerlink" href="#imaginary-parts" title="Permalink to this headline">¶</a></h3>
+<div class="math">
 <p><img src="_images/math/72bf0dd0cbb84535e8cd2fb9c1cbfa804942e3b0.png" alt="\frac{\partial \hat{\rho}''(\omega)}{\partial \rho_0} &amp;= - \frac{m (\omega
 \tau)^c sin(\frac{c \pi}{2})}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) +
 (\omega \tau)^{2 c}}\\
@@ -107,6 +113,13 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
   \pi}{2}) \right] + \left[2 ln(\omega \tau) (\omega \tau)^{2
   c}\right]}{\left[1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega
   \tau)^{2 c}\right]^2}"/></p>
+</div></div>
+</div>
+<div class="section" id="partial-derivatives-respect-to">
+<h2>Partial derivatives respect to <img class="math" src="_images/math/bf70a14c33ee3b136a8749574dfff83c1de6a592.png" alt="log_{10}(x)"/>:<a class="headerlink" href="#partial-derivatives-respect-to" title="Permalink to this headline">¶</a></h2>
+<p>There are also partial derivatives of the real and the imaginary part respect to the common logarithm of all variables:</p>
+<div class="math">
+<p><img src="_images/math/ed08aa5c317732e3883c07a55d4c75f8d5bc424d.png" alt="\frac{\partial F(X)}{\partial log_{10}(x)} &amp;= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)"/></p>
 </div></div>
 </div>
 
@@ -138,7 +151,8 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Cole-Cole decomposition resistivities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#complex">complex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#real-and-imaginary-parts">real and imaginary parts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#derivatives">derivatives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#partial-derivatives">partial derivatives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#partial-derivatives-respect-to">Partial derivatives respect to <img class="math" src="_images/math/bf70a14c33ee3b136a8749574dfff83c1de6a592.png" alt="log_{10}(x)"/>:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="theory_cc_cond.html">Cole-Cole decomposition conductivities</a></li>

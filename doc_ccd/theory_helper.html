@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Mathematical helper terms &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
+    <title>Mathematical helper terms &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.11',
+        VERSION:     '0.8.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -82,6 +82,12 @@ c} = \ln (\omega \tau) \cdot e^{c \ln (\omega \tau)} = \ln (\omega \tau)
 \frac{\partial}{\partial c} \left[ 1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c} \right] &amp;=
 2 c \omega (\omega \tau)^{c -1} \cos \frac{c \pi}{2} + 2 c (\omega \tau)^{2
 c - 1} \omega"/></p>
+</div><p>Partial derivatives respect to <img class="math" src="_images/math/bf70a14c33ee3b136a8749574dfff83c1de6a592.png" alt="log_{10}(x)"/>:</p>
+<div class="math">
+<p><img src="_images/math/ee3558586bae0266f3fd87a5987a86448600c5a9.png" alt="\frac{\partial y}{\partial x} &amp;= \frac{\partial y}{\partial u} \cdot \frac{\partial u}{\partial x}\\
+\frac{\partial F(X)}{\partial x} &amp;= \frac{\partial F(X)}{\partial log_{10}(x)} \cdot \frac{\partial log_{10}(x)}{\partial x}\\
+\frac{\partial F(X)}{\partial x} &amp;= \frac{\partial F(X)}{\partial log_{10}(x)} \cdot \frac{1}{x \cdot log(x)}\\
+\Rightarrow \frac{\partial F(X)}{\partial log_{10}(x)} &amp;= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)"/></p>
 </div><p>Remember:</p>
 <ul class="simple">
 <li><img class="math" src="_images/math/a3af7d5d3cb536967162cfaa3c65419ff5b0c7cc.png" alt="\frac{\partial}{\partial x} \cdot 10^x = log_e(10) 10^x"/></li>

@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Installation &#8212; Time-lapse Cole-Cole decomposition routines 0.8.11 documentation</title>
+    <title>Installation &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.8.11',
+        VERSION:     '0.8.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -60,13 +60,50 @@ system, feel free to open a bug report and we will try to help.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="install_windows.html">Windows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install_windows.html#anaconda-installation">Anaconda installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install_windows.html#git-installation">Git installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install_windows.html#optional-miktex">(Optional) MiKTeX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install_windows.html#installing-ccd-tools">Installing ccd_tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install_windows.html#via-pip-install">via pip install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_windows.html#via-local-source-git-clone">via local source (Git clone)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_windows.html#via-local-source-zip-download">via local source (Zip download)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install_windows.html#old">OLD</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install_windows.html#installing-the-anaconda-python-distribution">Installing the Anaconda Python distribution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install_windows.html#installing-the-dd-tools">Installing the DD tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install_windows.html#optional-installing-miktex">(optional) Installing MiKTex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install_windows.html#problems">Problems</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="install_linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install_linux.html">Linux</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html#python-general">Python - general</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#how-to-setup-anaconda">How to setup Anaconda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#how-to-setup-virtualenv">How to setup Virtualenv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#setup-a-working-directory">Setup a working directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#how-to-use-the-git-repository">How to use the Git repository</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html#getting-started-ccd-tools-with-anaconda">Getting Started: CCD-tools with Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html#getting-started-ccd-tools-with-virtualenv">Getting Started: CCD-tools with Virtualenv</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#python-and-virtualenv">Python and Virtualenv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#a-installation-of-ccd-tools-and-required-packages-via-pip-install">A) Installation of ccd-tools and required packages via pip install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#b-installation-of-ccd-tools-and-required-packages-via-local-source">B) Installation of ccd-tools and required packages via local source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#using-a-user-defined-directory">Using a user-defined directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html#getting-started-ccd-tools-with-jupyter-notebooks-and-virtualenv">Getting Started: ccd-tools with Jupyter Notebooks and Virtualenv</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#installing-jupyter-notebook">Installing Jupyter Notebook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#starting-the-notebook-server">Starting the Notebook Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install_linux.html#using-the-notebooks">Using the Notebooks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html#supplementary-installation-instructions">Supplementary installation instructions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install_linux.html#old-installation-guide">Old installation guide</a></li>
 </ul>
 </div>
 </div>
@@ -91,7 +128,9 @@ system, feel free to open a bug report and we will try to help.</p>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install_windows.html">Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install_windows.html#old">OLD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install_linux.html">Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install_linux.html#old-installation-guide">Old installation guide</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
