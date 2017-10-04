@@ -64,6 +64,9 @@ The current version is 0.8.1
 
 ## Installation
 
+Detailed [installation guide](https://m-weigand.github.io/ccd_tools/doc_ccd/introduction.html) 
+for Windows and Linux.
+
 Stable versions are released to pipy and can be installed using:
 
 	pip install ccd_tools
@@ -94,6 +97,40 @@ To build the documentation:
 setuptools developer guide:
 
 https://pythonhosted.org/setuptools/setuptools.html
+
+### Using Jupyter Notebooks
+
+We recommend installing and using Anaconda. Anaconda conveniently installs 
+Python, the Jupyter Notebook, and all needed packages for ccd-tools.
+
+Use the following installation steps:
+
+    * Download [Anaconda](https://www.anaconda.com/download/#linux) with Python
+     3 version (currently Python 3.6).
+
+    * Install the version of Anaconda which you downloaded, following the instr
+    uctions on the download page.
+
+    * To install ccd-tools, open the Anaconda prompt and use the following command: 
+
+        pip install ccd_tools
+    
+    * To run the Notebook within the Anaconda prompt, navigate to the notebook directory and use:
+
+        jupyter notebook
+
+This will print some information about the notebook server in your terminal, 
+including the URL of the web application (by default, http://localhost:8888).
+It will then open your default web browser to this URL.
+When the notebook opens in your browser, you will see the Notebook Dashboard, 
+including a list of the notebooks, files, and subdirectories of the directory 
+where the notebook server was started.
+
+If Jupyter Notebooks are used with Virtualenvm, the Jupyter Widget JavaScript 
+library needs to be installed and enabled, using the following commands:
+
+    pip install ipywidgets
+    jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
 ## Dependencies
 
