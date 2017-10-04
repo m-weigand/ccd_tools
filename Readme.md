@@ -42,19 +42,18 @@ Please refer to the [Changelog.md](Changelog.md)
 ## Roadmap
 
 The following functionality is planned to be implemented in the near future
-(Q1-Q3 2017). After that, new feature will probably only be implemented when
+(Q1-Q3 2018). After that, new feature will probably only be implemented when
 required. For additional todo-items, please refer to the issues of this project
 and to the file [TODO](TODO).
 
-The current version is 0.8.1
+The current version is 0.8.12
 
 ### 0.9
 
-* improve testing framework for **dd_time.py**
+* improve testing framework for **ccd_time**
 * implement Cole-Cole decomposition (c less than 1) also for conductivity
   formulation
 * improve Jupyter integration and provide examples
-* provide mybinder-integration
 
 ### 1.0
 
@@ -64,7 +63,7 @@ The current version is 0.8.1
 
 ## Installation
 
-Detailed [installation guide](https://m-weigand.github.io/ccd_tools/doc_ccd/installation.html) 
+Detailed [installation guide](https://m-weigand.github.io/ccd_tools/doc_ccd/installation.html)
 for Windows and Linux.
 
 Stable versions are released to pipy and can be installed using:
@@ -100,7 +99,7 @@ https://pythonhosted.org/setuptools/setuptools.html
 
 ### Using Jupyter Notebooks
 
-We recommend installing and using Anaconda. Anaconda conveniently installs 
+We recommend installing and using Anaconda. Anaconda conveniently installs
 Python, the Jupyter Notebook, and all needed packages for ccd-tools.
 
 Use the following installation steps:
@@ -111,23 +110,23 @@ Use the following installation steps:
 * Install the version of Anaconda which you downloaded, following the instr
 uctions on the download page.
 
-* To install ccd-tools, open the Anaconda prompt and use the following command: 
+* To install ccd-tools, open the Anaconda prompt and use the following command:
 
-    
+
     `pip install ccd_tools`
-    
+
 * To run the Notebook within the Anaconda prompt, navigate to the notebook directory and use:
 
     `jupyter notebook`
 
-This will print some information about the notebook server in your terminal, 
+This will print some information about the notebook server in your terminal,
 including the URL of the web application (by default, http://localhost:8888).
 It will then open your default web browser to this URL.
-When the notebook opens in your browser, you will see the Notebook Dashboard, 
-including a list of the notebooks, files, and subdirectories of the directory 
+When the notebook opens in your browser, you will see the Notebook Dashboard,
+including a list of the notebooks, files, and subdirectories of the directory
 where the notebook server was started.
 
-If Jupyter Notebooks are used with Virtualenvm, the Jupyter Widget JavaScript 
+If Jupyter Notebooks are used with Virtualenvm, the Jupyter Widget JavaScript
 library needs to be installed and enabled, using the following commands:
 
     pip install ipywidgets
