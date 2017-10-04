@@ -1,7 +1,9 @@
 # jupyter notebook app for ccd_single
 import os
 import logging
+import tempfile
 import shutil
+import datetime
 
 import ipywidgets
 import ipywidgets as widgets
@@ -419,7 +421,7 @@ class ccd_single_app(object):
         )
         h_c = widgets.HTML(
             value='<a href="https://m-weigand.github.io/ccd_tools/doc_ccd/' +
-            'usage_and_implementation.html#data_weighting" ' +
+            'theory.html" ' +
             'target="_blank">Help</a>',
         )
         hb_c = widgets.HBox(
@@ -436,9 +438,9 @@ class ccd_single_app(object):
             style=self.style,
         )
         help_normalization = widgets.HTML(
-            value='<a href="https://m-weigand.github.io/ccd_tools/doc_ccd/' +
-            'usage_and_implementation.html#normalization" ' +
-            'target="_blank">Help</a>',
+            value=self._help_url(
+                'usage_and_implementation.html#normalization'
+            )
         )
         w_norm_value = widgets.FloatText(
             value=10,
@@ -607,7 +609,7 @@ class ccd_single_app(object):
         config['frequency_file'] = self.frequencies
         config['data_file'] = self.data
         config['fixed_lambda'] = int(self.widgets['lambda'].value)
-        config['plot_it_spectra'] = self.widgets['generate_it_plots'].value
+        # config['plot_it_spectra'] = self.widgets['generate_it_plots'].value
         config['max_iterations'] = self.widgets['max_its'].value
         config['nr_terms_decade'] = self.widgets['nr_terms'].value
         config['data_format'] = self.widgets['data_format'].value
@@ -657,7 +659,7 @@ class ccd_single_app(object):
             # _
             for spectrum in ccd_obj.results:
                 last_it = spectrum.iterations[-1]
-                self._plot(last_it)
+                self._plot(ccd_obj, last_it)
 
         if self.widgets['generate_lcurve'].value is True:
             for spectrum in ccd_obj.results:
@@ -670,30 +672,46 @@ class ccd_single_app(object):
                 last_it.plot_reg_strengths()
 
         if self.widgets['generate_it_plots'].value is True:
-            logging.info('TODO: plot all iterations')
+            for spectrum in ccd_obj.results:
+                for iteration in spectrum.iterations:
+                    self._plot(ccd_obj, iteration)
 
         if self.widgets['generate_output'].value is True:
-            outdir = 'output'
-            if os.path.isdir(outdir):
-                shutil.rmtree(outdir)
-            ccd_obj.save_to_directory('output')
+            with tempfile.TemporaryDirectory() as outdir:
+                ccd_obj.save_to_directory(outdir)
 
-            shutil.make_archive(
-                'output', format='zip', root_dir='output/', verbose=True
-            )
+                outfile = 'sip_results_{0}'.format(
+                    datetime.datetime.strftime(
+                        datetime.datetime.now(),
+                        '%Y%m%d_%H%M',
+                    )
+                )
 
-            display(HTML('<a href="output.zip" download>Download results</a>'))
+                shutil.make_archive(
+                    outfile,
+                    format='zip',
+                    root_dir=outdir + os.sep,
+                    verbose=True
+                )
+
+            display(HTML(
+                self._help_url('data_formats.html#ascii-audit-format')
+            ))
+            display(HTML(
+                '<a href="{0}.zip" download>Download results</a>'.format(
+                    outfile
+                )
+            ))
+
         print('finished')
 
-    def _plot(self, it):
-        logging.info('TODO: supply norm factors')
-
+    def _plot(self, ccd_obj, it):
         obj = lib_dd.plot.plot_iteration()
 
-        norm_factors = 1
+        norm_factors = ccd_obj.data.get('norm_factors', 1)
         D = it.Data.D / norm_factors
         M = it.Model.convert_to_M(it.m)
-        # renormalize here? why do we compuate the forward solution again?
+        # renormalize here? Why do we compute the forward solution again?
         F = it.Model.F(M) / norm_factors
         # extra_size = int(
         #     np.sum([x[1][1] for x in it.Data.extra_dims.items()])
