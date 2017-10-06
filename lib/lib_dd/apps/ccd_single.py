@@ -21,6 +21,7 @@ import lib_dd.plot
 class ccd_single_app(object):
     def __init__(self, frequency_file, data_file, no_logging=False):
         self._setup_logger(disabled=no_logging)
+        self._check_versions()
         self.style = {'description_width': 'initial'}
         self.frequencies = np.loadtxt(frequency_file)
         self.data = np.loadtxt(data_file)
@@ -36,6 +37,13 @@ class ccd_single_app(object):
         # use the url-prefix from here
         self.url = 'https://m-weigand.github.io/ccd_tools/doc_ccd/'
         self._init_app_widgets()
+
+    def _check_versions(self):
+        if int(ipywidgets.__version__[0]) < 7:
+            raise Exception(
+                'ipywidgets version is too old. Need at least major ' +
+                'version number 7, is: {0}'.format(ipywidgets.__version__)
+            )
 
     def _setup_logger(self, disabled=False):
         logging.basicConfig(level=logging.INFO)
