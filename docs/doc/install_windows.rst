@@ -22,6 +22,15 @@ Download Anaconda (Python 3.6 version) here: https://www.anaconda.com/download/
 and follwow the installation instructions.
 In addition, a installation guide can be found here: https://docs.anaconda.com/anaconda/install/windows.html
 
+To make shure that the newest Anaconda version will be used, update Anaconda after the installation.
+Open the Anaconda prompt and use: ::
+
+    conda update conda
+    
+After the insterallation and the update of Anaconda, install and enable the Jupyter ipywidges via conda, using the following command: ::
+
+    conda install -c conda-forge ipywidgets
+
 Git installation
 ----------------
 
