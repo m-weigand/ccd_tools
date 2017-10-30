@@ -278,6 +278,11 @@ def prepare_stat_values(raw_values, key, norm_factors):
         # renormalize
         values -= np.log10(norm_factors).squeeze()
 
+    if key == 'sigma_infty' and norm_factors is not None :
+        # sigma0 is log10
+        # renormalize
+        values -= np.log10(norm_factors).squeeze()
+
     if(key == 'm_tot_n' and norm_factors is not None):
         # renormalize
         if int(os.environ.get('DD_COND', 0)) == 1:
