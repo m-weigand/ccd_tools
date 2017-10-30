@@ -204,7 +204,7 @@ def call_fit_functions(fit_data, ND):
     if(fit_data['prep_opts']['plot']):
         logging.info('Plotting final iteration')
         ND.iterations[-1].plot(
-            filename='iteration',
+            filename='plot_iteration_{0}'.format(fit_data['nr']),
             norm_factors=fit_data['inv_opts']['norm_factors']
         )
         ND.iterations[-1].Model.obj.plot_stats(
