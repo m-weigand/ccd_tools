@@ -22,6 +22,15 @@ Download Anaconda (Python 3.6 version) here: https://www.anaconda.com/download/
 and follwow the installation instructions.
 In addition, a installation guide can be found here: https://docs.anaconda.com/anaconda/install/windows.html
 
+To make shure that the newest Anaconda version will be used, update Anaconda after the installation.
+Open the Anaconda prompt and use: ::
+
+    conda update conda
+
+After the insterallation and the update of Anaconda, install and enable the Jupyter ipywidges via conda, using the following command: ::
+
+    conda install -c conda-forge ipywidgets
+
 Git installation
 ----------------
 
@@ -66,7 +75,7 @@ Open the Anaconda prompt (a terminal window should appear) and install ccd_tools
     pip install ccd_tools
 
 The following Python packages are required and already part of the Anaconda distribution:
-    
+
     * numpy
     * scipy
     * matplotlib
@@ -85,14 +94,14 @@ via local source (Git clone)
 
     git clone https://github.com/m-weigand/sip_models.git
     git clone https://github.com/m-weigand/geccoinv.git
-    git clone https://github.com/m-weigand/ccd_tools.git    
+    git clone https://github.com/m-weigand/ccd_tools.git
 
 4. Open the Anaconda prompt (a terminal window should appear).
 5. To install geccoinv, navigate within the Anaconda promt to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
-    
+
     pip install -U pip
     pip install -r requirements.txt
-    python setup.py install 
+    python setup.py install
 
 (to navigate within the Anaconda promt, use the 'cd' command.)
 
@@ -107,7 +116,7 @@ via local source (Git clone)
     python setup.py install
 
 via local source (Zip download)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Create a working directory, e.g. *.../users/USERNAME/ccd-tools*.
 2. Download the required Git repositories to your working directory:
@@ -124,10 +133,10 @@ via local source (Zip download)
 
 4. Open the Anaconda prompt (a terminal window should appear).
 5. To install geccoinv, navigate within the Anaconda promt to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
-    
+
     pip install -U pip
     pip install -r requirements.txt
-    python setup.py install 
+    python setup.py install
 
 6. To install sip-models, navigate within the Anaconda promt to the corresponding directory .../ccd-tools/sip_models and use the following commands: ::
 

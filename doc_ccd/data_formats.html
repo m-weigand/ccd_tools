@@ -101,9 +101,9 @@ display purposes, line breaks were introduced, and indicated by ‘'
 characters.</p>
 </div>
 <div class="section" id="input-data-formats">
-<h2>input data formats<a class="headerlink" href="#input-data-formats" title="Permalink to this headline">¶</a></h2>
+<h2>Input data formats<a class="headerlink" href="#input-data-formats" title="Permalink to this headline">¶</a></h2>
 <p>Input data in <cite>data.dat</cite> can be specified in various formats (internally
-converted using the sip_formats.convert) module:</p>
+converted using the <code class="xref py py-mod docutils literal"><span class="pre">sip_formats.convert</span></code>) module:</p>
 <ul class="simple">
 <li><em>lnrmag_rpha</em>: The first N columns are resistivity magnitudes in the natural
 logarithm; the second N columns contain resistivity phase values (mrad)</li>
@@ -124,13 +124,17 @@ columns contain conductivity imaginary parts</li>
 columns contain the negative of conductivity imaginary parts</li>
 </ul>
 <p>N is the number of frequencies. Specify the data format using the
-<strong>–data_format</strong> command line option.</p>
+<strong class="command">--data_format</strong> command line option. For example, to use
+conductivity real and imaginary parts as input data, use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ccd_tools</span> <span class="o">--</span><span class="n">data_format</span> <span class="n">cre_cim</span> <span class="o">...</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="output-files">
 <h1>Output Files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h1>
 <p>The following sections describe the output files of the various formats.
-Formats can be changed using the <strong>–output_format</strong> switch.</p>
+Formats can be changed using the <strong class="command">--output_format</strong> switch.</p>
 <div class="section" id="ascii-audit-format">
 <h2>ascii_audit format<a class="headerlink" href="#ascii-audit-format" title="Permalink to this headline">¶</a></h2>
 <p>This output format saves fit results to ASCII text files. Each text file
@@ -141,7 +145,7 @@ created, and mix-ups of results can be prevented.</p>
 <p>This is the default output format.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Can be enabled using the <strong>–output_format ascii_audit</strong> switch</p>
+<p class="last">Can be enabled using the <strong class="command">--output_format ascii_audit</strong> switch</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -155,7 +159,7 @@ for new decompositions!</p>
 part (the rest of the file). The header looks like this</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># id:30ffcd8e-2b75-48f9-acc4-3f93c9c0d48e</span>
 <span class="c1"># 20150730_14h:32m</span>
-<span class="c1"># /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat\</span>
+<span class="c1"># /home/mweigand/.local/bin/cdd_time -f data/frequencies.dat --times data/times.dat\</span>
     <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results_time</span> <span class="o">--</span><span class="n">f_lambda</span> <span class="mi">50</span>\
     <span class="o">--</span><span class="n">tmi_first_order</span> <span class="o">--</span><span class="n">tm_i_lambda</span> <span class="mi">5000</span> <span class="o">--</span><span class="n">plot</span>
 <span class="c1"># covf</span>
@@ -164,7 +168,7 @@ part (the rest of the file). The header looks like this</p>
 <ul class="simple">
 <li>the ‘#’ character indicates a non-data line</li>
 <li>the first line contains a unique id, which is generated for each run of
-either <strong>dd_single.py</strong> or <strong>dd_time.py</strong>. This id changes also for repeated
+either <strong>ccd_single</strong> or <strong>ccd_time</strong>. This id changes also for repeated
 runs of the same settings!</li>
 <li>The second line contains a datetime string: first the date in the order
 year-month-day, followed by the hour (24 hours) and minute.</li>
@@ -235,12 +239,12 @@ columns decribed in the header.</li>
 primarily for debug purposes)</li>
 <li><em>lams_and_nr_its.dat</em>:</li>
 <li><em>m_i.dat</em>: RTDs for all spectra. Each line contains the RTD of one spectrum.</li>
-<li><em>normalization_factors.dat</em>: Normalisation factors used (will only be created
-if the <cite>–norm</cite> option was activated.</li>
+<li><em>normalization_factors.dat</em>: Normalization factors used (will only be created
+if the <strong class="command">--norm</strong> option was activated.</li>
 </ul>
 <ul class="simple">
 <li><em>tau.dat</em>: stores the relaxation times used for decomposition</li>
-<li><em>times.dat</em>: times corresponding to the spectra (only created by <em>dd_time.py</em></li>
+<li><em>times.dat</em>: times corresponding to the spectra (only created by <em>ccd_time</em></li>
 </ul>
 <ul class="simple">
 <li><em>version.dat</em>: This file contains the package versions of either dd_tools, or
@@ -257,7 +261,7 @@ of files. No, or only very limited, headers are provided. This format can make
 postprocessing easy, but should only be used if really necessary.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">can be enabled using the <strong>–output_format ascii</strong> switch</p>
+<p class="last">can be enabled using the <strong class="command">--output_format ascii</strong> switch</p>
 </div>
 <p>A typical result directory in this format contains the following files</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>results/
@@ -327,7 +331,7 @@ the conductivity formulation is used, real parts of the conductivities are
 stored here. Correspondingly, the second N columns contain imaginary parts of
 either the resistivities, or the conductivities.</li>
 <li><em>data_format.dat</em> contains the data format in the format usable with the
-<code class="docutils literal"><span class="pre">--data_format</span></code> command line option (usually <strong>cre_cim</strong>).</li>
+<strong class="command">--data_format</strong> command line option (usually <strong>cre_cim</strong>).</li>
 <li><dl class="first docutils">
 <dt>Frequencies and corresponding angular frequencies (</dt>
 <dd><img class="math" src="_images/math/16cc506d5187af73241d0c841eff7b1cf7667337.png" alt="\omega = 2 \cdot \pi \cdot f"/>) are stored in the files
@@ -339,9 +343,9 @@ either the resistivities, or the conductivities.</li>
 options. This file is mainly for debugging purposes, and needed to recreated
 inversion objects from fit results.</li>
 <li><em>rho_normalizations.dat</em> contains normalization factors if the option
-<code class="docutils literal"><span class="pre">--norm_mag</span></code> was used.</li>
+<strong class="command">--norm_mag</strong> was used.</li>
 </ul>
-<p><em>dd_time.py</em> only:</p>
+<p><em>ccd_time</em> only:</p>
 <ul class="simple">
 <li>the file <em>times.dat</em> contains the time strings as read from the input files.
 One time per line.</li>
@@ -550,7 +554,7 @@ number of parameters):</p>
 <li class="toctree-l1"><a class="reference internal" href="inversion.html">Inversion and implementation details</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="usage_and_implementation.html">Usage and implementation details</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Input Data files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#input-data-formats">input data formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-data-formats">Input data formats</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#output-files">Output Files</a><ul>
@@ -599,7 +603,7 @@ number of parameters):</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
