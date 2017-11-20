@@ -67,11 +67,11 @@ data.dat
     display purposes, line breaks were introduced, and indicated by '\\'
     characters.
 
-input data formats
+Input data formats
 """"""""""""""""""
 
 Input data in `data.dat` can be specified in various formats (internally
-converted using the sip_formats.convert) module:
+converted using the :py:mod:`sip_formats.convert`) module:
 
 * *lnrmag_rpha*: The first N columns are resistivity magnitudes in the natural
   logarithm; the second N columns contain resistivity phase values (mrad)
@@ -92,13 +92,16 @@ converted using the sip_formats.convert) module:
   columns contain the negative of conductivity imaginary parts
 
 N is the number of frequencies. Specify the data format using the
-**--data_format** command line option.
+:command:`\-\-data_format` command line option. For example, to use
+conductivity real and imaginary parts as input data, use::
+
+    ccd_tools --data_format cre_cim ...
 
 Output Files
 ^^^^^^^^^^^^
 
 The following sections describe the output files of the various formats.
-Formats can be changed using the **--output_format** switch.
+Formats can be changed using the :command:`--output_format` switch.
 
 ascii_audit format
 """"""""""""""""""
@@ -113,7 +116,7 @@ This is the default output format.
 
 .. note::
 
-    Can be enabled using the **--output_format ascii_audit** switch
+    Can be enabled using the :command:`--output_format ascii_audit` switch
 
 .. note::
 
@@ -129,14 +132,14 @@ part (the rest of the file). The header looks like this ::
 
     # id:30ffcd8e-2b75-48f9-acc4-3f93c9c0d48e
     # 20150730_14h:32m
-    # /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat\
+    # /home/mweigand/.local/bin/cdd_time -f data/frequencies.dat --times data/times.dat\
         -d data/data.dat -o results_time --f_lambda 50\
         --tmi_first_order --tm_i_lambda 5000 --plot
     # covf
 
 * the '#' character indicates a non-data line
 * the first line contains a unique id, which is generated for each run of
-  either **dd_single.py** or **dd_time.py**. This id changes also for repeated
+  either **ccd_single** or **ccd_time**. This id changes also for repeated
   runs of the same settings!
 * The second line contains a datetime string: first the date in the order
   year-month-day, followed by the hour (24 hours) and minute.
@@ -193,12 +196,12 @@ A typical result directory in this format contains the following files ::
 
 * *m_i.dat*: RTDs for all spectra. Each line contains the RTD of one spectrum.
 
-* *normalization_factors.dat*: Normalisation factors used (will only be created
-  if the `--norm` option was activated.
+* *normalization_factors.dat*: Normalization factors used (will only be created
+  if the :command:`--norm` option was activated.
 
 .. include:: output_files/tau.dat.txt
 
-* *times.dat*: times corresponding to the spectra (only created by *dd_time.py*
+* *times.dat*: times corresponding to the spectra (only created by *ccd_time*
 
 .. include:: output_files/version.dat.txt
 
@@ -213,7 +216,7 @@ postprocessing easy, but should only be used if really necessary.
 
 .. note::
 
-    can be enabled using the **--output_format ascii** switch
+    can be enabled using the :command:`--output_format ascii` switch
 
 A typical result directory in this format contains the following files ::
 
@@ -279,7 +282,7 @@ Input data
 .. include:: output_files/data.dat.txt
 
 * *data_format.dat* contains the data format in the format usable with the
-  ``--data_format`` command line option (usually **cre_cim**).
+  :command:`--data_format` command line option (usually **cre_cim**).
 * Frequencies and corresponding angular frequencies (
    :math:`\omega = 2 \cdot \pi \cdot f`) are stored in the files
    *frequencies.dat* and *omega.dat*.
@@ -288,9 +291,9 @@ Input data
   options. This file is mainly for debugging purposes, and needed to recreated
   inversion objects from fit results.
 * *rho_normalizations.dat* contains normalization factors if the option
-  ``--norm_mag`` was used.
+  :command:`--norm_mag` was used.
 
-*dd_time.py* only:
+*ccd_time* only:
 
 * the file *times.dat* contains the time strings as read from the input files.
   One time per line.
@@ -389,4 +392,3 @@ filename                       stored values per line
 =============================  ===============================
 
 Integral parameters are explained in the section :ref:`int_pars`.
-
