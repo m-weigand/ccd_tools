@@ -20,10 +20,11 @@ script: sh travis_test.sh
 after_success: |
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
-    ls
-    git fetch
-    git checkout gh-pages
-    ls
+    mkdir ghpages
+    cd ghpages
+    git clone --depth=2 --branch=gh-pages https://github.com/m-weigand/ccd_tools.git
+    rm -r ccd_tools/doc_ccd/
+    cp -r ../docs/doc/_build/html/ ccd_tools/doc_ccd
     git status
     # This generates a `web` directory containing the website.
     # make web
