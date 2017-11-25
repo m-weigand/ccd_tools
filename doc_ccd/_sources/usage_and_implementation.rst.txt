@@ -18,7 +18,7 @@ inversions using *ccd_single* and *ccd_time*:
   makes results comparable)
 * Usually the third starting model yields the most robust results: ::
 
-    DD_STARTING_MODEL=3 dd_single.py ...
+    DD_STARTING_MODEL=3 cdd_single ...
 
 * Normalization can help... : ::
 
@@ -27,15 +27,15 @@ inversions using *ccd_single* and *ccd_time*:
 * For time regularization: here only a fixed lambda can be used. Start with a
   small value and take a look at the maximum regularization strength for the
   time-regularization. The regularization strength is automatically plotted
-  when the ``--plot`` option is enabled.
+  when the :command:`--plot` option is enabled.
 
 * while the structure of the input files is fixed, the data format can be
-  changed using the ``--data_format`` option. Thus a conversion from
+  changed using the :command:`--data_format` option. Thus a conversion from
   conductivities to resistivities and vice versa is not necessary, as well as a
   conversion between real/imaginary part and magnitude/phase format.
 
-* the ``--tmp`` option can improve execution speed on conventional hard
-  drives (for SSDs there shouldn't be any improvement)
+* the :command:`--tmp` option can improve execution speed on conventional hard
+  drives (don't expect huge improvements for solid state discs (SSDs).
 
 
 Normalization
@@ -54,7 +54,8 @@ normalized both in magnitude/phase, or real and imaginary parts:
  \tau_k)}{1 + (\omega \tau_k)^2} \right)
 
 The factor A is determined by norming the lowest frequency
-:math:`\rho'|\sigma'` value to the target value B given by the `--norm` switch:
+:math:`\rho'|\sigma'` value to the target value B given by the
+:command:`--norm` switch:
 
 .. math ::
 
@@ -385,5 +386,3 @@ Normally distributed noise can then be added to this spectrum:
 
    fig.subplots_adjust(hspace=0.3, wspace=0.4)
    fig.show()
-
-

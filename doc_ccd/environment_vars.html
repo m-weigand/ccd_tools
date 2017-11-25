@@ -58,9 +58,9 @@ Default is 1 (the Debye decomposition).</p>
 <li><p class="first"><strong>DD_TAU_X</strong>: Sets the cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> which shall
 be computed. The string separates the requested percentages as fractions with
 ‘;’ characters.</p>
-<p>For example, the following call to <strong>dd_single</strong> computes the 20%, 35%, and 60%
+<p>For example, the following call to <strong>cdd_single</strong> computes the 20%, 35%, and 60%
 percentiles of the RTD:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_TAU_X</span><span class="o">=</span><span class="s2">&quot;0.2;0.35;0.6&quot;</span> <span class="n">dd_single</span><span class="o">.</span><span class="n">py</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_TAU_X</span><span class="o">=</span><span class="s2">&quot;0.2;0.35;0.6&quot;</span> <span class="n">cdd_single</span>
 </pre></div>
 </div>
 </li>
@@ -81,7 +81,7 @@ command:</p>
 <p>For example, to enable the conductivity model, a <strong>.bat</strong> file could start like
 this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span>
-<span class="n">dd_single</span><span class="o">.</span><span class="n">py</span> <span class="o">...</span>
+<span class="n">ccd_single</span> <span class="o">...</span>
 </pre></div>
 </div>
 </div>
@@ -116,13 +116,13 @@ this:</p>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="fit_routines.html">Fit Routines</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="programs/ccd_single.html">ccd_single</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="programs/ccd_single.html">ccd_single</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="programs/ccd_time.html">ccd_time</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Environment variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="programs/ccd_single.html#command-line-options">Command line options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="programs/ccd_single.html#usage-examples">Usage Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/ccd_time.html#command-line-options">Command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/ccd_time.html#regularisation-parameters">Regularisation Parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="programs/ccd_time.html">ccd_time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="programs/ddps.html">ddps.py</a></li>
 </ul>
 </li>
