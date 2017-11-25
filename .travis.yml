@@ -25,6 +25,7 @@ after_success: |
     git clone --depth=2 --branch=gh-pages https://github.com/m-weigand/ccd_tools.git
     rm -r ccd_tools/doc_ccd/
     cp -r ../docs/doc/_build/html/ ccd_tools/doc_ccd
+    cd ccd_tools
     git status
     # This generates a `web` directory containing the website.
     # make web
