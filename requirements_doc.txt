@@ -5,3 +5,4 @@ sphinxcontrib-programoutput
 sphinxcontrib.napoleon
 alabaster>=0.7.9
 nose
+ipywidgets
