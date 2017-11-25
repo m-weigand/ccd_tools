@@ -5,7 +5,7 @@ Python - general
 ----------------
 
 Install a Python 3 environment, e.g. Anaconda or Virtualenv, and make sure the following Python packages are installed:
-  
+
     * numpy, matplotlib, pandas, sphinx
 
 For the case of missing packages you can either use conda (provided the
@@ -55,7 +55,7 @@ Install git and get yourself familiar with the following git commands:
     * git add
     * git commit
     * git branch
-    * git checkout 
+    * git checkout
     * git merge
 
 Simply clone the following repositories::
@@ -70,7 +70,7 @@ Getting Started: CCD-tools with Anaconda
 ----------------------------------------
 
 .. todo::
-	
+
     Edit: Installation of ccd with Anaconda
 
 
@@ -94,7 +94,7 @@ A) Installation of ccd-tools and required packages via pip install
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Enter your virtual environment and install ccd-tools including sip-models and geccoinv, using the following commands: ::
-    
+
     workon ccd-tools
     pip install ccd_tools
 
@@ -106,22 +106,22 @@ B) Installation of ccd-tools and required packages via local source
 1. Install Git as described above.
 2. Create a working directory and clone the Git repositories into the corresponding folder.
 3. Enter your virtual environment, using the following commands: ::
-    
+
     workon ccd-tools
 
 4. To install geccoinv, go to the corresponding directory *.../ccd-tools/geccoinv* and use the following commands: ::
-	
+
     pip install -U pip
     pip install -r requirements.txt
     python setup.py install
 
 5. To install sip-models, go to the corresponding directory *.../ccd-tools/sip_models* and use the following commands: ::
-	
+
     pip install -r requirements.txt
     python setup.py install
 
 6. To install ccd-tools, go to the corresponding directory *.../ccd-tools/ccd_tools* and use the following commands: ::
-	
+
     pip install -r requirements.txt
     python setup.py install
 
@@ -170,7 +170,7 @@ Using the Notebooks
 ^^^^^^^^^^^^^^^^^^^
 
 .. todo::
-	
+
     Edit: Insert a guide with screenshots
 
 Supplementary installation instructions
@@ -224,7 +224,7 @@ Workarounds:
 * Use only one thread in openblas:
   ::
 
-    OPENBLAS_NUM_THREADS=1 dd_single.py [...]
+    OPENBLAS_NUM_THREADS=1 ccd_single [...]
 
 * switch to atlas/libblas:
 

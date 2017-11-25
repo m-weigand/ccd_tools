@@ -12,7 +12,7 @@ spectra is applied.
 Command line options
 ^^^^^^^^^^^^^^^^^^^^
 
-.. program-output:: dd_single.py -h
+.. program-output:: ccd_single -h
 
 Usage Examples
 ^^^^^^^^^^^^^^
