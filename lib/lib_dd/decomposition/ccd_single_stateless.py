@@ -78,19 +78,19 @@ def _get_fit_datas(data):
 
 
 def _prepare_ND_object(fit_data):
+    # set c parameter for Cole-Cole distribution
+    if 'DD_C' in os.environ:
+        fit_data['inv_opts']['c'] = float(os.environ['DD_C'])
+    else:
+        fit_data['inv_opts']['c'] = 1.0
+
     # use conductivity or resistivity model?
     if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
         # there is only one parameterisation: log10(sigma_i), log10(m)
         model = cond_model.dd_conductivity(fit_data['inv_opts'])
     else:
-        # there are multiple parameterisations available, use the log10 one
-        # model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
-        if 'DD_C' in os.environ:
-            fit_data['inv_opts']['c'] = float(os.environ['DD_C'])
-        else:
-            fit_data['inv_opts']['c'] = 1.0
-        # model = lib_cc2.decomposition_resistivity(fit_data['inv_opts'])
         model = ccd_res.decomposition_resistivity(fit_data['inv_opts'])
+
     ND = NDimInv.NDimInv(model, fit_data['inv_opts'])
     ND.finalize_dimensions()
     ND.Data.data_converter = sip_converter.convert
