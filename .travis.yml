@@ -9,8 +9,30 @@ before_install:
 # command to install dependencies
 install:
     - pip install -r requirements.txt
+    - pip install -r requirements_doc.txt
     - pip install sip_models
     - pip install geccoinv
     - python setup.py install
 # command to run tests
 script: sh travis_test.sh
+# not used, but could be interesting:
+# https://docs.travis-ci.com/user/deployment/pages/
+# loosely after:
+# https://stackoverflow.com/questions/23277391/how-to-publish-to-github-pages-from-travis-ci#33125422
+after_success: |
+  if [ -n "$GITHUB_API_KEY" ]; then
+    cd "$TRAVIS_BUILD_DIR"
+    mkdir ghpages
+    cd ghpages
+    git clone --depth=2 --branch=gh-pages https://github.com/m-weigand/ccd_tools.git
+    rm -r ccd_tools/doc_ccd/
+    cp -r ../docs/doc/_build/html/ ccd_tools/doc_ccd
+    cd ccd_tools
+    git status
+    git add doc_ccd
+    git commit -m "[by travis] update documentation"
+    # # Make sure to make the output quiet, or else the API token will leak!
+    # # This works because the API key can replace your password.
+    git push -f -q https://m-weigand:$GITHUB_API_KEY@github.com/m-weigand/ccd_tools.git gh-pages &2>/dev/null
+    cd "$TRAVIS_BUILD_DIR"
+  fi

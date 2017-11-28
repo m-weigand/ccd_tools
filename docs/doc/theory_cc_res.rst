@@ -21,9 +21,10 @@ real and imaginary parts
     \pi}{2})}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}
 
 partial derivatives
------------
+-------------------
 
-There are partial derivatives of the real and the imaginary part respect to all variables.
+There are partial derivatives of the real and the imaginary part respect to all
+variables.
 
 real parts
 ^^^^^^^^^^

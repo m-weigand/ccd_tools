@@ -18,12 +18,12 @@ Environment variables
   be computed. The string separates the requested percentages as fractions with
   ';' characters.
 
-  For example, the following call to **dd_single** computes the 20%, 35%, and 60%
+  For example, the following call to **cdd_single** computes the 20%, 35%, and 60%
   percentiles of the RTD:
 
   ::
 
-      DD_TAU_X="0.2;0.35;0.6" dd_single.py
+      DD_TAU_X="0.2;0.35;0.6" cdd_single
 
 * **DD_DEBUG_STARTING_PARS**: internal parameter
 * **DD_USE_LATEX**: Enable the Latex backend. Plot labels will be processed by
@@ -42,7 +42,7 @@ For example, to enable the conductivity model, a **.bat** file could start like
 this: ::
 
     set DD_COND=1
-    dd_single.py ...
+    ccd_single ...
 
 Usage Linux
 -----------

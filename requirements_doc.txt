@@ -1,6 +1,8 @@
-sphinx==1.2.3
+sphinx>=1.4.3
 numpydoc
 sphinxcontrib-blockdiag
 sphinxcontrib-programoutput
-alabaster==0.7.9
+sphinxcontrib.napoleon
+alabaster>=0.7.9
 nose
+ipywidgets
