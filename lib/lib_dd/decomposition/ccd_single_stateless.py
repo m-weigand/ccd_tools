@@ -12,8 +12,9 @@ import NDimInv.regs as RegFuncs
 import NDimInv.reg_pars as LamFuncs
 import lib_dd.plot as lDDp
 import sip_formats.convert as sip_converter
-import lib_dd.conductivity.model as cond_model
+# import lib_dd.conductivity.model as cond_model
 from lib_dd.models import ccd_res
+from lib_dd.models import ccd_cond
 
 
 def _filter_nan_values(frequencies, cr_spectrum):
@@ -80,8 +81,16 @@ def _get_fit_datas(data):
 def _prepare_ND_object(fit_data):
     # use conductivity or resistivity model?
     if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-        # there is only one parameterisation: log10(sigma_i), log10(m)
-        model = cond_model.dd_conductivity(fit_data['inv_opts'])
+        if 'DD_C' in os.environ:
+            fit_data['inv_opts']['c'] = float(os.environ['DD_C'])
+        else:
+            fit_data['inv_opts']['c'] = 1.0
+        model = ccd_cond.decomposition_conductivity(fit_data['inv_opts'])
+
+        # Old version:
+        # ------------
+        # # there is only one parameterisation: log10(sigma_i), log10(m)
+        # model = cond_model.dd_conductivity(fit_data['inv_opts'])
     else:
         # there are multiple parameterisations available, use the log10 one
         # model = lib_dd.main.get('log10rho0log10m', fit_data['inv_opts'])
