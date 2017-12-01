@@ -7,7 +7,7 @@ method can be selected by setting the environment variable
 
 ::
 
-    DD_STARTING_MODEL=3 dd_single.py ...
+    DD_STARTING_MODEL=3 ccd_single ...
 
 * (`DD_STARTING_MODEL = 1`): Flat starting model
 * (`DD_STARTING_MODEL = 2`): [TODO] (Gaussian, center at peak of imaginary part)
