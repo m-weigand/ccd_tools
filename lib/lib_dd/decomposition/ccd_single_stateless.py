@@ -87,12 +87,7 @@ def _prepare_ND_object(fit_data):
 
     # use conductivity or resistivity model?
     if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-        if 'DD_C' in os.environ:
-            fit_data['inv_opts']['c'] = float(os.environ['DD_C'])
-        else:
-            fit_data['inv_opts']['c'] = 1.0
         model = ccd_cond.decomposition_conductivity(fit_data['inv_opts'])
-
         # Old version:
         # ------------
         # # there is only one parameterisation: log10(sigma_i), log10(m)
