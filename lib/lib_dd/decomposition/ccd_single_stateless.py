@@ -204,7 +204,7 @@ def call_fit_functions(fit_data, ND):
     if(fit_data['prep_opts']['plot']):
         logging.info('Plotting final iteration')
         ND.iterations[-1].plot(
-            filename='plot_iteration_{0}'.format(fit_data['nr']),
+            filename='_iteration_'.format(fit_data['nr']),
             norm_factors=fit_data['inv_opts']['norm_factors']
         )
         ND.iterations[-1].Model.obj.plot_stats(
@@ -215,8 +215,11 @@ def call_fit_functions(fit_data, ND):
         ND.iterations[-1].plot_reg_strengths()
 
     if(fit_data['prep_opts']['plot_it_spectra']):
-        for it in ND.iterations:
-            it.plot()
+        for nr, it in enumerate(ND.iterations[0:-1]):
+            it.plot(
+                filename='_iteration_',
+                norm_factors=fit_data['inv_opts']['norm_factors']
+            )
 
     if(fit_data['prep_opts']['plot_lambda'] is not None):
         ND.iterations[fit_data['prep_opts']['plot_lambda']].plot_lcurve(
