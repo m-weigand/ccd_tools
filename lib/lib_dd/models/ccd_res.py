@@ -110,15 +110,16 @@ class decomposition_resistivity(
         return rre_rmim
 
     def Jacobian(self, pars_dec):
-        """
+        """Compute the Jacobian of the CCD kernel
         Parameters
         ----------
-        pars_dec: numpy.ndarray
-            array containing (log10(rho0), log10(m_i)
+        pars_dec: :class:`numpy.ndarray`
+            array containing (log10(rho0), log10(m_i))
 
         Returns
         -------
-        J: (2N) X K array with derivatives.
+        J: :class:`numpy.ndarray`
+            (2N) X K array with derivatives.
         """
         pars = self._get_full_pars(pars_dec)
 
@@ -141,7 +142,7 @@ class decomposition_resistivity(
         return J
 
     def get_data_base_dimensions(self):
-        """ Return a dict with a description of the data base dimensions. In
+        """Return a dict with a description of the data base dimensions. In
         this case we have frequencies and re/im data
         """
         if(self.D_base_dims is None):
