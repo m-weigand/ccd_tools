@@ -1,1 +1,1 @@
-dd_single.py -n 20 -c 1 --silent --lambda 10 -f frequencies.dat  --data_file data.dat -o active_run --output_format ascii
+ccd_single -n 20 -c 1 --silent --lambda 10 --output_format ascii -f frequencies.dat  --data_file data.dat -o active_run --output_format ascii
