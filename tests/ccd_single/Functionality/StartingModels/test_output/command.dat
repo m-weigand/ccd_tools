@@ -1,1 +1,0 @@
-/home/mweigand/inst/pip_installs/bin/dd_single.py --silent --tmp -c 1 --lambda 50 -o test_output -f ./01/frequencies.dat -d ./01/data.dat

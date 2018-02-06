@@ -34,14 +34,15 @@ def test_generator():
 
 
 def run_case_single_core(data_file, frequency_file, starting_model):
-    if(os.path.isdir(output_dir)):
-        shutil.rmtree(output_dir)
+    outdir = output_dir + '_model_{}'.format(starting_model)
+    if(os.path.isdir(outdir)):
+        shutil.rmtree(outdir)
 
     # set environment variable
     os.environ['DD_STARTING_MODEL'] = '{0}'.format(starting_model)
 
-    cmd = 'dd_single.py --silent --tmp -c 1 --lambda 50 -o "{0}"'.format(
-        output_dir)
+    cmd = 'ccd_single --silent --tmp -c 1 --lambda 50 -o "{0}"'.format(
+        outdir)
     cmd += ' -f "{0}" -d "{1}"'.format(frequency_file, data_file)
 
     # result = subprocess.Popen(cmd, shell=True, stdout=subprocess.Pipe.:w
@@ -49,4 +50,4 @@ def run_case_single_core(data_file, frequency_file, starting_model):
     result = subprocess.call(cmd, shell=True)
     assert_equal(result, 0)
     # remove output dir
-    shutil.rmtree(output_dir)
+    shutil.rmtree(outdir)
