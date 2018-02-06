@@ -3,7 +3,8 @@
 """
 Execute to run single Cole-Cole term characterization
 """
-from NDimInv.plot_helper import *
+import NDimInv.plot_helper
+plt, mpl = NDimInv.plot_helper.setup()
 mpl.rcParams['font.size'] = 8.0
 import sys
 sys.path.append('..')
@@ -11,7 +12,7 @@ from nose.tools import *
 import subprocess
 import os
 import numpy as np
-import NDimInv.colecole as colecole
+from sip_models.res.cc import cc
 import glob
 import shutil
 shutil
@@ -72,7 +73,7 @@ def generate_spectra(colecole_parameters, variations, frequencies):
     Generate different Cole-Cole parameter sets (and spectra)
     """
     # find None
-    index = np.where(np.isnan(colecole_parameters))[0]
+    index = np.where(np.isnan(colecole_parameters))[0].squeeze()
     output_dir = settings.datadir + os.sep + settings.vars[index]
 
     # generate setdir
@@ -89,8 +90,9 @@ def generate_spectra(colecole_parameters, variations, frequencies):
         cc_sets[nr, index] = value
 
         # generate CR response
-        magpha = colecole.cole_log(fin, cc_sets[nr])
-        magpha[0, :] = np.exp(magpha[0, :])
+        colecole = cc(frequencies)
+        response = colecole.response(cc_sets[nr])
+        magpha = np.hstack((np.exp(response.rmag), response.rpha))
         data.append(magpha.flatten())
 
     data = np.array(data)
@@ -134,7 +136,8 @@ def run_case(directory, data_file, frequency_file):
         pwd = os.getcwd()
         os.chdir(directory)
         output_dir = 'dd_output_Nd_{0}'.format(Nd)
-        cmd = 'dd_single.py -o "{0}" --lambda 30 -c 2 -f '.format(output_dir)
+        cmd = 'ccd_single --output_format ascii ' + \
+            '-o "{0}" --lambda 30 -c 2 -f '.format(output_dir)
         cmd += '"{0}" -d "{1}" -n {2}'.format(frequency_file, data_file,
                                               Nd)
         result = subprocess.call(cmd, shell=True)
