@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """ Run with
 
@@ -11,7 +11,9 @@ import os
 import subprocess
 import shutil
 import numpy as np
-import lib_cc.main as cc
+import pandas as pd
+
+from sip_models.res.cc import cc
 import sip_formats.convert as sip_converter
 from collections import namedtuple
 
@@ -32,25 +34,26 @@ def generate_data(directory, settings):
                 'frequencies': np.array()
                 }
     """
-    cc_obj = cc.get('logrho0_m_logtau_c',
-                    {'frequencies': settings['frequencies']}
-                    )
-    pars = [np.log(initial_cc_pars.rho0),
-            initial_cc_pars.m,
-            np.log(initial_cc_pars.tau),
-            initial_cc_pars.c]
-    response = cc_obj.cc_rmag_rpha(pars).T.reshape(
-        1, settings['frequencies'].size * 2)
+    cc_obj = cc(settings['frequencies'])
 
-    response_converted = sip_converter.convert('rmag_rpha',
-                                               settings['data_format'],
-                                               response)
+    pars = [initial_cc_pars.rho0,
+            initial_cc_pars.m,
+            initial_cc_pars.tau,
+            initial_cc_pars.c]
+    response = cc_obj.response(pars)
+
+    response_converted = sip_converter.convert(
+        'rmag_rpha',
+        settings['data_format'],
+        response.rmag_rpha
+    ).flatten(order='F')
 
     if not os.path.isdir(directory):
         os.makedirs(directory)
 
     np.savetxt(directory + os.sep + 'frequencies.dat', settings['frequencies'])
-    np.savetxt(directory + os.sep + 'data.dat', response_converted)
+    np.savetxt(directory + os.sep + 'data.dat', np.atleast_2d(
+        response_converted))
 
 
 def generate_dd(directory, settings):
@@ -69,7 +72,7 @@ def generate_dd(directory, settings):
         if settings['model'] == 'cond':
             fid.write('DD_COND=1 ')
         fid.write(' DD_STARTING_MODEL=3 ')
-        fid.write('dd_single.py -c 1')
+        fid.write('ccd_single -c 1')
         fid.write(' -n {0}'.format(settings['Nd']))
         fid.write(' --lambda {0}'.format(settings['lam']))
         if settings['norm'] is not None:
@@ -102,23 +105,23 @@ def _check_io_datafiles(directory, dd_dir, format_orig):
         print('data_format is wrong!', dataformat_fit, format_orig)
 
 
-def _check_rho0(directory, dd_dir):
-    with open(dd_dir + os.sep + 'integrated_paramaters.dat', 'r') as fid:
-        fid.readline()
-        fid.readline()
-        fid.readline()
-        labels = fid.readline().strip().split(' ')
+def _check_rho0(directory, dd_dir, settings_dd):
+    intparfile = dd_dir + os.sep + 'integrated_parameters.dat'
+    intpars = pd.read_csv(intparfile, sep=' ', skiprows=3)
 
-        intpars_raw = np.loadtxt(fid)
-        intpars = {key: item for key, item in zip(labels, intpars_raw)}
-
-    rho0_diff = np.abs(initial_cc_pars.rho0 - 10 ** intpars['rho0']) / \
-        initial_cc_pars.rho0
+    rho0_diff = np.abs(
+        initial_cc_pars.rho0 - 10 ** intpars['rho0'].values[0]
+    ) / initial_cc_pars.rho0
     print('rho0 orig', initial_cc_pars.rho0)
-    print('rho0 recovered', 10 ** intpars['rho0'])
+    print('rho0 recovered', 10 ** intpars['rho0'].values[0])
     print('rho0_diff (relative, percentage)', rho0_diff * 1e2)
-    # we only allow for 2 percent variation
-    assert_true(rho0_diff < 0.02)
+
+    if settings_dd['norm'] is None:
+        # we expect a discrepancy if no norm is used
+        assert_true(rho0_diff > 0.02)
+    else:
+        # we only allow for 2 percent variation
+        assert_true(rho0_diff < 0.02)
 
 
 def apply_checks(directory, settings_data, settings_dd):
@@ -127,7 +130,7 @@ def apply_checks(directory, settings_data, settings_dd):
     dd_dir = directory + os.sep + 'results'
 
     # _check_io_datafiles(directory, dd_dir, settings_data['data_format'])
-    _check_rho0(directory, dd_dir)
+    _check_rho0(directory, dd_dir, settings_dd)
     # TODO: more checks
 
 
@@ -141,7 +144,7 @@ def run_batch(directory):
 
 
 def case(model, norm, lam, data_format):
-    directory = 'case_{0}_{1}_{2}'.format(model, norm,
+    directory = 'case_model_{0}_norm_{1}_format_{2}'.format(model, norm,
                                           data_format)
     if os.path.isdir(directory):
         shutil.rmtree(directory)
