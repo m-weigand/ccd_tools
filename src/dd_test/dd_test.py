@@ -25,13 +25,13 @@ import lib_ccd_test.run_test as ccd_test
 
 # dict with the available binaries, and the corresponding data files
 available_binaries = {
-    'dd_single.py': {
+    'ccd_single': {
         'data_files': {
             '-f': 'frequencies.dat',
             '-d': 'data.dat'
         }
     },
-    'dd_time.py': {
+    'cdd_time': {
         'data_files': {
             '-f': 'frequencies.dat',
             '-d': 'data.dat',
@@ -47,12 +47,13 @@ def handle_cmd_options():
     """
     parser = OptionParser()
     for full_binary in sorted(available_binaries.keys()):
-        binary = full_binary[:-3]
-        parser.add_option("--" + binary,
-                          action="store_true",
-                          dest=binary,
-                          help="Create test for " + binary,
-                          default=False)
+        binary = full_binary
+        parser.add_option(
+            "--" + binary,
+            action="store_true",
+            dest=binary,
+            help="Create test for " + binary,
+            default=False)
 
     parser.add_option("--init", action="store_true", dest="init_record",
                       help="Init a new test result directory (default: False)",
@@ -69,14 +70,14 @@ def handle_cmd_options():
     if options.init_record:
         nr_found = 0
         for full_binary in sorted(available_binaries.keys()):
-            value = getattr(options, full_binary[:-3])
+            value = getattr(options, full_binary)
             if value:
                 nr_found += 1
                 # store the binary for later use
-                setattr(options, 'binary', full_binary[:-3])
+                setattr(options, 'binary', full_binary)
         if nr_found == 0:
             raise Exception(
-                'You MUST provide either --dd_single or --dd_time!')
+                'You MUST provide either --ccd_single or --dd_time!')
         if nr_found > 1:
             print('You can use one of the binaries!')
 
