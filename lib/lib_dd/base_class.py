@@ -159,7 +159,7 @@ def get_tau_values_for_data(frequencies, Nd, factor_left=1,
 
 
 class starting_pars_3():
-    """Heuristic (nr 3) for determining useful starting values for the fit.
+    """Heuristic nr 3 for determining useful starting values for the fit.
 
     This function is aware if the conductivity or resistivity formulation is
     used.
