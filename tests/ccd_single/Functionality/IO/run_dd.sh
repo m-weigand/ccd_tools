@@ -5,7 +5,7 @@ function fit_data(){
 
 	odir="results_${format}"
 	test -d "${odir}" && rm -r "${odir}"
-	DD_COND=1 DD_STARTING_MODEL=3 dd_single.py \
+	DD_COND=1 DD_STARTING_MODEL=3 ccd_single \
 		-f data/frequencies.dat \
 		-d data/data.dat \
 		--output_format ${format} \

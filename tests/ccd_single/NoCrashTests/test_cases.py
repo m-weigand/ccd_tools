@@ -35,7 +35,7 @@ def test_generator():
 def run_case_single_core(data_file, frequency_file):
     if(os.path.isdir(output_dir)):
         shutil.rmtree(output_dir)
-    cmd = 'dd_single.py --silent --tmp -c 1 -o "{0}"'.format(output_dir)
+    cmd = 'ccd_single --silent --tmp -c 1 -o "{0}"'.format(output_dir)
     cmd += ' -f "{0}" -d "{1}"'.format(frequency_file, data_file)
 
     # result = subprocess.Popen(cmd, shell=True, stdout=subprocess.Pipe.:w
@@ -49,7 +49,7 @@ def run_case_single_core(data_file, frequency_file):
 def run_case_duo_core(data_file, frequency_file):
     if(os.path.isdir(output_dir)):
         shutil.rmtree(output_dir)
-    cmd = 'dd_single.py --silent --tmp -c 2 -o "{0}"'.format(output_dir)
+    cmd = 'ccd_single --silent --tmp -c 2 -o "{0}"'.format(output_dir)
     cmd += ' -f "{0}" -d "{1}"'.format(frequency_file, data_file)
     result = subprocess.call(cmd, shell=True)
     assert_equal(result, 0)
