@@ -48,14 +48,14 @@ def get_test_dir(args, last=False):
 
 
 def get_cmd(testcfg_file):
-    available_binaries = ('dd_single.py', 'dd_time.py')
+    available_binaries = ('ccd_single', 'ccd_time')
     regexes = [re.compile(x) for x in available_binaries]
 
     # read test.cfg file, fourth line
     with open(testcfg_file, 'r') as fid:
         cmd = []
         add_to_cmd = False
-        # find initial call to dd_single or dd_time
+        # find initial call to ccd_single or ccd_time
         for line in fid.readlines():
             # if the binaries was already found
             if add_to_cmd:
@@ -93,10 +93,11 @@ def run_test(test_dir):
     with open('active_run.sh', 'w') as fid:
         fid.write(cmd)
 
-    # subprocess.call(test_cmd, shell=True, stdin=PIPE)
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE)
-    p.wait()
+    p = subprocess.check_output(
+        cmd,
+        shell=True,
+        stderr=subprocess.STDOUT,
+    )
 
     sys.path.append(os.getcwd())
     # run the test
