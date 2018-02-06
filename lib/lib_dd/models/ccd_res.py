@@ -105,9 +105,9 @@ class decomposition_resistivity(
         pars = self._get_full_pars(pars_dec)
         response = self.cc.response(pars)
 
-        remim = response.rre_rim
-        remim[:, 1] *= -1
-        return remim
+        rre_rmim = response.rre_rim
+        rre_rmim[:, 1] *= -1
+        return rre_rmim
 
     def Jacobian(self, pars_dec):
         """

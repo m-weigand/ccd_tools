@@ -55,7 +55,7 @@ class decomposition_conductivity(
         )
 
     def convert_parameters(self, pars):
-        r""" Convert parameters given as (:math:`\rho_0, m_i`) to the
+        r""" Convert parameters given as (:math:`\sigma_\infty, m_i`) to the
         parameterization used by this class.
         """
         pars_converted = np.empty_like(pars)
@@ -85,7 +85,7 @@ class decomposition_conductivity(
         return pars
 
     def forward(self, pars_dec):
-        """
+        """Forward response of this model
 
         Parameters
         ----------
@@ -122,14 +122,14 @@ class decomposition_conductivity(
         # real part
         real_J = np.concatenate(
             (
-                self.cc.dre_dlog10rho0(pars)[:, np.newaxis],
+                self.cc.dre_dlog10sigmai(pars)[:, np.newaxis],
                 self.cc.dre_dlog10m(pars)
             ),
             axis=1
         )
         imag_J = -np.concatenate(
             (
-                self.cc.dim_dlog10rho0(pars)[:, np.newaxis],
+                self.cc.dim_dlog10sigmai(pars)[:, np.newaxis],
                 self.cc.dim_dlog10m(pars)
             ),
             axis=1
