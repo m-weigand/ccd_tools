@@ -159,6 +159,11 @@ def get_tau_values_for_data(frequencies, Nd, factor_left=1,
 
 
 class starting_pars_3():
+    """Heuristic (nr 3) for determining useful starting values for the fit.
+
+    This function is aware if the conductivity or resistivity formulation is
+    used.
+    """
     def __init__(self, re, mim, frequencies, taus):
         self.re = re
         self.mim = mim
@@ -175,6 +180,9 @@ class starting_pars_3():
         # high-frequency limit
         if int(os.environ.get('DD_COND', 0)) == 1:
             self.rho0 = np.sqrt(re[-1] ** 2 + mim[-1] ** 2)
+            # self.rho0 = np.abs(re[-1])
+            # print('debug: rho0=sigma_inf', re[-1], mim[-1], self.rho0)
+            # print(re)
 
         # compute bins for each frequency decade
         self.minf = self.frequencies.min()
@@ -236,10 +244,9 @@ class starting_pars_3():
                 continue
 
             # take logarithmic means of frequency data for the bins
-            f_logmeans = (np.log10(bins[0:-1]) +
-                          np.log10(bins[1:])) / 2
+            f_logmeans = (np.log10(bins[0:-1]) + np.log10(bins[1:])) / 2
 
-            if(frequencies is not None):
+            if frequencies is not None:
                 # assign data points to bins
                 data_in_f_bins = np.digitize(frequencies, bins)
 
@@ -275,8 +282,7 @@ class starting_pars_3():
         return sec_data
 
     def estimate(self, obj):
-        """
-        Determine a starting model by creating frequency-decade wise mean
+        """ Determine a starting model by creating frequency-decade wise mean
         values of mim and then computing a fixed chargeability value for each
         frequency decade.
         """
@@ -288,7 +294,7 @@ class starting_pars_3():
         # the value which will be assigned to tau-range outside the data range
 
         # if 'DD_COND' in os.environ and os.environ['DD_COND'] == '1':
-        # select only the "valid" polarisations, i.e. capactive effects
+        # select only the "valid" polarizations, i.e. capacitative effects
         capacitive_values = np.where(self.mim > 0)[0]
         if len(capacitive_values) > 0:
             self.data_mean_tau = self.mim[capacitive_values].min()
@@ -309,7 +315,7 @@ class starting_pars_3():
             for nr, bin_nr in enumerate(range(1, tau_bins.size)):
                 tau_indices = np.where(tau_digi == bin_nr)[0]
                 # compute the chargeability for this tau span
-                # we work wiht mim, therefore no minus sign
+                # we work with mim, therefore no minus sign
                 m_dec = (sec_data[key][1][nr] / self.rho0)
                 term = 1
                 for i in tau_indices:
@@ -341,18 +347,25 @@ class starting_pars_3():
         scales = np.logspace(-7, 0, 15)
         # scales = np.array((1e-3, 0.5, 1))
         for scale in scales:
-            # test forward modelling
+            # test forward modeling
             m_list.append(chargeabilities * scale)
             pars_linear = np.hstack((self.rho0, chargeabilities * scale))
             pars = obj.convert_parameters(pars_linear)
             re_mim = obj.forward(pars)
             mim_f = re_mim[:, 1]
+            # print('mim_f', mim_f)
+            # print('mim', self.mim)
+            # print('--')
+            # print('--')
             mim_list.append(mim_f)
             # compute rms_mim
-            rms_mim = np.sqrt((1.0 / float(self.mim.size)) *
-                              np.sum(np.abs(mim_f - self.mim) ** 2))
+            rms_mim = np.sqrt(
+                (1.0 / float(self.mim.size)) * np.sum(
+                    np.abs(mim_f - self.mim) ** 2)
+            )
             rms_list.append(rms_mim)
         rms_list = np.array(rms_list)
+        # print('rms_list', rms_list)
 
         # find minimum rms
         min_index = np.argmin(rms_list)
@@ -364,11 +377,13 @@ class starting_pars_3():
         # if min_index is the largest scaling factor, use this
         a = b = c = 0
         if indices[-1] == len(scales):
+            logger.info('using largest scaling factor')
             x_min = scales[-1]
             # remove last entry from index because it points to a value outside
             # the 'scales' array
             del(indices[-1])
         elif indices[-1] == 0:
+            logger.info('using smallest scaling factor')
             x_min = scales[0]
         else:
             # fit parabola to rms-values
@@ -382,14 +397,19 @@ class starting_pars_3():
             A[:, 2] = 1
             a, b, c = np.linalg.solve(A, y)
 
-            # compute minum minmum
+            # compute minimum
             x_min = -b / (2 * a)
 
-            # set to default, if we get a nevative scaling factor
+            # set to default, if we get a negative scaling factor
             if x_min < 0:
+                logger.info(
+                    'starting parameters: setting scaling factor to' +
+                    '{}'.format(x_min)
+                )
                 # note that this is an arbitrarily small factor, adjusted by
                 # experience! Please find a suitable automatic way for this!
                 x_min = 0.0001
+        logger.info('Scaling factor: {}'.format(x_min))
         # """
 
         # test for conductivity
@@ -398,10 +418,19 @@ class starting_pars_3():
         term = np.abs(1 -
                       np.sum(chargeabilities * x_min /
                              (1 + 1j * self.omega[0] * self.tau)))
+        # print('term', term)
+        # self.rho0 = self.re[0] * term
         # self.rho0 = self.re[0] / term
         pars_linear = np.hstack((self.rho0, chargeabilities * x_min))
         pars = obj.convert_parameters(pars_linear)
 
+        # debug on:
+        # re_mim = obj.forward(pars)
+        # mim_f = re_mim[:, 1]
+        # print('FINAL')
+        # print('mim_f', mim_f)
+        # print('mim', self.mim)
+        # debug off
         plot_starting_model = False
         if(plot_starting_model):
             # # plot
