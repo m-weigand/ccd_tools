@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
-Test the basic normalisation procedure by comparing the forward modelling of
-the resisitvity and the condcutivity formulation for different normalisation
+Test the basic normalization procedure by comparing the forward modeling of
+the resisitvity and the conductivity formulation for different normalization
 factors.
 """
 import numpy as np
@@ -37,7 +37,7 @@ class test_dd_resistivity():
 
 
     def test_norm_res(self):
-        print 'test normalisation'
+        print('test normalization')
         rho0_orig = np.log10(100)
         norm_facs = (1, 10, 100)
 
@@ -63,7 +63,7 @@ class test_dd_resistivity():
 
 
     def test_norm_cond(self):
-        print 'test normalisation'
+        print('test normalisation')
         sigi_orig = np.log10(100)
         norm_facs = (1, 10, 100)
 
