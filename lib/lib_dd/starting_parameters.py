@@ -1,6 +1,7 @@
 import os
 
 import numpy as np
+from scipy import stats
 
 import lib_dd.base_class as base_class
 
