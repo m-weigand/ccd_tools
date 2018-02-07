@@ -82,6 +82,6 @@ Notes on possible conductivity extension
 
     \sigma'' = - \sigma_\infty m \frac{\omega \tau}{1 + (\omega \tau)^2}\\
     \sigma'' = - \sigma_0 (1 - m) m \frac{\omega \tau}{1 + (\omega \tau)^2}\\
-    \frac{\sigma''}{\sigma_0} = \frac{1 + (\omega \tau)^2}{\omega \tau} = -(1-m) m = -m + m^2\\
-    m = -0.5 \pm \sqrt{1/4 - \left(\frac{\sigma''}{\sigma_0} - \frac{1 + (\omega \tau)^2}{\omega \tau}\right)}
+    \frac{\sigma''}{\sigma_0} \left[ \frac{1 + (\omega \tau)^2}{\omega \tau} \right]^{-1}= -(1-m) m = -m + m^2\\
+    m = -0.5 \pm \sqrt{1/4 - \left(\frac{\sigma''}{\sigma_0} - \left[ \frac{1 + (\omega \tau)^2}{\omega \tau}\right) \right]^{-1}}
 
