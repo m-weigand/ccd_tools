@@ -299,7 +299,7 @@ class starting_pars_3():
         if len(capacitive_values) > 0:
             self.data_mean_tau = self.mim[capacitive_values].min()
         else:
-            # no valid value was found. we can assume this spectrum can not
+            # no valid value was found. We can assume this spectrum can not
             # be fitted using the DD. Use a really small m value here
             self.data_mean_tau = 1e-7
 
