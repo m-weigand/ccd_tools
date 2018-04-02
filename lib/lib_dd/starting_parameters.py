@@ -9,13 +9,15 @@ import lib_dd.base_class as base_class
 class starting_parameters(object):
 
     def estimate_starting_parameters_3(self, re, mim):
-        estimator = base_class.starting_pars_3(re, mim, self.frequencies, self.tau)
+        estimator = base_class.starting_pars_3(
+            re, mim, self.frequencies, self.tau
+        )
         parameters = estimator.estimate(self)
         return parameters
 
     def estimate_starting_parameters_2(self, re, mim):
         """
-        Try to find good starting parameters using a gaussian m-distribution.
+        Try to find good starting parameters using a Gaussian m-distribution.
 
         This should only work well if we have only one peak in the data
         (imaginary/phase)
@@ -106,5 +108,10 @@ class starting_parameters(object):
         elif(starting_model == 3):
             # frequency bin wise
             parameters = self.estimate_starting_parameters_3(re, mim)
+        else:
+            raise Exception(
+                'starting model heuristic number {} not known!'.format(
+                    starting_model)
+            )
 
         return parameters

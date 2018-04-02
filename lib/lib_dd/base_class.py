@@ -159,7 +159,7 @@ def get_tau_values_for_data(frequencies, Nd, factor_left=1,
 
 
 class starting_pars_3():
-    """Heuristic (nr 3) for determining useful starting values for the fit.
+    """Heuristic nr 3 for determining useful starting values for the fit.
 
     This function is aware if the conductivity or resistivity formulation is
     used.
@@ -299,7 +299,7 @@ class starting_pars_3():
         if len(capacitive_values) > 0:
             self.data_mean_tau = self.mim[capacitive_values].min()
         else:
-            # no valid value was found. we can assume this spectrum can not
+            # no valid value was found. We can assume this spectrum can not
             # be fitted using the DD. Use a really small m value here
             self.data_mean_tau = 1e-7
 
