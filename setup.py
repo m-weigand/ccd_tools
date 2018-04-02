@@ -19,14 +19,15 @@ if __name__ == '__main__':
     setup(name='ccd_tools',
           version=version_long,
           description='Time-lapse Cole-Cole decomposition routines',
-          author='Maximilian Weigand',
+          long_description=open('Readme.md', 'r').read(),
+          author='Maximilian Weigand and Department of Geophysics,'
+          'University of Bonn, Germany',
           author_email='mweigand@geo.uni-bonn.de',
           url='https://github.com/m-weigand/ccd_tools',
           license='GPL-3',
           keywords=['SIP, Cole-Cole model, Debye decomposition'],
           classifiers=[
-              # "Development Status :: 5 - Production/Stable",
-              "Development Status :: 4 - Beta",
+              "Development Status :: 5 - Production/Stable",
               "License :: OSI Approved :: GNU Lesser General Public License " +
               "v3 (LGPLv3)",
               "Programming Language :: Python :: 3.4",
