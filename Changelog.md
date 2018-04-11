@@ -1,12 +1,17 @@
 # Change log
+## 0.8.13
 
-## 0.7
+* a lot of documentation fixes
+* fix tests
+* fix computation for sigma_infty for conductivity formulation
 
-* Published version, see paper
+## 0.8.3
 
-## 0.8
+* fix tests
 
-* Transition version to a proper versioning scheme, Python 3, etc
+## 0.8.2
+
+* set starting model heuristic number 3 as default
 
 ## 0.8.1
 
@@ -16,10 +21,10 @@
 * first version with a DOI (via Zenodo)
 * initial homepage with online-documentation
 
-## 0.8.2
+## 0.8
 
-* set starting model heuristic number 3 as default
+* Transition version to a proper versioning scheme, Python 3, etc
 
-## 0.8.3
+## 0.7
 
-* fix tests
+* Published version, see paper
