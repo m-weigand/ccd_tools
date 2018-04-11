@@ -6,7 +6,7 @@
 
 [![DOI](https://zenodo.org/badge/68698547.svg)](https://zenodo.org/badge/latestdoi/68698547)
 
-[Try ccd_tools on binder](https://pypi.org/help/#file-name-reuse)
+[Try ccd_tools on binder](https://mybinder.org/v2/gh/m-weigand/try-ccd-tools/master)
 
 
 Cole-Cole decomposition routines
