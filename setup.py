@@ -25,12 +25,15 @@ if __name__ == '__main__':
           author_email='mweigand@geo.uni-bonn.de',
           url='https://github.com/m-weigand/ccd_tools',
           license='GPL-3',
-          keywords=['SIP, Cole-Cole model, Debye decomposition'],
+          keywords=['SIP, Cole-Cole model', 'Debye decomposition',
+                    'Cole-Cole decomposition'],
           classifiers=[
               "Development Status :: 5 - Production/Stable",
               "License :: OSI Approved :: GNU Lesser General Public License " +
               "v3 (LGPLv3)",
               "Programming Language :: Python :: 3.4",
+              "Programming Language :: Python :: 3.5",
+              "Programming Language :: Python :: 3.6",
               "Intended Audience :: Science/Research",
           ],
           # find_packages() somehow does not work under Win7 when creating a
