@@ -1,27 +1,27 @@
-lib\_dd\.config package
-=======================
+lib\_dd.config package
+======================
 
 Submodules
 ----------
 
-lib\_dd\.config\.cfg\_base module
----------------------------------
+lib\_dd.config.cfg\_base module
+-------------------------------
 
 .. automodule:: lib_dd.config.cfg_base
     :members:
     :undoc-members:
     :show-inheritance:
 
-lib\_dd\.config\.cfg\_single module
------------------------------------
+lib\_dd.config.cfg\_single module
+---------------------------------
 
 .. automodule:: lib_dd.config.cfg_single
     :members:
     :undoc-members:
     :show-inheritance:
 
-lib\_dd\.config\.cfg\_time module
----------------------------------
+lib\_dd.config.cfg\_time module
+-------------------------------
 
 .. automodule:: lib_dd.config.cfg_time
     :members:

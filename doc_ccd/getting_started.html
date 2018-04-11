@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting Started &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
+    <title>Getting Started &#8212; Time-lapse Cole-Cole decomposition routines 0.8.13 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.8.12',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -31,8 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -50,7 +41,7 @@ and provides two detailed usage examples.</p>
 </div>
 <div class="section" id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
-<div><a class="reference internal image-reference" href="_images/blockdiag-a24fe31aef5a36be09664455e5a059388f6009c4.png"><img height="132.0" src="_images/blockdiag-a24fe31aef5a36be09664455e5a059388f6009c4.png" width="1126.4" /></a></div><p>Given one or more SIP spectra in form of a frequency file and a data file, the
+<div><a class="reference internal image-reference" href="_images/blockdiag-0f3268aa44ee3ad0b93a6584265357e310131800.png"><img height="132.0" src="_images/blockdiag-0f3268aa44ee3ad0b93a6584265357e310131800.png" width="1126.4" /></a></div><p>Given one or more SIP spectra in form of a frequency file and a data file, the
 decomposition commands could be called directly. However, given the large
 number of possible command line options (and environment variables), it is
 recommended to create a batch file with the command call. This ensures
@@ -67,7 +58,7 @@ postprocessing can be applied to the output directory.</p>
 double click. Environment variables can be set using the <cite>set</cite> command. Given a
 functional installation of the decomposition tools, a working batch file could
 be:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">REM</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">windows</span> <span class="n">bat</span> <span class="n">file</span><span class="p">,</span> <span class="n">execute</span> <span class="n">by</span> <span class="n">double</span> <span class="n">clicking</span> <span class="n">on</span> <span class="n">it</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">REM</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">windows</span> <span class="n">bat</span> <span class="n">file</span><span class="p">,</span> <span class="n">execute</span> <span class="n">by</span> <span class="n">double</span> <span class="n">clicking</span> <span class="n">on</span> <span class="n">it</span>
 <span class="n">REM</span> <span class="n">All</span> <span class="n">lines</span> <span class="n">starting</span> <span class="k">with</span> <span class="s2">&quot;REM&quot;</span> <span class="n">are</span> <span class="n">comments</span><span class="p">,</span> <span class="ow">and</span> <span class="n">will</span> <span class="n">be</span> <span class="n">ignored</span> <span class="n">during</span> <span class="n">execution</span><span class="o">.</span>
 
 <span class="n">REM</span> <span class="n">environment</span> <span class="n">variables</span> <span class="n">are</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">the</span> <span class="n">syntax</span><span class="p">:</span>
@@ -92,7 +83,7 @@ be:</p>
 <h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
 <p>Linux shell files usually have the file ending <cite>.sh</cite>. A typical shell file for
 a decomposition call is:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 <span class="c1"># The first line indicates the program which executes this file</span>
 
 <span class="c1"># comment lines start with the character &#39;#&#39;</span>
@@ -112,18 +103,18 @@ a decomposition call is:</p>
 </div>
 <p>Environment variables can also be set only for a given command by prepending
 the assignment before the command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_COND</span><span class="o">=</span><span class="mi">0</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DD_COND</span><span class="o">=</span><span class="mi">0</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> \
  <span class="o">-</span><span class="n">n</span> <span class="mi">20</span> <span class="o">-</span><span class="n">o</span> <span class="n">results</span> \
  <span class="o">--</span><span class="n">tausel</span> <span class="n">data_ext</span> \
  <span class="o">--</span><span class="n">nr_cores</span><span class="o">=</span><span class="mi">1</span> <span class="o">--</span><span class="n">plot</span>
 </pre></div>
 </div>
 <p>Linux shell files can be executed on the command line using the commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="p">[</span><span class="n">FILENAME</span><span class="p">]</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="p">[</span><span class="n">FILENAME</span><span class="p">]</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>or</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="p">[</span><span class="n">FILENAME</span><span class="p">]</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="p">[</span><span class="n">FILENAME</span><span class="p">]</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 </div>
@@ -138,11 +129,11 @@ a Debye decomposition scheme:</p>
 </div>
 <p>You need a frequency file which contains the frequencies, each in a seperate
 line, in ascending order:</p>
-<p>frequency.dat (<a class="reference download internal" href="_downloads/frequencies.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
+<p>frequency.dat (<a class="reference download internal" href="_downloads/frequencies.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
 <span class="pre">(unix)</span></code></a>)
-(<a class="reference download internal" href="_downloads/frequencies1.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
+(<a class="reference download internal" href="_downloads/frequencies1.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
 <span class="pre">(Windows)</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">0.0010</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.0010</span>
 <span class="mf">0.0018</span>
 <span class="mf">0.0032</span>
 <span class="mf">0.0056</span>
@@ -176,9 +167,9 @@ magnitude values (<img class="math" src="_images/math/63aa8639fa10609f8e940bb48b
 <em>frequencies.dat</em>. The following N columns represent the corresponding phase
 values.</p>
 <p>data.dat
-(<a class="reference download internal" href="_downloads/data.dat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">data.dat</span> <span class="pre">(unix)</span></code></a>)</p>
-<p>(<a class="reference download internal" href="_downloads/data1.dat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">data.dat</span> <span class="pre">(Windows)</span></code></a>)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">49.345594</span> <span class="mf">49.120225</span> <span class="mf">48.860658</span> <span class="mf">48.589371</span> <span class="mf">48.333505</span> <span class="mf">48.113950</span> <span class="mf">47.939222</span>\
+(<a class="reference download internal" href="_downloads/data.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">data.dat</span> <span class="pre">(unix)</span></code></a>)</p>
+<p>(<a class="reference download internal" href="_downloads/data1.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">data.dat</span> <span class="pre">(Windows)</span></code></a>)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">49.345594</span> <span class="mf">49.120225</span> <span class="mf">48.860658</span> <span class="mf">48.589371</span> <span class="mf">48.333505</span> <span class="mf">48.113950</span> <span class="mf">47.939222</span>\
 <span class="mf">47.807051</span> <span class="mf">47.709583</span> <span class="mf">47.637735</span> <span class="mf">47.583349</span> <span class="mf">47.539704</span> <span class="mf">47.501267</span> <span class="mf">47.463162</span>\
 <span class="mf">47.420588</span> <span class="mf">47.368190</span> <span class="mf">47.299354</span> <span class="mf">47.205358</span> <span class="mf">47.074354</span> <span class="mf">46.890271</span> <span class="mf">46.632118</span>\
 <span class="mf">46.274900</span> <span class="mf">45.794402</span> <span class="mf">45.178163</span> <span class="mf">44.441082</span> <span class="o">-</span><span class="mf">10.526822</span> <span class="o">-</span><span class="mf">12.095446</span> <span class="o">-</span><span class="mf">13.004975</span>\
@@ -195,48 +186,48 @@ display purposes, line breaks were introduced, and indicated by ‘'
 characters.</p>
 </div>
 <p>The spectrum can now be fitted to a Debye decomposition using the command
-(<a class="reference download internal" href="_downloads/run_dd1.sh" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>)
-(<a class="reference download internal" href="_downloads/run_dd1.bat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span>
+(<a class="reference download internal" href="_downloads/run_dd1.sh" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>)
+(<a class="reference download internal" href="_downloads/run_dd1.bat" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>This call uses a line search to find an optimal lambda value, and saves fit
 results in the directory <strong>results1/</strong>.</p>
 <p>By default, no plot is created for the fit results. The command <strong>ddplot.py</strong>
 creates these plots afterwards (output files are named <strong>spec_*.png</strong>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ddplot</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">i</span> <span class="n">results1</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ddplot</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">i</span> <span class="n">results1</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>In addition, the last iteration can directly be plotted by <strong>dd_time.py</strong> by
 using the option <cite>- -plot</cite>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span> <span class="o">--</span><span class="n">plot</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results1</span><span class="o">/</span> <span class="o">--</span><span class="n">plot</span>
 </pre></div>
 </div>
 <img alt="_images/plot_spec_000_iteration0005.png" class="align-center" src="_images/plot_spec_000_iteration0005.png" />
 <p>The fit can be further controlled by providing a fixed lambda value
 (<cite>- -lambda</cite>) and by using an advanced starting model (nr 3, using the
 environment variable <strong>DD_STARTING_MODEL</strong>):</p>
-<p>Windows (<a class="reference download internal" href="_downloads/run_dd2.bat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">batch</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span>
+<p>Windows (<a class="reference download internal" href="_downloads/run_dd2.bat" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">batch</span> <span class="pre">file</span></code></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span>
 <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results2</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
 </pre></div>
 </div>
-<p>Unix (<a class="reference download internal" href="_downloads/run_dd2.sh" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results2</span>\
+<p>Unix (<a class="reference download internal" href="_downloads/run_dd2.sh" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results2</span>\
  <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
 </pre></div>
 </div>
 <img alt="_images/plot_spec_000_iteration00051.png" class="align-center" src="_images/plot_spec_000_iteration00051.png" />
 <p>The conductivity model can be activated using the environment variable <strong>DD_COND</strong>:</p>
-<p>Windows (<a class="reference download internal" href="_downloads/run_dd3.bat" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">batch</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span>
+<p>Windows (<a class="reference download internal" href="_downloads/run_dd3.bat" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">Windows</span> <span class="pre">batch</span> <span class="pre">file</span></code></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span>
 <span class="nb">set</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span>
 
 <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">o</span> <span class="n">results</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span>
 </pre></div>
 </div>
-<p>Linux (<a class="reference download internal" href="_downloads/run_dd3.sh" download=""><code class="xref download docutils literal"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span>\
+<p>Linux (<a class="reference download internal" href="_downloads/run_dd3.sh" download=""><code class="xref download docutils literal notranslate"><span class="pre">download</span> <span class="pre">linux</span> <span class="pre">shell</span> <span class="pre">file</span></code></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">DD_COND</span><span class="o">=</span><span class="mi">1</span> <span class="n">ccd_single</span> <span class="o">-</span><span class="n">f</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">.</span><span class="n">dat</span>\
  <span class="o">-</span><span class="n">o</span> <span class="n">results3</span> <span class="o">--</span><span class="n">plot</span> <span class="o">--</span><span class="k">lambda</span> <span class="mi">10</span> <span class="o">--</span><span class="n">norm</span> <span class="mi">10</span>
 </pre></div>
 </div>
@@ -251,20 +242,20 @@ environment variable <strong>DD_STARTING_MODEL</strong>):</p>
 </div>
 <p>Download the raw data files:</p>
 <ul class="simple">
-<li>data.dat (<a class="reference download internal" href="_downloads/data2.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">data.dat</span> <span class="pre">(unix)</span></code></a>)
-(<a class="reference download internal" href="_downloads/data_windows.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">data.dat</span> <span class="pre">(Windows)</span></code></a>)</li>
-<li>frequencies.dat (<a class="reference download internal" href="_downloads/frequencies2.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
+<li>data.dat (<a class="reference download internal" href="_downloads/data2.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">data.dat</span> <span class="pre">(unix)</span></code></a>)
+(<a class="reference download internal" href="_downloads/data_windows.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">data.dat</span> <span class="pre">(Windows)</span></code></a>)</li>
+<li>frequencies.dat (<a class="reference download internal" href="_downloads/frequencies2.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
 <span class="pre">(unix)</span></code></a>)
-(<a class="reference download internal" href="_downloads/frequencies_windows.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
+(<a class="reference download internal" href="_downloads/frequencies_windows.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">frequencies.dat</span>
 <span class="pre">(Windows)</span></code></a>)</li>
-<li>times.dat (<a class="reference download internal" href="_downloads/times.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">times.dat</span>
+<li>times.dat (<a class="reference download internal" href="_downloads/times.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">times.dat</span>
 <span class="pre">(unix)</span></code></a>)
-(<a class="reference download internal" href="_downloads/times_windows.dat" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">times.dat</span>
+(<a class="reference download internal" href="_downloads/times_windows.dat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">times.dat</span>
 <span class="pre">(Windows)</span></code></a>)</li>
 </ul>
 <p>Save the files to a new directory in the subdirectory <strong>data</strong>, and rename them
 according to the file listing:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
 |-- data
     |-- data.dat
     |-- frequencies.dat
@@ -273,7 +264,7 @@ according to the file listing:</p>
 </div>
 <p>To fit all spectra without any time regularisation, use the following batch
 file for Linux:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dd_time</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">data</span><span class="o">/</span><span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span>\
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dd_time</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">data</span><span class="o">/</span><span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span>\
  <span class="o">--</span><span class="n">times</span> <span class="n">data</span><span class="o">/</span><span class="n">times</span><span class="o">.</span><span class="n">dat</span>\
  <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">dat</span>\
  <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;results_no_time&quot;</span>\
@@ -283,9 +274,9 @@ file for Linux:</p>
  <span class="o">--</span><span class="n">plot</span>
 </pre></div>
 </div>
-<p>Use this bat file for Windows: (<a class="reference download internal" href="_downloads/run_no_time.bat" download=""><code class="xref download docutils literal"><span class="pre">Download</span>
+<p>Use this bat file for Windows: (<a class="reference download internal" href="_downloads/run_no_time.bat" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span>
 <span class="pre">run_no_time.bat</span></code></a>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dd_time</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">data</span><span class="o">/</span><span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span><span class="o">^</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dd_time</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">f</span> <span class="n">data</span><span class="o">/</span><span class="n">frequencies</span><span class="o">.</span><span class="n">dat</span><span class="o">^</span>
  <span class="o">--</span><span class="n">times</span> <span class="n">data</span><span class="o">/</span><span class="n">times</span><span class="o">.</span><span class="n">dat</span><span class="o">^</span>
  <span class="o">-</span><span class="n">d</span> <span class="n">data</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">dat</span><span class="o">^</span>
  <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;results_no_time&quot;</span><span class="o">^</span>
@@ -301,7 +292,7 @@ information, please refer to the list of options for <em>dd_time.py</em>:
 <a class="reference internal" href="programs/ccd_time.html"><span class="doc">ccd_time</span></a>.</p>
 <p>The resulting directory listing now should look like this (with either the .bat
 or the .sh file):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
 |-- data
 |   |-- data.dat
 |   |-- frequencies.dat
@@ -315,7 +306,7 @@ directory <strong>results/</strong>, with the plot file <strong>plot_times_itera
 <a class="reference internal image-reference" href="_images/plot_times_iteration0006.png"><img alt="_images/plot_times_iteration0006.png" class="align-center" src="_images/plot_times_iteration0006.png" style="width: 1260.0px; height: 2436.0px;" /></a>
 <a class="reference internal image-reference" href="_images/plot_times_iteration0005.png"><img alt="_images/plot_times_iteration0005.png" class="align-center" src="_images/plot_times_iteration0005.png" style="width: 1260.0px; height: 2436.0px;" /></a>
 <p>With <strong>dd_time.py</strong>, too, plot can be created afterward by using the command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ddplot</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">i</span> <span class="n">results1</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ddplot</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">i</span> <span class="n">results1</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -370,12 +361,14 @@ directory <strong>results/</strong>, with the plot file <strong>plot_times_itera
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -386,7 +379,7 @@ directory <strong>results/</strong>, with the plot file <strong>plot_times_itera
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

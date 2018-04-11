@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Starting Models &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
+    <title>Starting Models &#8212; Time-lapse Cole-Cole decomposition routines 0.8.13 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.8.12',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -31,8 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -42,11 +33,26 @@
             
   <div class="section" id="starting-models">
 <h1>Starting Models<a class="headerlink" href="#starting-models" title="Permalink to this headline">¶</a></h1>
+<p>The Cole-Cole decomposition comprises a non-linear inversion problem and is
+dependent on the choice of starting parameters for <img class="math" src="_images/math/96e56d22f23eff0d6f9a09e56d107fe7bf6dd018.png" alt="(\rho_0,
+\underline{m})"/>. If these starting parameters produce a model response that is
+not close to the actual measurement data, then the inversion algorithm will
+have a smaller chance of properly fitting the data (the sensitivities that are
+used to compute model updates are only valid locally, i.e., close to the model
+parameters of a given iteration).</p>
+<p>Starting models are selected by heuristics that somehow try to create suitable
+parameter set without requiring the full inversion problem that they are
+generated for.</p>
 <p>The following methods can be used to determine starting models. A specific
 method can be selected by setting the environment variable
 <strong>DD_STARTING_MODEL</strong> to the corresponding integer number, i.e.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">ccd_single</span> <span class="o">...</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Starting model nr 3 is used by default, and based on our experience works
+for most SIP signatures.</p>
 </div>
 <ul class="simple">
 <li>(<cite>DD_STARTING_MODEL = 1</cite>): Flat starting model</li>
@@ -56,9 +62,19 @@ method can be selected by setting the environment variable
 <p>This page describes the implemented starting models</p>
 <div class="section" id="model-1">
 <h2>Model 1<a class="headerlink" href="#model-1" title="Permalink to this headline">¶</a></h2>
+<p>This heuristic generates constant RTDs with in the chargeability range
+<img class="math" src="_images/math/ea422cb20f3dd6474e526857758b78f7d2c086e0.png" alt="(10^-12, 0)"/>. It then computes the forward responses of all these (20)
+RTDs and chooses the one that has the lowest absolute difference in the
+imaginary parts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tmim</span> <span class="o">-</span> <span class="n">mim</span><span class="p">)))</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="model-2">
 <h2>Model 2<a class="headerlink" href="#model-2" title="Permalink to this headline">¶</a></h2>
+<p>This heuristic tries to find good starting parameters using a Gaussian
+m-distribution.  This should only work well if we have only one peak in the
+data (imaginary/phase).</p>
 </div>
 <div class="section" id="model-3">
 <h2>Model 3<a class="headerlink" href="#model-3" title="Permalink to this headline">¶</a></h2>
@@ -90,6 +106,14 @@ above zero as a lower value.</p>
 </li>
 </ul>
 </div>
+<div class="section" id="notes-on-possible-conductivity-extension">
+<h2>Notes on possible conductivity extension<a class="headerlink" href="#notes-on-possible-conductivity-extension" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+<p><img src="_images/math/d9deff1b91a0221fb8afac217b5ff9cd7ff7ced9.png" alt="\sigma'' = - \sigma_\infty m \frac{\omega \tau}{1 + (\omega \tau)^2}\\
+\sigma'' = - \sigma_0 (1 - m) m \frac{\omega \tau}{1 + (\omega \tau)^2}\\
+\frac{\sigma''}{\sigma_0} \left[ \frac{1 + (\omega \tau)^2}{\omega \tau} \right]^{-1}= -(1-m) m = -m + m^2\\
+m = -0.5 \pm \sqrt{1/4 - \left(\frac{\sigma''}{\sigma_0} - \left[ \frac{1 + (\omega \tau)^2}{\omega \tau}\right) \right]^{-1}}"/></p>
+</div></div>
 </div>
 
 
@@ -122,6 +146,7 @@ above zero as a lower value.</p>
 <li class="toctree-l3"><a class="reference internal" href="#model-1">Model 1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-2">Model 2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-3">Model 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes-on-possible-conductivity-extension">Notes on possible conductivity extension</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage_and_implementation.html#best-practices">Best practices</a></li>
@@ -148,12 +173,14 @@ above zero as a lower value.</p>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -164,7 +191,7 @@ above zero as a lower value.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

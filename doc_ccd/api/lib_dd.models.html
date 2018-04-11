@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>lib_dd.models package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
+    <title>lib_dd.models package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.13 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.8.12',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -50,7 +41,7 @@
 <dl class="class">
 <dt id="lib_dd.models.ccd_cond.decomposition_conductivity">
 <em class="property">class </em><code class="descclassname">lib_dd.models.ccd_cond.</code><code class="descname">decomposition_conductivity</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NDimInv.model_template.model_template</span></code></p>
 <dl class="method">
 <dt id="lib_dd.models.ccd_cond.decomposition_conductivity.Jacobian">
 <code class="descname">Jacobian</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.Jacobian" title="Permalink to this definition">¶</a></dt>
@@ -71,7 +62,7 @@
 <dl class="method">
 <dt id="lib_dd.models.ccd_cond.decomposition_conductivity.convert_parameters">
 <code class="descname">convert_parameters</code><span class="sig-paren">(</span><em>pars</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.convert_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert parameters given as (<img class="math" src="../_images/math/90fbb956016b6e0ca52057cbd32189c7faee071d.png" alt="\rho_0, m_i"/>) to the
+<dd><p>Convert parameters given as (<img class="math" src="../_images/math/6e8e4fb4e271b7cec9dd3d9eb0e356f200ea5608.png" alt="\sigma_\infty, m_i"/>) to the
 parameterization used by this class.</p>
 </dd></dl>
 
@@ -86,7 +77,8 @@ Here: From <img class="math" src="../_images/math/cdee566703617f6d81c3203699af2f
 <dl class="method">
 <dt id="lib_dd.models.ccd_cond.decomposition_conductivity.forward">
 <code class="descname">forward</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_cond.decomposition_conductivity.forward" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Forward response of this model</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -146,7 +138,7 @@ high-frequency EM Cole-Cole term</p>
 <dl class="class">
 <dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity">
 <em class="property">class </em><code class="descclassname">lib_dd.models.ccd_em_res.</code><code class="descname">decomposition_em_resistivity</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NDimInv.model_template.model_template</span></code></p>
 <dl class="method">
 <dt id="lib_dd.models.ccd_em_res.decomposition_em_resistivity.Jacobian">
 <code class="descname">Jacobian</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_em_res.decomposition_em_resistivity.Jacobian" title="Permalink to this definition">¶</a></dt>
@@ -235,19 +227,20 @@ denotes all chargeability values corresponding to the relaxation times.</p>
 <dl class="class">
 <dt id="lib_dd.models.ccd_res.decomposition_resistivity">
 <em class="property">class </em><code class="descclassname">lib_dd.models.ccd_res.</code><code class="descname">decomposition_resistivity</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">NDimInv.model_template.model_template</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.plot_stats._plot_stats</span></code>, <a class="reference internal" href="lib_dd.html#lib_dd.base_class.integrated_parameters" title="lib_dd.base_class.integrated_parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.base_class.integrated_parameters</span></code></a>, <a class="reference internal" href="lib_dd.html#lib_dd.starting_parameters.starting_parameters" title="lib_dd.starting_parameters.starting_parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.starting_parameters.starting_parameters</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NDimInv.model_template.model_template</span></code></p>
 <dl class="method">
 <dt id="lib_dd.models.ccd_res.decomposition_resistivity.Jacobian">
 <code class="descname">Jacobian</code><span class="sig-paren">(</span><em>pars_dec</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.models.ccd_res.decomposition_resistivity.Jacobian" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute the Jacobian of the CCD kernel
+:param pars_dec: array containing (log10(rho0), log10(m_i))
+:type pars_dec: <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pars_dec</strong> (<em>numpy.ndarray</em>) – array containing (log10(rho0), log10(m_i)</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>J</strong> – (2N) X K array with derivatives.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>J</strong></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(2N) X K array with derivatives.</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -383,12 +376,14 @@ denotes all chargeability values corresponding to the relaxation times.</p>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -399,7 +394,7 @@ denotes all chargeability values corresponding to the relaxation times.</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

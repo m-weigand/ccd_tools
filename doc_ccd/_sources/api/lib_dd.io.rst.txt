@@ -1,35 +1,35 @@
-lib\_dd\.io package
-===================
+lib\_dd.io package
+==================
 
 Submodules
 ----------
 
-lib\_dd\.io\.ascii module
--------------------------
+lib\_dd.io.ascii module
+-----------------------
 
 .. automodule:: lib_dd.io.ascii
     :members:
     :undoc-members:
     :show-inheritance:
 
-lib\_dd\.io\.ascii\_audit module
---------------------------------
+lib\_dd.io.ascii\_audit module
+------------------------------
 
 .. automodule:: lib_dd.io.ascii_audit
     :members:
     :undoc-members:
     :show-inheritance:
 
-lib\_dd\.io\.helper module
---------------------------
+lib\_dd.io.helper module
+------------------------
 
 .. automodule:: lib_dd.io.helper
     :members:
     :undoc-members:
     :show-inheritance:
 
-lib\_dd\.io\.io\_general module
--------------------------------
+lib\_dd.io.io\_general module
+-----------------------------
 
 .. automodule:: lib_dd.io.io_general
     :members:

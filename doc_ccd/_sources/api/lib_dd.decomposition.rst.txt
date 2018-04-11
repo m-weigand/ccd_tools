@@ -1,19 +1,19 @@
-lib\_dd\.decomposition package
-==============================
+lib\_dd.decomposition package
+=============================
 
 Submodules
 ----------
 
-lib\_dd\.decomposition\.ccd\_single module
-------------------------------------------
+lib\_dd.decomposition.ccd\_single module
+----------------------------------------
 
 .. automodule:: lib_dd.decomposition.ccd_single
     :members:
     :undoc-members:
     :show-inheritance:
 
-lib\_dd\.decomposition\.ccd\_single\_stateless module
------------------------------------------------------
+lib\_dd.decomposition.ccd\_single\_stateless module
+---------------------------------------------------
 
 .. automodule:: lib_dd.decomposition.ccd_single_stateless
     :members:

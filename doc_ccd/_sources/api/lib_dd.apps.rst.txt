@@ -1,11 +1,11 @@
-lib\_dd\.apps package
-=====================
+lib\_dd.apps package
+====================
 
 Submodules
 ----------
 
-lib\_dd\.apps\.ccd\_single module
----------------------------------
+lib\_dd.apps.ccd\_single module
+-------------------------------
 
 .. automodule:: lib_dd.apps.ccd_single
     :members:

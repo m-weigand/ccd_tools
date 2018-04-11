@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Linux &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
+    <title>Linux &#8212; Time-lapse Cole-Cole decomposition routines 0.8.13 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.8.12',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -31,8 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -52,11 +43,11 @@
 </div></blockquote>
 <p>For the case of missing packages you can either use conda (provided the
 Anaconda stack was installed)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">matplotlib</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="n">sphinx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">matplotlib</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="n">sphinx</span>
 </pre></div>
 </div>
 <p>or pip</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">matplotlib</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="n">sphinx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">matplotlib</span> <span class="n">scipy</span> <span class="n">pandas</span> <span class="n">sphinx</span>
 </pre></div>
 </div>
 <div class="section" id="how-to-setup-anaconda">
@@ -69,12 +60,12 @@ An installation guide for Linux (and for other platforms) can be found here: <a 
 <p>Virtualenv is a tool to create isolated Python environments.
 An installation guide and all virtualenv-support can be found here: <a class="reference external" href="https://virtualenv.pypa.io/en/stable/installation/">https://virtualenv.pypa.io/en/stable/installation/</a></p>
 <p>Creat a virtual environment</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="o">--</span><span class="n">python</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="n">NAME</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="o">--</span><span class="n">python</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="n">NAME</span>
 </pre></div>
 </div>
 <p>with <em>NAME</em> as the name of your virtual environment. For e.g. CRTomo tool you can set <em>NAME</em> to <em>crtomo</em> or for EDF to <em>edf</em>.
 Open your virtual environment with</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="o">*</span><span class="n">NAME</span><span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="o">*</span><span class="n">NAME</span><span class="o">*</span>
 </pre></div>
 </div>
 </div>
@@ -98,7 +89,7 @@ Install git and get yourself familiar with the following git commands:</p>
 </ul>
 </div></blockquote>
 <p>Simply clone the following repositories:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">weigand</span><span class="o">/</span><span class="n">sip_models</span><span class="o">.</span><span class="n">git</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">weigand</span><span class="o">/</span><span class="n">sip_models</span><span class="o">.</span><span class="n">git</span>
 <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">weigand</span><span class="o">/</span><span class="n">geccoinv</span><span class="o">.</span><span class="n">git</span>
 <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">weigand</span><span class="o">/</span><span class="n">ccd_tools</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
@@ -115,19 +106,19 @@ Install git and get yourself familiar with the following git commands:</p>
 <h3>Python and Virtualenv<a class="headerlink" href="#python-and-virtualenv" title="Permalink to this headline">¶</a></h3>
 <p>1. Install Python and Virtualenv as described above.
 3. Create a virtual environment (named <em>ccd-tools</em>), using the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="o">--</span><span class="n">python</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="o">--</span><span class="n">python</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
 </pre></div>
 </div>
 <p>If the virtual environment already exists, you can enter it, using the following command:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="a-installation-of-ccd-tools-and-required-packages-via-pip-install">
 <h3>A) Installation of ccd-tools and required packages via pip install<a class="headerlink" href="#a-installation-of-ccd-tools-and-required-packages-via-pip-install" title="Permalink to this headline">¶</a></h3>
 <p>Enter your virtual environment and install ccd-tools including sip-models and geccoinv, using the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">ccd_tools</span>
 </pre></div>
 </div>
@@ -141,25 +132,25 @@ Install git and get yourself familiar with the following git commands:</p>
 <li><p class="first">Create a working directory and clone the Git repositories into the corresponding folder.</p>
 </li>
 <li><p class="first">Enter your virtual environment, using the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">ccd</span><span class="o">-</span><span class="n">tools</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">To install geccoinv, go to the corresponding directory <em>…/ccd-tools/geccoinv</em> and use the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pip</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pip</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">To install sip-models, go to the corresponding directory <em>…/ccd-tools/sip_models</em> and use the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">To install ccd-tools, go to the corresponding directory <em>…/ccd-tools/ccd_tools</em> and use the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
@@ -169,7 +160,7 @@ Install git and get yourself familiar with the following git commands:</p>
 <div class="section" id="using-a-user-defined-directory">
 <h3>Using a user-defined directory<a class="headerlink" href="#using-a-user-defined-directory" title="Permalink to this headline">¶</a></h3>
 <p>The package can also be installed to a user-defined directory:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>export PYTHONUSERBASE=$HOME/inst/pip_installs
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export PYTHONUSERBASE=$HOME/inst/pip_installs
 export PYTHONPATH=$HOME/inst/pip_installs/lib/python3.4/\
     site-packages/:$PYTHONPATH
 python setup.py install --user
@@ -186,13 +177,13 @@ export PATH=$HOME/inst/pip_installs/bin:$PAT
 <li><p class="first">Install Python and Virtualenv, create a virtual environment and install ccd-tools as described above (A or B, both possible)</p>
 </li>
 <li><p class="first">Enter your virtual environment and install Jupyter Notebooks, using the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
 <span class="n">pip3</span> <span class="n">install</span> <span class="n">jupyter</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Install and enable the Jupyter Widget JavaScript library, using the following commands:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ipywidgets</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ipywidgets</span>
 <span class="n">jupyter</span> <span class="n">nbextension</span> <span class="n">enable</span> <span class="o">--</span><span class="n">py</span> <span class="n">widgetsnbextension</span> <span class="o">--</span><span class="n">sys</span><span class="o">-</span><span class="n">prefix</span>
 </pre></div>
 </div>
@@ -202,7 +193,7 @@ export PATH=$HOME/inst/pip_installs/bin:$PAT
 <div class="section" id="starting-the-notebook-server">
 <h3>Starting the Notebook Server<a class="headerlink" href="#starting-the-notebook-server" title="Permalink to this headline">¶</a></h3>
 <p>Navigate to the Notebook example directory <em>…/ccd-tools/ccd_tools/Examples/notebooks</em> and open Jupyter Notebooks:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
 </pre></div>
 </div>
 <p>This will print some information about the notebook server in your terminal, including the URL of the web application (by default, <a class="reference external" href="http://localhost:8888">http://localhost:8888</a>)
@@ -218,11 +209,11 @@ When the notebook opens in your browser, you will see the Notebook Dashboard, wh
 <div class="section" id="supplementary-installation-instructions">
 <h2>Supplementary installation instructions<a class="headerlink" href="#supplementary-installation-instructions" title="Permalink to this headline">¶</a></h2>
 <p>Installation for developers:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">seutp</span><span class="o">.</span><span class="n">py</span> <span class="n">develop</span> <span class="o">--</span><span class="n">user</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">seutp</span><span class="o">.</span><span class="n">py</span> <span class="n">develop</span> <span class="o">--</span><span class="n">user</span>
 </pre></div>
 </div>
 <p>To build the documentation:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span><span class="o">/</span><span class="n">doc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span><span class="o">/</span><span class="n">doc</span>
 <span class="n">make</span> <span class="n">html</span>
 </pre></div>
 </div>
@@ -232,11 +223,11 @@ When the notebook opens in your browser, you will see the Notebook Dashboard, wh
 <div class="section" id="old-installation-guide">
 <h1>Old installation guide<a class="headerlink" href="#old-installation-guide" title="Permalink to this headline">¶</a></h1>
 <p>The <em>setuptools</em> distribution tools to manage the installation procedure:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p>should suffice to install the libraries and scripts.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>python setup.py build
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>python setup.py build
 python setup.py install --prefix=$HOME/inst/dd
 
 export PYTHONUSERBASE=$HOME/inst/pip_installs
@@ -248,7 +239,7 @@ python seutp.py develop --user
 </pre></div>
 </div>
 <p>To build the documentation, execute</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span><span class="o">/</span><span class="n">doc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span><span class="o">/</span><span class="n">doc</span>
 <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sphinx_build</span>
 </pre></div>
 </div>
@@ -258,12 +249,12 @@ related to multithreading issues in Python</p>
 <p>Workarounds:</p>
 <ul>
 <li><p class="first">Use only one thread in openblas:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">OPENBLAS_NUM_THREADS</span><span class="o">=</span><span class="mi">1</span> <span class="n">ccd_single</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OPENBLAS_NUM_THREADS</span><span class="o">=</span><span class="mi">1</span> <span class="n">ccd_single</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">switch to atlas/libblas:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">config</span> <span class="n">libblas</span><span class="o">.</span><span class="n">so</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">config</span> <span class="n">libblas</span><span class="o">.</span><span class="n">so</span>
 <span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">config</span> <span class="n">libblas</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">3</span>
 </pre></div>
 </div>
@@ -325,12 +316,14 @@ related to multithreading issues in Python</p>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -341,7 +334,7 @@ related to multithreading issues in Python</p>
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

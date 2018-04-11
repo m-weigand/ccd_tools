@@ -1,11 +1,11 @@
-lib\_dd\.conductivity package
-=============================
+lib\_dd.conductivity package
+============================
 
 Submodules
 ----------
 
-lib\_dd\.conductivity\.model module
------------------------------------
+lib\_dd.conductivity.model module
+---------------------------------
 
 .. automodule:: lib_dd.conductivity.model
     :members:

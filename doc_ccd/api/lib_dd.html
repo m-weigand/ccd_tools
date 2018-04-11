@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>lib_dd package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.12 documentation</title>
+    <title>lib_dd package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.13 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.8.12',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -31,8 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -203,7 +194,7 @@ the data set.</p>
 <dl class="class">
 <dt id="lib_dd.base_class.integrated_parameters">
 <em class="property">class </em><code class="descclassname">lib_dd.base_class.</code><code class="descname">integrated_parameters</code><a class="headerlink" href="#lib_dd.base_class.integrated_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Computation of integrated paramters. This class is not meant to be used
 alone, it is meant to be inherited by ‘dd_resistivity_skeleton’</p>
 <dl class="method">
@@ -231,7 +222,10 @@ statistical values such das <img class="math" src="../_images/math/0f964a169e517
 <dl class="class">
 <dt id="lib_dd.base_class.starting_pars_3">
 <em class="property">class </em><code class="descclassname">lib_dd.base_class.</code><code class="descname">starting_pars_3</code><span class="sig-paren">(</span><em>re</em>, <em>mim</em>, <em>frequencies</em>, <em>taus</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.starting_pars_3" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Heuristic nr 3 for determining useful starting values for the fit.</p>
+<p>This function is aware if the conductivity or resistivity formulation is
+used.</p>
 <dl class="method">
 <dt id="lib_dd.base_class.starting_pars_3.estimate">
 <code class="descname">estimate</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.base_class.starting_pars_3.estimate" title="Permalink to this definition">¶</a></dt>
@@ -452,7 +446,7 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
 <dl class="class">
 <dt id="lib_dd.plot.plot_iteration">
 <em class="property">class </em><code class="descclassname">lib_dd.plot.</code><code class="descname">plot_iteration</code><a class="headerlink" href="#lib_dd.plot.plot_iteration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class defines an override function for the default plot function
 of the Iteration class. The new plot function is aware of the Cole-Cole
 Decomposition approach and will plot more information (i.e. the RTD)</p>
@@ -483,7 +477,7 @@ Decomposition approach and will plot more information (i.e. the RTD)</p>
 <dl class="class">
 <dt id="lib_dd.starting_parameters.starting_parameters">
 <em class="property">class </em><code class="descclassname">lib_dd.starting_parameters.</code><code class="descname">starting_parameters</code><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters">
 <code class="descname">estimate_starting_parameters</code><span class="sig-paren">(</span><em>spectrum</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters" title="Permalink to this definition">¶</a></dt>
@@ -499,7 +493,7 @@ Decomposition approach and will plot more information (i.e. the RTD)</p>
 <dl class="method">
 <dt id="lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_2">
 <code class="descname">estimate_starting_parameters_2</code><span class="sig-paren">(</span><em>re</em>, <em>mim</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.starting_parameters.starting_parameters.estimate_starting_parameters_2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Try to find good starting parameters using a gaussian m-distribution.</p>
+<dd><p>Try to find good starting parameters using a Gaussian m-distribution.</p>
 <p>This should only work well if we have only one peak in the data
 (imaginary/phase)</p>
 </dd></dl>
@@ -581,7 +575,7 @@ thresholds</li>
 <dl class="class">
 <dt id="lib_dd.test_functions.tcolors">
 <em class="property">class </em><code class="descclassname">lib_dd.test_functions.</code><code class="descname">tcolors</code><a class="headerlink" href="#lib_dd.test_functions.tcolors" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="lib_dd.test_functions.tcolors.ENDC">
 <code class="descname">ENDC</code><em class="property"> = '\x1b[0m'</em><a class="headerlink" href="#lib_dd.test_functions.tcolors.ENDC" title="Permalink to this definition">¶</a></dt>
@@ -699,12 +693,14 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -715,7 +711,7 @@ with this program.  If not, see &lt;<a class="reference external" href="http://w
       &copy;2014-2017, Maximilian Weigand.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
