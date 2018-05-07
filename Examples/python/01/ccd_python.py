@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # *-* coding: utf-8 *-*
 # simple example for using the ccd_single module directly with Python
 import lib_dd.decomposition.ccd_single as ccd_single
@@ -29,4 +29,12 @@ print('stat_pars', last_it.stat_pars)
 
 # save to directory
 ccd_obj.save_to_directory()
-last_it.plot()
+
+# you need to supply a filename to directly save the figure to file
+# Note that at the moment filenames sometimes will be handled wrong.
+# For now we suggest to use the method below
+last_it.plot(filename='plot.png')
+# if you do not supply a filename, a figure object will be returned
+fig = last_it.plot()
+fig.savefig('plot_v2.png', dpi=300)
+# you could also use the figure object to modify the whole figure
