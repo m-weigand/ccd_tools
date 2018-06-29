@@ -61,7 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Time-lapse Cole-Cole decomposition routines'
-copyright = u'2014-2017, Maximilian Weigand'
+copyright = u'2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -217,8 +217,8 @@ latex_elements = {
     # 'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
-    'preamble': '\usepackage[utf8]{inputenc}' +
-    '\usepackage{textcomp}\usepackage[T1]{fontenc}',
+    'preamble': r'\usepackage[utf8]{inputenc}' +
+    r'\usepackage{textcomp}\usepackage[T1]{fontenc}',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
