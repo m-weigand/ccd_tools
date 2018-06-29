@@ -14,6 +14,10 @@ config['frequency_file'] = frequencies
 config['data_file'] = data
 config['fixed_lambda'] = 10
 
+# also, some options can only be set using environment variables
+import os
+os.environ['DD_C'] = '0.5'  # uses a Warburg-Kernel
+
 # generate a ccd object
 ccd_obj = ccd_single.ccd_single(config)
 
