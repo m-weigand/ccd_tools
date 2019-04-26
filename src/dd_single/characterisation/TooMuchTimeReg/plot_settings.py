@@ -16,7 +16,6 @@ else:
 mpl.rcParams['mathtext.default'] = 'regular'
 
 mpl.rcParams['text.usetex'] = True
-mpl.rcParams['text.latex.unicode'] = True
 # mpl sometimes has problems with latex and unicde. If you work on utf-8, the
 # following string conversion should do the trick:
 
