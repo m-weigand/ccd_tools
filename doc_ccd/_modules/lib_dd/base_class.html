@@ -1,0 +1,717 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.base_class &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.base_class</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot; Copyright 2014-2017 Maximilian Weigand</span>
+
+<span class="sd">This program is free software: you can redistribute it and/or modify it under</span>
+<span class="sd">the terms of the GNU General Public License as published by the Free Software</span>
+<span class="sd">Foundation, either version 3 of the License, or (at your option) any later</span>
+<span class="sd">version.</span>
+
+<span class="sd">This program is distributed in the hope that it will be useful, but WITHOUT</span>
+<span class="sd">ANY WARRANTY without even the implied warranty of MERCHANTABILITY or FITNESS</span>
+<span class="sd">FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License along</span>
+<span class="sd">with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">NDimInv.plot_helper</span>
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">lib_dd.int_pars</span> <span class="k">as</span> <span class="nn">int_pars</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;lib_dd.main&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="determine_tau_range"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.determine_tau_range">[docs]</a><span class="k">def</span> <span class="nf">determine_tau_range</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the tau values depending on the settings &#39;Nd&#39;, &#39;tau_values&#39;</span>
+<span class="sd">    and &#39;tau_sel&#39; in the dict &#39;settings&#39;</span>
+
+<span class="sd">    Tau values can be set by using one of the following strings in</span>
+<span class="sd">        self.settings[&#39;tausel&#39;]:</span>
+
+<span class="sd">            data</span>
+<span class="sd">            data_ext</span>
+<span class="sd">            factor_left,factor_right</span>
+<span class="sd">            ,factor_right</span>
+<span class="sd">            factor_left,</span>
+
+<span class="sd">    Missing values are replaced by one (i.e. the data frequency limits are</span>
+<span class="sd">                                        used).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check which selection strategy to use</span>
+    <span class="k">if</span><span class="p">(</span><span class="s1">&#39;tau_values&#39;</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">):</span>
+        <span class="c1"># we got custom tau values</span>
+        <span class="n">tau</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;tau_values&#39;</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+        <span class="n">tau_f_values</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">tau</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># determine range</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;data&#39;</span><span class="p">):</span>
+                <span class="n">factor_left</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">factor_right</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;data_ext&#39;</span><span class="p">):</span>
+                <span class="n">factor_left</span> <span class="o">=</span> <span class="mi">10</span>
+                <span class="n">factor_right</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># try to parse</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong format for tausel&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">factor_left</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">factor_left</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">factor_right</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">factor_right</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># determine tau values for one data set</span>
+        <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">tau_f_values</span> <span class="o">=</span> <span class="n">get_tau_values_for_data</span><span class="p">(</span>
+            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;frequencies&#39;</span><span class="p">],</span>
+            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;Nd&#39;</span><span class="p">],</span>
+            <span class="n">factor_left</span><span class="o">=</span><span class="n">factor_left</span><span class="p">,</span>
+            <span class="n">factor_right</span><span class="o">=</span><span class="n">factor_right</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">tau_f_values</span></div>
+
+
+<div class="viewcode-block" id="get_tau_values_for_data"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.get_tau_values_for_data">[docs]</a><span class="k">def</span> <span class="nf">get_tau_values_for_data</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">Nd</span><span class="p">,</span> <span class="n">factor_left</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">factor_right</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the :math:`\tau` values corresponding to the frequency range of</span>
+<span class="sd">    the data set.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Nd : number of :math:`\tau` values per decade</span>
+<span class="sd">    factor_left : factor to divide to the lower limit by</span>
+<span class="sd">    factor_right : factor to multiply to the upper limit</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tau,s with :math:`s = log_{10}(\tau)`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">minf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">maxf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
+
+    <span class="c1"># check min/max frequencies</span>
+    <span class="c1"># if(minf &lt; 1e-4):</span>
+    <span class="c1">#    logger.warn(&#39;Minimum frequency below global minimum&#39;)</span>
+
+    <span class="c1"># if(maxf &gt; 1e-4):</span>
+    <span class="c1">#    logger.warn(&#39;Maximum frequency above global minimum&#39;)</span>
+
+    <span class="c1"># global min/max values for tau, corresponding to the frequency range</span>
+    <span class="c1"># [1e-4 Hz,1e6 Hz]</span>
+    <span class="n">min_tau_f</span> <span class="o">=</span> <span class="mf">1e-15</span>
+    <span class="n">max_tau_f</span> <span class="o">=</span> <span class="mf">1e16</span>
+    <span class="n">nr_decades</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">max_tau_f</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">min_tau_f</span><span class="p">)</span>
+    <span class="n">g_tau_fmin</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">1e-15</span><span class="p">)</span>
+    <span class="n">g_tau_fmax</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">1e16</span><span class="p">)</span>
+
+    <span class="c1"># compile total pool of tau values</span>
+    <span class="c1"># the (fixed) global frequency range spans 9 order of magnitude</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">nr_decades</span> <span class="o">*</span> <span class="n">Nd</span>
+    <span class="n">g_tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">g_tau_fmin</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">g_tau_fmax</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span>
+    <span class="n">g_tau_frequencies</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">g_tau</span><span class="p">)</span>
+
+    <span class="c1"># the global pool</span>
+    <span class="n">g_pool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">g_tau_frequencies</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                        <span class="n">g_tau</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]))</span>
+
+    <span class="c1"># find nearest index</span>
+    <span class="n">fmin</span> <span class="o">=</span> <span class="n">minf</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">factor_left</span><span class="p">)</span>
+    <span class="n">fmax</span> <span class="o">=</span> <span class="n">maxf</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">factor_right</span><span class="p">)</span>
+
+    <span class="n">index_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">g_pool</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">fmin</span><span class="p">))</span>
+    <span class="n">index_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">g_pool</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">fmax</span><span class="p">))</span>
+
+    <span class="c1"># fmin/fmax depend on the data frequency range</span>
+    <span class="c1"># when we choose our tau value out of the (data independent) pool, it</span>
+    <span class="c1"># is possible that we choose a tau value corresponding to a slightly</span>
+    <span class="c1"># larger/smaller value of fmin/max. In those cases we just use the next</span>
+    <span class="c1"># smaller/larger value of tau</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">g_pool</span><span class="p">[</span><span class="n">index_min</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">fmin</span> <span class="ow">and</span> <span class="n">index_min</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="c1"># logger.info(&#39;Reducing index_min by one&#39;)</span>
+        <span class="n">index_min</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">g_pool</span><span class="p">[</span><span class="n">index_max</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">fmax</span> <span class="ow">and</span> <span class="n">index_max</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">g_pool</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)):</span>
+        <span class="c1"># logger.info(&#39;Increasing index_max by one&#39;)</span>
+        <span class="n">index_max</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">tau_data</span> <span class="o">=</span> <span class="n">g_pool</span><span class="p">[</span><span class="n">index_min</span><span class="p">:</span><span class="n">index_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="c1"># tau values should be sorted in ascending order</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">tau_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tau_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+        <span class="n">tau_data</span> <span class="o">=</span> <span class="n">tau_data</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="n">tau_s</span> <span class="o">=</span> <span class="n">tau_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">f_s</span> <span class="o">=</span> <span class="n">tau_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">s_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">tau_s</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tau_s</span><span class="p">,</span> <span class="n">s_s</span><span class="p">,</span> <span class="n">f_s</span></div>
+
+
+<div class="viewcode-block" id="starting_pars_3"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.starting_pars_3">[docs]</a><span class="k">class</span> <span class="nc">starting_pars_3</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Heuristic nr 3 for determining useful starting values for the fit.</span>
+
+<span class="sd">    This function is aware if the conductivity or resistivity formulation is</span>
+<span class="sd">    used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">re</span><span class="p">,</span> <span class="n">mim</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">taus</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">re</span> <span class="o">=</span> <span class="n">re</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mim</span> <span class="o">=</span> <span class="n">mim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">frequencies</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">frequencies</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau</span> <span class="o">=</span> <span class="n">taus</span>
+
+        <span class="c1"># rho0 can be approximated by the low-frequency magnitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">re</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">mim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Check if the conductivity formulation was turned on using the</span>
+        <span class="c1"># environment variable DD_COND=1</span>
+        <span class="c1"># the conductivity formulation uses sigma_\infty, i.e. the</span>
+        <span class="c1"># high-frequency limit</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DD_COND&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rho0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">re</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">mim</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="c1"># self.rho0 = np.abs(re[-1])</span>
+            <span class="c1"># print(&#39;debug: rho0=sigma_inf&#39;, re[-1], mim[-1], self.rho0)</span>
+            <span class="c1"># print(re)</span>
+
+        <span class="c1"># compute bins for each frequency decade</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+        <span class="c1"># round to nearest decade below/above min/max-f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minf</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxf</span><span class="p">))</span>
+
+        <span class="c1"># just to be sure, determine tau ranges outside the frequency-derived</span>
+        <span class="c1"># limits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f_tau_min</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f_tau_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_min</span><span class="p">)</span>
+
+        <span class="c1"># round to nearest decade below/above</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_tau_min</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_tau_max</span><span class="p">))</span>
+
+        <span class="c1"># determine limits: we only work on the data range</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin_fl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin_fl</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin_fl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin_fl</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="starting_pars_3.get_bins"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.starting_pars_3.get_bins">[docs]</a>    <span class="k">def</span> <span class="nf">get_bins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># now we compute the frequency bins</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin_fl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bins_tau_lowf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bins_tau_lowf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span><span class="p">,</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minbin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bins_inside_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin_fl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bins_tau_highf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bins_tau_highf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin</span><span class="p">,</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="starting_pars_3.get_sec_data"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.starting_pars_3.get_sec_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_sec_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sec_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">frequencies</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s1">&#39;lowf&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins_tau_lowf</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;inside&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins_inside_f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;highf&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins_tau_highf</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">bins</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># take logarithmic means of frequency data for the bins</span>
+            <span class="n">f_logmeans</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span> <span class="o">/</span> <span class="mi">2</span>
+
+            <span class="k">if</span> <span class="n">frequencies</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># assign data points to bins</span>
+                <span class="n">data_in_f_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+
+                <span class="c1"># now avarage the data points for each bin</span>
+                <span class="n">f_data_means</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">fbins</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">f_f_means</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">bin_nr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins_inside_f</span><span class="o">.</span><span class="n">size</span><span class="p">)):</span>
+                    <span class="n">f_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data_in_f_bins</span> <span class="o">==</span> <span class="n">bin_nr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="c1"># bin_frequencies = frequencies[f_indices]</span>
+                    <span class="n">f_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mim</span><span class="p">[</span><span class="n">f_indices</span><span class="p">]</span>
+                    <span class="n">f_data_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">f_data</span><span class="p">)</span>
+                    <span class="c1"># DD can only handle negative imaginary parts, therefore</span>
+                    <span class="c1"># replace all positive mim (minus imaginary) values by</span>
+                    <span class="c1"># data_mean_tau</span>
+                    <span class="k">if</span><span class="p">(</span><span class="n">f_data_mean</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+                        <span class="n">f_data_mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_mean_tau</span>
+
+                    <span class="n">f_data_means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_data_mean</span><span class="p">)</span>
+                    <span class="n">fbins</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">bins</span><span class="p">[</span><span class="n">bin_nr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="p">[</span><span class="n">bin_nr</span><span class="p">]))</span>
+                    <span class="n">f_f_means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_logmeans</span><span class="p">[</span><span class="n">nr</span><span class="p">])</span>
+
+                    <span class="n">outstr</span> <span class="o">=</span> <span class="s1">&#39;The frequencies </span><span class="si">{0}</span><span class="s1"> belong into bin </span><span class="si">{1}</span><span class="s1"> - &#39;</span>
+                    <span class="n">outstr</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{2}</span><span class="s1"> with mean </span><span class="si">{3}</span><span class="s1"> and flogmean </span><span class="si">{4}</span><span class="s1">&#39;</span>
+                    <span class="c1"># print(outstr.format(</span>
+                    <span class="c1">#   bin_frequencies, fbins[-1][0], fbins[-1][1],</span>
+                    <span class="c1">#    f_data_mean,</span>
+                    <span class="c1">#    f_logmeans[nr]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f_data_means</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_mean_tau</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">f_logmeans</span><span class="p">]</span>
+            <span class="n">sec_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_logmeans</span><span class="p">,</span> <span class="n">f_data_means</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sec_data</span></div>
+
+<div class="viewcode-block" id="starting_pars_3.estimate"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.starting_pars_3.estimate">[docs]</a>    <span class="k">def</span> <span class="nf">estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Determine a starting model by creating frequency-decade wise mean</span>
+<span class="sd">        values of mim and then computing a fixed chargeability value for each</span>
+<span class="sd">        frequency decade.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># print(&#39;Start determining initial parameters&#39;)</span>
+
+        <span class="c1"># compute bins</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_bins</span><span class="p">()</span>
+
+        <span class="c1"># the value which will be assigned to tau-range outside the data range</span>
+
+        <span class="c1"># if &#39;DD_COND&#39; in os.environ and os.environ[&#39;DD_COND&#39;] == &#39;1&#39;:</span>
+        <span class="c1"># select only the &quot;valid&quot; polarizations, i.e. capacitative effects</span>
+        <span class="n">capacitive_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mim</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">capacitive_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_mean_tau</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mim</span><span class="p">[</span><span class="n">capacitive_values</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># no valid value was found. We can assume this spectrum can not</span>
+            <span class="c1"># be fitted using the DD. Use a really small m value here</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_mean_tau</span> <span class="o">=</span> <span class="mf">1e-7</span>
+
+        <span class="n">sec_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sec_data</span><span class="p">()</span>
+
+        <span class="c1"># select chargeabilities for the frequency decades</span>
+        <span class="n">chargeabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">ersatz</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;inside&#39;</span><span class="p">,</span> <span class="p">):</span>  <span class="c1"># sec_data.keys():</span>
+            <span class="c1"># select tau values corresponding to bins</span>
+            <span class="n">tau_bins</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">sec_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">tau_digi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">tau_bins</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">bin_nr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">tau_bins</span><span class="o">.</span><span class="n">size</span><span class="p">)):</span>
+                <span class="n">tau_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tau_digi</span> <span class="o">==</span> <span class="n">bin_nr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># compute the chargeability for this tau span</span>
+                <span class="c1"># we work with mim, therefore no minus sign</span>
+                <span class="n">m_dec</span> <span class="o">=</span> <span class="p">(</span><span class="n">sec_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">nr</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">)</span>
+                <span class="n">term</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tau_indices</span><span class="p">:</span>
+                    <span class="n">w</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">sec_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="n">nr</span><span class="p">]</span>
+                    <span class="n">term</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span>
+                                 <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+                <span class="n">m_dec</span> <span class="o">*=</span> <span class="n">term</span>
+
+                <span class="n">chargeabilities</span><span class="p">[</span><span class="n">tau_indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">m_dec</span>  <span class="c1"># sec_data[key][1][nr]</span>
+                <span class="n">ersatz</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">where_are_numbers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">chargeabilities</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">chargeabilities</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">where_are_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">chargeabilities</span><span class="p">[</span>
+            <span class="n">where_are_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">chargeabilities</span><span class="p">[</span><span class="n">where_are_numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:]</span> <span class="o">=</span> <span class="n">chargeabilities</span><span class="p">[</span>
+            <span class="n">where_are_numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        chargeabilities[0:where_are_numbers[0]] = 1e-6</span>
+<span class="sd">        chargeabilities[where_are_numbers[-1]:] = 1e-6</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># assign the nearest data chargeabilities to the outside regions</span>
+        <span class="c1"># normalize chargeabilities to 1</span>
+        <span class="n">chargeabilities</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">chargeabilities</span><span class="p">)</span>
+
+        <span class="c1"># test various scaling factors</span>
+        <span class="n">mim_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rms_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">m_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">scales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+        <span class="c1"># scales = np.array((1e-3, 0.5, 1))</span>
+        <span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="n">scales</span><span class="p">:</span>
+            <span class="c1"># test forward modeling</span>
+            <span class="n">m_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chargeabilities</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
+            <span class="n">pars_linear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">,</span> <span class="n">chargeabilities</span> <span class="o">*</span> <span class="n">scale</span><span class="p">))</span>
+            <span class="n">pars</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">convert_parameters</span><span class="p">(</span><span class="n">pars_linear</span><span class="p">)</span>
+            <span class="n">re_mim</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+            <span class="n">mim_f</span> <span class="o">=</span> <span class="n">re_mim</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># print(&#39;mim_f&#39;, mim_f)</span>
+            <span class="c1"># print(&#39;mim&#39;, self.mim)</span>
+            <span class="c1"># print(&#39;--&#39;)</span>
+            <span class="c1"># print(&#39;--&#39;)</span>
+            <span class="n">mim_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mim_f</span><span class="p">)</span>
+            <span class="c1"># compute rms_mim</span>
+            <span class="n">rms_mim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+                <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mim</span><span class="o">.</span><span class="n">size</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">mim_f</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mim</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">rms_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rms_mim</span><span class="p">)</span>
+        <span class="n">rms_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rms_list</span><span class="p">)</span>
+        <span class="c1"># print(&#39;rms_list&#39;, rms_list)</span>
+
+        <span class="c1"># find minimum rms</span>
+        <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">rms_list</span><span class="p">)</span>
+
+        <span class="c1"># select three values to fit a parabola through</span>
+        <span class="c1"># indices = [0, min_index, len(scales) - 1]</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">min_index</span><span class="p">,</span> <span class="n">min_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># if min_index is the largest scaling factor, use this</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">scales</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;using largest scaling factor&#39;</span><span class="p">)</span>
+            <span class="n">x_min</span> <span class="o">=</span> <span class="n">scales</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># remove last entry from index because it points to a value outside</span>
+            <span class="c1"># the &#39;scales&#39; array</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;using smallest scaling factor&#39;</span><span class="p">)</span>
+            <span class="n">x_min</span> <span class="o">=</span> <span class="n">scales</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># fit parabola to rms-values</span>
+            <span class="c1"># fit parabola</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scales</span><span class="p">)[</span><span class="n">indices</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rms_list</span><span class="p">)[</span><span class="n">indices</span><span class="p">]</span>
+
+            <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+            <span class="n">A</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">A</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">A</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+            <span class="c1"># compute minimum</span>
+            <span class="n">x_min</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+
+            <span class="c1"># set to default, if we get a negative scaling factor</span>
+            <span class="k">if</span> <span class="n">x_min</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;starting parameters: setting scaling factor to&#39;</span> <span class="o">+</span>
+                    <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_min</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="c1"># note that this is an arbitrarily small factor, adjusted by</span>
+                <span class="c1"># experience! Please find a suitable automatic way for this!</span>
+                <span class="n">x_min</span> <span class="o">=</span> <span class="mf">0.0001</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Scaling factor: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_min</span><span class="p">))</span>
+        <span class="c1"># &quot;&quot;&quot;</span>
+
+        <span class="c1"># test for conductivity</span>
+        <span class="c1"># x_min = 1</span>
+        <span class="c1"># rms_list = []</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span>
+                      <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">chargeabilities</span> <span class="o">*</span> <span class="n">x_min</span> <span class="o">/</span>
+                             <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">)))</span>
+        <span class="c1"># print(&#39;term&#39;, term)</span>
+        <span class="c1"># self.rho0 = self.re[0] * term</span>
+        <span class="c1"># self.rho0 = self.re[0] / term</span>
+        <span class="n">pars_linear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">,</span> <span class="n">chargeabilities</span> <span class="o">*</span> <span class="n">x_min</span><span class="p">))</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">convert_parameters</span><span class="p">(</span><span class="n">pars_linear</span><span class="p">)</span>
+
+        <span class="c1"># debug on:</span>
+        <span class="c1"># re_mim = obj.forward(pars)</span>
+        <span class="c1"># mim_f = re_mim[:, 1]</span>
+        <span class="c1"># print(&#39;FINAL&#39;)</span>
+        <span class="c1"># print(&#39;mim_f&#39;, mim_f)</span>
+        <span class="c1"># print(&#39;mim&#39;, self.mim)</span>
+        <span class="c1"># debug off</span>
+        <span class="n">plot_starting_model</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">plot_starting_model</span><span class="p">):</span>
+            <span class="c1"># # plot</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+            <span class="c1"># plot spectrum</span>
+            <span class="n">pars_linear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">,</span> <span class="n">chargeabilities</span> <span class="o">*</span> <span class="n">x_min</span><span class="p">))</span>
+            <span class="n">pars</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">convert_parameters</span><span class="p">(</span><span class="n">pars_linear</span><span class="p">)</span>
+            <span class="n">re_mim</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+            <span class="n">re_f</span> <span class="o">=</span> <span class="n">re_mim</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">mim_f</span> <span class="o">=</span> <span class="n">re_mim</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># real part</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">re</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">re_f</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$-\sigma&#39;~[\Omega m]$&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+            <span class="c1"># imaginary part</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;xmin: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_min</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sec_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sec_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span> <span class="n">sec_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+                           <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mim</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$-\sigma&#39;&#39;~[\Omega m]$&quot;</span><span class="p">)</span>
+            <span class="c1"># for scaled_mim in mim_list:</span>
+            <span class="c1"># print(&#39;mimf&#39;, mim_f)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">mim_f</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">f_tau_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_tau_max</span><span class="p">])</span>
+
+            <span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">):</span>
+                <span class="n">pars_linear_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rho0</span><span class="p">,</span> <span class="n">chargeabilities</span> <span class="o">*</span> <span class="n">scale</span><span class="p">))</span>
+                <span class="n">pars_plot</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">convert_parameters</span><span class="p">(</span><span class="n">pars_linear_plot</span><span class="p">)</span>
+                <span class="n">re_mim</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">pars_plot</span><span class="p">)</span>
+                <span class="n">re_f</span> <span class="o">=</span> <span class="n">re_mim</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">mim_f</span> <span class="o">=</span> <span class="n">re_mim</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">mim_f</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+            <span class="c1"># plot RTD</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">chargeabilities</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\tau~[s]$&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$m_i$&#39;</span><span class="p">)</span>
+
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+
+            <span class="c1"># scales vs. rms_mim</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">rms_list</span><span class="p">))):</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">scales</span><span class="p">,</span> <span class="n">rms_list</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">)</span>
+
+                <span class="n">scale_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">scale_range</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">scale_range</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span>
+                          <span class="n">b</span> <span class="o">*</span> <span class="n">scale_range</span> <span class="o">+</span> <span class="n">c</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+                          <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">scales</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">rms_list</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;scaling factor&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;RMS&#39;</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;starting_pars3.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="c1"># print(&#39;End determining initial parameters&#39;)</span>
+        <span class="c1"># exit()</span>
+        <span class="k">return</span> <span class="n">pars</span></div></div>
+
+
+<div class="viewcode-block" id="integrated_parameters"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.integrated_parameters">[docs]</a><span class="k">class</span> <span class="nc">integrated_parameters</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computation of integrated paramters. This class is not meant to be used</span>
+<span class="sd">    alone, it is meant to be inherited by &#39;dd_resistivity_skeleton&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="integrated_parameters.compute_par_stats"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.base_class.integrated_parameters.compute_par_stats">[docs]</a>    <span class="k">def</span> <span class="nf">compute_par_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For a given parameter set (i.e. a fit result), compute relevant</span>
+<span class="sd">        statistical values such das :math:`m_{tot}`, :math:`m_{tot}^n`,</span>
+<span class="sd">        :math:`\tau_{50}`, :math:`\tau_{mean}`, :math:`\tau_{peak}`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        stat_pars : dict containing the computed parameters</span>
+
+<span class="sd">        Also store stat_pars in self.stat_pars</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># integrated parameters are computed from the tau/chargeability values</span>
+        <span class="c1"># corresponding to the data frequency ranges. Therefore we first create</span>
+        <span class="c1"># linear representation of these values</span>
+
+        <span class="c1"># mask all tau values outside the data ranges</span>
+        <span class="n">tau_extra_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_data_min</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">tau_extra_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_data_max</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># work with linear parameters</span>
+        <span class="n">pars_lin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_pars_back</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+
+        <span class="n">pars_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">pars_lin</span><span class="p">,</span> <span class="n">tau_extra_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">pars_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">pars_data</span><span class="p">,</span> <span class="n">tau_extra_min</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">tau_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">tau_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">tau_data</span><span class="p">,</span> <span class="n">tau_extra_max</span><span class="p">)</span>
+        <span class="n">tau_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">tau_data</span><span class="p">,</span> <span class="n">tau_extra_min</span><span class="p">)</span>
+        <span class="n">s_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">tau_data</span><span class="p">)</span>
+
+        <span class="c1"># now compute the integrated parameters</span>
+        <span class="n">stat_pars</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># the exception: we want to save the &#39;raw&#39; pars, tau</span>
+        <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;m_i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">pars_lin</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="c1"># coverages are computed on the whole parameter range</span>
+        <span class="n">covm</span><span class="p">,</span> <span class="n">covf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_coverages</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+        <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;covm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">covm</span>
+        <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;covf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">covf</span>
+
+        <span class="c1"># &quot;regular&quot; integrated pars</span>
+        <span class="n">int_par_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;rho0&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">rho0</span><span class="p">,</span>
+                        <span class="s1">&#39;m_data&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">m_data</span><span class="p">,</span>
+                        <span class="s1">&#39;m_tot&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">m_tot</span><span class="p">,</span>
+                        <span class="s1">&#39;m_tot_n&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">m_tot_n</span><span class="p">,</span>
+                        <span class="s1">&#39;tau_x&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">tau_x</span><span class="p">,</span>
+                        <span class="s1">&#39;tau_50&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">tau_50</span><span class="p">,</span>
+                        <span class="s1">&#39;tau_mean&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">tau_mean</span><span class="p">,</span>
+                        <span class="s1">&#39;tau_peaks&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">tau_peaks</span><span class="p">,</span>
+                        <span class="s1">&#39;tau_max&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">tau_max</span><span class="p">,</span>
+                        <span class="s1">&#39;U_tau&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">U_tau</span><span class="p">,</span>
+                        <span class="s1">&#39;tau_arithmetic&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">tau_arithmetic</span><span class="p">,</span>
+                        <span class="s1">&#39;tau_geometric&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">tau_geometric</span><span class="p">,</span>
+                        <span class="s1">&#39;decade_loadings&#39;</span><span class="p">:</span> <span class="n">int_pars</span><span class="o">.</span><span class="n">decade_loadings</span>
+                        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">int_par_keys</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">pars_data</span><span class="p">,</span> <span class="n">tau_data</span><span class="p">,</span> <span class="n">s_data</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+                <span class="n">stat_pars</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stat_pars</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span> <span class="o">=</span> <span class="n">stat_pars</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span></div>
+
+    <span class="k">def</span> <span class="nf">_compute_coverages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Jacobian</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Jacobian</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+        <span class="n">Jsize</span> <span class="o">=</span> <span class="n">Jacobian</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># extract dsigma&#39;&#39;/dm</span>
+        <span class="n">del_mim_del_m</span> <span class="o">=</span> <span class="n">Jacobian</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">Jsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">):,</span> <span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">covf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">del_mim_del_m</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">covf</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">covf</span><span class="p">)</span>
+
+        <span class="n">covm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">del_mim_del_m</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">covm</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">covm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">covm</span><span class="p">,</span> <span class="n">covf</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

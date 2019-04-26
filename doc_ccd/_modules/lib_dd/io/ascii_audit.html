@@ -1,0 +1,334 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.io.ascii_audit &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.io.ascii_audit</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">lib_dd.interface</span> <span class="k">as</span> <span class="nn">lDDi</span>
+<span class="kn">import</span> <span class="nn">lib_dd.version</span> <span class="k">as</span> <span class="nn">version</span>
+<span class="kn">import</span> <span class="nn">lib_dd.io.helper</span> <span class="k">as</span> <span class="nn">helper</span>
+
+
+<span class="k">def</span> <span class="nf">_get_header</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return a header string that can be added to each output file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">uuidstr</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+    <span class="n">datetimestr</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%Hh:%Mm&#39;</span><span class="p">)</span>
+
+    <span class="n">command</span> <span class="o">=</span> <span class="n">lDDi</span><span class="o">.</span><span class="n">get_command</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+    <span class="c1"># assemble header</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s1">&#39;# id:&#39;</span> <span class="o">+</span> <span class="n">uuidstr</span><span class="p">,</span>
+                        <span class="s1">&#39;# &#39;</span> <span class="o">+</span> <span class="n">datetimestr</span><span class="p">,</span>
+                        <span class="s1">&#39;# &#39;</span> <span class="o">+</span> <span class="n">command</span><span class="p">))</span>
+    <span class="n">header</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="n">header</span>
+
+
+<div class="viewcode-block" id="save_results"><a class="viewcode-back" href="../../../api/lib_dd.io.html#lib_dd.io.ascii_audit.save_results">[docs]</a><span class="k">def</span> <span class="nf">save_results</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">NDlist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Save fit results to the current directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">norm_factors</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;norm_factors&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">_get_header</span><span class="p">()</span>
+    <span class="n">final_iterations</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">nr</span><span class="p">)</span> <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">NDlist</span><span class="p">)]</span>
+
+    <span class="n">save_integrated_parameters</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+    <span class="n">save_frequency_data</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+    <span class="n">save_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">norm_factors</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="s1">&#39;# frequencies [Hz]</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">frequencies</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tau.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span>
+            <span class="s1">&#39;# relaxation times used for the decomposition</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+
+    <span class="c1"># final_iterations[0][0].RMS.save_rms_definition(&#39;rms_definition.json&#39;)</span>
+
+    <span class="c1"># save lambdas</span>
+    <span class="c1"># TODO: We want all lambdas, not only from the last iteration</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lambdas</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lams</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">final_iterations</span><span class="p">]</span>
+        <span class="n">nr_of_iterations</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nr</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">final_iterations</span><span class="p">]</span>
+        <span class="n">nr_its_and_lambdas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">nr_of_iterations</span><span class="p">,</span> <span class="n">lambdas</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;lams_and_nr_its.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span>
+                <span class="s1">&#39;nr-its lambda</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;UTF-8&#39;</span>
+            <span class="p">))</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">nr_its_and_lambdas</span><span class="p">)</span>  <span class="c1"># , fmt=&#39;%i %f&#39;)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There was an error saving the lambda and nr its values&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># save normalization factors</span>
+    <span class="k">if</span><span class="p">(</span><span class="s1">&#39;norm_factors&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;normalization_factors.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="s1">&#39;# normalisation factors</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;norm_factors&#39;</span><span class="p">])</span>
+
+    <span class="c1"># save weighting factors</span>
+    <span class="n">Wd_diag</span> <span class="o">=</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Wd</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;errors.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="nb">bytes</span><span class="p">(</span>
+                <span class="s1">&#39;# weighting factors, scheme: </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inv_opts&#39;</span><span class="p">][</span><span class="s1">&#39;data_weighting&#39;</span><span class="p">],</span>
+                <span class="p">),</span>
+                <span class="s1">&#39;UTF-8&#39;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">Wd_diag</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;version.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span>
+            <span class="n">version</span><span class="o">.</span><span class="n">_get_version_numbers</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">iopts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inv_opts&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">iopts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iopts</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">iopts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">iopts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;inversion_options.json&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="s1">&#39;# inversion options dict</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">iopts</span><span class="p">),</span>
+            <span class="s1">&#39;UTF-8&#39;</span>
+        <span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="save_data"><a class="viewcode-back" href="../../../api/lib_dd.io.html#lib_dd.io.ascii_audit.save_data">[docs]</a><span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">norm_factors</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">):</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">_get_header</span><span class="p">()</span>
+    <span class="c1"># save original data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">out_str</span> <span class="o">=</span> <span class="s1">&#39;# raw data, format: &#39;</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;raw_format&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">out_str</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+
+        <span class="n">orig_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;raw_data&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">norm_factors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">orig_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">orig_data</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm_factors</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">orig_data</span><span class="p">)</span>
+
+    <span class="c1"># save forward response</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;f.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span>
+            <span class="s1">&#39;# forward response data format: &#39;</span> <span class="o">+</span>
+            <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">data_format</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;UTF-8&#39;</span>
+        <span class="p">))</span>
+        <span class="n">helper</span><span class="o">.</span><span class="n">save_f</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">,</span> <span class="n">norm_factors</span><span class="p">)</span>
+
+    <span class="c1"># save times</span>
+    <span class="k">if</span> <span class="s1">&#39;times&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;times.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+            <span class="c1"># write column description</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span>
+                <span class="s1">&#39;# time of each spectrum</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;times&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="save_integrated_parameters"><a class="viewcode-back" href="../../../api/lib_dd.io.html#lib_dd.io.ascii_audit.save_integrated_parameters">[docs]</a><span class="k">def</span> <span class="nf">save_integrated_parameters</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">):</span>
+    <span class="n">stat_pars</span> <span class="o">=</span> <span class="n">lDDi</span><span class="o">.</span><span class="n">aggregate_dicts</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="s1">&#39;stat_pars&#39;</span><span class="p">)</span>
+    <span class="c1"># get keys of statistical parameters</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">stat_pars</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="n">norm_factors</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;norm_factors&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># do not save these values here</span>
+    <span class="n">black_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;m_data&#39;</span><span class="p">,</span> <span class="s1">&#39;m_i&#39;</span><span class="p">,</span> <span class="s1">&#39;covf&#39;</span><span class="p">,</span> <span class="s1">&#39;covm&#39;</span><span class="p">]</span>
+
+    <span class="n">pars_labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pars_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># save keys (statistics)</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+        <span class="n">raw_values</span> <span class="o">=</span> <span class="n">stat_pars</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="c1"># we need to treat some keys different than others before we can save</span>
+        <span class="c1"># them</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">lDDi</span><span class="o">.</span><span class="n">prepare_stat_values</span><span class="p">(</span><span class="n">raw_values</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">norm_factors</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">black_list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">):</span>
+                <span class="n">postfix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">if</span> <span class="n">nr</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">postfix</span> <span class="o">=</span> <span class="s1">&#39;-</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span><span class="p">)</span>
+                <span class="n">pars_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="n">postfix</span><span class="p">)</span>
+                <span class="n">pars_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;m_data&#39;</span><span class="p">,</span> <span class="p">):</span>
+                <span class="c1"># save to its own file</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+                    <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+                    <span class="n">out_str</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">out_str</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+    <span class="n">all_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">pars_list</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;integrated_parameters.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">out_str</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pars_labels</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">out_str</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">all_data</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="save_frequency_data"><a class="viewcode-back" href="../../../api/lib_dd.io.html#lib_dd.io.ascii_audit.save_frequency_data">[docs]</a><span class="k">def</span> <span class="nf">save_frequency_data</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="s1">&#39;norm_factors&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">norm_factors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;norm_factors&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">norm_factors</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># save frequencies/omega</span>
+    <span class="c1"># frequencies = final_iterations[0][0].Data.obj.frequencies</span>
+    <span class="c1"># Wd_diag_1d = final_iterations[0][0].Data.Wd.diagonal()</span>
+    <span class="c1"># nr_x = int(Wd_diag_1d.size / frequencies.size)</span>
+
+    <span class="c1"># Wd_diag_2d = Wd_diag_1d.reshape(frequencies.size, nr_x)</span>
+
+    <span class="n">orig_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;raw_data&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">norm_factors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">orig_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">orig_data</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm_factors</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span></div>
+
+    <span class="c1"># (re)save the data format</span>
+    <span class="c1"># open(&#39;data_format.dat&#39;, &#39;w&#39;).write(prep_opts[&#39;data_format&#39;])</span>
+    <span class="c1"># open(&#39;data_format.dat&#39;, &#39;w&#39;).write(data[&#39;raw_format&#39;])</span>
+
+    <span class="c1"># save model response</span>
+    <span class="c1"># with open(&#39;f.dat&#39;, &#39;w&#39;) as fid:</span>
+    <span class="c1">#     for index, itd in enumerate(final_iterations):</span>
+    <span class="c1">#         f_data = itd[0].Model.f(itd[0].m)[np.newaxis, :]</span>
+    <span class="c1">#         if norm_factors is not None:</span>
+    <span class="c1">#             f_data /= norm_factors[index]</span>
+    <span class="c1">#         np.savetxt(fid, f_data)</span>
+    <span class="c1"># open(&#39;f_format.dat&#39;, &#39;w&#39;).write(itd[0].Data.obj.data_format)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

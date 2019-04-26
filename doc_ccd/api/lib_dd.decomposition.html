@@ -6,13 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>lib_dd.decomposition package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.14 documentation</title>
+    <title>lib_dd.decomposition package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lib_dd.io package" href="lib_dd.io.html" />
@@ -42,19 +43,19 @@
 <span id="lib-dd-decomposition-ccd-single-module"></span><h2>lib_dd.decomposition.ccd_single module<a class="headerlink" href="#module-lib_dd.decomposition.ccd_single" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib_dd.decomposition.ccd_single.ccd_single">
-<em class="property">class </em><code class="descclassname">lib_dd.decomposition.ccd_single.</code><code class="descname">ccd_single</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">lib_dd.decomposition.ccd_single.</code><code class="descname">ccd_single</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/decomposition/ccd_single.html#ccd_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Cole-Cole decomposition object</p>
 <dl class="method">
 <dt id="lib_dd.decomposition.ccd_single.ccd_single.fit_data">
-<code class="descname">fit_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.fit_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/decomposition/ccd_single.html#ccd_single.fit_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.fit_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the central fit function, which prepares the data, fits each
 spectrum, plots (if requested), and then saves the results.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.decomposition.ccd_single.ccd_single.get_data_dd_single">
-<code class="descname">get_data_dd_single</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.get_data_dd_single" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data_dd_single</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/decomposition/ccd_single.html#ccd_single.get_data_dd_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.get_data_dd_single" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load frequencies and data and return a data dict</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -72,7 +73,7 @@ spectrum, plots (if requested), and then saves the results.</p>
 
 <dl class="method">
 <dt id="lib_dd.decomposition.ccd_single.ccd_single.save_to_directory">
-<code class="descname">save_to_directory</code><span class="sig-paren">(</span><em>directory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.save_to_directory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_to_directory</code><span class="sig-paren">(</span><em>directory=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/decomposition/ccd_single.html#ccd_single.save_to_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.decomposition.ccd_single.ccd_single.save_to_directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the fit results to a directory. The output directory can either
 be set in the initial configuration object, or directly via the
 directory parameter</p>
@@ -87,12 +88,12 @@ directory parameter</p>
 in the ccd_single object</p>
 <dl class="function">
 <dt id="lib_dd.decomposition.ccd_single_stateless.call_fit_functions">
-<code class="descclassname">lib_dd.decomposition.ccd_single_stateless.</code><code class="descname">call_fit_functions</code><span class="sig-paren">(</span><em>fit_data</em>, <em>ND</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.call_fit_functions" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.decomposition.ccd_single_stateless.</code><code class="descname">call_fit_functions</code><span class="sig-paren">(</span><em>fit_data</em>, <em>ND</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/decomposition/ccd_single_stateless.html#call_fit_functions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.call_fit_functions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum">
-<code class="descclassname">lib_dd.decomposition.ccd_single_stateless.</code><code class="descname">fit_one_spectrum</code><span class="sig-paren">(</span><em>fit_data</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lib_dd.decomposition.ccd_single_stateless.</code><code class="descname">fit_one_spectrum</code><span class="sig-paren">(</span><em>fit_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/decomposition/ccd_single_stateless.html#fit_one_spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.decomposition.ccd_single_stateless.fit_one_spectrum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit one spectrum</p>
 </dd></dl>
 
@@ -175,6 +176,14 @@ in the ccd_single object</p>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -183,8 +192,8 @@ in the ccd_single object</p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="../_sources/api/lib_dd.decomposition.rst.txt"

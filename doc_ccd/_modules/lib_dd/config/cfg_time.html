@@ -1,0 +1,267 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.config.cfg_time &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.config.cfg_time</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">lib_dd.config.cfg_base</span> <span class="k">as</span> <span class="nn">cfg_base</span>
+
+
+<div class="viewcode-block" id="cfg_time"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_time.cfg_time">[docs]</a><span class="k">class</span> <span class="nc">cfg_time</span><span class="p">(</span><span class="n">cfg_base</span><span class="o">.</span><span class="n">cfg_base</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">cfg_time</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;times&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;times.dat&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;times&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Time index file&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--times&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FILE&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;freq_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;freq_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Use a fixed lambda for the tau regularization&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--f_lambda&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FLOAT&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_rho0_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;time_rho0_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Fixed time regularization lambda for rho0&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--trho0_lambda&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FLOAT&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_m_i_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;time_m_i_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Fixed time regularization lambda for chargeabilities m_i&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--tm_i_lambda&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FLOAT&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;individual_lambdas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;individual_lambdas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use individual lambdas for f-regularization&quot;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--ind_lams&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_lam0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;f_lam0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Initial lambda for f-regularization&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--lam0&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FLOAT&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;trho0_first_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;trho0_first_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">&quot;Use first order smoothing for rho_0 &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;(instead of second order smoothing)&quot;</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--trho0_first_order&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_weighting_rho0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;time_weighting_rho0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">&quot;Use time-weighting (only in combination with&quot;</span><span class="p">,</span>
+                <span class="s2">&quot; --trho0_first_order)&quot;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--tw_rho0&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;tmi_first_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;tmi_first_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">&quot;Use first order smoothing for m_i &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;(instead of second order smoothing)&quot;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--tmi_first_order&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_weighting_mi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;time_weighting_mi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">&quot;Use time-weighting (only in combination with &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;--tmi_first_order)&quot;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--tw_mi&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="cfg_time.split_options"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_time.cfg_time.split_options">[docs]</a>    <span class="k">def</span> <span class="nf">split_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract options for two groups:</span>
+<span class="sd">        1) prep_opts : these options are used to prepare the actual inversion,</span>
+<span class="sd">        i.e.  which regularization objects to use</span>
+<span class="sd">        2) inv_opts : these options are directly passed through to the NDimInv</span>
+<span class="sd">        object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prep_opts</span><span class="p">,</span> <span class="n">inv_opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_options_base</span><span class="p">()</span>
+
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;f_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;freq_lambda&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;t_rho0_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_rho0_lambda&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;t_m_i_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_m_i_lambda&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;individual_lambdas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;individual_lambdas&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;f_lam0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_lam0&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;trho0_first_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;trho0_first_order&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;tmi_first_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;tmi_first_order&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;time_weighting_rho0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_weighting_rho0&#39;</span><span class="p">]</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;time_weighting_mi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;time_weighting_mi&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">prep_opts</span><span class="p">,</span> <span class="n">inv_opts</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">cfg_time</span><span class="p">()</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">parse_cmd_arguments</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

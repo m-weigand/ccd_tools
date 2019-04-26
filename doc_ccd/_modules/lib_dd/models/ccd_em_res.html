@@ -1,0 +1,279 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.models.ccd_em_res &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.models.ccd_em_res</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Cole-Cole decomposition in resistivity formulation, including a</span>
+<span class="sd">high-frequency EM Cole-Cole term</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">NDimInv.plot_helper</span>
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">NDimInv.model_template</span> <span class="k">as</span> <span class="nn">mt</span>
+<span class="kn">import</span> <span class="nn">lib_dd.base_class</span> <span class="k">as</span> <span class="nn">base_class</span>
+<span class="kn">import</span> <span class="nn">lib_dd.starting_parameters</span> <span class="k">as</span> <span class="nn">starting_parameters</span>
+<span class="kn">import</span> <span class="nn">lib_dd.plot_stats</span> <span class="k">as</span> <span class="nn">plot_stats</span>
+
+<span class="c1"># import resistivity formulation</span>
+<span class="kn">import</span> <span class="nn">sip_models.res.cc</span> <span class="k">as</span> <span class="nn">cc_res</span>
+
+
+<div class="viewcode-block" id="decomposition_em_resistivity"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity">[docs]</a><span class="k">class</span> <span class="nc">decomposition_em_resistivity</span><span class="p">(</span>
+    <span class="n">plot_stats</span><span class="o">.</span><span class="n">_plot_stats</span><span class="p">,</span>
+    <span class="n">base_class</span><span class="o">.</span><span class="n">integrated_parameters</span><span class="p">,</span>
+    <span class="n">starting_parameters</span><span class="o">.</span><span class="n">starting_parameters</span><span class="p">,</span>
+        <span class="n">mt</span><span class="o">.</span><span class="n">model_template</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="s1">&#39;rre_rmim&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D_base_dims</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">required_keys</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Nd&#39;</span><span class="p">,</span> <span class="s1">&#39;tausel&#39;</span><span class="p">,</span> <span class="s1">&#39;frequencies&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">required_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;required key not found: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;frequencies&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cc</span> <span class="o">=</span> <span class="n">cc_res</span><span class="o">.</span><span class="n">cc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;frequencies&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.set_settings"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.set_settings">[docs]</a>    <span class="k">def</span> <span class="nf">set_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Set the settings and call necessary functions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span>
+
+        <span class="c1"># extract some variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;frequencies&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span>
+
+        <span class="c1"># set min/max tau values corresponding to data limits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau_data_min</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau_data_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_f_values</span> <span class="o">=</span> <span class="n">base_class</span><span class="o">.</span><span class="n">determine_tau_range</span><span class="p">(</span>
+            <span class="n">settings</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.convert_parameters"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">convert_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert parameters given as (:math:`\rho_0, m_i`) to the</span>
+<span class="sd">        parameterization used by this class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pars_converted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+        <span class="n">pars_converted</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">pars</span><span class="p">[:])</span>
+        <span class="k">return</span> <span class="n">pars_converted</span></div>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.convert_pars_back"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.convert_pars_back">[docs]</a>    <span class="k">def</span> <span class="nf">convert_pars_back</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert parameters given in this parameterization back to the</span>
+<span class="sd">        linear state</span>
+
+<span class="sd">        Here: From :math:`log_{10}(\rho_0), log_{10}(m_i)`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pars_converted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+        <span class="n">pars_converted</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">pars</span><span class="p">[:]</span>
+        <span class="k">return</span> <span class="n">pars_converted</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_full_pars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars_dec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;convert the parameters to linear scale and return full Cole-Cole</span>
+<span class="sd">        parameters sets (in contrast to the reduced decomposition parameter</span>
+<span class="sd">        set)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># prepare Cole-Cole parameters</span>
+        <span class="n">rho0</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">pars_dec</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">pars_dec</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">tau</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">tau</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;m and tau have different sizes!&#39;</span><span class="p">)</span>
+
+        <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span>
+
+        <span class="n">pars</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">rho0</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pars</span>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.forward"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars_dec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Forward response of this model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pars_dec: list</span>
+<span class="sd">            [log10(rho0), log10(m_i), m_m, tau_em, c_em], with m_i a vector of</span>
+<span class="sd">            the chargabilities</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        remim: Nx2 numpy.ndarray</span>
+<span class="sd">            array with N the nr of frequencies, and the real and the negative</span>
+<span class="sd">            imaginary parts on the second axis</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_full_pars</span><span class="p">(</span><span class="n">pars_dec</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">response</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+
+        <span class="n">remim</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">rre_rim</span>
+        <span class="n">remim</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">remim</span></div>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.Jacobian"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.Jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">Jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars_dec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pars_dec: numpy.ndarray</span>
+<span class="sd">            array containing (log10(rho0), log10(m_i)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        J: (2N) X K array with derivatives.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_full_pars</span><span class="p">(</span><span class="n">pars_dec</span><span class="p">)</span>
+
+        <span class="c1"># real part</span>
+        <span class="n">real_J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">dre_dlog10rho0</span><span class="p">(</span><span class="n">pars</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">dre_dlog10m</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="n">imag_J</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">dim_dlog10rho0</span><span class="p">(</span><span class="n">pars</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">dim_dlog10m</span><span class="p">(</span><span class="n">pars</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">real_J</span><span class="p">,</span> <span class="n">imag_J</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">J</span></div>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.get_data_base_dimensions"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_dimensions">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_base_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return a dict with a description of the data base dimensions. In</span>
+<span class="sd">        this case we have frequencies and re/im data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">D_base_dims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">D_base_dims</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">size</span><span class="p">],</span>
+                <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rre_rmim&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">D_base_dims</span></div>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.get_data_base_size"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_data_base_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_base_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return size of flattened base dimensions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="mi">2</span></div>
+
+<div class="viewcode-block" id="decomposition_em_resistivity.get_model_base_dimensions"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_em_res.decomposition_em_resistivity.get_model_base_dimensions">[docs]</a>    <span class="k">def</span> <span class="nf">get_model_base_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return a dict with a description of the model base dimensions. In</span>
+<span class="sd">        this case we have one dimension: the DD parameters (rho0, mi) where m_i</span>
+<span class="sd">        denotes all chargeability values corresponding to the relaxation times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">M_base_dims</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rho0_mi&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">M_base_dims</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

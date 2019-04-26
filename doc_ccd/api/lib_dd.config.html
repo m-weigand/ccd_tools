@@ -6,13 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>lib_dd.config package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.14 documentation</title>
+    <title>lib_dd.config package &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lib_dd.decomposition package" href="lib_dd.decomposition.html" />
@@ -42,17 +43,17 @@
 <span id="lib-dd-config-cfg-base-module"></span><h2>lib_dd.config.cfg_base module<a class="headerlink" href="#module-lib_dd.config.cfg_base" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib_dd.config.cfg_base.cfg_base">
-<em class="property">class </em><code class="descclassname">lib_dd.config.cfg_base.</code><code class="descname">cfg_base</code><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">lib_dd.config.cfg_base.</code><code class="descname">cfg_base</code><a class="reference internal" href="../_modules/lib_dd/config/cfg_base.html#cfg_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
 <dl class="class">
 <dt id="lib_dd.config.cfg_base.cfg_base.cfg_obj">
-<em class="property">class </em><code class="descname">cfg_obj</code><span class="sig-paren">(</span><em>type</em>, <em>help</em>, <em>cmd_dict</em>, <em>possible_values=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.cfg_obj" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">cfg_obj</code><span class="sig-paren">(</span><em>type</em>, <em>help</em>, <em>cmd_dict</em>, <em>possible_values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/config/cfg_base.html#cfg_base.cfg_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.cfg_obj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.config.cfg_base.cfg_base.check_input_files">
-<code class="descname">check_input_files</code><span class="sig-paren">(</span><em>additional_files=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.check_input_files" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_input_files</code><span class="sig-paren">(</span><em>additional_files=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/config/cfg_base.html#cfg_base.check_input_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.check_input_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the input files exist. In addition to the base files for
 data and frequency, also test for all filenames stored in the
 corresponding attributes as provided by the extra list.</p>
@@ -60,18 +61,18 @@ corresponding attributes as provided by the extra list.</p>
 
 <dl class="method">
 <dt id="lib_dd.config.cfg_base.cfg_base.get_cmd_parser">
-<code class="descname">get_cmd_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.get_cmd_parser" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_cmd_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/config/cfg_base.html#cfg_base.get_cmd_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.get_cmd_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.config.cfg_base.cfg_base.parse_cmd_arguments">
-<code class="descname">parse_cmd_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.parse_cmd_arguments" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse_cmd_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/config/cfg_base.html#cfg_base.parse_cmd_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.parse_cmd_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the command line arguments and update the dictionary</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib_dd.config.cfg_base.cfg_base.split_options_base">
-<code class="descname">split_options_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.split_options_base" title="Permalink to this definition">¶</a></dt>
+<code class="descname">split_options_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/config/cfg_base.html#cfg_base.split_options_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_base.cfg_base.split_options_base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare dicts containing preparation and inversion settings common to
 all cdd_* programs</p>
 </dd></dl>
@@ -83,11 +84,11 @@ all cdd_* programs</p>
 <span id="lib-dd-config-cfg-single-module"></span><h2>lib_dd.config.cfg_single module<a class="headerlink" href="#module-lib_dd.config.cfg_single" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib_dd.config.cfg_single.cfg_single">
-<em class="property">class </em><code class="descclassname">lib_dd.config.cfg_single.</code><code class="descname">cfg_single</code><a class="headerlink" href="#lib_dd.config.cfg_single.cfg_single" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">lib_dd.config.cfg_single.</code><code class="descname">cfg_single</code><a class="reference internal" href="../_modules/lib_dd/config/cfg_single.html#cfg_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_single.cfg_single" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lib_dd.config.cfg_base.cfg_base" title="lib_dd.config.cfg_base.cfg_base"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.config.cfg_base.cfg_base</span></code></a></p>
 <dl class="method">
 <dt id="lib_dd.config.cfg_single.cfg_single.split_options">
-<code class="descname">split_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.config.cfg_single.cfg_single.split_options" title="Permalink to this definition">¶</a></dt>
+<code class="descname">split_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/config/cfg_single.html#cfg_single.split_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_single.cfg_single.split_options" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Notes</p>
 <p>Extract options for two groups:</p>
 <p>prep_opts) these options are used to prepare the actual inversion,
@@ -104,11 +105,11 @@ object</p>
 <span id="lib-dd-config-cfg-time-module"></span><h2>lib_dd.config.cfg_time module<a class="headerlink" href="#module-lib_dd.config.cfg_time" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib_dd.config.cfg_time.cfg_time">
-<em class="property">class </em><code class="descclassname">lib_dd.config.cfg_time.</code><code class="descname">cfg_time</code><a class="headerlink" href="#lib_dd.config.cfg_time.cfg_time" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">lib_dd.config.cfg_time.</code><code class="descname">cfg_time</code><a class="reference internal" href="../_modules/lib_dd/config/cfg_time.html#cfg_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_time.cfg_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lib_dd.config.cfg_base.cfg_base" title="lib_dd.config.cfg_base.cfg_base"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib_dd.config.cfg_base.cfg_base</span></code></a></p>
 <dl class="method">
 <dt id="lib_dd.config.cfg_time.cfg_time.split_options">
-<code class="descname">split_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lib_dd.config.cfg_time.cfg_time.split_options" title="Permalink to this definition">¶</a></dt>
+<code class="descname">split_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib_dd/config/cfg_time.html#cfg_time.split_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib_dd.config.cfg_time.cfg_time.split_options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract options for two groups:
 1) prep_opts : these options are used to prepare the actual inversion,
 i.e.  which regularization objects to use
@@ -197,6 +198,14 @@ object</p>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -205,8 +214,8 @@ object</p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="../_sources/api/lib_dd.config.rst.txt"

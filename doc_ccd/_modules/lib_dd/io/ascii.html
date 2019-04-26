@@ -1,0 +1,220 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.io.ascii &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.io.ascii</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;save results as ASCII files to a given directory</span>
+
+<span class="sd">This is the default output format</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">lib_dd.version</span> <span class="k">as</span> <span class="nn">version</span>
+<span class="kn">import</span> <span class="nn">lib_dd.interface</span> <span class="k">as</span> <span class="nn">lDDi</span>
+<span class="kn">import</span> <span class="nn">lib_dd.io.helper</span> <span class="k">as</span> <span class="nn">helper</span>
+
+
+<div class="viewcode-block" id="save_base_results"><a class="viewcode-back" href="../../../api/lib_dd.io.html#lib_dd.io.ascii.save_base_results">[docs]</a><span class="k">def</span> <span class="nf">save_base_results</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save data files that are shared between</span>
+<span class="sd">    dd_single.py/dd_time.py/dd_space_time.py</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># convert all arrays to lists</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inv_opts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;inv_opts&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inv_opts&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inv_opts&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;inversion_options.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;inv_opts&#39;</span><span class="p">],</span> <span class="n">fid</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;version.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">_get_version_numbers</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># with open(&#39;data_format.dat&#39;, &#39;w&#39;) as fid:</span>
+    <span class="c1">#     fid.write(final_iterations[0][0].Data.obj.data_format + &#39;\n&#39;)</span>
+
+    <span class="c1"># save call to debye_decomposition.py</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;command.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">lDDi</span><span class="o">.</span><span class="n">get_command</span><span class="p">()</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+    <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">RMS</span><span class="o">.</span><span class="n">save_rms_definition</span><span class="p">(</span><span class="s1">&#39;rms_definition.json&#39;</span><span class="p">)</span>
+
+    <span class="c1"># save tau/s</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;tau.dat&#39;</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;s.dat&#39;</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c1"># save frequencies/omega</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;omega.dat&#39;</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">omega</span><span class="p">)</span>
+
+    <span class="c1"># save weighting factors</span>
+    <span class="n">Wd_diag</span> <span class="o">=</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Wd</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;errors.dat&#39;</span><span class="p">,</span> <span class="n">Wd_diag</span><span class="p">)</span>
+
+    <span class="c1"># save lambdas</span>
+    <span class="c1"># TODO: We want all lambdas, not only from the last iteration</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lambdas</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lams</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">final_iterations</span><span class="p">]</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;lambdas.dat&#39;</span><span class="p">,</span> <span class="n">lambdas</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There was an error saving the lambda values&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># save number of iterations</span>
+    <span class="n">nr_of_iterations</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nr</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">final_iterations</span><span class="p">]</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;nr_iterations.dat&#39;</span><span class="p">,</span> <span class="n">nr_of_iterations</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%i</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># save normalization factors</span>
+    <span class="k">if</span><span class="p">(</span><span class="s1">&#39;norm_factors&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;normalization_factors.dat&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;norm_factors&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="save_data"><a class="viewcode-back" href="../../../api/lib_dd.io.html#lib_dd.io.ascii.save_data">[docs]</a><span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">NDlist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Save fit results to the current directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">final_iterations</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">nr</span><span class="p">)</span> <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">NDlist</span><span class="p">)]</span>
+
+    <span class="n">save_base_results</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;stats_and_rms&#39;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;stats_and_rms&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;stats_and_rms&#39;</span><span class="p">)</span>
+    <span class="n">stats_for_all_its</span> <span class="o">=</span> <span class="n">lDDi</span><span class="o">.</span><span class="n">aggregate_dicts</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="s1">&#39;stat_pars&#39;</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="s1">&#39;norm_factors&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">norm_factors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;norm_factors&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">norm_factors</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">lDDi</span><span class="o">.</span><span class="n">save_stat_pars</span><span class="p">(</span><span class="n">stats_for_all_its</span><span class="p">,</span> <span class="n">norm_factors</span><span class="p">)</span>
+
+    <span class="n">rms_for_all_its</span> <span class="o">=</span> <span class="n">lDDi</span><span class="o">.</span><span class="n">aggregate_dicts</span><span class="p">(</span><span class="n">final_iterations</span><span class="p">,</span> <span class="s1">&#39;rms_values&#39;</span><span class="p">)</span>
+    <span class="n">lDDi</span><span class="o">.</span><span class="n">save_rms_values</span><span class="p">(</span><span class="n">rms_for_all_its</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">RMS</span><span class="o">.</span><span class="n">rms_names</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
+
+    <span class="c1"># save original data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">orig_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;raw_data&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">norm_factors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">orig_data</span> <span class="o">=</span> <span class="n">orig_data</span> <span class="o">/</span> <span class="n">norm_factors</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">orig_data</span><span class="p">)</span>
+
+    <span class="c1"># (re)save the data format</span>
+    <span class="c1"># open(&#39;data_format.dat&#39;, &#39;w&#39;).write(prep_opts[&#39;data_format&#39;])</span>
+    <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data_format.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;raw_format&#39;</span><span class="p">])</span>
+
+    <span class="c1"># save model response</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;f.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">helper</span><span class="o">.</span><span class="n">save_f</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">final_iterations</span><span class="p">,</span> <span class="n">norm_factors</span><span class="p">)</span>
+
+    <span class="c1"># save times</span>
+    <span class="k">if</span> <span class="s1">&#39;times&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;times.dat&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;times&#39;</span><span class="p">])</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

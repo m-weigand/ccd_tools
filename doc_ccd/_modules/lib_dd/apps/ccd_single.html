@@ -1,0 +1,865 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.apps.ccd_single &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.apps.ccd_single</h1><div class="highlight"><pre>
+<span></span><span class="c1"># jupyter notebook app for ccd_single</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">ipywidgets</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="kn">import</span> <span class="nn">IPython</span>
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="k">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">NDimInv.plot_helper</span>
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">lib_dd.decomposition.ccd_single</span> <span class="k">as</span> <span class="nn">ccd_single</span>
+<span class="kn">import</span> <span class="nn">lib_dd.config.cfg_single</span> <span class="k">as</span> <span class="nn">cfg_single</span>
+<span class="kn">import</span> <span class="nn">lib_dd.plot</span>
+
+
+<div class="viewcode-block" id="ccd_single_app"><a class="viewcode-back" href="../../../api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app">[docs]</a><span class="k">class</span> <span class="nc">ccd_single_app</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency_file</span><span class="p">,</span> <span class="n">data_file</span><span class="p">,</span> <span class="n">no_logging</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_logger</span><span class="p">(</span><span class="n">disabled</span><span class="o">=</span><span class="n">no_logging</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_versions</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description_width&#39;</span><span class="p">:</span> <span class="s1">&#39;initial&#39;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">frequency_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># items to be arranged in a VBox later</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># store containers for parameter groups here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vbox</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_data_summary</span><span class="p">()</span>
+
+        <span class="c1"># we generate links to the online documentation. To simplify things,</span>
+        <span class="c1"># use the url-prefix from here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_app_widgets</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_check_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">ipywidgets</span><span class="o">.</span><span class="n">__version__</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;ipywidgets version is too old. Need at least major &#39;</span> <span class="o">+</span>
+                <span class="s1">&#39;version number 7, is: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ipywidgets</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_setup_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">disabled</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ccd_single_app.enable_logger"><a class="viewcode-back" href="../../../api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.enable_logger">[docs]</a>    <span class="k">def</span> <span class="nf">enable_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NOTSET</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ccd_single_app.disable_logger"><a class="viewcode-back" href="../../../api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.disable_logger">[docs]</a>    <span class="k">def</span> <span class="nf">disable_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ccd_single_app.print_data_summary"><a class="viewcode-back" href="../../../api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.print_data_summary">[docs]</a>    <span class="k">def</span> <span class="nf">print_data_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print a summary of the data, e.g., number of frequencies, min/max</span>
+<span class="sd">        values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># frequency statistics</span>
+        <span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s1">&#39;Number of frequencies: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s1">&#39;Minimum frequency: </span><span class="si">{0}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s1">&#39;Maximum frequency: </span><span class="si">{0}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="p">)</span>
+
+        <span class="c1"># data statistics</span>
+        <span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;number of SIP spectra: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">)</span>
+
+        <span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;hr /&gt;&#39;</span><span class="p">)</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&lt;h2&gt;Data summary&lt;/h2&gt;&#39;</span><span class="p">))</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&lt;br /&gt;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">summary</span><span class="p">)))</span></div>
+
+    <span class="k">def</span> <span class="nf">_help_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">postfix</span><span class="p">):</span>
+        <span class="n">help_str</span> <span class="o">=</span> <span class="s1">&#39;&lt;a href=&quot;</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">postfix</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span>
+        <span class="k">return</span> <span class="n">help_str</span>
+
+    <span class="k">def</span> <span class="nf">_add_dformat_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_dformat</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;rmag_rpha&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;lnrmag_rpha&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;log10rmag_rpha&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rmag_rpha&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rre_rim&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rre_rmim&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cmag_cpha&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cre_cim&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cre_cmim&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;rmag_rpha&#39;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Input data format:&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">h_dformat</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_help_url</span><span class="p">(</span><span class="s1">&#39;data_formats.html#input-data-formats&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">hb_dformat</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_dformat</span><span class="p">,</span> <span class="n">h_dformat</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;data_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_dformat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_dformat</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_condres_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_condres</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;resistivity formulation&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;conductivity formulation&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Type of kernel:&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">h_condres</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;usage_and_implementation.html#&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_condres</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_condres</span><span class="p">,</span> <span class="n">h_condres</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;type_formulation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_condres</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_condres</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_flimits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_fmin</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatText</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Frequency min:&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">w_fmax</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatText</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Frequency max:&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">h_fminmax</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;usage_and_implementation.html#&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_fminmax</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_fmin</span><span class="p">,</span> <span class="n">w_fmax</span><span class="p">,</span> <span class="n">h_fminmax</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fmin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_fmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_fmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_fminmax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s1">&#39;fminmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hb_fminmax</span>
+
+        <span class="k">def</span> <span class="nf">fminmax_change</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">change</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+                <span class="n">fmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fmin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+                <span class="n">fmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fmax&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+                <span class="c1"># hide all frequencies in fignore that are outside the range</span>
+                <span class="n">fign</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fignore&#39;</span><span class="p">]</span>
+                <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">fmin</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">)</span> <span class="o">&amp;</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">&lt;=</span> <span class="n">fmax</span><span class="p">)</span>
+                <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">wdg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fign</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">nr</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+                        <span class="n">wdg</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;visible&#39;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">wdg</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;hidden&#39;</span>
+
+        <span class="n">w_fmin</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">fminmax_change</span><span class="p">)</span>
+        <span class="n">w_fmax</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">fminmax_change</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_fignore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">f_ign</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="n">wid</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+                <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{0:.3f}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="c1"># width=50,</span>
+            <span class="p">)</span>
+            <span class="n">f_ign</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wid</span><span class="p">)</span>
+        <span class="n">box_layout</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+            <span class="n">width</span><span class="o">=</span><span class="s1">&#39;100%&#39;</span><span class="p">,</span>
+            <span class="n">flex_flow</span><span class="o">=</span><span class="s1">&#39;row wrap&#39;</span><span class="p">,</span>
+            <span class="n">display</span><span class="o">=</span><span class="s1">&#39;inline-flex&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">vb_fignore</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="n">f_ign</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">box_layout</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">accordion</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Accordion</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">vb_fignore</span><span class="p">,</span> <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">accordion</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Ignore frequencies&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ipywidgets</span><span class="o">.</span><span class="n">__version__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;6&#39;</span><span class="p">:</span>
+            <span class="n">accordion</span><span class="o">.</span><span class="n">selected_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">accordion</span><span class="o">.</span><span class="n">selected_index</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fignore&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_ign</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accordion</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s1">&#39;fignore&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">accordion</span>
+
+    <span class="k">def</span> <span class="nf">_add_max_its</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_max_its</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Maximum nr of iterations:&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">h_max_its</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;usage_and_implementation.html#&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_max_its</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_max_its</span><span class="p">,</span> <span class="n">h_max_its</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;max_its&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_max_its</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_max_its</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s1">&#39;hb_max_its&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hb_max_its</span>
+
+    <span class="k">def</span> <span class="nf">_add_nr_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_nr_terms</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntText</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Nr of terms per frequency decade:&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">h_nr_terms</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;usage_and_implementation.html#&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># h_nr_terms = widgets.HTML(</span>
+        <span class="c1">#     value=&#39;&lt;iframe src=&quot;https://m-weigand.github.io/ccd_tools/&#39; +</span>
+        <span class="c1">#     &#39;doc_ccd/&quot;&gt;&lt;/iframe&gt;&#39;,</span>
+        <span class="c1"># )</span>
+        <span class="n">hb_nr_terms</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_nr_terms</span><span class="p">,</span> <span class="n">h_nr_terms</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;nr_terms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_nr_terms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_nr_terms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s1">&#39;nr_terms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hb_nr_terms</span>
+
+    <span class="k">def</span> <span class="nf">_add_tausel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_tausel</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;data_ext&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;data&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;individual&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;data_ext&#39;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Range of tau values:&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">w_tausel_ind_left</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectionSlider</span><span class="p">(</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;left:&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">w_tausel_ind_left</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;hidden&#39;</span>
+        <span class="n">w_tausel_ind_right</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectionSlider</span><span class="p">(</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;right:&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">w_tausel_ind_right</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;hidden&#39;</span>
+
+        <span class="n">h_tausel</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;usage_and_implementation.html#&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">hb_tausel</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">w_tausel</span><span class="p">,</span> <span class="n">w_tausel_ind_left</span><span class="p">,</span> <span class="n">w_tausel_ind_right</span><span class="p">,</span> <span class="n">h_tausel</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_tausel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;tausel_left&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_tausel_ind_left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;tausel_right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_tausel_ind_right</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_tausel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hb_tausel</span>
+
+        <span class="k">def</span> <span class="nf">tausel_change</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">change</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">change</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;individual&#39;</span><span class="p">:</span>
+                    <span class="n">w_tausel_ind_left</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;visible&#39;</span>
+                    <span class="n">w_tausel_ind_right</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;visible&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">w_tausel_ind_left</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;hidden&#39;</span>
+                    <span class="n">w_tausel_ind_right</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;hidden&#39;</span>
+
+        <span class="n">w_tausel</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">tausel_change</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_plot_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_generate_plot</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generate plot&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">w_generate_it_plots</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generate plots for all iterations&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">w_generate_lcurve</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Plot lcurve&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">w_generate_reg_strength</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Plot regularization strength &#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">w_generate_output</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generate output for download&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">box_layout</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+            <span class="n">width</span><span class="o">=</span><span class="s1">&#39;100%&#39;</span><span class="p">,</span>
+            <span class="n">flex_flow</span><span class="o">=</span><span class="s1">&#39;row wrap&#39;</span><span class="p">,</span>
+            <span class="n">display</span><span class="o">=</span><span class="s1">&#39;inline-flex&#39;</span><span class="p">,</span>
+            <span class="n">border</span><span class="o">=</span><span class="s1">&#39;3px solid black&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_output</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">w_generate_plot</span><span class="p">,</span>
+                <span class="n">w_generate_it_plots</span><span class="p">,</span>
+                <span class="n">w_generate_lcurve</span><span class="p">,</span>
+                <span class="n">w_generate_reg_strength</span><span class="p">,</span>
+                <span class="n">w_generate_output</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">box_layout</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_plot&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_generate_plot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_generate_output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_it_plots&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_generate_it_plots</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_lcurve&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_generate_lcurve</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_reg_strength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_generate_reg_strength</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_output</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_data_weighting</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_data_weighting</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;re_vs_im&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;avg_im&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;avg_im_err&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;one&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;all_to_one&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rel_abs_error&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;re_vs_im&#39;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Data weighting scheme:&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">h_data_weighting</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;usage_and_implementation.html#data_weighting&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_data_weighting</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_data_weighting</span><span class="p">,</span> <span class="n">h_data_weighting</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;data_weighting&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_data_weighting</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_data_weighting</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s1">&#39;data_weighting&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hb_data_weighting</span>
+
+    <span class="k">def</span> <span class="nf">_add_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_lambda</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntText</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Lambda&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">h_lambda</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;usage_and_implementation.html#data_weighting&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_lambda</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_lambda</span><span class="p">,</span> <span class="n">h_lambda</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_lambda</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_lambda</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_c</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;C-value:&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;.1f&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">h_c</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;https://m-weigand.github.io/ccd_tools/doc_ccd/&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;theory.html&quot; &#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;target=&quot;_blank&quot;&gt;Help&lt;/a&gt;&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_c</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_c</span><span class="p">,</span> <span class="n">h_c</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_c</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_normalization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_normalization</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Checkbox</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Activate normalization&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">help_normalization</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_help_url</span><span class="p">(</span>
+                <span class="s1">&#39;usage_and_implementation.html#normalization&#39;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">w_norm_value</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatText</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Normalization value:&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hb_norm</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">w_normalization</span><span class="p">,</span>
+                <span class="n">w_norm_value</span><span class="p">,</span>
+                <span class="n">help_normalization</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="s1">&#39;hb_norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hb_norm</span>
+
+        <span class="k">def</span> <span class="nf">use_norm_change</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">change</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">change</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">w_norm_value</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">w_norm_value</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">w_normalization</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">use_norm_change</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;use_norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_normalization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;norm_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_norm_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_norm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_toggles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w_advanced</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">ToggleButton</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Show advanced options&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">button_style</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;check&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;50%&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">toggle_advanced</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">change</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+                <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s1">&#39;hb_norm&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hb_max_its&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;fignore&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;fminmax&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;nr_terms&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;data_weighting&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;tausel&#39;</span><span class="p">,</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="n">change</span><span class="p">[</span><span class="s1">&#39;new&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="c1"># advanced mode</span>
+                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;visible&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="s1">&#39;hidden&#39;</span>
+
+        <span class="n">w_show_output</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">ToggleButton</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Show output&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">button_style</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="c1"># icon=&#39;check&#39;</span>
+            <span class="n">style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;50%&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">hb_toggles</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">w_advanced</span><span class="p">,</span> <span class="n">w_show_output</span><span class="p">],</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+                <span class="n">width</span><span class="o">=</span><span class="s1">&#39;80%&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">w_advanced</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">toggle_advanced</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;nb_show_output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_show_output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_toggles</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_app_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_toggles</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_dformat_selection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_condres_selection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_lambda</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_c</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_flimits</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_fignore</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_max_its</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_nr_terms</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_tausel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_data_weighting</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_normalization</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_plot_options</span><span class="p">()</span>
+
+        <span class="n">w_run</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Run CCD&#39;</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;Run the Cole-Cole decomposition&#39;</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;50%&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;80px&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">w_run</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_ccd</span><span class="p">)</span>
+
+        <span class="n">w_clear</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Reset app&#39;</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">&#39;50%&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;80px&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">clear_cell</span><span class="p">(</span><span class="n">button</span><span class="p">):</span>
+            <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">clear_output</span><span class="p">()</span>
+
+        <span class="n">w_clear</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">clear_cell</span><span class="p">)</span>
+
+        <span class="n">hb_run</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">(</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">w_run</span><span class="p">,</span>
+                <span class="n">w_clear</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+                <span class="n">width</span><span class="o">=</span><span class="s1">&#39;100%&#39;</span><span class="p">,</span>
+                <span class="n">align_items</span><span class="o">=</span><span class="s1">&#39;center&#39;</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;run&#39;</span><span class="p">:</span> <span class="n">w_run</span><span class="p">,</span>
+        <span class="p">})</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&lt;h3&gt;Settings&lt;/h3&gt;&#39;</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">+=</span> <span class="p">[</span>
+            <span class="n">hb_run</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vbox</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ccd_single_app.show"><a class="viewcode-back" href="../../../api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">display</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vbox</span><span class="p">)</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&lt;hr /&gt;&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ccd_single_app.run_ccd"><a class="viewcode-back" href="../../../api/lib_dd.apps.html#lib_dd.apps.ccd_single.ccd_single_app.run_ccd">[docs]</a>    <span class="k">def</span> <span class="nf">run_ccd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Based on the GUI input, generate a configuration for the CCD and run</span>
+<span class="sd">        it</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;nb_show_output&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enable_logger</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># show at least this note</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running CCD&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">disable_logger</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;running CCD&#39;</span><span class="p">)</span>
+        <span class="c1"># set environment variables</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DD_COND&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;type_formulation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DD_C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="p">)</span>
+
+        <span class="c1"># set options using this dict-like object</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">cfg_single</span><span class="o">.</span><span class="n">cfg_single</span><span class="p">()</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;frequency_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;data_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;fixed_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;lambda&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="c1"># config[&#39;plot_it_spectra&#39;] = self.widgets[&#39;generate_it_plots&#39;].value</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;max_iterations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;max_its&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;nr_terms_decade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;nr_terms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;data_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;data_format&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;data_fmin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fmin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;data_fmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fmax&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="n">ignores_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;fignore&#39;</span><span class="p">]</span>
+        <span class="n">ignores</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">nr</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ignores_raw</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ignores</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ign_str</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ign_str</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ignores</span><span class="p">)</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;ignore_frequencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ign_str</span>
+
+        <span class="c1"># tausel</span>
+        <span class="n">w_tausel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span>
+        <span class="n">w_tausel_ind_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;tausel_left&#39;</span><span class="p">]</span>
+        <span class="n">w_tausel_ind_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;tausel_right&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">w_tausel</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;individual&#39;</span><span class="p">:</span>
+            <span class="n">tausel_opt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">,</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">w_tausel_ind_left</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">w_tausel_ind_right</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tausel_opt</span> <span class="o">=</span> <span class="n">w_tausel</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tausel_opt</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;use_norm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;norm_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1"># generate a ccd object</span>
+        <span class="n">ccd_obj</span> <span class="o">=</span> <span class="n">ccd_single</span><span class="o">.</span><span class="n">ccd_single</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># commence with the actual fitting</span>
+        <span class="n">ccd_obj</span><span class="o">.</span><span class="n">fit_data</span><span class="p">()</span>
+
+        <span class="c1"># extract the last iteration</span>
+        <span class="n">last_it</span> <span class="o">=</span> <span class="n">ccd_obj</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_plot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;plotting ... this may take a while&#39;</span><span class="p">)</span>
+            <span class="c1"># don&#39;t show in notebook</span>
+            <span class="c1"># plt.ioff()</span>
+            <span class="c1"># _ = last_it.plot()</span>
+            <span class="c1"># _</span>
+            <span class="k">for</span> <span class="n">spectrum</span> <span class="ow">in</span> <span class="n">ccd_obj</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+                <span class="n">last_it</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_plot</span><span class="p">(</span><span class="n">ccd_obj</span><span class="p">,</span> <span class="n">last_it</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_lcurve&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spectrum</span> <span class="ow">in</span> <span class="n">ccd_obj</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+                <span class="n">last_it</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">last_it</span><span class="o">.</span><span class="n">plot_lcurve</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_reg_strength&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spectrum</span> <span class="ow">in</span> <span class="n">ccd_obj</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+                <span class="n">last_it</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">last_it</span><span class="o">.</span><span class="n">plot_reg_strengths</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_it_plots&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spectrum</span> <span class="ow">in</span> <span class="n">ccd_obj</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">iterations</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_plot</span><span class="p">(</span><span class="n">ccd_obj</span><span class="p">,</span> <span class="n">iteration</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">[</span><span class="s1">&#39;generate_output&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">outdir</span><span class="p">:</span>
+                <span class="n">ccd_obj</span><span class="o">.</span><span class="n">save_to_directory</span><span class="p">(</span><span class="n">outdir</span><span class="p">)</span>
+
+                <span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;sip_results_</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                        <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="n">shutil</span><span class="o">.</span><span class="n">make_archive</span><span class="p">(</span>
+                    <span class="n">outfile</span><span class="p">,</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">,</span>
+                    <span class="n">root_dir</span><span class="o">=</span><span class="n">outdir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+
+            <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_help_url</span><span class="p">(</span><span class="s1">&#39;data_formats.html#ascii-audit-format&#39;</span><span class="p">)</span>
+            <span class="p">))</span>
+            <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span>
+                <span class="s1">&#39;&lt;a href=&quot;</span><span class="si">{0}</span><span class="s1">.zip&quot; download&gt;Download results&lt;/a&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">outfile</span>
+                <span class="p">)</span>
+            <span class="p">))</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;finished&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ccd_obj</span><span class="p">,</span> <span class="n">it</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">lib_dd</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot_iteration</span><span class="p">()</span>
+
+        <span class="n">norm_factors</span> <span class="o">=</span> <span class="n">ccd_obj</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;norm_factors&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">D</span> <span class="o">/</span> <span class="n">norm_factors</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">convert_to_M</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">m</span><span class="p">)</span>
+        <span class="c1"># renormalize here? Why do we compute the forward solution again?</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">F</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm_factors</span>
+        <span class="c1"># extra_size = int(</span>
+        <span class="c1">#     np.sum([x[1][1] for x in it.Data.extra_dims.items()])</span>
+        <span class="c1"># )</span>
+        <span class="c1"># nr_spectra = max(1, extra_size)</span>
+
+        <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">250</span>
+        <span class="c1"># iterate over spectra</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">DM_iterator</span><span class="p">()):</span>
+            <span class="c1"># plot spectrum</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">5</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">_plot_rre_rim</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">D</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">F</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">it</span><span class="p">)</span>
+            <span class="c1"># self._plot_rmag_rpha(nr, axes[nr, 2:4], D[d], F[d], it)</span>
+            <span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+            <span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">_plot_cre_cim</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">],</span> <span class="n">D</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">F</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">it</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+            <span class="c1"># plot spectrum rmag_rpha</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">5</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">_plot_rmag_rpha</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">D</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">F</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">it</span><span class="p">)</span>
+            <span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+            <span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+            <span class="c1"># plot rtd</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">5</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">_plot_rtd</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">M</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">it</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

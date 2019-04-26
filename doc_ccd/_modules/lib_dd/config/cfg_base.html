@@ -1,0 +1,556 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.config.cfg_base &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.config.cfg_base</h1><div class="highlight"><pre>
+<span></span><span class="c1"># *-* coding: utf-8 *-*</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">lib_dd.version</span> <span class="k">as</span> <span class="nn">version</span>
+<span class="kn">import</span> <span class="nn">NDimInv.data_weighting</span> <span class="k">as</span> <span class="nn">data_weighting</span>
+
+
+<div class="viewcode-block" id="cfg_base"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base">[docs]</a><span class="k">class</span> <span class="nc">cfg_base</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+
+<div class="viewcode-block" id="cfg_base.cfg_obj"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base.cfg_obj">[docs]</a>    <span class="k">class</span> <span class="nc">cfg_obj</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">help</span><span class="p">,</span> <span class="n">cmd_dict</span><span class="p">,</span> <span class="n">possible_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">help</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cmd_dict</span> <span class="o">=</span> <span class="n">cmd_dict</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">possible_values</span> <span class="o">=</span> <span class="n">possible_values</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">web_order</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;nr_terms_decade&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="c1"># these options will not be shown in the web interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">web_blacklist</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;version&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;frequency_file&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data_file&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;output_dir&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;nr_cores&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;silent&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;output_format&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;use_tmp&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data_format&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="c1"># will store the command line parser object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_parser</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># store the cfg objects here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># add the actual configs here</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;frequency_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;frequencies.dat&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;frequency_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Frequency file&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-f&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--frequency_file&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FILE&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ignore_frequencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;ignore_frequencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s1">&#39;Frequency ids to ignore, example:&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;12,13,14&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;. Starts with index 0.&#39;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--ignore&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;data_fmin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;data_fmin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s1">&#39;Ignore frequencies below this value&#39;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--fmin&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FLOAT&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;data_fmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;data_fmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s1">&#39;Ignore frequencies above this value&#39;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--fmax&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FLOAT&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;plot_spectra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;plot_spectra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Plot final iterations (default: False)&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--plot&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;data_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;data.dat&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;data_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;data file&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-d&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--data_file&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FILE&#39;</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;data_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rmag_rpha&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;data_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s1">&#39;Input data format, possible values are: &#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rmag_rpha, lnrmag_rpha, log10rmag_rpha, rmag_rpha, &#39;</span><span class="p">,</span>
+                <span class="s1">&#39; rre_rim rre_rmim, cmag_cpha, cre_cim, cre_cmim. &#39;</span><span class="p">,</span>
+                <span class="s1">&#39;&quot;r&quot; stands for resistance/&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;resistivity, and &quot;c&quot; stands for conductance/&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;conductivity&#39;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--data_format&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FORMAT&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">possible_values</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;rmag_rpha&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cre_cim&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;nr_terms_decade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;nr_terms_decade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of polarization terms per frequency decade&quot;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-n&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--nr_terms&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;output_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;results&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;output_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Output directory&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--output&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;DIR&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;plot_spectra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;plot_spectra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Plot final iterations&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--plot&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;plot_reg_strength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;plot_reg_strength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Plot regularization strengths of final iterations&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--plot_reg_strength&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;plot_it_spectra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;plot_it_spectra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Plot spectra of each iteration&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--plot_its&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;silent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;silent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Do not plot any logs to STDOUT&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--silent&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;use_tmp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;use_tmp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">&quot;Create the output in a temporary directory and &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;later move it later to its destination&quot;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--tmp&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;data_ext&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">&quot;Tau selection strategy:</span><span class="se">\n</span><span class="s2">data: Use &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data frequency limits for tau selection</span><span class="se">\n</span><span class="s2">data_ext &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;(default): Extend tau ranges by one frequency decade &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;compared to the &#39;data&#39; strategy. Factors can be set &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;for the low and high frequency by separating with a &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;,&#39;: LEFT,RIGHT, e.g. &#39;10,100&#39;&quot;</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--tausel&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;STRATEGY&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s1">&#39;Normalize lowest frequency real part to this value&#39;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--norm&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;FLOAT&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;plot_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;plot_lambda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">&quot;Plot the l-curve for a selected iteration. &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;WARNING: This only plots the l-curve and does not &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;use it in the inversion process. Use -1 for last &quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iteration.&quot;</span><span class="p">,</span>
+            <span class="p">)),</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--plot_lcurve&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;max_iterations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;max_iterations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Maximum number of iterations&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--max_it&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Print version information&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="s1">&#39;-v&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;output_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ascii_audit&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;output_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Output format(ascii| ascii_audit)&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--output_format&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;data_weighting&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;re_vs_im&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;data_weighting&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg_obj</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Data weighting scheme to use.&#39;</span><span class="p">,</span>
+            <span class="n">cmd_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;short&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="s1">&#39;--data_weighting&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;metavar&#39;</span><span class="p">:</span> <span class="s1">&#39;SCHEME&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">possible_values</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">data_weighting</span><span class="o">.</span><span class="n">functions</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="cfg_base.get_cmd_parser"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base.get_cmd_parser">[docs]</a>    <span class="k">def</span> <span class="nf">get_cmd_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">helptext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">help_text</span><span class="p">,</span>
+                <span class="s1">&#39; (default: &#39;</span><span class="p">,</span>
+                <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+            <span class="p">))</span>
+            <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                <span class="s1">&#39;dest&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+                <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="n">helptext</span><span class="p">,</span>
+                <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+            <span class="p">}</span>
+
+            <span class="c1"># if self[key] is None:</span>
+            <span class="c1">#     opts[&#39;default&#39;] = None</span>
+
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;metavar&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">cmd_dict</span><span class="p">:</span>
+                    <span class="n">opts</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">cmd_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s1">&#39;action&#39;</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">:</span>
+                <span class="k">del</span><span class="p">(</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">cmd_dict</span><span class="p">[</span><span class="s1">&#39;short&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">lso</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">cmd_dict</span><span class="p">[</span><span class="s1">&#39;short&#39;</span><span class="p">],</span> <span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lso</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="n">lso</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">cmd_dict</span><span class="p">[</span><span class="s1">&#39;long&#39;</span><span class="p">])</span>
+
+            <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span>
+                <span class="o">*</span><span class="n">lso</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">opts</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_parser</span> <span class="o">=</span> <span class="n">parser</span>
+        <span class="k">return</span> <span class="n">parser</span></div>
+
+<div class="viewcode-block" id="cfg_base.parse_cmd_arguments"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base.parse_cmd_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">parse_cmd_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the command line arguments and update the dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd_parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_cmd_parser</span><span class="p">()</span>
+
+        <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd_parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+        <span class="c1"># multi threading does not work on Windows</span>
+        <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+            <span class="n">options</span><span class="o">.</span><span class="n">nr_cores</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># print version information if requested</span>
+        <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">_get_version_numbers</span><span class="p">())</span>
+            <span class="n">exit</span><span class="p">()</span>
+
+        <span class="c1"># update the self-dict with the new values</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">options</span></div>
+
+<div class="viewcode-block" id="cfg_base.split_options_base"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base.split_options_base">[docs]</a>    <span class="k">def</span> <span class="nf">split_options_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare dicts containing preparation and inversion settings common to</span>
+<span class="sd">        all cdd_* programs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prep_opts</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="s1">&#39;plot_it_spectra&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;plot_reg_strength&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;output_dir&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data_format&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;plot_lambda&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="p">}</span>
+        <span class="c1"># prep_opts[&#39;plot_it_spectra&#39;] = options.plot_it_spectra</span>
+        <span class="n">prep_opts</span><span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;plot_spectra&#39;</span><span class="p">]</span>
+        <span class="c1"># prep_opts[&#39;plot_reg_strength&#39;] = options.plot_reg_strength</span>
+        <span class="c1"># prep_opts[&#39;output_dir&#39;] = options.output_dir</span>
+        <span class="c1"># prep_opts[&#39;data_format&#39;] = options.data_format</span>
+        <span class="c1"># prep_opts[&#39;plot_lambda&#39;] = options.plot_lambda</span>
+
+        <span class="n">inv_opts</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="s1">&#39;tausel&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;max_iterations&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data_weighting&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="p">}</span>
+        <span class="c1"># inv_opts[&#39;tausel&#39;] = options.tausel</span>
+        <span class="n">inv_opts</span><span class="p">[</span><span class="s1">&#39;Nd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;nr_terms_decade&#39;</span><span class="p">]</span>
+        <span class="c1"># inv_opts[&#39;max_iterations&#39;] = options.max_iterations</span>
+
+        <span class="k">return</span> <span class="n">prep_opts</span><span class="p">,</span> <span class="n">inv_opts</span></div>
+
+<div class="viewcode-block" id="cfg_base.check_input_files"><a class="viewcode-back" href="../../../api/lib_dd.config.html#lib_dd.config.cfg_base.cfg_base.check_input_files">[docs]</a>    <span class="k">def</span> <span class="nf">check_input_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">additional_files</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;Check if the input files exist. In addition to the base files for</span>
+<span class="sd">        data and frequency, also test for all filenames stored in the</span>
+<span class="sd">        corresponding attributes as provided by the extra list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">none_missing</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">base_files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;frequency_file&#39;</span><span class="p">,</span> <span class="s1">&#39;data_file&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">base_files</span> <span class="o">+</span> <span class="n">additional_files</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s1">&#39;Filename not found for attribute </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">attr</span><span class="p">,</span> <span class="n">filename</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">none_missing</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">none_missing</span><span class="p">:</span>
+                <span class="n">exit</span><span class="p">()</span>
+
+        <span class="c1"># check if output directory already exists</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;output_dir&#39;</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span>
+                <span class="s1">&#39;Output directory already exists. Please choose another &#39;</span> <span class="o">+</span>
+                <span class="s1">&#39;output directory, or delete the existing one.&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="s1">&#39;CCD configuration:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="s1">&#39;Entry </span><span class="si">{0}</span><span class="s1">:</span><span class="si">{1}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+        <span class="n">output</span> <span class="o">+=</span> <span class="s1">&#39;--- end ---&#39;</span>
+
+        <span class="k">return</span> <span class="n">output</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

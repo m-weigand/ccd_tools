@@ -1,0 +1,348 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lib_dd.conductivity.model &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib_dd.conductivity.model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Template class for models</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">lib_dd.base_class</span> <span class="k">as</span> <span class="nn">base_class</span>
+<span class="kn">import</span> <span class="nn">NDimInv.model_template</span> <span class="k">as</span> <span class="nn">mt</span>
+<span class="kn">import</span> <span class="nn">lib_dd.starting_parameters</span> <span class="k">as</span> <span class="nn">starting_parameters</span>
+<span class="kn">import</span> <span class="nn">lib_dd.plot_stats</span> <span class="k">as</span> <span class="nn">plot_stats</span>
+
+
+<div class="viewcode-block" id="dd_conductivity"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity">[docs]</a><span class="k">class</span> <span class="nc">dd_conductivity</span><span class="p">(</span>
+    <span class="n">plot_stats</span><span class="o">.</span><span class="n">_plot_stats</span><span class="p">,</span>
+    <span class="n">base_class</span><span class="o">.</span><span class="n">integrated_parameters</span><span class="p">,</span>    <span class="c1"># base_class.dd_resistivity_skeleton</span>
+    <span class="n">starting_parameters</span><span class="o">.</span><span class="n">starting_parameters</span><span class="p">,</span>
+    <span class="n">mt</span><span class="o">.</span><span class="n">model_template</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="s1">&#39;cre_cim&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D_base_dims</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># required_keys = (&#39;Nd&#39;, &#39;tausel&#39;, &#39;frequencies&#39;, &#39;c&#39;)</span>
+        <span class="n">required_keys</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Nd&#39;</span><span class="p">,</span> <span class="s1">&#39;tausel&#39;</span><span class="p">,</span> <span class="s1">&#39;frequencies&#39;</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">required_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;required key not found: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;frequencies&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+<div class="viewcode-block" id="dd_conductivity.set_settings"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.set_settings">[docs]</a>    <span class="k">def</span> <span class="nf">set_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the settings and call necessary functions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span>
+
+        <span class="c1"># extract some variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;frequencies&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span>
+
+        <span class="c1"># set min/max tau values corresponding to data limits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau_data_min</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau_data_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_f_values</span> <span class="o">=</span> <span class="n">base_class</span><span class="o">.</span><span class="n">determine_tau_range</span><span class="p">(</span>
+            <span class="n">settings</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="dd_conductivity.convert_parameters"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.convert_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">convert_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert from linear to the actually used scale</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">pars</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="dd_conductivity.convert_pars_back"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.convert_pars_back">[docs]</a>    <span class="k">def</span> <span class="nf">convert_pars_back</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert from log10 to linear</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">10</span><span class="o">**</span><span class="n">pars</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="dd_conductivity.forward"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the forward response in base dimensions</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pars: [log10(sigma_infty), log10(m_i)]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        response: Nx2 array, first axis denotes frequencies, seconds real and</span>
+<span class="sd">                  imaginary parts</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># pars = log10(sigma_0), log10(m_i)</span>
+        <span class="c1"># sigma0 = 10**pars[0]</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">pars</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">nan_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">nan_indices</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># mtot = np.sum(m)</span>
+        <span class="c1"># sigmai = sigma0 / (1 - mtot)</span>
+        <span class="n">sigmai</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">pars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">relterms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">mi</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">*</span> <span class="n">taui</span><span class="p">)</span> <span class="k">for</span>
+                             <span class="n">mi</span><span class="p">,</span> <span class="n">taui</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">)])</span>
+        <span class="n">response_complex</span> <span class="o">=</span> <span class="n">sigmai</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">relterms</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">response_complex</span><span class="p">),</span>
+                              <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">response_complex</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    def forward_re_mim(self, pars):</span>
+<span class="sd">        response = self.forward(pars)</span>
+<span class="sd">        return response[0, :], response[1, :]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="dd_conductivity.Jacobian"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.Jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">Jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the Jacobian corresponding to the forward response. The</span>
+<span class="sd">        Jacobian has the dimensions :math:`B \times D \times M`</span>
+
+<span class="sd">        TODO: Check the return dimensions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># sigma0 = 10**pars[0]</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">pars</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="c1"># mtot = np.sum(m)</span>
+        <span class="c1"># sigmai = sigma0 / (1 - mtot)</span>
+        <span class="n">sigmai</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">pars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># compute 1 / (1 + omega^2 tau^2)</span>
+        <span class="n">relterms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">nr1</span><span class="p">,</span> <span class="n">omega</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">nr2</span><span class="p">,</span> <span class="n">tau</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">):</span>
+                <span class="n">relterms</span><span class="p">[</span><span class="n">nr2</span><span class="p">,</span> <span class="n">nr1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">omega</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># relterms2 = np.array([1 / (1 + self.omega**2 * taui**2) for</span>
+        <span class="c1">#                      mi, taui in zip(m, self.tau)])</span>
+
+        <span class="n">del_cre_dsigi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">omega</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">nr2</span><span class="p">,</span> <span class="n">mi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                <span class="n">taui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">nr2</span><span class="p">]</span>
+                <span class="n">del_cre_dsigi</span><span class="p">[</span><span class="n">nr</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">mi</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">omega</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">taui</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">del_cre_dsigi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">del_cre_dsigi</span>
+
+        <span class="c1"># del_cre_dsigi = (1 - np.sum(m[:, np.newaxis] * relterms, axis=0))</span>
+        <span class="n">del_cre_dsigi</span> <span class="o">*=</span> <span class="n">sigmai</span>
+
+        <span class="n">del_cre_dmi</span> <span class="o">=</span> <span class="o">-</span> <span class="n">sigmai</span> <span class="o">*</span> <span class="n">relterms</span>
+        <span class="n">del_cre_dmi</span> <span class="o">*=</span> <span class="n">m</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+        <span class="c1"># omegatau = np.array([omega * taui for mi, taui in zip(m, self.tau)])</span>
+        <span class="c1"># omegatau = self.omega[np.newaxis, :] * self.tau[:, np.newaxis]</span>
+        <span class="c1"># del_cim_dsigi1 = np.sum(omegatau * m[:, np.newaxis] * relterms,</span>
+        <span class="c1">#                         axis=0)</span>
+        <span class="n">del_cim_dsigi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mi</span><span class="p">,</span> <span class="n">taui</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">):</span>
+            <span class="n">del_cim_dsigi</span> <span class="o">+=</span> <span class="p">(</span><span class="n">mi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span> <span class="o">*</span> <span class="n">taui</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">taui</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">del_cim_dsigi</span> <span class="o">*=</span> <span class="n">sigmai</span>
+
+        <span class="c1"># del_cim_dmi1 = sigmai * omegatau / relterms</span>
+        <span class="n">del_cim_dmi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">nr1</span><span class="p">,</span> <span class="n">omega</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">nr2</span><span class="p">,</span> <span class="n">taui</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">):</span>
+                <span class="n">mi</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="n">nr2</span><span class="p">]</span>
+                <span class="n">del_cim_dmi</span><span class="p">[</span><span class="n">nr2</span><span class="p">,</span> <span class="n">nr1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigmai</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">taui</span> <span class="o">/</span> <span class="p">(</span>
+                    <span class="mi">1</span> <span class="o">+</span> <span class="n">omega</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">taui</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">del_cim_dmi</span> <span class="o">*=</span> <span class="n">m</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+        <span class="n">J_re</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">del_cre_dsigi</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span>
+                          <span class="n">del_cre_dmi</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">J_im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">del_cim_dsigi</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span>
+                          <span class="n">del_cim_dmi</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">J_re</span><span class="p">,</span> <span class="n">J_im</span><span class="p">))</span>
+        <span class="n">J</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">J</span></div>
+
+<div class="viewcode-block" id="dd_conductivity.get_data_base_size"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.get_data_base_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_base_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Usually you do not need to modify this.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get_data_base_dimensions</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="k">return</span> <span class="n">size</span></div>
+
+<div class="viewcode-block" id="dd_conductivity.get_data_base_dimensions"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.get_data_base_dimensions">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_base_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Return a dict with a description of the data base dimensions. In this</span>
+<span class="sd">        case we have frequencies and re/im data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">D_base_dims</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">size</span><span class="p">],</span>
+                       <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cre_cmim&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+                       <span class="p">}</span>
+        <span class="k">return</span> <span class="n">D_base_dims</span></div>
+
+<div class="viewcode-block" id="dd_conductivity.get_model_base_dimensions"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.get_model_base_dimensions">[docs]</a>    <span class="k">def</span> <span class="nf">get_model_base_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a dict with a description of the model base dimensions. In</span>
+<span class="sd">        this case we have one dimension: the DD parameters (rho0, mi) where m_i</span>
+<span class="sd">        denotes all chargeability values corresponding to the relaxation times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">M_base_dims</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sigi_mi&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="n">M_base_dims</span></div>
+
+<div class="viewcode-block" id="dd_conductivity.compute_par_stats"><a class="viewcode-back" href="../../../api/lib_dd.conductivity.html#lib_dd.conductivity.model.dd_conductivity.compute_par_stats">[docs]</a>    <span class="k">def</span> <span class="nf">compute_par_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;For a given parameter set (i.e. a fit result), compute relevant</span>
+<span class="sd">        statistical values such as :math:`m_{tot}`, :math:`m_{tot}^n`,</span>
+<span class="sd">        :math:`\tau_{50}`, :math:`\tau_{mean}`, :math:`\tau_{peak}`</span>
+
+<span class="sd">        This is the way to compute any secondary results based on the fit</span>
+<span class="sd">        results.</span>
+
+<span class="sd">        Store in self.stat_pars = dict()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_class</span><span class="o">.</span><span class="n">integrated_parameters</span><span class="o">.</span><span class="n">compute_par_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">)</span>
+
+        <span class="c1"># self.stat_pars = {}</span>
+        <span class="c1"># the statistical parameters as computed above relate to the</span>
+        <span class="c1"># resistivity formulation. We must correct some of them and add a few</span>
+        <span class="c1"># parameters.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma_infty&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;rho0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">sigma0_linear</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Compute :math:`sigma0` using math:`\sigma_\infty` and</span>
+<span class="sd">            :math:`m_{tot}`:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                \sigma_0 = \sigma_\infty \cdot (1 - m_{tot})</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">sigma0</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma_infty&#39;</span><span class="p">]</span> <span class="o">*</span>\
+                <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;m_tot&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">sigma0</span>
+
+        <span class="k">def</span> <span class="nf">sigma0</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">sigma0_linear</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma0</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">)</span>
+
+        <span class="c1"># rho0 is stored in log10, change sign for 1/rho0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;rho0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma0&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">def</span> <span class="nf">mtotn</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute the conductivity mtotn:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                m_{tot}^n = \frac{m_{tot}}{\sigma_0}</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">mtotn</span> <span class="o">=</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;m_tot&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;rho0&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">mtotn</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;m_tot_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mtotn</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Time-lapse Cole-Cole decomposition routines</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fit_routines.html">Fit Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theory of SIP models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inversion.html">Inversion and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage_and_implementation.html">Usage and implementation details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Profiling and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
