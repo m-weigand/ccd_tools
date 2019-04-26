@@ -4,7 +4,7 @@ import glob
 from setuptools import setup
 
 version_short = '0.8'
-version_long = '0.8.14'
+version_long = '0.8.15'
 
 # generate entry points
 entry_points = {'console_scripts': []}
