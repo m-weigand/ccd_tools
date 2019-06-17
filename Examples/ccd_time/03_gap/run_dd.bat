@@ -1,5 +1,5 @@
 
-dd_time.py -f data/frequencies.dat^
+cdd_time -f data/frequencies.dat^
 	--times data/times.dat^
 	-d data/data.dat^
 	-o results_no_time^
@@ -13,7 +13,7 @@ dd_time.py -f data/frequencies.dat^
 ddpt.py -i results_no_time --plot_stats
 
 
-dd_time.py -f data/frequencies.dat^
+ccd_time -f data/frequencies.dat^
 	--times data/times.dat^
 	-d data/data.dat^
 	-o results^
@@ -26,7 +26,7 @@ dd_time.py -f data/frequencies.dat^
 
 ddpt.py -i results/ --plot_stats
 
-dd_time.py -f data/frequencies.dat^
+ccd_time -f data/frequencies.dat^
 	--times data/times.dat^
 	-d data/data.dat^
 	-o results_tw^

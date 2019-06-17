@@ -2,7 +2,7 @@
 
 outdir="results_time"
 test -d ${outdir} && rm -r ${outdir}
-dd_time.py -f data/frequencies.dat --times data/times.dat\
+ccd_time -f data/frequencies.dat --times data/times.dat\
     -d data/data.dat\
     -o ${outdir}\
     --data_format "cre_cmim"\
@@ -10,5 +10,5 @@ dd_time.py -f data/frequencies.dat --times data/times.dat\
     --tm_i_lambda 5\
     --norm 100 --plot --output_format ascii
 
-# plot time evolutation
+# plot time evolution
 ddpt.py --plot_stats -i ${outdir}

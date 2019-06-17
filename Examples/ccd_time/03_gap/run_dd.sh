@@ -2,7 +2,7 @@
 function baseline()
 {
     test -d results_no_time && rm -r results_no_time
-    dd_time.py -f data/frequencies.dat\
+    ccd_time -f data/frequencies.dat\
         --times data/times.dat\
         -d data/data.dat\
         -o results_no_time\
@@ -19,7 +19,7 @@ function baseline()
 function rho0_reg()
 {
     test -d results && rm -r results
-    dd_time.py -f data/frequencies.dat\
+    ccd_time -f data/frequencies.dat\
         --times data/times.dat\
         -d data/data.dat\
         -o results\
@@ -36,7 +36,7 @@ function rho0_reg()
 function rho0_time_diff()
 {
     test -d results_tw && rm -r results_tw
-    dd_time.py -f data/frequencies.dat\
+    ccd_time -f data/frequencies.dat\
         --times data/times.dat\
         -d data/data.dat\
         -o results_tw\

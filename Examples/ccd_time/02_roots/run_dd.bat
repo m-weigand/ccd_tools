@@ -1,4 +1,4 @@
-dd_time.py -f frequencies.dat --times times.dat -d data.dat^
+cdd_time -f frequencies.dat --times times.dat -d data.dat^
     -o results_no_time_reg -c 1 --plot^
     --f_lambda 5^
     --tm_i_lambda 0^
@@ -6,7 +6,7 @@ dd_time.py -f frequencies.dat --times times.dat -d data.dat^
 ddpt.py -i results_no_time_reg/ --plot_stats
 
 
-dd_time.py -f frequencies.dat --times times.dat -d data.dat^
+cdd_time -f frequencies.dat --times times.dat -d data.dat^
     -o results_time_reg -c 1 --plot^
     --f_lambda 5^
     --tm_i_lambda 1^

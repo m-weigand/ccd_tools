@@ -3,7 +3,7 @@
 # fit without any time regularization
 outdir="results_no_time"
 test -d ${outdir} && rm -r ${outdir}
-DD_STARTING_MODEL=3 dd_time.py -f data/frequencies.dat --times data/times.dat\
+DD_STARTING_MODEL=3 cdd_time -f data/frequencies.dat --times data/times.dat\
     -d data/data.dat\
     -o ${outdir}\
     -c 1 --plot\
