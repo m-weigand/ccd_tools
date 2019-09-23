@@ -1,13 +1,9 @@
 ### Status
 
 [![Join the chat at https://gitter.im/ccd_tools/Lobby](https://badges.gitter.im/ccd_tools/Lobby.svg)](https://gitter.im/ccd_tools/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Build Status](https://travis-ci.org/m-weigand/ccd_tools.svg?branch=master)](https://travis-ci.org/m-weigand/ccd_tools)
-
 [![DOI](https://zenodo.org/badge/68698547.svg)](https://zenodo.org/badge/latestdoi/68698547)
-
 [Try ccd_tools on binder](https://mybinder.org/v2/gh/m-weigand/try-ccd-tools/master?filepath=ccd_test.ipynb)
-
 
 Cole-Cole decomposition routines
 ================================
@@ -46,11 +42,9 @@ Please refer to the [Changelog.md](Changelog.md)
 ## Roadmap
 
 The following functionality is planned to be implemented in the near future
-(Q1-Q3 2018). After that, new feature will probably only be implemented when
+(2020+). After that, new feature will probably only be implemented when
 required. For additional todo-items, please refer to the issues of this project
 and to the file [TODO](TODO).
-
-The current version is 0.8.12
 
 ### 0.9
 
