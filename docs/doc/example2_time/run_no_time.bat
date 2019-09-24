@@ -1,4 +1,4 @@
-dd_time.py -f data/frequencies.dat^
+ccd_time -f data/frequencies.dat^
  --times data/times.dat^
  -d data/data.dat^
  -o "results_no_time"^
