@@ -6,12 +6,10 @@ Generate sample SIP-Spectra for 9 time steps, decreasing linearly tau
 import os
 import numpy as np
 import shutil
-# import crlab_py.colecole as CC
 from sip_models.res.cc import cc as cc_res
 
 # times = range(0, 10) + range(19, 29)
 frequencies = np.logspace(-2, 4, 20)
-fin = np.hstack((frequencies, frequencies))
 
 # generate CC parameters
 np.random.seed(6)
@@ -47,18 +45,12 @@ for timestep in range(0, len(times)):
     cc_list.append(cc_pars)
 
     ccobj = cc_res(frequencies=frequencies)
-    print(cc_pars)
     response = ccobj.response(cc_pars)
-    # import IPython
-    # IPython.embed()
     rmagpha = response.rmag_rpha
     # convert rmag to exp
     rmagpha[:, 0] = np.exp(rmagpha[:, 0])
     rmagpha_nonoise = rmagpha.flatten(order='F')
 
-    # magpha = CC.cole_log(fin, cc_pars).flatten()
-    # magpha[0:magpha.size / 2] = np.exp(magpha[0:magpha.size / 2])
-    # magpha_orig = magpha.copy()
     cr_data_orig.append(rmagpha_nonoise)
     # add noise to phase data
     # magpha[magpha.size / 2:] *= (1 + np.random.normal(-1, 1, size=1) * 0.10)
