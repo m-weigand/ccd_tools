@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting Started &#8212; Time-lapse Cole-Cole decomposition routines 0.8.15 documentation</title>
+    <title>Getting Started &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16-dev documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -44,7 +44,7 @@ and provides two detailed usage examples.</p>
 </div>
 <div class="section" id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
-<div><a class="reference internal image-reference" href="_images/blockdiag-c0bc06430a80acc822a1ec747df35b89305b7484.png"><img height="132.0" src="_images/blockdiag-c0bc06430a80acc822a1ec747df35b89305b7484.png" width="1126.4" /></a></div><p>Given one or more SIP spectra in form of a frequency file and a data file, the
+<div><a class="reference internal image-reference" href="_images/blockdiag-8ab7415dab4ac0bfa6e03569c77e3d971f721ee9.png"><img height="132.0" src="_images/blockdiag-8ab7415dab4ac0bfa6e03569c77e3d971f721ee9.png" width="1126.4" /></a></div><p>Given one or more SIP spectra in form of a frequency file and a data file, the
 decomposition commands could be called directly. However, given the large
 number of possible command line options (and environment variables), it is
 recommended to create a batch file with the command call. This ensures
@@ -306,7 +306,7 @@ or the .sh file):</p>
 </div>
 <p>After executing the corresponding bat/batch file, results will be saved to the
 directory <strong>results/</strong>, with the plot file <strong>plot_times_iteration0006.png</strong>:</p>
-<a class="reference internal image-reference" href="_images/plot_times_iteration0006.png"><img alt="_images/plot_times_iteration0006.png" class="align-center" src="_images/plot_times_iteration0006.png" style="width: 1260.0px; height: 2436.0px;" /></a>
+<a class="reference internal image-reference" href="example2_time/results_no_time/plot_times_iteration0006.png"><img alt="example2_time/results_no_time/plot_times_iteration0006.png" class="align-center" src="example2_time/results_no_time/plot_times_iteration0006.png" /></a>
 <a class="reference internal image-reference" href="_images/plot_times_iteration0005.png"><img alt="_images/plot_times_iteration0005.png" class="align-center" src="_images/plot_times_iteration0005.png" style="width: 1260.0px; height: 2436.0px;" /></a>
 <p>With <strong>dd_time.py</strong>, too, plot can be created afterward by using the command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ddplot</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">i</span> <span class="n">results1</span><span class="o">/</span>
