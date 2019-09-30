@@ -44,14 +44,17 @@ class plot_iteration():
 
     def create_figure(self):
         space_top = 1.2
-        size_x = 14
-        size_y = 2 * self.nr_spectra + space_top
+        space_bottom = 0.5
+        size_x = 18
+        size_y = 2.5 * self.nr_spectra + space_top
 
         fig, axes = plt.subplots(
             self.nr_spectra, 5,
             figsize=(size_x, size_y)
         )
+        # convert to relative sizes
         self.top_margin = (size_y - space_top) / float(size_y)
+        self.bottom_margin = space_bottom / float(size_y)
         axes = np.atleast_2d(axes)
         self.fig = fig
         self.axes = axes
@@ -82,8 +85,15 @@ class plot_iteration():
             xycoords='figure fraction',
         )
 
-        self.fig.tight_layout()
-        self.fig.subplots_adjust(top=self.top_margin)
+        # self.fig.tight_layout()
+        self.fig.subplots_adjust(
+            left=0.04,
+            right=0.98,
+            wspace=0.4,
+            hspace=0.3,
+            top=self.top_margin,
+            bottom=self.bottom_margin,
+        )
 
     def _plot(self, it):
         """Plot one or more spectra
