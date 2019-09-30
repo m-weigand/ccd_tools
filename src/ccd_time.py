@@ -279,8 +279,15 @@ def fit_one_time_series(data):
 def call_fit_functions(data, ND):
     if data['prep_opts']['plot']:
         print('Plotting final iteration')
-        ND.iterations[-1].plot()
-        ND.iterations[-1].plot_reg_strengths()
+        ND.iterations[-1].plot(
+            filename='_iteration_',  # {}'.format(len(ND.iterations)),
+            norm_factors=data['inv_opts']['norm_factors']
+        )
+        # ND.iterations[-1].Model.obj.plot_stats(
+        #     '{0}'.format(len(ND.iterations))
+        # )
+        # ND.iterations[-1].plot_reg_strengths(
+        # )
 
     if data['prep_opts']['plot_it_spectra']:
         for it in ND.iterations:
