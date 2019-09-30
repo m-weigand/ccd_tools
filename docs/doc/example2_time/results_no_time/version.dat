@@ -1,5 +1,7 @@
-# id:ca142f00-e9fa-4abf-97e5-c0c6b3ba6de2
-# 20150730_15h:03m
-# /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat -d data/data.dat -o results_no_time --f_lambda 50 --tm_i_lambda 0 --trho0_lambda 0 --plot
-geccoinv version: 0.5.4-7b5d1aee84f43ca1e7f3ae5faeaacba2328f5797
-dd_interface version: 0.5.4-8c4f58b954b064c3d1006b3047859094e5995077
+# id:ba235051-0be1-4892-a5d8-ce14ff2f4bb5
+# 20190930_13h:27m
+# /home/mweigand/.virtualenvs/ccd/bin/ccd_time -f data/frequencies.dat --times data/times.dat -d data/data.dat -o results_no_time --f_lambda 50 --tm_i_lambda 0 --trho0_lambda 0 --plot
+sip_models version: 0.1.2
+geccoinv version: 0.8.5
+ccd_tools version: 0.8.16.dev0
+

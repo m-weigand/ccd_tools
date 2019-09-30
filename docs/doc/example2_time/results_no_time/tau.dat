@@ -1,6 +1,6 @@
-# id:ca142f00-e9fa-4abf-97e5-c0c6b3ba6de2
-# 20150730_15h:03m
-# /home/mweigand/.local/bin/dd_time.py -f data/frequencies.dat --times data/times.dat -d data/data.dat -o results_no_time --f_lambda 50 --tm_i_lambda 0 --trho0_lambda 0 --plot
+# id:ba235051-0be1-4892-a5d8-ce14ff2f4bb5
+# 20190930_13h:27m
+# /home/mweigand/.virtualenvs/ccd/bin/ccd_time -f data/frequencies.dat --times data/times.dat -d data/data.dat -o results_no_time --f_lambda 50 --tm_i_lambda 0 --trho0_lambda 0 --plot
 # relaxation times used for the decomposition
 1.477440343815754721e-06
 1.658023681909329552e-06
