@@ -236,8 +236,8 @@ def decade_loadings(pars, tau, s):
     f_tau = 1 / (2 * np.pi * tau)
 
     # get min/max of frequencies, rounded to lower/higher decade
-    min_f = np.floor(np.log10(f_tau).min())
-    max_f = np.ceil(np.log10(f_tau).max())
+    min_f = int(np.floor(np.log10(f_tau).min()))
+    max_f = int(np.ceil(np.log10(f_tau).max()))
 
     # generate bins
     bins = np.logspace(min_f, max_f, (max_f - min_f) + 1)

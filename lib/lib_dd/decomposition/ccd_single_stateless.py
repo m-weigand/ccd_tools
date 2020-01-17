@@ -211,6 +211,7 @@ def call_fit_functions(fit_data, ND):
             filename='_iteration_'.format(fit_data['nr']),
             norm_factors=fit_data['inv_opts']['norm_factors']
         )
+        ND.iterations[-1].Model.obj.stat_pars = ND.iterations[-1].stat_pars
         ND.iterations[-1].Model.obj.plot_stats(
             '{0}'.format(fit_data['nr'])
         )

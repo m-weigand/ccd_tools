@@ -16,7 +16,10 @@ class _plot_stats(object):
         f = self.frequencies
         fig, axes = plt.subplots(2, 2, figsize=(5, 4))
         # plot data/fig
-        pars = np.hstack((self.stat_pars['rho0'], self.stat_pars['m_i']))
+        pars = np.hstack((
+            self.stat_pars['rho0'][0],
+            self.stat_pars['m_i'][0]
+        ))
         rre_rim = self.forward(pars)
         rre = rre_rim[:, 0]
         rmim = -rre_rim[:, 1]

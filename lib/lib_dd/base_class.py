@@ -19,8 +19,8 @@ import logging
 import numpy as np
 
 import NDimInv.plot_helper
-plt, mpl = NDimInv.plot_helper.setup()
 import lib_dd.int_pars as int_pars
+plt, mpl = NDimInv.plot_helper.setup()
 
 logger = logging.getLogger('lib_dd.main')
 
@@ -50,11 +50,11 @@ def determine_tau_range(settings):
     else:
         # determine range
         if(settings['tausel'] == 'data'):
-                factor_left = 1
-                factor_right = 1
+            factor_left = 1
+            factor_right = 1
         elif(settings['tausel'] == 'data_ext'):
-                factor_left = 10
-                factor_right = 10
+            factor_left = 10
+            factor_right = 10
         else:
             # try to parse
             items = settings['tausel'].split(',')
@@ -111,12 +111,14 @@ def get_tau_values_for_data(frequencies, Nd, factor_left=1,
     # [1e-4 Hz,1e6 Hz]
     min_tau_f = 1e-15
     max_tau_f = 1e16
-    nr_decades = np.log10(max_tau_f) - np.log10(min_tau_f)
+    nr_decades = int(np.log10(max_tau_f) - np.log10(min_tau_f))
     g_tau_fmin = 1.0 / (2 * np.pi * 1e-15)
     g_tau_fmax = 1.0 / (2 * np.pi * 1e16)
 
     # compile total pool of tau values
     # the (fixed) global frequency range spans 9 order of magnitude
+    # import IPython
+    # IPython.embed()
     N = nr_decades * Nd
     g_tau = np.logspace(np.log10(g_tau_fmin), np.log10(g_tau_fmax), N)
     g_tau_frequencies = 1.0 / (2 * np.pi * g_tau)
@@ -189,8 +191,8 @@ class starting_pars_3():
         self.maxf = self.frequencies.max()
 
         # round to nearest decade below/above min/max-f
-        self.minbin = np.floor(np.log10(self.minf))
-        self.maxbin = np.ceil(np.log10(self.maxf))
+        self.minbin = int(np.floor(np.log10(self.minf)))
+        self.maxbin = int(np.ceil(np.log10(self.maxf)))
 
         # just to be sure, determine tau ranges outside the frequency-derived
         # limits
@@ -200,8 +202,8 @@ class starting_pars_3():
         self.f_tau_max = 1 / (2 * np.pi * self.tau_min)
 
         # round to nearest decade below/above
-        self.min_tau_bin = np.floor(np.log10(self.f_tau_min))
-        self.max_tau_bin = np.ceil(np.log10(self.f_tau_max))
+        self.min_tau_bin = int(np.floor(np.log10(self.f_tau_min)))
+        self.max_tau_bin = int(np.ceil(np.log10(self.f_tau_max)))
 
         # determine limits: we only work on the data range
         if(self.min_tau_bin < self.minbin):
