@@ -54,8 +54,8 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">NDimInv.plot_helper</span>
-<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">lib_dd.int_pars</span> <span class="k">as</span> <span class="nn">int_pars</span>
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;lib_dd.main&#39;</span><span class="p">)</span>
 
@@ -85,11 +85,11 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># determine range</span>
         <span class="k">if</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;data&#39;</span><span class="p">):</span>
-                <span class="n">factor_left</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="n">factor_right</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">factor_left</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">factor_right</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">elif</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;data_ext&#39;</span><span class="p">):</span>
-                <span class="n">factor_left</span> <span class="o">=</span> <span class="mi">10</span>
-                <span class="n">factor_right</span> <span class="o">=</span> <span class="mi">10</span>
+            <span class="n">factor_left</span> <span class="o">=</span> <span class="mi">10</span>
+            <span class="n">factor_right</span> <span class="o">=</span> <span class="mi">10</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># try to parse</span>
             <span class="n">items</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;tausel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
@@ -146,12 +146,14 @@
     <span class="c1"># [1e-4 Hz,1e6 Hz]</span>
     <span class="n">min_tau_f</span> <span class="o">=</span> <span class="mf">1e-15</span>
     <span class="n">max_tau_f</span> <span class="o">=</span> <span class="mf">1e16</span>
-    <span class="n">nr_decades</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">max_tau_f</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">min_tau_f</span><span class="p">)</span>
+    <span class="n">nr_decades</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">max_tau_f</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">min_tau_f</span><span class="p">))</span>
     <span class="n">g_tau_fmin</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">1e-15</span><span class="p">)</span>
     <span class="n">g_tau_fmax</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">1e16</span><span class="p">)</span>
 
     <span class="c1"># compile total pool of tau values</span>
     <span class="c1"># the (fixed) global frequency range spans 9 order of magnitude</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
     <span class="n">N</span> <span class="o">=</span> <span class="n">nr_decades</span> <span class="o">*</span> <span class="n">Nd</span>
     <span class="n">g_tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">g_tau_fmin</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">g_tau_fmax</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span>
     <span class="n">g_tau_frequencies</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">g_tau</span><span class="p">)</span>
@@ -224,8 +226,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">maxf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
         <span class="c1"># round to nearest decade below/above min/max-f</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minf</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxf</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minf</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxbin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxf</span><span class="p">)))</span>
 
         <span class="c1"># just to be sure, determine tau ranges outside the frequency-derived</span>
         <span class="c1"># limits</span>
@@ -235,8 +237,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">f_tau_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau_min</span><span class="p">)</span>
 
         <span class="c1"># round to nearest decade below/above</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_tau_min</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_tau_max</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_tau_min</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_tau_bin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_tau_max</span><span class="p">)))</span>
 
         <span class="c1"># determine limits: we only work on the data range</span>
         <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_tau_bin</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minbin</span><span class="p">):</span>
