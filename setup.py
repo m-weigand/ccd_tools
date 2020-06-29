@@ -19,6 +19,7 @@ if __name__ == '__main__':
     setup(name='ccd_tools',
           version=version_long,
           description='Time-lapse Cole-Cole decomposition routines',
+          long_description_content_type="text/markdown",
           long_description=open('Readme.md', 'r').read(),
           author='Maximilian Weigand and Department of Geophysics,'
           'University of Bonn, Germany',
