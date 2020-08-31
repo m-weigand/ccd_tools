@@ -19,8 +19,8 @@ import numpy as np
 import logging
 
 import NDimInv.plot_helper
-plt, mpl = NDimInv.plot_helper.setup()
 import sip_formats.convert as sip_convert
+plt, mpl = NDimInv.plot_helper.setup()
 
 
 class plot_iteration():
@@ -102,7 +102,7 @@ class plot_iteration():
 
         D = it.Data.D / self.norm_factors
         M = it.Model.convert_to_M(it.m)
-        # renormalize here? why do we compuate the forward solution again?
+        # renormalize here? why do we compute the forward solution again?
         F = it.Model.F(M) / self.norm_factors
         extra_size = int(
             np.sum([x[1][1] for x in it.Data.extra_dims.items()]))
@@ -117,6 +117,8 @@ class plot_iteration():
             self._plot_rtd(nr, axes[nr, 4], M[m], it)
             ax1 = axes[nr, 0].twinx()
             ax2 = axes[nr, 1].twinx()
+            for ax in (ax1, ax2):
+                ax.grid(None)
             self._plot_cre_cim(nr, [ax1, ax2], D[d], F[d], it)
 
         self.finalize_fig()
@@ -227,7 +229,7 @@ class plot_iteration():
         ax.semilogx(frequencies, rre_rim_orig[:, 0], '.', color='k')
         ax.semilogx(frequencies, rre_rim_fit[:, 0], '-', color='k')
         ax.set_xlabel('frequency [Hz]')
-        ax.set_ylabel(r"$-\rho'~[\Omega m]$")
+        ax.set_ylabel(r"$\rho'~[\Omega m]$")
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
         ax = axes[1]
@@ -236,7 +238,7 @@ class plot_iteration():
         ax.semilogx(frequencies, -rre_rim_fit[:, 1], '-', color='k',
                     label='fit')
         ax.set_xlabel('frequency [Hz]')
-        ax.set_ylabel(r"$-\rho''~[\Omega m]$")
+        ax.set_ylabel(r"$\rho''~[\Omega m]$")
         ax.xaxis.set_major_locator(mpl.ticker.LogLocator(numticks=4))
 
         self._mark_tau_parameters_f(nr, ax, it)
@@ -260,7 +262,7 @@ class plot_iteration():
                     ax.axvline(x=10**tpeak, color='k', label=r'$\tau_{peak}^' +
                                '{0}'.format(index) + '$',
                                linestyle='dashed')
-            except:
+            except Exception:
                 pass
 
         try:
