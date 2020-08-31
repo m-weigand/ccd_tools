@@ -54,8 +54,8 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">NDimInv.plot_helper</span>
-<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">sip_formats.convert</span> <span class="k">as</span> <span class="nn">sip_convert</span>
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="plot_iteration"><a class="viewcode-back" href="../../api/lib_dd.html#lib_dd.plot.plot_iteration">[docs]</a><span class="k">class</span> <span class="nc">plot_iteration</span><span class="p">():</span>
@@ -137,7 +137,7 @@
 
         <span class="n">D</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">D</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_factors</span>
         <span class="n">M</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">convert_to_M</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">m</span><span class="p">)</span>
-        <span class="c1"># renormalize here? why do we compuate the forward solution again?</span>
+        <span class="c1"># renormalize here? why do we compute the forward solution again?</span>
         <span class="n">F</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">F</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_factors</span>
         <span class="n">extra_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">extra_dims</span><span class="o">.</span><span class="n">items</span><span class="p">()]))</span>
@@ -152,6 +152,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_plot_rtd</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">axes</span><span class="p">[</span><span class="n">nr</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">it</span><span class="p">)</span>
             <span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">nr</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
             <span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">nr</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">):</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_plot_cre_cim</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">],</span> <span class="n">D</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">F</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">it</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">finalize_fig</span><span class="p">()</span>
@@ -262,7 +264,7 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">rre_rim_orig</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">rre_rim_fit</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$-\rho&#39;~[\Omega m]$&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\rho&#39;~[\Omega m]$&quot;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">numticks</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
         <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -271,7 +273,7 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="o">-</span><span class="n">rre_rim_fit</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
                     <span class="n">label</span><span class="o">=</span><span class="s1">&#39;fit&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$-\rho&#39;&#39;~[\Omega m]$&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\rho&#39;&#39;~[\Omega m]$&quot;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">numticks</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_mark_tau_parameters_f</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">it</span><span class="p">)</span>
@@ -295,7 +297,7 @@
                     <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="n">tpeak</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\tau_</span><span class="si">{peak}</span><span class="s1">^&#39;</span> <span class="o">+</span>
                                <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span>
                                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">pass</span>
 
         <span class="k">try</span><span class="p">:</span>
