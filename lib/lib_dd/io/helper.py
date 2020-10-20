@@ -19,12 +19,7 @@ def save_f(fid, final_iterations, norm_factors):
             extra_dim = 1
         f_data = f_data.T
 
-        # import pdb
-        # pdb.set_trace()
         f_data = f_data.reshape(extra_dim, base_dim)
-        if norm_factors is not None:
-            print('normalising')
-            f_data /= norm_factors[index]
         np.savetxt(fid, f_data)
 
     open('f_format.dat', 'w').write(itd[0].Data.obj.data_format)

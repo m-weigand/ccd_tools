@@ -94,7 +94,7 @@ def write_pc_infos(fid):
         'git log -1 | grep commit',
         shell=True
     )
-    git_branch = subprocess.check_output('git branch | grep "\*"', shell=True)
+    git_branch = subprocess.check_output(r'git branch | grep "\*"', shell=True)
     uname = subprocess.check_output('uname -a', shell=True)
     cpu = subprocess.check_output(
         'cat /proc/cpuinfo  | grep "model name" | head -1', shell=True)
@@ -107,7 +107,7 @@ def write_pc_infos(fid):
 
 
 def _get_data_files_for_binary(options):
-    return available_binaries[options.binary + '.py']['data_files'].values()
+    return list(available_binaries[options.binary]['data_files'].values())
 
 
 def initialize_new_test_dir(options):
@@ -136,7 +136,7 @@ def initialize_new_test_dir(options):
         # now write default dd_single.py call
         default_N = 20
         default_nr_cores = 1
-        fid.write(options.binary + '.py\n')
+        fid.write(options.binary + '\n')
         fid.write('-n {0}\n-c {1}\n--silent\n'.format(
             default_N, default_nr_cores))
 
