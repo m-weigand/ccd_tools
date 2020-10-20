@@ -165,22 +165,88 @@ def fit_one_spectrum(fit_data):
     final_iteration = ND.iterations[-1]
 
     # renormalize data (we deal only with one spectrum here)
-    if(False and fit_data['inv_opts']['norm_factors'] is not None):
-        norm_fac = fit_data['inv_opts']['norm_factors']
+    if fit_data['inv_opts']['norm_factors'] is not None:
+        norm_factors = fit_data['inv_opts']['norm_factors']
 
-        # add normalization factor to the parameters
-        final_iteration.m[0] -= np.log10(norm_fac)
-        final_iteration.f = final_iteration.Model.f(final_iteration.m)
+        for iteration in ND.iterations:
+            # add normalization factor to the parameters (log10
+            # parameterization !)
+            iteration.m[0] -= np.log10(norm_factors)
+            iteration.f = iteration.Model.f(iteration.m)
+            # note that we use .stat_pars as a parameter. This is a property
+            # which triggers the initial aggregation/computation of the
+            # parameters. Only then can we modify them.
+            # iteration.statpars = renormalize_statpars(
+            #     iteration.stat_pars, norm_factors
+            # )
+
         # data
         # note: the normalization factor can be applied either to the
         # magnitude, or to both real and imaginary parts!
-        final_iteration.Data.D /= norm_fac
+        # also note: all iterations refer to the same Data object, therefore we
+        # must only re-normalize once!
+        # print('pre norm', final_iteration.Data.D)
+        final_iteration.Data.D /= norm_factors
 
     call_fit_functions(fit_data, ND)
 
     # invoke the garbage collection just to be sure
     gc.collect()
     return ND
+
+
+def renormalize_statpars(stat_pars_dict, norm_factors):
+    """Given normalization factors for each spectrum, renormalize relevant stat
+    pars. Return the modified dictionary.
+
+    Parameters
+    ----------
+    stat_pars_dict : dict
+        dictionary containing the stat pars of an iteration
+        (iteration.stat_pars)
+    norm_factors : numpy.ndarray
+        Normalization factors for the spectra
+
+    Returns
+    -------
+    stat_pars_dict : dict
+        dictionary containing the stat pars of an iteration
+        (iteration.stat_pars)
+
+    """
+    if norm_factors is None:
+        return stat_pars_dict
+
+    # renormalize all parameters containing rho0
+    # Note: When the conductivity model is used, the normalisation factors
+    # refer to the data in conductivities, and correspondingly, sigma_0. As we
+    # apply the normalisation to a resistivity (rho_0) parameter, we have to
+    # invert the normalisations, which manifests as a sign change in the log
+    # operations
+    # if key == 'rho0' and norm_factors is not None):
+    # rho0 is log10
+    if int(os.environ.get('DD_COND', 0)) == 1:
+        stat_pars_dict['rho0'] += np.log10(norm_factors).squeeze()
+    else:
+        stat_pars_dict['rho0'] -= np.log10(norm_factors).squeeze()
+
+    # if(key == 'sigma0' and norm_factors is not None):
+    #     # sigma0 is log10
+    #     # renormalize
+    #     values -= np.log10(norm_factors).squeeze()
+
+    # if key == 'sigma_infty' and norm_factors is not None:
+    #     # sigma0 is log10
+    #     # renormalize
+    #     values -= np.log10(norm_factors).squeeze()
+
+    # if(key == 'm_tot_n' and norm_factors is not None):
+    #     # renormalize
+    #     if int(os.environ.get('DD_COND', 0)) == 1:
+    #         values -= np.log10(norm_factors).squeeze()
+    #     else:
+    #         values += np.log10(norm_factors).squeeze()
+    return stat_pars_dict
 
 
 def call_fit_functions(fit_data, ND):
