@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Mathematical helper terms &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mathematical helper terms &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Debye decomposition resistivities" href="theory_dd_res.html" />
@@ -39,12 +38,12 @@
 <p>The following expressions are used in the following presentation of the various
 model equations:</p>
 <div class="math">
-<p><img src="_images/math/35564bef40665cabdce6a0a8fc840d3c466dd448.png" alt="j &amp;= e^{j \frac{\pi}{2}}\\
+<p><img src="_images/math/da9cd9b4c02e3e119a85c90d58253f58ec619d15.png" alt="j &amp;= e^{j \frac{\pi}{2}}\\
 \Rightarrow j^c &amp;= \left(e^{j \frac{\pi}{2}} \right)^c\\
 &amp;= e^{j \frac{c \pi}{2}}\\
 &amp;= \cos\left(\frac{c \pi}{2}\right) + j \sin{\left(\frac{c \pi}{2}\right)}"/></p>
 </div><div class="math">
-<p><img src="_images/math/b90dd4b4559a743184f8f6c3239a45c0004adc6d.png" alt="\frac{1}{1 + (j \omega \tau)^c} &amp;= \frac{1}{1 + \cos\left(\frac{c
+<p><img src="_images/math/0ce2a804c1d0cd8291592090353465f3fce5a48c.png" alt="\frac{1}{1 + (j \omega \tau)^c} &amp;= \frac{1}{1 + \cos\left(\frac{c
 \pi}{2}\right) + j \sin \left(\frac{c \pi}{2}\right)}\\
 &amp;= \frac{1 + (\omega \tau)^c \cos \left(\frac{c \pi}{2}\right) - j (\omega
 \tau)^c \sin\left( \frac{c \pi}{2}\right)}{\left[1 + (\omega \tau)^c \cos
@@ -60,7 +59,7 @@ model equations:</p>
 \tau)^c \sin\left( \frac{c \pi}{2}\right)}{1 + 2 (\omega \tau)^c \cos
 \left(\frac{c \pi}{2}\right) + (\omega \tau)^{2c}}"/></p>
 </div><div class="math">
-<p><img src="_images/math/7727fe57a15374f3840978e1be677a03966557df.png" alt="\frac{\partial}{\partial c} (\omega \tau)^c &amp;= \frac{\partial}{\partial c}
+<p><img src="_images/math/ee0e819bcd925d42645eb2882f43c6c739f42079.png" alt="\frac{\partial}{\partial c} (\omega \tau)^c &amp;= \frac{\partial}{\partial c}
 e^{\ln (\omega \tau)^c} = \frac{\partial e^{c \ln (\omega \tau)}}{\partial
 c} = \ln (\omega \tau) \cdot e^{c \ln (\omega \tau)} = \ln (\omega \tau)
 (\omega \tau)^c\\
@@ -72,25 +71,25 @@ c} = \ln (\omega \tau) \cdot e^{c \ln (\omega \tau)} = \ln (\omega \tau)
 \frac{\partial}{\partial c} \left[2 (\omega \tau)^c \cos \frac{c \pi}{2} \right] &amp;=
 2 \ln(\omega \tau) (\omega \tau)^c \cos \frac{c \pi}{2} - 2 (\omega \tau)^c \frac{\pi}{2} \sin \frac{c \pi}{2}"/></p>
 </div><div class="math">
-<p><img src="_images/math/f36f69621e2c7bc24ebc6a937b48dfee2e3dc066.png" alt="\frac{\partial}{\partial c} (\omega \tau)^c &amp;= c \omega (\omega \tau)^{c - 1}\\
+<p><img src="_images/math/1b0785b4b6b382aed1c03dd4a0e2a1fc582f16b7.png" alt="\frac{\partial}{\partial c} (\omega \tau)^c &amp;= c \omega (\omega \tau)^{c - 1}\\
 \frac{\partial}{\partial c} \left[ 1 + 2 (\omega \tau)^c \cos \frac{c \pi}{2} + (\omega \tau)^{2 c} \right] &amp;=
 2 c \omega (\omega \tau)^{c -1} \cos \frac{c \pi}{2} + 2 c (\omega \tau)^{2
 c - 1} \omega"/></p>
-</div><p>Partial derivatives respect to <img class="math" src="_images/math/bf70a14c33ee3b136a8749574dfff83c1de6a592.png" alt="log_{10}(x)"/>:</p>
+</div><p>Partial derivatives respect to <img class="math" src="_images/math/b0bdf5981b72ab813f6d36bed62996ca6935a46f.png" alt="log_{10}(x)"/>:</p>
 <div class="math">
-<p><img src="_images/math/ee3558586bae0266f3fd87a5987a86448600c5a9.png" alt="\frac{\partial y}{\partial x} &amp;= \frac{\partial y}{\partial u} \cdot \frac{\partial u}{\partial x}\\
+<p><img src="_images/math/7dd5cf47273fcc8b5d47e01d23483c0ef613f6bd.png" alt="\frac{\partial y}{\partial x} &amp;= \frac{\partial y}{\partial u} \cdot \frac{\partial u}{\partial x}\\
 \frac{\partial F(X)}{\partial x} &amp;= \frac{\partial F(X)}{\partial log_{10}(x)} \cdot \frac{\partial log_{10}(x)}{\partial x}\\
 \frac{\partial F(X)}{\partial x} &amp;= \frac{\partial F(X)}{\partial log_{10}(x)} \cdot \frac{1}{x \cdot log(x)}\\
 \Rightarrow \frac{\partial F(X)}{\partial log_{10}(x)} &amp;= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)"/></p>
 </div><p>Remember:</p>
 <ul class="simple">
-<li><img class="math" src="_images/math/a3af7d5d3cb536967162cfaa3c65419ff5b0c7cc.png" alt="\frac{\partial}{\partial x} \cdot 10^x = log_e(10) 10^x"/></li>
-<li><img class="math" src="_images/math/07e80c9e618cbdf740d4c4776f93109baad75372.png" alt="log_{10}(F(x)) = \frac{log_e(F(x))}{log_e(10)}"/></li>
-<li><img class="math" src="_images/math/3a6e54c81e56a21dd8a3bc55171340058016d813.png" alt="\frac{\partial}{\partial x} log_{10}(F(x)) = \frac{1}{log_e(10)} \cdot
-\frac{1}{F(x)} \cdot \frac{\partial F(x)}{\partial x}"/></li>
+<li><p><img class="math" src="_images/math/c315bdddd6292c2f894654280de0a817798c659e.png" alt="\frac{\partial}{\partial x} \cdot 10^x = log_e(10) 10^x"/></p></li>
+<li><p><img class="math" src="_images/math/c9aa2eb0ebd15895089b5814c8a9f7422afa4ddb.png" alt="log_{10}(F(x)) = \frac{log_e(F(x))}{log_e(10)}"/></p></li>
+<li><p><img class="math" src="_images/math/047379598d29592dd126cf3f6a11ec902a432bcf.png" alt="\frac{\partial}{\partial x} log_{10}(F(x)) = \frac{1}{log_e(10)} \cdot
+\frac{1}{F(x)} \cdot \frac{\partial F(x)}{\partial x}"/></p></li>
 </ul>
 <div class="math">
-<p><img src="_images/math/841c3de1921e8579c5e7d68c3dc432a5f6b39d95.png" alt="\frac{\partial F(x)}{\partial \log_{10}(x)} &amp;= \\
+<p><img src="_images/math/e36ac67151b617fa69cd674b7c52c8c74da8f6b6.png" alt="\frac{\partial F(x)}{\partial \log_{10}(x)} &amp;= \\
 \frac{\partial log_{10}(F(x))}{\partial x} &amp;= \\
 \frac{\partial log_{10}(F(x))}{\partial \log_{10}(x)} &amp;= \\"/></p>
 </div></div>
@@ -152,17 +151,15 @@ c - 1} \omega"/></p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -179,7 +176,7 @@ c - 1} \omega"/></p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

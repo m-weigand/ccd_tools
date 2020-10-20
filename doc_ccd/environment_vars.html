@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Environment variables &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Environment variables &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="ccd_time" href="programs/ccd_time.html" />
@@ -38,18 +37,15 @@
 <span id="environ-vars"></span><h1>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h1>
 <p><em>dd_single.py</em> and <em>dd_time.py</em> recognize the following environment variables:</p>
 <ul>
-<li><p class="first"><strong>DD_COND</strong>: Switch between the resistivity (<strong>DD_COND=0</strong>, default) and conductivity
+<li><p><strong>DD_COND</strong>: Switch between the resistivity (<strong>DD_COND=0</strong>, default) and conductivity
 (<strong>DD_COND=1</strong>) model formulations. See <a class="reference internal" href="theory.html"><span class="doc">Theory of SIP models</span></a> for more information on
-the formulations.</p>
-</li>
-<li><p class="first"><strong>DD_STARTING_MODEL</strong>: Switch between different heuristics to generate the
-starting models. Valid values are 1 (default), 2, 3</p>
-</li>
-<li><p class="first"><strong>DD_C</strong>: (resistivity only) Use a Cole-Cole decomposition with the provided
+the formulations.</p></li>
+<li><p><strong>DD_STARTING_MODEL</strong>: Switch between different heuristics to generate the
+starting models. Valid values are 1 (default), 2, 3</p></li>
+<li><p><strong>DD_C</strong>: (resistivity only) Use a Cole-Cole decomposition with the provided
 <em>c</em> value. Values larger than 0 and smaller, or equal to, 1 are valid.
-Default is 1 (the Debye decomposition).</p>
-</li>
-<li><p class="first"><strong>DD_TAU_X</strong>: Sets the cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> which shall
+Default is 1 (the Debye decomposition).</p></li>
+<li><p><strong>DD_TAU_X</strong>: Sets the cumulative relaxation times <img class="math" src="_images/math/8741f4c08abf23665dc3a82b33a0d3b28e52b03f.png" alt="\tau_x"/> which shall
 be computed. The string separates the requested percentages as fractions with
 ‘;’ characters.</p>
 <p>For example, the following call to <strong>cdd_single</strong> computes the 20%, 35%, and 60%
@@ -58,12 +54,10 @@ percentiles of the RTD:</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><strong>DD_DEBUG_STARTING_PARS</strong>: internal parameter</p>
-</li>
-<li><p class="first"><strong>DD_USE_LATEX</strong>: Enable the Latex backend. Plot labels will be processed by
+<li><p><strong>DD_DEBUG_STARTING_PARS</strong>: internal parameter</p></li>
+<li><p><strong>DD_USE_LATEX</strong>: Enable the Latex backend. Plot labels will be processed by
 Latex, producing better plot output. On Windows, this requires a working
-MiKTex install. On by default on Linux, off by default on Windows.</p>
-</li>
+MiKTex install. On by default on Linux, off by default on Windows.</p></li>
 </ul>
 <div class="section" id="usage-windows">
 <h2>Usage Windows<a class="headerlink" href="#usage-windows" title="Permalink to this headline">¶</a></h2>
@@ -111,13 +105,13 @@ this:</p>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="fit_routines.html">Fit Routines</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="programs/ccd_single.html">ccd_single</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="programs/ccd_single.html">ccd_single</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="programs/ccd_time.html">ccd_time</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Environment variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="programs/ccd_single.html#command-line-options">Command line options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="programs/ccd_single.html#usage-examples">Usage Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/ccd_time.html#command-line-options">Command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programs/ccd_time.html#regularisation-parameters">Regularisation Parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="programs/ccd_time.html">ccd_time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="programs/ddps.html">ddps.py</a></li>
 </ul>
 </li>
@@ -142,17 +136,15 @@ this:</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -169,7 +161,7 @@ this:</p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

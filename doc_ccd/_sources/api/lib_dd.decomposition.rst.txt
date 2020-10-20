@@ -8,23 +8,22 @@ lib\_dd.decomposition.ccd\_single module
 ----------------------------------------
 
 .. automodule:: lib_dd.decomposition.ccd_single
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.decomposition.ccd\_single\_stateless module
 ---------------------------------------------------
 
 .. automodule:: lib_dd.decomposition.ccd_single_stateless
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
 
 .. automodule:: lib_dd.decomposition
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Integral Parameters &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integral Parameters &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Inversion and implementation details" href="inversion.html" />
@@ -44,51 +43,49 @@ relaxation times, i.e. the time scales on which the polarization processes take
 place:</p>
 <p><strong>Chargeability parameters:</strong></p>
 <ul class="simple">
-<li>The total chargeability <img class="math" src="_images/math/0eea4ef4b93f6a743eec122fbaa62ce96056c306.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
+<li><p>The total chargeability <img class="math" src="_images/math/47067ff1568b5f3fb97ebcba5400a5accfc75f1d.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
 DD to the chargeability as defined by Seigel, 1959:
-<img class="math" src="_images/math/b7de0cd881d4ebeedf790705a9f077a6db476278.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
+<img class="math" src="_images/math/23f03bc0be9a71ad508b17804ae4e14d9dfd8d49.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
 = \frac{\rho_0 - \rho_{\infty}}{\rho_0}"/> (this is also the definition used
-for <img class="math" src="_images/math/de1ecb8a22c7385c220191eeedd2f64a9d549209.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
+for <img class="math" src="_images/math/35d5f9db82732d22123b97a58571debf933b94da.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
 the polarisation response of the system must be located within the measured
 frequency range for the DD to pick it up, while the original definition of
 the chargeability extends over the whole frequency domain. Thus, not fully
 resolved polarization peaks indicate an underestimation of the total
-polarization of the system by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/> in the DD.</li>
-<li>Nordsiek and Weller, 2008 computed chargeability sums for each
-relaxation time decades, normed by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>. These so called <em>decade
-loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</li>
-<li>The total, normalized chargeability <img class="math" src="_images/math/84792cf1dcf347ca8690383632fa41541407bcea.png" alt="m_{tot}^n =
+polarization of the system by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/> in the DD.</p></li>
+<li><p>Nordsiek and Weller, 2008 computed chargeability sums for each
+relaxation time decades, normed by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/>. These so called <em>decade
+loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</p></li>
+<li><p>The total, normalized chargeability <img class="math" src="_images/math/84299d85abbb04d56dc2feee046904969f22cdf2.png" alt="m_{tot}^n =
 \frac{m_{tot}}{\rho_0}"/> is obtained by normalizing the total chargeability
 with the DC resistivity (Scott2003phd, Weller2010g_a). It gives an indication
 of the total polarization of the measured system without any influence of any
-occuring resistivity contrasts.</li>
+occuring resistivity contrasts.</p></li>
 </ul>
 <p><strong>Relaxation time parameters:</strong></p>
 <p>Various parameters to determine characteristic relaxation times from the whole
 RTD were proposed:</p>
 <ul>
-<li><p class="first">Cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> denote relaxation times at which a
-certain percentage <img class="math" src="_images/math/a59f68a4202623bb859a7093f0316bf466e6f75d.png" alt="x"/> of chargeability is reached (Norsieg and Weller,
-2008; Zisser et al. 2010). For example, <img class="math" src="_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/> is the median
+<li><p>Cumulative relaxation times <img class="math" src="_images/math/8741f4c08abf23665dc3a82b33a0d3b28e52b03f.png" alt="\tau_x"/> denote relaxation times at which a
+certain percentage <img class="math" src="_images/math/888f7c323ac0341871e867220ae2d76467d74d6e.png" alt="x"/> of chargeability is reached (Norsieg and Weller,
+2008; Zisser et al. 2010). For example, <img class="math" src="_images/math/87a28e18806f1353e6cc4c81824d68478d004beb.png" alt="\tau_{50}"/> is the median
 relaxation time of a given RTD. (See ref:<cite>environ_vars</cite> on how to set
-individual percentages).</p>
-</li>
-<li><p class="first">Nordsiek and Weller, 2008 introduced the non-uniformity parameter
-<img class="math" src="_images/math/ecf4f7bf7a9c35002142e9c4440a05fe61eb53c0.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
+individual percentages).</p></li>
+<li><p>Nordsiek and Weller, 2008 introduced the non-uniformity parameter
+<img class="math" src="_images/math/78cde04fd76a4f958a477005745afe2ac6513823.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
 the RTD. However, no information regarding the number of siginificant peaks
-in the RTD can be derived using <img class="math" src="_images/math/491725783c41191a4189a34edce3f84ee1041440.png" alt="U_{\tau}"/>.</p>
-</li>
-<li><p class="first">Tong et al, 2004 use the arithmetic and geometric means of the relaxation
+in the RTD can be derived using <img class="math" src="_images/math/ca5e4fb53a597c34afc72c4ae2d7cbcd29e0b725.png" alt="U_{\tau}"/>.</p></li>
+<li><p>Tong et al, 2004 use the arithmetic and geometric means of the relaxation
 times for further analysis:</p>
 <div class="math">
-<p><img src="_images/math/d5d30bb6d4aa9a0cde7f9a299fd1f6307bd6a77a.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
+<p><img src="_images/math/fdb949a1400a52d6c9d2ec02e4a89c956700c750.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
 m_i}}\\
 \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}"/></p>
 </div></li>
-<li><p class="first">Nordsiek et al., 2008 introduced the logarithmic average relaxation time
-<img class="math" src="_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/></p>
+<li><p>Nordsiek et al., 2008 introduced the logarithmic average relaxation time
+<img class="math" src="_images/math/f91ba61d7586ee933f9d765afb21d52cb241039c.png" alt="\tau_{mean}"/></p>
 <div class="math">
-<p><img src="_images/math/096c36c1d7e9370023dff01ea83f68ca301ff77f.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
+<p><img src="_images/math/88b2ae698a77eb4f638232000954b06d4424c621.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
 </div></li>
 </ul>
 <p>The listed relaxation time parameters do not take into account the specific
@@ -97,10 +94,10 @@ distribution, e.g. to extract characteristic relaxation times specific to
 certain polarisation peaks. This approach has conceptual similarities to the
 use of (multi-)Cole-Cole models as the produced relaxation times can be
 directly related to polarization peaks. The relaxation time with the larges
-corresponding chargeability is called <img class="math" src="_images/math/8c55aa67d14e17cfadb5a43af42910c7de07f254.png" alt="\tau_{max}"/>
+corresponding chargeability is called <img class="math" src="_images/math/1ea7118aede0e0197f3ad81a320cb99e98fd5cf4.png" alt="\tau_{max}"/>
 (Attwa2013hess), and the in the generalized form the
-relaxation time <img class="math" src="_images/math/7ca58f698a41084bca3a6b233db2de53853241bc.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
-the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values).
+relaxation time <img class="math" src="_images/math/92246e5103cc2e8841fb344a5676abe7af62ae38.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
+the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values).
 This approach can recover multiple peaks without any knowlegdge of the exact
 number of peaks in the data.  However, this process can yield multiple small
 maxima if the smoothing between adjacent chargeabilitiy values is not strong
@@ -114,50 +111,48 @@ relaxation times, i.e. the time scales on which the polarization processes take
 place:</p>
 <p><strong>Chargeability parameters:</strong></p>
 <ul class="simple">
-<li>The total chargeability <img class="math" src="_images/math/0eea4ef4b93f6a743eec122fbaa62ce96056c306.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
+<li><p>The total chargeability <img class="math" src="_images/math/47067ff1568b5f3fb97ebcba5400a5accfc75f1d.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
 DD to the chargeability as defined by Seigel, 1959:
-<img class="math" src="_images/math/b7de0cd881d4ebeedf790705a9f077a6db476278.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
+<img class="math" src="_images/math/23f03bc0be9a71ad508b17804ae4e14d9dfd8d49.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
 = \frac{\rho_0 - \rho_{\infty}}{\rho_0}"/> (this is also the definition used
-for <img class="math" src="_images/math/de1ecb8a22c7385c220191eeedd2f64a9d549209.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
+for <img class="math" src="_images/math/35d5f9db82732d22123b97a58571debf933b94da.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
 the polarisation response of the system must be located within the measured
 frequency range for the DD to pick it up, while the original definition of
 the chargeability extends over the whole frequency domain. Thus, not fully
 resolved polarization peaks indicate an underestimation of the total
-polarization of the system by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/> in the DD.</li>
-<li>Nordsiek and Weller, 2008 computed chargeability sums for each
-relaxation time decades, normed by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>. These so called <em>decade
-loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</li>
-<li>The total, normalized chargeability <img class="math" src="_images/math/84792cf1dcf347ca8690383632fa41541407bcea.png" alt="m_{tot}^n =
+polarization of the system by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/> in the DD.</p></li>
+<li><p>Nordsiek and Weller, 2008 computed chargeability sums for each
+relaxation time decades, normed by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/>. These so called <em>decade
+loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</p></li>
+<li><p>The total, normalized chargeability <img class="math" src="_images/math/84299d85abbb04d56dc2feee046904969f22cdf2.png" alt="m_{tot}^n =
 \frac{m_{tot}}{\rho_0}"/> is obtained by normalizing the total chargeability
 with the DC resistivity (Scott2003phd, Weller2010g_a). It gives an indication
 of the total polarization of the measured system without any influence of any
-occuring resistivity contrasts.</li>
+occuring resistivity contrasts.</p></li>
 </ul>
 <p><strong>Relaxation time parameters:</strong></p>
 <p>Various parameters to determine characteristic relaxation times from the whole
 RTD were proposed:</p>
 <ul>
-<li><p class="first">Cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> denote relaxation times at which a
-certain percentage <img class="math" src="_images/math/a59f68a4202623bb859a7093f0316bf466e6f75d.png" alt="x"/> of chargeability is reached
+<li><p>Cumulative relaxation times <img class="math" src="_images/math/8741f4c08abf23665dc3a82b33a0d3b28e52b03f.png" alt="\tau_x"/> denote relaxation times at which a
+certain percentage <img class="math" src="_images/math/888f7c323ac0341871e867220ae2d76467d74d6e.png" alt="x"/> of chargeability is reached
 (Norsieg and Weller, 2008; Zisser et al. 2010). For example,
-<img class="math" src="_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/> is the median relaxation time of a given RTD.</p>
-</li>
-<li><p class="first">Nordsiek and Weller, 2008 introduced the non-uniformity parameter
-<img class="math" src="_images/math/ecf4f7bf7a9c35002142e9c4440a05fe61eb53c0.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
+<img class="math" src="_images/math/87a28e18806f1353e6cc4c81824d68478d004beb.png" alt="\tau_{50}"/> is the median relaxation time of a given RTD.</p></li>
+<li><p>Nordsiek and Weller, 2008 introduced the non-uniformity parameter
+<img class="math" src="_images/math/78cde04fd76a4f958a477005745afe2ac6513823.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
 the RTD. However, no information regarding the number of siginificant peaks
-in the RTD can be derived using <img class="math" src="_images/math/491725783c41191a4189a34edce3f84ee1041440.png" alt="U_{\tau}"/>.</p>
-</li>
-<li><p class="first">Tong et al, 2004 use the arithmetic and geometric means of the relaxation
+in the RTD can be derived using <img class="math" src="_images/math/ca5e4fb53a597c34afc72c4ae2d7cbcd29e0b725.png" alt="U_{\tau}"/>.</p></li>
+<li><p>Tong et al, 2004 use the arithmetic and geometric means of the relaxation
 times for further analysis:</p>
 <div class="math">
-<p><img src="_images/math/d5d30bb6d4aa9a0cde7f9a299fd1f6307bd6a77a.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
+<p><img src="_images/math/fdb949a1400a52d6c9d2ec02e4a89c956700c750.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
 m_i}}\\
 \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}"/></p>
 </div></li>
-<li><p class="first">Nordsiek et al., 2008 introduced the logarithmic average relaxation time
-<img class="math" src="_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/></p>
+<li><p>Nordsiek et al., 2008 introduced the logarithmic average relaxation time
+<img class="math" src="_images/math/f91ba61d7586ee933f9d765afb21d52cb241039c.png" alt="\tau_{mean}"/></p>
 <div class="math">
-<p><img src="_images/math/096c36c1d7e9370023dff01ea83f68ca301ff77f.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
+<p><img src="_images/math/88b2ae698a77eb4f638232000954b06d4424c621.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
 </div></li>
 </ul>
 <p>The listed relaxation time parameters do not take into account the specific
@@ -166,10 +161,10 @@ distribution, e.g. to extract characteristic relaxation times specific to
 certain polarisation peaks. This approach has conceptual similarities to the
 use of (multi-)Cole-Cole models as the produced relaxation times can be
 directly related to polarization peaks. The relaxation time with the larges
-corresponding chargeability is called <img class="math" src="_images/math/8c55aa67d14e17cfadb5a43af42910c7de07f254.png" alt="\tau_{max}"/>
+corresponding chargeability is called <img class="math" src="_images/math/1ea7118aede0e0197f3ad81a320cb99e98fd5cf4.png" alt="\tau_{max}"/>
 (Attwa2013hess), and the in the generalized form the
-relaxation time <img class="math" src="_images/math/7ca58f698a41084bca3a6b233db2de53853241bc.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
-the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values).
+relaxation time <img class="math" src="_images/math/92246e5103cc2e8841fb344a5676abe7af62ae38.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
+the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values).
 This approach can recover multiple peaks without any knowlegdge of the exact
 number of peaks in the data.  However, this process can yield multiple small
 maxima if the smoothing between adjacent chargeabilitiy values is not strong
@@ -184,51 +179,49 @@ relaxation times, i.e. the time scales on which the polarization processes take
 place:</p>
 <p><strong>Chargeability parameters:</strong></p>
 <ul class="simple">
-<li>The total chargeability <img class="math" src="_images/math/0eea4ef4b93f6a743eec122fbaa62ce96056c306.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
+<li><p>The total chargeability <img class="math" src="_images/math/47067ff1568b5f3fb97ebcba5400a5accfc75f1d.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
 DD to the chargeability as defined by Seigel, 1959:
-<img class="math" src="_images/math/b7de0cd881d4ebeedf790705a9f077a6db476278.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
+<img class="math" src="_images/math/23f03bc0be9a71ad508b17804ae4e14d9dfd8d49.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
 = \frac{\rho_0 - \rho_{\infty}}{\rho_0}"/> (this is also the definition used
-for <img class="math" src="_images/math/de1ecb8a22c7385c220191eeedd2f64a9d549209.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
+for <img class="math" src="_images/math/35d5f9db82732d22123b97a58571debf933b94da.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
 the polarisation response of the system must be located within the measured
 frequency range for the DD to pick it up, while the original definition of
 the chargeability extends over the whole frequency domain. Thus, not fully
 resolved polarization peaks indicate an underestimation of the total
-polarization of the system by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/> in the DD.</li>
-<li>Nordsiek and Weller, 2008 computed chargeability sums for each
-relaxation time decades, normed by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>. These so called <em>decade
-loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</li>
-<li>The total, normalized chargeability <img class="math" src="_images/math/84792cf1dcf347ca8690383632fa41541407bcea.png" alt="m_{tot}^n =
+polarization of the system by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/> in the DD.</p></li>
+<li><p>Nordsiek and Weller, 2008 computed chargeability sums for each
+relaxation time decades, normed by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/>. These so called <em>decade
+loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</p></li>
+<li><p>The total, normalized chargeability <img class="math" src="_images/math/84299d85abbb04d56dc2feee046904969f22cdf2.png" alt="m_{tot}^n =
 \frac{m_{tot}}{\rho_0}"/> is obtained by normalizing the total chargeability
 with the DC resistivity (Scott2003phd, Weller2010g_a). It gives an indication
 of the total polarization of the measured system without any influence of any
-occuring resistivity contrasts.</li>
+occuring resistivity contrasts.</p></li>
 </ul>
 <p><strong>Relaxation time parameters:</strong></p>
 <p>Various parameters to determine characteristic relaxation times from the whole
 RTD were proposed:</p>
 <ul>
-<li><p class="first">Cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> denote relaxation times at which a
-certain percentage <img class="math" src="_images/math/a59f68a4202623bb859a7093f0316bf466e6f75d.png" alt="x"/> of chargeability is reached (Norsieg and Weller,
-2008; Zisser et al. 2010). For example, <img class="math" src="_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/> is the median
+<li><p>Cumulative relaxation times <img class="math" src="_images/math/8741f4c08abf23665dc3a82b33a0d3b28e52b03f.png" alt="\tau_x"/> denote relaxation times at which a
+certain percentage <img class="math" src="_images/math/888f7c323ac0341871e867220ae2d76467d74d6e.png" alt="x"/> of chargeability is reached (Norsieg and Weller,
+2008; Zisser et al. 2010). For example, <img class="math" src="_images/math/87a28e18806f1353e6cc4c81824d68478d004beb.png" alt="\tau_{50}"/> is the median
 relaxation time of a given RTD. (See ref:<cite>environ_vars</cite> on how to set
-individual percentages).</p>
-</li>
-<li><p class="first">Nordsiek and Weller, 2008 introduced the non-uniformity parameter
-<img class="math" src="_images/math/ecf4f7bf7a9c35002142e9c4440a05fe61eb53c0.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
+individual percentages).</p></li>
+<li><p>Nordsiek and Weller, 2008 introduced the non-uniformity parameter
+<img class="math" src="_images/math/78cde04fd76a4f958a477005745afe2ac6513823.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
 the RTD. However, no information regarding the number of siginificant peaks
-in the RTD can be derived using <img class="math" src="_images/math/491725783c41191a4189a34edce3f84ee1041440.png" alt="U_{\tau}"/>.</p>
-</li>
-<li><p class="first">Tong et al, 2004 use the arithmetic and geometric means of the relaxation
+in the RTD can be derived using <img class="math" src="_images/math/ca5e4fb53a597c34afc72c4ae2d7cbcd29e0b725.png" alt="U_{\tau}"/>.</p></li>
+<li><p>Tong et al, 2004 use the arithmetic and geometric means of the relaxation
 times for further analysis:</p>
 <div class="math">
-<p><img src="_images/math/d5d30bb6d4aa9a0cde7f9a299fd1f6307bd6a77a.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
+<p><img src="_images/math/fdb949a1400a52d6c9d2ec02e4a89c956700c750.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
 m_i}}\\
 \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}"/></p>
 </div></li>
-<li><p class="first">Nordsiek et al., 2008 introduced the logarithmic average relaxation time
-<img class="math" src="_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/></p>
+<li><p>Nordsiek et al., 2008 introduced the logarithmic average relaxation time
+<img class="math" src="_images/math/f91ba61d7586ee933f9d765afb21d52cb241039c.png" alt="\tau_{mean}"/></p>
 <div class="math">
-<p><img src="_images/math/096c36c1d7e9370023dff01ea83f68ca301ff77f.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
+<p><img src="_images/math/88b2ae698a77eb4f638232000954b06d4424c621.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
 </div></li>
 </ul>
 <p>The listed relaxation time parameters do not take into account the specific
@@ -237,10 +230,10 @@ distribution, e.g. to extract characteristic relaxation times specific to
 certain polarisation peaks. This approach has conceptual similarities to the
 use of (multi-)Cole-Cole models as the produced relaxation times can be
 directly related to polarization peaks. The relaxation time with the larges
-corresponding chargeability is called <img class="math" src="_images/math/8c55aa67d14e17cfadb5a43af42910c7de07f254.png" alt="\tau_{max}"/>
+corresponding chargeability is called <img class="math" src="_images/math/1ea7118aede0e0197f3ad81a320cb99e98fd5cf4.png" alt="\tau_{max}"/>
 (Attwa2013hess), and the in the generalized form the
-relaxation time <img class="math" src="_images/math/7ca58f698a41084bca3a6b233db2de53853241bc.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
-the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values).
+relaxation time <img class="math" src="_images/math/92246e5103cc2e8841fb344a5676abe7af62ae38.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
+the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values).
 This approach can recover multiple peaks without any knowlegdge of the exact
 number of peaks in the data.  However, this process can yield multiple small
 maxima if the smoothing between adjacent chargeabilitiy values is not strong
@@ -254,50 +247,48 @@ relaxation times, i.e. the time scales on which the polarization processes take
 place:</p>
 <p><strong>Chargeability parameters:</strong></p>
 <ul class="simple">
-<li>The total chargeability <img class="math" src="_images/math/0eea4ef4b93f6a743eec122fbaa62ce96056c306.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
+<li><p>The total chargeability <img class="math" src="_images/math/47067ff1568b5f3fb97ebcba5400a5accfc75f1d.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
 DD to the chargeability as defined by Seigel, 1959:
-<img class="math" src="_images/math/b7de0cd881d4ebeedf790705a9f077a6db476278.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
+<img class="math" src="_images/math/23f03bc0be9a71ad508b17804ae4e14d9dfd8d49.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
 = \frac{\rho_0 - \rho_{\infty}}{\rho_0}"/> (this is also the definition used
-for <img class="math" src="_images/math/de1ecb8a22c7385c220191eeedd2f64a9d549209.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
+for <img class="math" src="_images/math/35d5f9db82732d22123b97a58571debf933b94da.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
 the polarisation response of the system must be located within the measured
 frequency range for the DD to pick it up, while the original definition of
 the chargeability extends over the whole frequency domain. Thus, not fully
 resolved polarization peaks indicate an underestimation of the total
-polarization of the system by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/> in the DD.</li>
-<li>Nordsiek and Weller, 2008 computed chargeability sums for each
-relaxation time decades, normed by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>. These so called <em>decade
-loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</li>
-<li>The total, normalized chargeability <img class="math" src="_images/math/84792cf1dcf347ca8690383632fa41541407bcea.png" alt="m_{tot}^n =
+polarization of the system by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/> in the DD.</p></li>
+<li><p>Nordsiek and Weller, 2008 computed chargeability sums for each
+relaxation time decades, normed by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/>. These so called <em>decade
+loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</p></li>
+<li><p>The total, normalized chargeability <img class="math" src="_images/math/84299d85abbb04d56dc2feee046904969f22cdf2.png" alt="m_{tot}^n =
 \frac{m_{tot}}{\rho_0}"/> is obtained by normalizing the total chargeability
 with the DC resistivity (Scott2003phd, Weller2010g_a). It gives an indication
 of the total polarization of the measured system without any influence of any
-occuring resistivity contrasts.</li>
+occuring resistivity contrasts.</p></li>
 </ul>
 <p><strong>Relaxation time parameters:</strong></p>
 <p>Various parameters to determine characteristic relaxation times from the whole
 RTD were proposed:</p>
 <ul>
-<li><p class="first">Cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> denote relaxation times at which a
-certain percentage <img class="math" src="_images/math/a59f68a4202623bb859a7093f0316bf466e6f75d.png" alt="x"/> of chargeability is reached
+<li><p>Cumulative relaxation times <img class="math" src="_images/math/8741f4c08abf23665dc3a82b33a0d3b28e52b03f.png" alt="\tau_x"/> denote relaxation times at which a
+certain percentage <img class="math" src="_images/math/888f7c323ac0341871e867220ae2d76467d74d6e.png" alt="x"/> of chargeability is reached
 (Norsieg and Weller, 2008; Zisser et al. 2010). For example,
-<img class="math" src="_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/> is the median relaxation time of a given RTD.</p>
-</li>
-<li><p class="first">Nordsiek and Weller, 2008 introduced the non-uniformity parameter
-<img class="math" src="_images/math/ecf4f7bf7a9c35002142e9c4440a05fe61eb53c0.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
+<img class="math" src="_images/math/87a28e18806f1353e6cc4c81824d68478d004beb.png" alt="\tau_{50}"/> is the median relaxation time of a given RTD.</p></li>
+<li><p>Nordsiek and Weller, 2008 introduced the non-uniformity parameter
+<img class="math" src="_images/math/78cde04fd76a4f958a477005745afe2ac6513823.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
 the RTD. However, no information regarding the number of siginificant peaks
-in the RTD can be derived using <img class="math" src="_images/math/491725783c41191a4189a34edce3f84ee1041440.png" alt="U_{\tau}"/>.</p>
-</li>
-<li><p class="first">Tong et al, 2004 use the arithmetic and geometric means of the relaxation
+in the RTD can be derived using <img class="math" src="_images/math/ca5e4fb53a597c34afc72c4ae2d7cbcd29e0b725.png" alt="U_{\tau}"/>.</p></li>
+<li><p>Tong et al, 2004 use the arithmetic and geometric means of the relaxation
 times for further analysis:</p>
 <div class="math">
-<p><img src="_images/math/d5d30bb6d4aa9a0cde7f9a299fd1f6307bd6a77a.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
+<p><img src="_images/math/fdb949a1400a52d6c9d2ec02e4a89c956700c750.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
 m_i}}\\
 \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}"/></p>
 </div></li>
-<li><p class="first">Nordsiek et al., 2008 introduced the logarithmic average relaxation time
-<img class="math" src="_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/></p>
+<li><p>Nordsiek et al., 2008 introduced the logarithmic average relaxation time
+<img class="math" src="_images/math/f91ba61d7586ee933f9d765afb21d52cb241039c.png" alt="\tau_{mean}"/></p>
 <div class="math">
-<p><img src="_images/math/096c36c1d7e9370023dff01ea83f68ca301ff77f.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
+<p><img src="_images/math/88b2ae698a77eb4f638232000954b06d4424c621.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
 </div></li>
 </ul>
 <p>The listed relaxation time parameters do not take into account the specific
@@ -306,10 +297,10 @@ distribution, e.g. to extract characteristic relaxation times specific to
 certain polarisation peaks. This approach has conceptual similarities to the
 use of (multi-)Cole-Cole models as the produced relaxation times can be
 directly related to polarization peaks. The relaxation time with the larges
-corresponding chargeability is called <img class="math" src="_images/math/8c55aa67d14e17cfadb5a43af42910c7de07f254.png" alt="\tau_{max}"/>
+corresponding chargeability is called <img class="math" src="_images/math/1ea7118aede0e0197f3ad81a320cb99e98fd5cf4.png" alt="\tau_{max}"/>
 (Attwa2013hess), and the in the generalized form the
-relaxation time <img class="math" src="_images/math/7ca58f698a41084bca3a6b233db2de53853241bc.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
-the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values).
+relaxation time <img class="math" src="_images/math/92246e5103cc2e8841fb344a5676abe7af62ae38.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
+the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values).
 This approach can recover multiple peaks without any knowlegdge of the exact
 number of peaks in the data.  However, this process can yield multiple small
 maxima if the smoothing between adjacent chargeabilitiy values is not strong
@@ -324,51 +315,49 @@ relaxation times, i.e. the time scales on which the polarization processes take
 place:</p>
 <p><strong>Chargeability parameters:</strong></p>
 <ul class="simple">
-<li>The total chargeability <img class="math" src="_images/math/0eea4ef4b93f6a743eec122fbaa62ce96056c306.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
+<li><p>The total chargeability <img class="math" src="_images/math/47067ff1568b5f3fb97ebcba5400a5accfc75f1d.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
 DD to the chargeability as defined by Seigel, 1959:
-<img class="math" src="_images/math/b7de0cd881d4ebeedf790705a9f077a6db476278.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
+<img class="math" src="_images/math/23f03bc0be9a71ad508b17804ae4e14d9dfd8d49.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
 = \frac{\rho_0 - \rho_{\infty}}{\rho_0}"/> (this is also the definition used
-for <img class="math" src="_images/math/de1ecb8a22c7385c220191eeedd2f64a9d549209.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
+for <img class="math" src="_images/math/35d5f9db82732d22123b97a58571debf933b94da.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
 the polarisation response of the system must be located within the measured
 frequency range for the DD to pick it up, while the original definition of
 the chargeability extends over the whole frequency domain. Thus, not fully
 resolved polarization peaks indicate an underestimation of the total
-polarization of the system by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/> in the DD.</li>
-<li>Nordsiek and Weller, 2008 computed chargeability sums for each
-relaxation time decades, normed by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>. These so called <em>decade
-loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</li>
-<li>The total, normalized chargeability <img class="math" src="_images/math/84792cf1dcf347ca8690383632fa41541407bcea.png" alt="m_{tot}^n =
+polarization of the system by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/> in the DD.</p></li>
+<li><p>Nordsiek and Weller, 2008 computed chargeability sums for each
+relaxation time decades, normed by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/>. These so called <em>decade
+loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</p></li>
+<li><p>The total, normalized chargeability <img class="math" src="_images/math/84299d85abbb04d56dc2feee046904969f22cdf2.png" alt="m_{tot}^n =
 \frac{m_{tot}}{\rho_0}"/> is obtained by normalizing the total chargeability
 with the DC resistivity (Scott2003phd, Weller2010g_a). It gives an indication
 of the total polarization of the measured system without any influence of any
-occuring resistivity contrasts.</li>
+occuring resistivity contrasts.</p></li>
 </ul>
 <p><strong>Relaxation time parameters:</strong></p>
 <p>Various parameters to determine characteristic relaxation times from the whole
 RTD were proposed:</p>
 <ul>
-<li><p class="first">Cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> denote relaxation times at which a
-certain percentage <img class="math" src="_images/math/a59f68a4202623bb859a7093f0316bf466e6f75d.png" alt="x"/> of chargeability is reached (Norsieg and Weller,
-2008; Zisser et al. 2010). For example, <img class="math" src="_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/> is the median
+<li><p>Cumulative relaxation times <img class="math" src="_images/math/8741f4c08abf23665dc3a82b33a0d3b28e52b03f.png" alt="\tau_x"/> denote relaxation times at which a
+certain percentage <img class="math" src="_images/math/888f7c323ac0341871e867220ae2d76467d74d6e.png" alt="x"/> of chargeability is reached (Norsieg and Weller,
+2008; Zisser et al. 2010). For example, <img class="math" src="_images/math/87a28e18806f1353e6cc4c81824d68478d004beb.png" alt="\tau_{50}"/> is the median
 relaxation time of a given RTD. (See ref:<cite>environ_vars</cite> on how to set
-individual percentages).</p>
-</li>
-<li><p class="first">Nordsiek and Weller, 2008 introduced the non-uniformity parameter
-<img class="math" src="_images/math/ecf4f7bf7a9c35002142e9c4440a05fe61eb53c0.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
+individual percentages).</p></li>
+<li><p>Nordsiek and Weller, 2008 introduced the non-uniformity parameter
+<img class="math" src="_images/math/78cde04fd76a4f958a477005745afe2ac6513823.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
 the RTD. However, no information regarding the number of siginificant peaks
-in the RTD can be derived using <img class="math" src="_images/math/491725783c41191a4189a34edce3f84ee1041440.png" alt="U_{\tau}"/>.</p>
-</li>
-<li><p class="first">Tong et al, 2004 use the arithmetic and geometric means of the relaxation
+in the RTD can be derived using <img class="math" src="_images/math/ca5e4fb53a597c34afc72c4ae2d7cbcd29e0b725.png" alt="U_{\tau}"/>.</p></li>
+<li><p>Tong et al, 2004 use the arithmetic and geometric means of the relaxation
 times for further analysis:</p>
 <div class="math">
-<p><img src="_images/math/d5d30bb6d4aa9a0cde7f9a299fd1f6307bd6a77a.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
+<p><img src="_images/math/fdb949a1400a52d6c9d2ec02e4a89c956700c750.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
 m_i}}\\
 \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}"/></p>
 </div></li>
-<li><p class="first">Nordsiek et al., 2008 introduced the logarithmic average relaxation time
-<img class="math" src="_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/></p>
+<li><p>Nordsiek et al., 2008 introduced the logarithmic average relaxation time
+<img class="math" src="_images/math/f91ba61d7586ee933f9d765afb21d52cb241039c.png" alt="\tau_{mean}"/></p>
 <div class="math">
-<p><img src="_images/math/096c36c1d7e9370023dff01ea83f68ca301ff77f.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
+<p><img src="_images/math/88b2ae698a77eb4f638232000954b06d4424c621.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
 </div></li>
 </ul>
 <p>The listed relaxation time parameters do not take into account the specific
@@ -377,10 +366,10 @@ distribution, e.g. to extract characteristic relaxation times specific to
 certain polarisation peaks. This approach has conceptual similarities to the
 use of (multi-)Cole-Cole models as the produced relaxation times can be
 directly related to polarization peaks. The relaxation time with the larges
-corresponding chargeability is called <img class="math" src="_images/math/8c55aa67d14e17cfadb5a43af42910c7de07f254.png" alt="\tau_{max}"/>
+corresponding chargeability is called <img class="math" src="_images/math/1ea7118aede0e0197f3ad81a320cb99e98fd5cf4.png" alt="\tau_{max}"/>
 (Attwa2013hess), and the in the generalized form the
-relaxation time <img class="math" src="_images/math/7ca58f698a41084bca3a6b233db2de53853241bc.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
-the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values).
+relaxation time <img class="math" src="_images/math/92246e5103cc2e8841fb344a5676abe7af62ae38.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
+the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values).
 This approach can recover multiple peaks without any knowlegdge of the exact
 number of peaks in the data.  However, this process can yield multiple small
 maxima if the smoothing between adjacent chargeabilitiy values is not strong
@@ -394,50 +383,48 @@ relaxation times, i.e. the time scales on which the polarization processes take
 place:</p>
 <p><strong>Chargeability parameters:</strong></p>
 <ul class="simple">
-<li>The total chargeability <img class="math" src="_images/math/0eea4ef4b93f6a743eec122fbaa62ce96056c306.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
+<li><p>The total chargeability <img class="math" src="_images/math/47067ff1568b5f3fb97ebcba5400a5accfc75f1d.png" alt="m_{tot} = \sum_i^N m_i"/> is the analogon of the
 DD to the chargeability as defined by Seigel, 1959:
-<img class="math" src="_images/math/b7de0cd881d4ebeedf790705a9f077a6db476278.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
+<img class="math" src="_images/math/23f03bc0be9a71ad508b17804ae4e14d9dfd8d49.png" alt="m_{seigel} = \frac{\epsilon_{\infty} - \epsilon_0}{\epsilon_{\infty}}
 = \frac{\rho_0 - \rho_{\infty}}{\rho_0}"/> (this is also the definition used
-for <img class="math" src="_images/math/de1ecb8a22c7385c220191eeedd2f64a9d549209.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
+for <img class="math" src="_images/math/35d5f9db82732d22123b97a58571debf933b94da.png" alt="m_{cc}"/>).  This is, howoever, only true insofar as the majority of
 the polarisation response of the system must be located within the measured
 frequency range for the DD to pick it up, while the original definition of
 the chargeability extends over the whole frequency domain. Thus, not fully
 resolved polarization peaks indicate an underestimation of the total
-polarization of the system by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/> in the DD.</li>
-<li>Nordsiek and Weller, 2008 computed chargeability sums for each
-relaxation time decades, normed by <img class="math" src="_images/math/0f964a169e51756347d9e9904e670035de3c8e04.png" alt="m_{tot}"/>. These so called <em>decade
-loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</li>
-<li>The total, normalized chargeability <img class="math" src="_images/math/84792cf1dcf347ca8690383632fa41541407bcea.png" alt="m_{tot}^n =
+polarization of the system by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/> in the DD.</p></li>
+<li><p>Nordsiek and Weller, 2008 computed chargeability sums for each
+relaxation time decades, normed by <img class="math" src="_images/math/ede6a9113063b294bfcc682727d019be899cdc2a.png" alt="m_{tot}"/>. These so called <em>decade
+loadings</em> provide frequency (or relaxation time) dependent chargeabilities.</p></li>
+<li><p>The total, normalized chargeability <img class="math" src="_images/math/84299d85abbb04d56dc2feee046904969f22cdf2.png" alt="m_{tot}^n =
 \frac{m_{tot}}{\rho_0}"/> is obtained by normalizing the total chargeability
 with the DC resistivity (Scott2003phd, Weller2010g_a). It gives an indication
 of the total polarization of the measured system without any influence of any
-occuring resistivity contrasts.</li>
+occuring resistivity contrasts.</p></li>
 </ul>
 <p><strong>Relaxation time parameters:</strong></p>
 <p>Various parameters to determine characteristic relaxation times from the whole
 RTD were proposed:</p>
 <ul>
-<li><p class="first">Cumulative relaxation times <img class="math" src="_images/math/c41fd13a2f13e4e05d3f7681ac7e517ea86033be.png" alt="\tau_x"/> denote relaxation times at which a
-certain percentage <img class="math" src="_images/math/a59f68a4202623bb859a7093f0316bf466e6f75d.png" alt="x"/> of chargeability is reached
+<li><p>Cumulative relaxation times <img class="math" src="_images/math/8741f4c08abf23665dc3a82b33a0d3b28e52b03f.png" alt="\tau_x"/> denote relaxation times at which a
+certain percentage <img class="math" src="_images/math/888f7c323ac0341871e867220ae2d76467d74d6e.png" alt="x"/> of chargeability is reached
 (Norsieg and Weller, 2008; Zisser et al. 2010). For example,
-<img class="math" src="_images/math/bcabe272d22b5e9b5ab3e79d33f6ab97688ff13d.png" alt="\tau_{50}"/> is the median relaxation time of a given RTD.</p>
-</li>
-<li><p class="first">Nordsiek and Weller, 2008 introduced the non-uniformity parameter
-<img class="math" src="_images/math/ecf4f7bf7a9c35002142e9c4440a05fe61eb53c0.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
+<img class="math" src="_images/math/87a28e18806f1353e6cc4c81824d68478d004beb.png" alt="\tau_{50}"/> is the median relaxation time of a given RTD.</p></li>
+<li><p>Nordsiek and Weller, 2008 introduced the non-uniformity parameter
+<img class="math" src="_images/math/78cde04fd76a4f958a477005745afe2ac6513823.png" alt="U_\tau = \frac{\tau_{10}}{\tau_{60}}"/> which characterizes the width of
 the RTD. However, no information regarding the number of siginificant peaks
-in the RTD can be derived using <img class="math" src="_images/math/491725783c41191a4189a34edce3f84ee1041440.png" alt="U_{\tau}"/>.</p>
-</li>
-<li><p class="first">Tong et al, 2004 use the arithmetic and geometric means of the relaxation
+in the RTD can be derived using <img class="math" src="_images/math/ca5e4fb53a597c34afc72c4ae2d7cbcd29e0b725.png" alt="U_{\tau}"/>.</p></li>
+<li><p>Tong et al, 2004 use the arithmetic and geometric means of the relaxation
 times for further analysis:</p>
 <div class="math">
-<p><img src="_images/math/d5d30bb6d4aa9a0cde7f9a299fd1f6307bd6a77a.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
+<p><img src="_images/math/fdb949a1400a52d6c9d2ec02e4a89c956700c750.png" alt="\tau_g = \left(\prod_{i=1}^N \tau_i^{m_i} \right)^{\frac{1}{\sum_{i=1}^N
 m_i}}\\
 \tau_a = \frac{\sum_{i=1}^N m_i \cdot \tau_i}{\sum_{i=1}^N m_i}"/></p>
 </div></li>
-<li><p class="first">Nordsiek et al., 2008 introduced the logarithmic average relaxation time
-<img class="math" src="_images/math/069478f888fd583f70126e67298babae61e0508a.png" alt="\tau_{mean}"/></p>
+<li><p>Nordsiek et al., 2008 introduced the logarithmic average relaxation time
+<img class="math" src="_images/math/f91ba61d7586ee933f9d765afb21d52cb241039c.png" alt="\tau_{mean}"/></p>
 <div class="math">
-<p><img src="_images/math/096c36c1d7e9370023dff01ea83f68ca301ff77f.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
+<p><img src="_images/math/88b2ae698a77eb4f638232000954b06d4424c621.png" alt="\tau_{mean} = \frac{exp(\sum_i m_i \cdot log(\tau_i))}{\sum m_i}`"/></p>
 </div></li>
 </ul>
 <p>The listed relaxation time parameters do not take into account the specific
@@ -446,10 +433,10 @@ distribution, e.g. to extract characteristic relaxation times specific to
 certain polarisation peaks. This approach has conceptual similarities to the
 use of (multi-)Cole-Cole models as the produced relaxation times can be
 directly related to polarization peaks. The relaxation time with the larges
-corresponding chargeability is called <img class="math" src="_images/math/8c55aa67d14e17cfadb5a43af42910c7de07f254.png" alt="\tau_{max}"/>
+corresponding chargeability is called <img class="math" src="_images/math/1ea7118aede0e0197f3ad81a320cb99e98fd5cf4.png" alt="\tau_{max}"/>
 (Attwa2013hess), and the in the generalized form the
-relaxation time <img class="math" src="_images/math/7ca58f698a41084bca3a6b233db2de53853241bc.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
-the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values).
+relaxation time <img class="math" src="_images/math/92246e5103cc2e8841fb344a5676abe7af62ae38.png" alt="\tau_{peak}^i"/>, refers to the <em>i</em>-th local maximum of
+the RTD, starting with the low frequencies (i.e. high <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values).
 This approach can recover multiple peaks without any knowlegdge of the exact
 number of peaks in the data.  However, this process can yield multiple small
 maxima if the smoothing between adjacent chargeabilitiy values is not strong
@@ -509,17 +496,15 @@ be increased.</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -536,7 +521,7 @@ be increased.</p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

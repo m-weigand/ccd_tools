@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Overview &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overview &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Mathematical helper terms" href="theory_helper.html" />
@@ -36,7 +35,7 @@
             
   <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<div><img height="520" src="_images/blockdiag-df2a2109a67a0fb25842255f36f7c2c5627fab08.png" width="832" /></div><p>Within the scope of this project, the models used to described (i.e. fit) SIP
+<div><img height="520" src="_images/blockdiag-75c9a656d5b7ffee19f6f9067865f3a37e88a45c.png" width="832" /></div><p>Within the scope of this project, the models used to described (i.e. fit) SIP
 signatures are divided in formulations using the resistivity and the
 conductivity. Within these categories, signatures can either be described by
 one term following the Cole-Cole model, or by a superposition of Cole-Cole
@@ -44,7 +43,7 @@ terms (i.e. a distribution of Cole-Cole models over the frequency/relaxation
 time range). The process of determining the various parameters (weights) for
 such a distribution is called a decomposition. The decomposition is then
 further subdivided in the Debye decomposition with a fixed <em>c</em> value of 1.0,
-and the general case for a values of <img class="math" src="_images/math/27aa03f3e64294a034cf889e7c12b25369cf7576.png" alt="c \in [0, 1)"/>. This structure is
+and the general case for a values of <img class="math" src="_images/math/f0fb7173720c478b91f673e65861234bfd9fbf0c.png" alt="c \in [0, 1)"/>. This structure is
 mirrored for the conductivity case.</p>
 <div class="toctree-wrapper compound">
 <ul>
@@ -108,17 +107,15 @@ mirrored for the conductivity case.</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -135,7 +132,7 @@ mirrored for the conductivity case.</p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

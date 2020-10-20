@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>lib_dd.models.ccd_cond &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lib_dd.models.ccd_cond &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
    
@@ -38,7 +37,6 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">NDimInv.plot_helper</span>
-<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">NDimInv.model_template</span> <span class="k">as</span> <span class="nn">mt</span>
 <span class="kn">import</span> <span class="nn">lib_dd.base_class</span> <span class="k">as</span> <span class="nn">base_class</span>
 <span class="kn">import</span> <span class="nn">lib_dd.starting_parameters</span> <span class="k">as</span> <span class="nn">starting_parameters</span>
@@ -47,6 +45,8 @@
 <span class="c1"># import conductivity formulation</span>
 <span class="kn">import</span> <span class="nn">sip_models.cond.cc</span> <span class="k">as</span> <span class="nn">cc_cond</span>
 
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">NDimInv</span><span class="o">.</span><span class="n">plot_helper</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
 
 <div class="viewcode-block" id="decomposition_conductivity"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity">[docs]</a><span class="k">class</span> <span class="nc">decomposition_conductivity</span><span class="p">(</span>
     <span class="n">plot_stats</span><span class="o">.</span><span class="n">_plot_stats</span><span class="p">,</span>
@@ -54,7 +54,7 @@
     <span class="n">starting_parameters</span><span class="o">.</span><span class="n">starting_parameters</span><span class="p">,</span>
         <span class="n">mt</span><span class="o">.</span><span class="n">model_template</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="s1">&#39;cre_cim&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">D_base_dims</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">required_keys</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Nd&#39;</span><span class="p">,</span> <span class="s1">&#39;tausel&#39;</span><span class="p">,</span> <span class="s1">&#39;frequencies&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
@@ -199,7 +199,64 @@
         <span class="n">M_base_dims</span> <span class="o">=</span> <span class="p">{</span>
             <span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rho0_mi&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">M_base_dims</span></div></div>
+        <span class="k">return</span> <span class="n">M_base_dims</span></div>
+
+<div class="viewcode-block" id="decomposition_conductivity.compute_par_stats"><a class="viewcode-back" href="../../../api/lib_dd.models.html#lib_dd.models.ccd_cond.decomposition_conductivity.compute_par_stats">[docs]</a>    <span class="k">def</span> <span class="nf">compute_par_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;For a given parameter set (i.e. a fit result), compute relevant</span>
+<span class="sd">        statistical values such as :math:`m_{tot}`, :math:`m_{tot}^n`,</span>
+<span class="sd">        :math:`\tau_{50}`, :math:`\tau_{mean}`, :math:`\tau_{peak}`</span>
+
+<span class="sd">        This is the way to compute any secondary results based on the fit</span>
+<span class="sd">        results.</span>
+
+<span class="sd">        Store in self.stat_pars = dict()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_class</span><span class="o">.</span><span class="n">integrated_parameters</span><span class="o">.</span><span class="n">compute_par_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pars</span><span class="p">)</span>
+
+        <span class="c1"># self.stat_pars = {}</span>
+        <span class="c1"># the statistical parameters as computed above relate to the</span>
+        <span class="c1"># resistivity formulation. We must correct some of them and add a few</span>
+        <span class="c1"># parameters.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma_infty&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;rho0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">sigma0_linear</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">):</span>
+            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute :math:`sigma0` using math:`\sigma_\infty` and</span>
+<span class="sd">            :math:`m_{tot}`:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                \sigma_0 = \sigma_\infty \cdot (1 - m_{tot})</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">sigma0</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma_infty&#39;</span><span class="p">]</span> <span class="o">*</span>\
+                <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;m_tot&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">sigma0</span>
+
+        <span class="k">def</span> <span class="nf">sigma0</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">sigma0_linear</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma0</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">)</span>
+
+        <span class="c1"># rho0 is stored in log10, change sign for 1/rho0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;rho0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;sigma0&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">def</span> <span class="nf">mtotn</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat_pars</span><span class="p">):</span>
+            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute the conductivity mtotn:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                m_{tot}^n = \frac{m_{tot}}{\sigma_0}</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">mtotn</span> <span class="o">=</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;m_tot&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;rho0&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">mtotn</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">[</span><span class="s1">&#39;m_tot_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mtotn</span><span class="p">(</span><span class="n">pars</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stat_pars</span></div></div>
 </pre></div>
 
           </div>
@@ -240,17 +297,15 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -267,7 +322,7 @@
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

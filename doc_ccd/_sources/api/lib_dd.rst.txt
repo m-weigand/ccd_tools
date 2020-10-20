@@ -5,13 +5,14 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
-    lib_dd.apps
-    lib_dd.conductivity
-    lib_dd.config
-    lib_dd.decomposition
-    lib_dd.io
-    lib_dd.models
+   lib_dd.apps
+   lib_dd.conductivity
+   lib_dd.config
+   lib_dd.decomposition
+   lib_dd.io
+   lib_dd.models
 
 Submodules
 ----------
@@ -20,79 +21,78 @@ lib\_dd.Jacobian module
 -----------------------
 
 .. automodule:: lib_dd.Jacobian
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.base\_class module
 --------------------------
 
 .. automodule:: lib_dd.base_class
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.int\_pars module
 ------------------------
 
 .. automodule:: lib_dd.int_pars
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.interface module
 ------------------------
 
 .. automodule:: lib_dd.interface
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.plot module
 -------------------
 
 .. automodule:: lib_dd.plot
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.plot\_stats module
 --------------------------
 
 .. automodule:: lib_dd.plot_stats
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.starting\_parameters module
 -----------------------------------
 
 .. automodule:: lib_dd.starting_parameters
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.test\_functions module
 ------------------------------
 
 .. automodule:: lib_dd.test_functions
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 lib\_dd.version module
 ----------------------
 
 .. automodule:: lib_dd.version
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
 
 .. automodule:: lib_dd
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

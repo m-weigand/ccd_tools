@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ddps.py &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ddps.py &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Theory of SIP models" href="../theory.html" />
@@ -37,8 +36,8 @@
   <div class="section" id="ddps-py">
 <h1>ddps.py<a class="headerlink" href="#ddps-py" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><em>ddps.py</em> only works with the ascii output format!</p>
+<p class="admonition-title">Note</p>
+<p><em>ddps.py</em> only works with the ascii output format!</p>
 </div>
 <div class="section" id="command-line-options">
 <h2>Command line options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
@@ -60,6 +59,20 @@ Options:
   --plot_to_grid        Plot results to grid
   --elem=ELEM_FILE      elem.dat file (default: elem.dat)
   --elec=ELEC_FILE      elec.dat file (default: elec.dat)
+  --tau_peak1_min=TAU_PEAK1_MIN
+                        Min value for tau_peak1
+  --tau_peak1_max=TAU_PEAK1_MAX
+                        Max value for tau_peak1
+  --tau_mean_min=TAU_MEAN_MIN
+                        Min value for tau_mean
+  --tau_mean_max=TAU_MEAN_MAX
+                        Max value for tau_mean
+  --tau_50_min=TAU_50_MIN
+                        Min value for tau_50
+  --tau_50_max=TAU_50_MAX
+                        Max value for tau_50
+  --rho0_min=RHO0_MIN   Min value for rho0
+  --rho0_max=RHO0_MAX   Max value for rho0
   --sigma0_min=SIGMA0_MIN
                         Min value for sigma0
   --sigma0_max=SIGMA0_MAX
@@ -68,28 +81,14 @@ Options:
                         Min value for m_tot_n
   --m_tot_n_max=M_TOT_N_MAX
                         Max value for m_tot_n
-  --tau_peak1_min=TAU_PEAK1_MIN
-                        Min value for tau_peak1
-  --tau_peak1_max=TAU_PEAK1_MAX
-                        Max value for tau_peak1
-  --U_tau_min=U_TAU_MIN
-                        Min value for U_tau
-  --U_tau_max=U_TAU_MAX
-                        Max value for U_tau
-  --tau_mean_min=TAU_MEAN_MIN
-                        Min value for tau_mean
-  --tau_mean_max=TAU_MEAN_MAX
-                        Max value for tau_mean
   --m_tot_min=M_TOT_MIN
                         Min value for m_tot
   --m_tot_max=M_TOT_MAX
                         Max value for m_tot
-  --rho0_min=RHO0_MIN   Min value for rho0
-  --rho0_max=RHO0_MAX   Max value for rho0
-  --tau_50_min=TAU_50_MIN
-                        Min value for tau_50
-  --tau_50_max=TAU_50_MAX
-                        Max value for tau_50
+  --U_tau_min=U_TAU_MIN
+                        Min value for U_tau
+  --U_tau_max=U_TAU_MAX
+                        Max value for U_tau
   --filter              Apply filters and save to new directory
   --maskfile=FILE       Mask file for filtering: discard all other pixels
                         (start at 0)
@@ -150,17 +149,15 @@ Options:
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -177,7 +174,7 @@ Options:
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

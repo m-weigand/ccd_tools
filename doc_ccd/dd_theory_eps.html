@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Formulation using the dielectric constant &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulation using the dielectric constant &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Coverage" href="dd_coverage.html" />
@@ -38,28 +37,28 @@
 <h1>Formulation using the dielectric constant<a class="headerlink" href="#formulation-using-the-dielectric-constant" title="Permalink to this headline">¶</a></h1>
 <p>Böttcher and Bordewijk, page 40:</p>
 <div class="math">
-<p><img src="_images/math/4a0768b60efd48c2947ec414b09a13ce05241890.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
+<p><img src="_images/math/d3bb15a9406cde5d0f3268ba3b2d268bbc6ba258.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
 \int_0^\infty \frac{g(\tau)}{1 + i \omega \tau} d\tau\\
 &amp;\text{with}\\
 &amp;\int_0^\infty g(\tau) d\tau = 1"/></p>
-</div><p>For a <img class="math" src="_images/math/772affd57f47442828778af7c6f7fe74de63982e.png" alt="g(\tau) = \delta(\tau - \tau_1)"/> it follows (see eqs. 8.182 in
+</div><p>For a <img class="math" src="_images/math/93281a49060e3322dbeff1495db3f3f718f92cc7.png" alt="g(\tau) = \delta(\tau - \tau_1)"/> it follows (see eqs. 8.182 in
 B&amp;B):</p>
 <div class="math">
-<p><img src="_images/math/d01eb439c6259124e98f9ed63f104664e3fbb02a.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
+<p><img src="_images/math/17f5e9ecc2ea244ad31572a01973a32238ec6f0e.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
 \frac{g(\tau)}{1 + i \omega \tau_1}"/></p>
 </div><p>For multiple relaxation times in a discrete case (8.187 in B&amp;W):</p>
 <div class="math">
-<p><img src="_images/math/42ba1edb091d4b3f3d575f53ff51ba09f1fcd3c7.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
+<p><img src="_images/math/f79b1f8ea0a1c93e92057356257dbc73231f0ca6.png" alt="\hat{\epsilon}(\omega) &amp;= \epsilon_\infty + (\epsilon - \epsilon_\infty)
 \sum_k \frac{g_k}{1 + i \omega \tau_k}\\
 &amp;\text{with}\\
 &amp;\sum_k g_k = 1"/></p>
 </div><div class="section" id="transformation-to-conductivity">
 <h2>Transformation to conductivity<a class="headerlink" href="#transformation-to-conductivity" title="Permalink to this headline">¶</a></h2>
-<p>Tarasov and Titov substitute <img class="math" src="_images/math/65d19c66c148d5016c6a89d26486bf6d1966ded1.png" alt="\epsilon"/> for <img class="math" src="_images/math/011e5790a6c33043ceadca81d9657dde6c61d769.png" alt="\sigma"/> (they cite the
+<p>Tarasov and Titov substitute <img class="math" src="_images/math/0ad7b30534898f253002222f998f38001e604648.png" alt="\epsilon"/> for <img class="math" src="_images/math/b52df27bfb0b1e3af0c2c68a7b9da459178c2a7d.png" alt="\sigma"/> (they cite the
 electrostatic analogy and the formulation for dielectric materials with
 losses):</p>
 <div class="math">
-<p><img src="_images/math/548a6ca4fa696bc2d3fff37dfc4e4ed38cf307c3.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty + (\sigma - \sigma_\infty)
+<p><img src="_images/math/ad78109f93b60301a64332daa1ee3d20872985f3.png" alt="\hat{\sigma}(\omega) &amp;= \sigma_\infty + (\sigma - \sigma_\infty)
 \int_0^{\infty} \frac{g(\tau)}{1 + i \omega \tau} d\tau\\
 &amp;\text{with}:\\
 &amp;\int_0^{\infty} g(\tau) d\tau"/></p>
@@ -121,17 +120,15 @@ losses):</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -148,7 +145,7 @@ losses):</p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

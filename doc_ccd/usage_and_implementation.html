@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Usage and implementation details &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usage and implementation details &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Input Data files" href="data_formats.html" />
@@ -71,136 +70,125 @@
 <p>The following procedure is recommended for new data sets and focuses on
 inversions using <em>ccd_single</em> and <em>ccd_time</em>:</p>
 <ul>
-<li><p class="first">Initially invert with variable <img class="math" src="_images/math/76f1d8ace30435987c01a00ca53a71cba1f40e6c.png" alt="\lambda"/> values for the frequency
-regularization</p>
-</li>
-<li><p class="first">Fine-tune with a fixed lambda (this in general yields more robust results and
-makes results comparable)</p>
-</li>
-<li><p class="first">Usually the third starting model yields the most robust results:</p>
+<li><p>Initially invert with variable <img class="math" src="_images/math/cefc603e5658facb747581f9567192993f21c7ab.png" alt="\lambda"/> values for the frequency
+regularization</p></li>
+<li><p>Fine-tune with a fixed lambda (this in general yields more robust results and
+makes results comparable)</p></li>
+<li><p>Usually the third starting model yields the most robust results:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DD_STARTING_MODEL</span><span class="o">=</span><span class="mi">3</span> <span class="n">cdd_single</span> <span class="o">...</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Normalization can help… :</p>
+<li><p>Normalization can help… :</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ccd_single</span> <span class="o">--</span><span class="n">norm</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">For time regularization: here only a fixed lambda can be used. Start with a
+<li><p>For time regularization: here only a fixed lambda can be used. Start with a
 small value and take a look at the maximum regularization strength for the
 time-regularization. The regularization strength is automatically plotted
-when the <strong class="command">--plot</strong> option is enabled.</p>
-</li>
-<li><p class="first">while the structure of the input files is fixed, the data format can be
+when the <strong class="command">--plot</strong> option is enabled.</p></li>
+<li><p>while the structure of the input files is fixed, the data format can be
 changed using the <strong class="command">--data_format</strong> option. Thus a conversion from
 conductivities to resistivities and vice versa is not necessary, as well as a
-conversion between real/imaginary part and magnitude/phase format.</p>
-</li>
-<li><p class="first">the <strong class="command">--tmp</strong> option can improve execution speed on conventional hard
-drives (don’t expect huge improvements for solid state discs (SSDs).</p>
-</li>
+conversion between real/imaginary part and magnitude/phase format.</p></li>
+<li><p>the <strong class="command">--tmp</strong> option can improve execution speed on conventional hard
+drives (don’t expect huge improvements for solid state discs (SSDs).</p></li>
 </ul>
 </div>
 <div class="section" id="normalization">
 <h2>Normalization<a class="headerlink" href="#normalization" title="Permalink to this headline">¶</a></h2>
-<p>The CDD is linear in <img class="math" src="_images/math/ac94cfcb695f488fb585333add7812d673843108.png" alt="\rho_0/\sigma_\infty"/>, as as such data can be
+<p>The CDD is linear in <img class="math" src="_images/math/ab96ae9f40e5499605c7537eb4e357c43d54ff9b.png" alt="\rho_0/\sigma_\infty"/>, as as such data can be
 normalized both in magnitude/phase, or real and imaginary parts:</p>
 <div class="math">
-<p><img src="_images/math/7de6124dad2ce1c4a3f0e533454775170bdc32f8.png" alt="\rho'_{norm} &amp;= A \cdot \rho'\\
+<p><img src="_images/math/d310961b017472c6e10cb0b44816a6ad4e899ba0.png" alt="\rho'_{norm} &amp;= A \cdot \rho'\\
    \rho''_{norm} &amp;= A \cdot \rho''\\
    \rho'(\omega)_{norm} &amp;= A \cdot \left(\rho_0 -  \rho_0 \sum_{i=1}^N m_i
 \frac{(\omega \tau_i)^2}{1 + (\omega \tau_i)^2}\right)\\
    \rho''(\omega)_{norm} &amp;= A \cdot \left(- \rho_0 \sum_{i=1}^N m_i \frac{(\omega
 \tau_k)}{1 + (\omega \tau_k)^2} \right)"/></p>
 </div><p>The factor A is determined by norming the lowest frequency
-<img class="math" src="_images/math/fb87c936448ed61fb024f611e69ed7de54a4bc7d.png" alt="\rho'|\sigma'"/> value to the target value B given by the
+<img class="math" src="_images/math/d3e622b03b3d1f46934ae3888335400a48b33fb6.png" alt="\rho'|\sigma'"/> value to the target value B given by the
 <strong class="command">--norm</strong> switch:</p>
 <div class="math">
-<p><img src="_images/math/7d819cb41df0d01c202bce313d2e569fc48eef83.png" alt="A = \frac{B}{\rho'/\sigma'}"/></p>
+<p><img src="_images/math/753bb834207dc51e12eb1d4dfd4ce7a91d1fc310.png" alt="A = \frac{B}{\rho'/\sigma'}"/></p>
 </div></div>
 <div class="section" id="determining-relaxation-time-ranges">
 <h2>Determining relaxation time ranges<a class="headerlink" href="#determining-relaxation-time-ranges" title="Permalink to this headline">¶</a></h2>
-<p>The following approach to select <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values is called ‘data’</p>
+<p>The following approach to select <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values is called ‘data’</p>
 <p>For forward modelling and inversions there is always the question of which
 range of relaxation times to consider. To answer this we consider the typical
 frequency range of measurements from 1 mHz to 50 kHz. By considering one-term
-debye models we can compute the minimum and maximum <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values using
+debye models we can compute the minimum and maximum <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values using
 the formula:</p>
 <div class="math">
-<p><img src="_images/math/cdce1695ea538fed5bbb9efae2d51e057eedb15b.png" alt="\tau_{peak} = \frac{1}{2 \pi f_{peak}}\\
+<p><img src="_images/math/224115c58509ed0d8294873926e755ca2c054de6.png" alt="\tau_{peak} = \frac{1}{2 \pi f_{peak}}\\
 \tau_{min}(0.001~Hz) &amp;= 159.15~s\\
 \tau_{max}(1e5~Hz) &amp;= 1.5915e-06~s"/></p>
-</div><p>For the implementation the number of <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values <img class="math" src="_images/math/0fc750f1c2b3c40da15072422e9dc14ea01238bc.png" alt="N_D"/> per decade
-is specified. The maximum <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>-interval corresponds to the frequency
-range <img class="math" src="_images/math/13b89966da842f80e9f57d76be101b4d9df4e4f3.png" alt="[1e-3~s, 1e5~s]"/>. Now compute the total number <img class="math" src="_images/math/f4170ed8938b79490d8923857962695514a8e4cb.png" alt="N"/> of
-<img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values using the formula</p>
+</div><p>For the implementation the number of <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values <img class="math" src="_images/math/a1eea7590e1409d0b80d6fb7ed1fb95a16184b8b.png" alt="N_D"/> per decade
+is specified. The maximum <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/>-interval corresponds to the frequency
+range <img class="math" src="_images/math/f6f4c1af5c9fa59e39d709b2086e59c3b938d4a3.png" alt="[1e-3~s, 1e5~s]"/>. Now compute the total number <img class="math" src="_images/math/3bfb3a64189a14b2704f4610827762d5e3145114.png" alt="N"/> of
+<img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values using the formula</p>
 <div class="math">
-<p><img src="_images/math/3da7ac50ef45651ae03a5c70993566353e2938f9.png" alt="N = |log_{10}(f_{min}) - log_{10}(f_{max})| \cdot N_D"/></p>
+<p><img src="_images/math/0935ed9ab6be346b5d62848467a15ab3180fa985.png" alt="N = |log_{10}(f_{min}) - log_{10}(f_{max})| \cdot N_D"/></p>
 </div><div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The maximum frequency range considered here spans exactly 8 decades. Thus
+<p class="admonition-title">Note</p>
+<p>The maximum frequency range considered here spans exactly 8 decades. Thus
 no rounding needs to take place.</p>
 </div>
-<p>The pool of possible <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values is now created by</p>
+<p>The pool of possible <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values is now created by</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">N_D</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values for a real data set will now be selected from this
+<p>The <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values for a real data set will now be selected from this
 pool, depending on the minimum and maximum frequency of the data set. This
-procedure ensures that always the same <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values are used
+procedure ensures that always the same <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values are used
 independently from the minimum and maximum data frequencies. However, the
-<img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values will still be dependend on <img class="math" src="_images/math/0fc750f1c2b3c40da15072422e9dc14ea01238bc.png" alt="N_D"/>!</p>
-<p>(<a class="reference external" href=".//usage_and_implementation-1.py">Source code</a>, <a class="reference external" href=".//usage_and_implementation-1.png">png</a>, <a class="reference external" href=".//usage_and_implementation-1.hires.png">hires.png</a>, <a class="reference external" href=".//usage_and_implementation-1.pdf">pdf</a>)</p>
-<div class="figure">
-<img alt="_images/usage_and_implementation-1.png" src="_images/usage_and_implementation-1.png" />
-</div>
-<p>(<a class="reference external" href=".//usage_and_implementation-2.py">Source code</a>, <a class="reference external" href=".//usage_and_implementation-2.png">png</a>, <a class="reference external" href=".//usage_and_implementation-2.hires.png">hires.png</a>, <a class="reference external" href=".//usage_and_implementation-2.pdf">pdf</a>)</p>
-<div class="figure">
-<img alt="_images/usage_and_implementation-2.png" src="_images/usage_and_implementation-2.png" />
-</div>
-<p>The following approach to selecting <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values is called ‘data_ext’.</p>
+<img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values will still be dependend on <img class="math" src="_images/math/a1eea7590e1409d0b80d6fb7ed1fb95a16184b8b.png" alt="N_D"/>!</p>
+<p>(<a class="reference external" href=".//usage_and_implementation-1.py">Source code</a>)</p>
+<p>(<a class="reference external" href=".//usage_and_implementation-2.py">Source code</a>)</p>
+<p>The following approach to selecting <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values is called ‘data_ext’.</p>
 <p>This approach adds one frequency decade to each of the frequency limits of the
-data prior to converting those limits to <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> values.</p>
+data prior to converting those limits to <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> values.</p>
 </div>
 <div class="section" id="using-the-cole-cole-distribution">
 <h2>Using the Cole-Cole distribution<a class="headerlink" href="#using-the-cole-cole-distribution" title="Permalink to this headline">¶</a></h2>
 <p>A single-termin Cole-Cole spectrum with c = 0.5 was fitted using kernel
 functions of c = (0.3, 0.5, 0.7, and 1.0).</p>
 <ul>
-<li><p class="first">c = 0.3:</p>
+<li><p>c = 0.3:</p>
 <p>The kernel function is too wide to fit the response:</p>
 <img alt="_images/plot_spec_000_iteration0001.png" src="_images/plot_spec_000_iteration0001.png" />
 </li>
-<li><p class="first">c = 0.5</p>
+<li><p>c = 0.5</p>
 <p>The kernel function has the same slope as the response. Any widening of the
 peak in the RTD is due to regularisation smoothing.</p>
 <img alt="_images/plot_spec_000_iteration0012.png" src="_images/plot_spec_000_iteration0012.png" />
 </li>
-<li><p class="first">c = 0.7</p>
+<li><p>c = 0.7</p>
 <img alt="_images/plot_spec_000_iteration0004.png" src="_images/plot_spec_000_iteration0004.png" />
 </li>
-<li><p class="first">c = 1.0</p>
+<li><p>c = 1.0</p>
 <img alt="_images/plot_spec_000_iteration00041.png" src="_images/plot_spec_000_iteration00041.png" />
 </li>
 </ul>
 </div>
 <div class="section" id="creating-synthetic-relaxation-time-distributions">
 <h2>Creating synthetic relaxation time distributions<a class="headerlink" href="#creating-synthetic-relaxation-time-distributions" title="Permalink to this headline">¶</a></h2>
-<p>The <img class="math" src="_images/math/b80430baf1b059d0097bc9081abca3b1e0a74287.png" alt="\tau_i"/> distribution is determined by the frequencies of the data
+<p>The <img class="math" src="_images/math/dbc357e9cf742d661bf4941cd0c41ec78cbbe187.png" alt="\tau_i"/> distribution is determined by the frequencies of the data
 and number of values per frequency decade set by the user. For synthetic
-studies or benchmarks we need to set the corresponding <img class="math" src="_images/math/79b19012e472bb27f43701fee56fde3495013f17.png" alt="g_i"/> values for
+studies or benchmarks we need to set the corresponding <img class="math" src="_images/math/c3c0e9ec2081f2ef618ad9de05046301ca287d6c.png" alt="g_i"/> values for
 those relaxation times. We do this either by explicitly setting those
 relaxation times for a small number of terms (usually one to three in
 correspondence to the Cole-Cole/Debye model), or by addition of one or more
-log-normal distributions to the <img class="math" src="_images/math/79b19012e472bb27f43701fee56fde3495013f17.png" alt="g_i"/> distribution.</p>
+log-normal distributions to the <img class="math" src="_images/math/c3c0e9ec2081f2ef618ad9de05046301ca287d6c.png" alt="g_i"/> distribution.</p>
 <p>(<a class="reference external" href=".//usage_and_implementation-3.py">Source code</a>, <a class="reference external" href=".//usage_and_implementation-3.png">png</a>, <a class="reference external" href=".//usage_and_implementation-3.hires.png">hires.png</a>, <a class="reference external" href=".//usage_and_implementation-3.pdf">pdf</a>)</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="_images/usage_and_implementation-3.png" src="_images/usage_and_implementation-3.png" />
 </div>
 <p>Normally distributed noise can then be added to this spectrum:</p>
 <p>(<a class="reference external" href=".//usage_and_implementation-4.py">Source code</a>, <a class="reference external" href=".//usage_and_implementation-4.png">png</a>, <a class="reference external" href=".//usage_and_implementation-4.hires.png">hires.png</a>, <a class="reference external" href=".//usage_and_implementation-4.pdf">pdf</a>)</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="_images/usage_and_implementation-4.png" src="_images/usage_and_implementation-4.png" />
 </div>
 </div>
@@ -255,17 +243,15 @@ log-normal distributions to the <img class="math" src="_images/math/79b19012e472
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -282,7 +268,7 @@ log-normal distributions to the <img class="math" src="_images/math/79b19012e472
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

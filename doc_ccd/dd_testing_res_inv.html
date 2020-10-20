@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Testing and characterization &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testing and characterization &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API" href="api.html" />
@@ -70,24 +69,21 @@ only goal of these tests is to not crash during the exection.</p>
 <h3>Characterization: Synthetic spectra one-on-one<a class="headerlink" href="#characterization-synthetic-spectra-one-on-one" title="Permalink to this headline">¶</a></h3>
 <p>The test/characterization matrix consists of the following values:</p>
 <ul class="simple">
-<li>RMS, RMS_re, RMS_im</li>
-<li><img class="math" src="_images/math/c02d34052a43ce0bbdcc0a3ab389ff5ef404bd13.png" alt="\rho_0^{orig} - \rho_0^{fit}"/></li>
-<li><img class="math" src="_images/math/4746810955090b4beeda2ba63bde7f8707d3ea59.png" alt="g_i^{orig} - g_i^{fit}"/></li>
+<li><p>RMS, RMS_re, RMS_im</p></li>
+<li><p><img class="math" src="_images/math/8684868ad7c7fe78195e6df48c8a3bf3ae72c860.png" alt="\rho_0^{orig} - \rho_0^{fit}"/></p></li>
+<li><p><img class="math" src="_images/math/cb5621e891dbbb3a88ca863eaeab2d249683e5f2.png" alt="g_i^{orig} - g_i^{fit}"/></p></li>
 </ul>
 <p>Those criteria are tested for the following scenarios (based upon the synthetic
 specutrum described above):</p>
 <ul>
-<li><p class="first">Vary the number of <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/> from 1 to 1000 (in logarithmic spacing)</p>
-</li>
-<li><p class="first">Vary <img class="math" src="_images/math/d5b4a098286d906ca2e61aac7332930bf6898618.png" alt="\rho_0"/> between 1 and 10000 <img class="math" src="_images/math/63aa8639fa10609f8e940bb48be6707930b596c2.png" alt="\Omega m"/> (in logarithmic spacing)</p>
-</li>
-<li><p class="first">Vary the overall level of the chargebility values by factors of 0.01, 0.1, 10, 100, 1000 (in comparison to the initial model)</p>
-</li>
-<li><p class="first">Vary the mean values of the <img class="math" src="_images/math/557d5fad862c9046d26e1a930f45a550c146d592.png" alt="\tau"/>-peaks as follows (original <img class="math" src="_images/math/eb74e256f6dbbe78654166d79e7a07bc25c8dd74.png" alt="(0, -4.5)"/>):</p>
+<li><p>Vary the number of <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/> from 1 to 1000 (in logarithmic spacing)</p></li>
+<li><p>Vary <img class="math" src="_images/math/2e0a2207815dc8e9c912464d162b33334fe57f77.png" alt="\rho_0"/> between 1 and 10000 <img class="math" src="_images/math/e0ee9de04eb35d0409f289efb70571a678501607.png" alt="\Omega m"/> (in logarithmic spacing)</p></li>
+<li><p>Vary the overall level of the chargebility values by factors of 0.01, 0.1, 10, 100, 1000 (in comparison to the initial model)</p></li>
+<li><p>Vary the mean values of the <img class="math" src="_images/math/914b2d4b6659b86d3153d5510839dfb254dfc8a3.png" alt="\tau"/>-peaks as follows (original <img class="math" src="_images/math/1d4391fa373dfd8fcc6531d73eacae5634c99696.png" alt="(0, -4.5)"/>):</p>
 <blockquote>
 <div><ul class="simple">
-<li>(0, -3), (0, -2), (0, -1)</li>
-<li>(-1, -4.5), (-2, -4.5), (-3, -4.5)</li>
+<li><p>(0, -3), (0, -2), (0, -1)</p></li>
+<li><p>(-1, -4.5), (-2, -4.5), (-3, -4.5)</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -147,17 +143,15 @@ specutrum described above):</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -174,7 +168,7 @@ specutrum described above):</p>
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

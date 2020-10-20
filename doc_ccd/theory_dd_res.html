@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Debye decomposition resistivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debye decomposition resistivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Debye decomposition on conductivities" href="theory_dd_cond.html" />
@@ -39,13 +38,13 @@
 <div class="section" id="complex">
 <h2>complex<a class="headerlink" href="#complex" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/2cfaf0ff54e851d1d289925077af91d1f623f2f7.png" alt="\hat{\rho}(\omega) &amp;= \rho_0 \left(1 - \sum_{i=1}^{N} m_k \left[1 -
+<p><img src="_images/math/6a6e0e411dcc55eaad4c695288a64f2e4a417514.png" alt="\hat{\rho}(\omega) &amp;= \rho_0 \left(1 - \sum_{i=1}^{N} m_k \left[1 -
 \frac{1}{1 + i \omega \tau_i}\right] \right)\\"/></p>
 </div></div>
 <div class="section" id="real-and-imaginary-parts">
 <h2>real and imaginary parts<a class="headerlink" href="#real-and-imaginary-parts" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/37b42e15f82acbba2eaa275a8fc2de50fdbfd597.png" alt="\rho'(\omega)) &amp;= \rho_0 -  \rho_0 \sum_{i=1}^N m_i
+<p><img src="_images/math/15438a9ea88bac4dee8990905aad9726757f9c1d.png" alt="\rho'(\omega)) &amp;= \rho_0 -  \rho_0 \sum_{i=1}^N m_i
 \frac{(\omega \tau_i)^2}{1 + (\omega \tau_i)^2}\\
 \rho''(\omega)) &amp;= -  \rho_0 \sum_{i=1}^N m_i \frac{(\omega \tau_k)}{1 +
 (\omega \tau_k)^2}"/></p>
@@ -53,7 +52,7 @@
 <div class="section" id="derivatives">
 <h2>Derivatives<a class="headerlink" href="#derivatives" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/e2131fd5094ec0dd6bc311ad3297c4446c8adb2f.png" alt="\frac{\partial \rho'(\omega)}{\partial \rho_0} &amp;= 1 - \sum_{i=1}^N m_i
+<p><img src="_images/math/b8d39ab506c0f53f0b62ed74353841dda1718083.png" alt="\frac{\partial \rho'(\omega)}{\partial \rho_0} &amp;= 1 - \sum_{i=1}^N m_i
 \frac{(\omega m_k)^2}{1 + (\omega m_k)^2}\\
 \frac{\partial \rho'(\omega)}{\partial m_k} &amp;= -\rho_0 \cdot \frac{(\omega
 m_k)^2}{1 + (\omega m_k)^2}\\
@@ -66,31 +65,31 @@ m_k)}{1 + (\omega m_k)^2}\\"/></p>
 <h2>Relating peak frequency of imaginary part to relaxation time<a class="headerlink" href="#relating-peak-frequency-of-imaginary-part-to-relaxation-time" title="Permalink to this headline">¶</a></h2>
 <p>Notes:</p>
 <div class="math">
-<p><img src="_images/math/37800ce8d1adc60d3683d69da6b33266f6b4fe01.png" alt="f(x) &amp;= \frac{u(x)}{v(x)}\\
+<p><img src="_images/math/529f4893d7093f86efb6e7ad855786ec972a2c43.png" alt="f(x) &amp;= \frac{u(x)}{v(x)}\\
 f'(x) &amp;= \frac{u'(x) v(x) - u(x) v'(x)}{v^2(x)}"/></p>
 </div><p>Determine the frequency maximum of the negative of the imaginary part using the
 first derivation:</p>
 <div class="math">
-<p><img src="_images/math/01ed8533605a3c14e4fba39034b868a362268a8b.png" alt="Im(\hat{\rho}(\omega)) &amp;= -  \rho_0 \sum_{i=1}^N m_i \frac{(\omega
+<p><img src="_images/math/7a6cdeff2542fc7242b7f6dcac81fd73692ea063.png" alt="Im(\hat{\rho}(\omega)) &amp;= -  \rho_0 \sum_{i=1}^N m_i \frac{(\omega
 \tau_k)}{1 + (\omega \tau_k)^2}\\
 \frac{\partial Im}{\partial \omega} &amp;= \frac{\partial \omega (-\rho_0 m
 \omega \tau) [1 + (\omega \tau)^2] - (-\rho_0 m \omega \tau)
 \partial \omega (1 + (\omega \tau)^2)}{[1 + (\omega \tau)^2]^2}\\"/></p>
 </div><div class="math">
-<p><img src="_images/math/3cbcfce6cc7c90bfd84baa5ebc0d83d46c709404.png" alt="&amp;= \frac{(-\rho_0 m \tau) [1 + (\omega \tau)^2] + \rho_0 m \omega \tau
+<p><img src="_images/math/adcec3d8c0eaeb454ea0f5905ef2d37305d5cc04.png" alt="&amp;= \frac{(-\rho_0 m \tau) [1 + (\omega \tau)^2] + \rho_0 m \omega \tau
 \cdot 2 \omega \tau \tau}{[1 + (\omega \tau)^2]^2}\\
 \Rightarrow \frac{\partial -Im}{\partial \omega} &amp;= 0\\
 &amp;\Leftrightarrow - \rho_0 m \tau - \rho_0 m \tau (\omega \tau)^2 + 2
 \omega^2 \tau^3 m \rho_0 = 0\\
 &amp; / \tau / \rho_0 / m\\"/></p>
 </div><div class="math">
-<p><img src="_images/math/47534c2fa721f9261c9b967f60e9118bb905e00b.png" alt="&amp;\Rightarrow -1 - \omega^2 \tau^2 + 2 \omega^2 \tau^2 = 0\\
+<p><img src="_images/math/3b1a56bd67f7351fb70d5126846536343302c9df.png" alt="&amp;\Rightarrow -1 - \omega^2 \tau^2 + 2 \omega^2 \tau^2 = 0\\
 &amp;\Rightarrow \omega^2 \cdot (2 - 1) \tau^2 = 1\\
 &amp;\Rightarrow \omega^2 = \frac{1}{(2-1) \tau^2}\\
 &amp;\Rightarrow \omega = \pm \frac{1}{\tau}
 \text{Negative } \omega \text{ not possible}\\"/></p>
 </div><div class="math">
-<p><img src="_images/math/565ecb73ebc023a4e30be0bf69d8a9db5206327c.png" alt="&amp;\Rightarrow \omega_{max} = \frac{1}{\tau_{max}}\\
+<p><img src="_images/math/011a27055f831b3e2483173756d726cd5c47da4a.png" alt="&amp;\Rightarrow \omega_{max} = \frac{1}{\tau_{max}}\\
 &amp;\Leftrightarrow f_{max} = \frac{1}{2 \pi \tau_{max}}\\
 &amp;\Leftrightarrow \tau_{max} = \frac{1}{2 \pi f_{max}}\\"/></p>
 </div></div>
@@ -99,14 +98,14 @@ first derivation:</p>
 <p>Peak relaxation times for the conductivity (a.k.a. Cole-Cole, CC) and the
 resistivity (a.k.a. Pelton, P) formulation are related by:</p>
 <div class="math">
-<p><img src="_images/math/9defe22ed0bfb0430bb4a03d5526d43b4d477410.png" alt="\tau_{CC} &amp;= (1 - m)^{\frac{1}{c}} \tau_P\\
+<p><img src="_images/math/c35271906709f0e0e22396de18654f1478a015b8.png" alt="\tau_{CC} &amp;= (1 - m)^{\frac{1}{c}} \tau_P\\
 \text{Peak frequencies for the imaginary parts then are related by:}\\
 \tau_{P}^{peak} = \frac{1}{\omega_{P}^{peak}}\\
 \tau_{CC}^{peak} = \frac{1}{\omega_{CC}^{peak}}\\
 \omega_{CC} = (1 - m)^{-\frac{1}{c}} \omega_{P}"/></p>
 </div><p>The relation hold for both the Cole-Cole model and the Debye model (c=1).
 Additionally, they also hold for the decomposition approach, here the
-chargeability has to be replaced by the total chargeability: <img class="math" src="_images/math/ccf13351799e55bb105b49ea38debc69c7245cd8.png" alt="m
+chargeability has to be replaced by the total chargeability: <img class="math" src="_images/math/31af01f610c3f7babf4dd5c14ef0d4769621275c.png" alt="m
 \rightarrow \sum_i m_i"/>.</p>
 </div>
 </div>
@@ -170,17 +169,15 @@ chargeability has to be replaced by the total chargeability: <img class="math" s
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -197,7 +194,7 @@ chargeability has to be replaced by the total chargeability: <img class="math" s
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

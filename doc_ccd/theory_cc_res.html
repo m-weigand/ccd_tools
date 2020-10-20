@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Cole-Cole decomposition resistivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.16 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cole-Cole decomposition resistivities &#8212; Time-lapse Cole-Cole decomposition routines 0.8.17.dev0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Cole-Cole decomposition conductivities" href="theory_cc_cond.html" />
@@ -39,13 +38,13 @@
 <div class="section" id="complex">
 <h2>complex<a class="headerlink" href="#complex" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/bd5c5e2c200ad9033f13d77f918fa8f6248bf33f.png" alt="\hat{\rho}(\omega) &amp;= \rho_0 \left[ 1 - \sum_k m_k \left(1 - \frac{1}{1 +
+<p><img src="_images/math/360c13127205cb1113d245dc6034beee82d67c7b.png" alt="\hat{\rho}(\omega) &amp;= \rho_0 \left[ 1 - \sum_k m_k \left(1 - \frac{1}{1 +
 (j \omega \tau_k)^c} \right) \right]"/></p>
 </div></div>
 <div class="section" id="real-and-imaginary-parts">
 <h2>real and imaginary parts<a class="headerlink" href="#real-and-imaginary-parts" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/8a72265b9cb921ae3f3134880c492414cc2700e0.png" alt="\rho'(\omega) &amp;= \rho_0 \cdot \left(1 - m \frac{ (\omega \tau)^{c}
+<p><img src="_images/math/f69a4a28038a60887de265cdbe037f76ae08fe55.png" alt="\rho'(\omega) &amp;= \rho_0 \cdot \left(1 - m \frac{ (\omega \tau)^{c}
 \left(cos(\frac{c \pi}{2}) + (\omega \tau)^{c}\right)}{1 + 2 (\omega
 \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}\right)\\
 \rho''(\omega) &amp;= m \frac{ - \rho_0 (\omega \tau)^{c} sin(\frac{c
@@ -58,7 +57,7 @@ variables.</p>
 <div class="section" id="real-parts">
 <h3>real parts<a class="headerlink" href="#real-parts" title="Permalink to this headline">¶</a></h3>
 <div class="math">
-<p><img src="_images/math/419f301554f77a17456b81c60a01f064fe26461a.png" alt="\frac{\partial \hat{\rho'}(\omega)}{\partial \rho_0} &amp;= 1 - \frac{m (\omega
+<p><img src="_images/math/48d6c34a6300d223412f3e4cf35b5baaf8ff915e.png" alt="\frac{\partial \hat{\rho'}(\omega)}{\partial \rho_0} &amp;= 1 - \frac{m (\omega
 \tau)^c cos(\frac{c \pi}{2}) + (\omega \tau)^c}{1 + 2 (\omega \tau)^c
 cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}}\\
 \frac{\partial \hat{\rho'}(\omega)}{\partial m} &amp;= - \rho_0 m (\omega \tau)^c
@@ -85,7 +84,7 @@ cos(\frac{c \pi}{2}) + (\omega \tau)^{2 c}\right]^2}"/></p>
 <div class="section" id="imaginary-parts">
 <h3>imaginary parts<a class="headerlink" href="#imaginary-parts" title="Permalink to this headline">¶</a></h3>
 <div class="math">
-<p><img src="_images/math/72bf0dd0cbb84535e8cd2fb9c1cbfa804942e3b0.png" alt="\frac{\partial \hat{\rho}''(\omega)}{\partial \rho_0} &amp;= - \frac{m (\omega
+<p><img src="_images/math/f7b0dbbc305e540d4f6f5f7ac834c67d5996d45c.png" alt="\frac{\partial \hat{\rho}''(\omega)}{\partial \rho_0} &amp;= - \frac{m (\omega
 \tau)^c sin(\frac{c \pi}{2})}{1 + 2 (\omega \tau)^c cos(\frac{c \pi}{2}) +
 (\omega \tau)^{2 c}}\\
 \frac{\partial \hat{\rho''}(\omega)}{\partial m} &amp;= - \rho_0 m (\omega
@@ -111,10 +110,10 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
 </div></div>
 </div>
 <div class="section" id="partial-derivatives-respect-to-log-10-x">
-<h2>Partial derivatives respect to <img class="math" src="_images/math/bf70a14c33ee3b136a8749574dfff83c1de6a592.png" alt="log_{10}(x)"/>:<a class="headerlink" href="#partial-derivatives-respect-to-log-10-x" title="Permalink to this headline">¶</a></h2>
+<h2>Partial derivatives respect to <img class="math" src="_images/math/b0bdf5981b72ab813f6d36bed62996ca6935a46f.png" alt="log_{10}(x)"/>:<a class="headerlink" href="#partial-derivatives-respect-to-log-10-x" title="Permalink to this headline">¶</a></h2>
 <p>There are also partial derivatives of the real and the imaginary part respect to the common logarithm of all variables:</p>
 <div class="math">
-<p><img src="_images/math/ed08aa5c317732e3883c07a55d4c75f8d5bc424d.png" alt="\frac{\partial F(X)}{\partial log_{10}(x)} &amp;= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)"/></p>
+<p><img src="_images/math/396d7ffc52b155fbd3919bb8f56dc58e68869ace.png" alt="\frac{\partial F(X)}{\partial log_{10}(x)} &amp;= \frac{\partial F(X)}{\partial x} \cdot x \cdot log(x)"/></p>
 </div></div>
 </div>
 
@@ -148,7 +147,7 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
 <li class="toctree-l3"><a class="reference internal" href="#complex">complex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#real-and-imaginary-parts">real and imaginary parts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#partial-derivatives">partial derivatives</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#partial-derivatives-respect-to-log-10-x">Partial derivatives respect to <img class="math" src="_images/math/bf70a14c33ee3b136a8749574dfff83c1de6a592.png" alt="log_{10}(x)"/>:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#partial-derivatives-respect-to-log-10-x">Partial derivatives respect to <img class="math" src="_images/math/b0bdf5981b72ab813f6d36bed62996ca6935a46f.png" alt="log_{10}(x)"/>:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="theory_cc_cond.html">Cole-Cole decomposition conductivities</a></li>
@@ -176,17 +175,15 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -203,7 +200,7 @@ sin(\frac{c \pi}{2}) ln(\omega \tau)(\omega \tau)^c - m (\omega \tau)^c
       &copy;2014-2018, Maximilian Weigand and Department of Geophysics, University of Bonn.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

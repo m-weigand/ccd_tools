@@ -8,15 +8,14 @@ lib\_dd.conductivity.model module
 ---------------------------------
 
 .. automodule:: lib_dd.conductivity.model
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
 
 .. automodule:: lib_dd.conductivity
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
