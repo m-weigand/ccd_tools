@@ -69,7 +69,7 @@ def get_command():
 def aggregate_dicts(iteration_list, dict_name):
     """
     For a given list of NDimInv iterations, aggregate the dictionaries with
-    name 'dict_name' (Iteration.dict_name) and return on dict containing the
+    name 'dict_name' (Iteration.dict_name) and return one dict containing the
     values of all iterations as lists.
     """
     global_stat_pars = {}
@@ -232,10 +232,19 @@ def prepare_stat_values(raw_values, key, norm_factors):
     Divide the statistical parameter rho0 by norm_factors and multiply m_tot_n
     by them.
 
+    Parameters
+    ----------
+    raw_values : NxM array, N: number of spectra, M: number of parameters
+        values of given parameter
+    key : str
+        identifier for the parameter type, e.g. rho0, tau_mean, ...
+    norm_factors: numpy.ndarray
+        norm factors for the inversions
+
     Returns
     -------
-    values: NxM array, with N the number of spectra, and M the number of
-            parameters
+    values : NxM array, N: number of spectra, M: number of parameters
+        modified values
 
     """
     # pad variable length parameters with nan so that we can save them to disc
@@ -258,37 +267,6 @@ def prepare_stat_values(raw_values, key, norm_factors):
     else:
         values = np.array(raw_values)
         # values = values.squeeze()
-
-    # renormalize all parameters containing rho0
-    # Note: When the conductivity model is used, the normalisation factors
-    # refer to the data in conductivities, and correspondingly, sigma_0. As we
-    # apply the normalisation to a resistivity (rho_0) parameter, we have to
-    # invert the normalisations, which manifests as a sign change in the log
-    # operations
-    if(key == 'rho0' and norm_factors is not None):
-        # rho0 is log10
-        # renormalize
-        if int(os.environ.get('DD_COND', 0)) == 1:
-            values += np.log10(norm_factors).squeeze()
-        else:
-            values -= np.log10(norm_factors).squeeze()
-
-    if(key == 'sigma0' and norm_factors is not None):
-        # sigma0 is log10
-        # renormalize
-        values -= np.log10(norm_factors).squeeze()
-
-    if key == 'sigma_infty' and norm_factors is not None :
-        # sigma0 is log10
-        # renormalize
-        values -= np.log10(norm_factors).squeeze()
-
-    if(key == 'm_tot_n' and norm_factors is not None):
-        # renormalize
-        if int(os.environ.get('DD_COND', 0)) == 1:
-            values -= np.log10(norm_factors).squeeze()
-        else:
-            values += np.log10(norm_factors).squeeze()
 
     # make sure values is a list
     values = np.atleast_2d(values.T).T
