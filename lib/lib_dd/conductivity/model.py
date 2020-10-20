@@ -7,6 +7,8 @@ import NDimInv.model_template as mt
 import lib_dd.starting_parameters as starting_parameters
 import lib_dd.plot_stats as plot_stats
 
+print('This module is deprecated and not used any more!!!!')
+
 
 class dd_conductivity(
     plot_stats._plot_stats,
@@ -198,7 +200,7 @@ class dd_conductivity(
         self.stat_pars['sigma_infty'] = self.stat_pars['rho0'].copy()
 
         def sigma0_linear(pars, tau, s, stat_pars):
-            """Compute :math:`sigma0` using math:`\sigma_\infty` and
+            r"""Compute :math:`sigma0` using math:`\sigma_\infty` and
             :math:`m_{tot}`:
 
             .. math::
@@ -220,7 +222,7 @@ class dd_conductivity(
         self.stat_pars['rho0'] = self.stat_pars['sigma0'] * -1
 
         def mtotn(pars, tau, s, stat_pars):
-            """
+            r"""
             Compute the conductivity mtotn:
 
             .. math::
