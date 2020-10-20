@@ -28,14 +28,10 @@ class plot_iteration():
     of the Iteration class. The new plot function is aware of the Cole-Cole
     Decomposition approach and will plot more information (i.e. the RTD)
 
-    In addition, it will renormalise data if necessary.
+    In addition, it will renormalize data if necessary.
     """
     def plot(self, it, norm_factors=None):
         try:
-            if norm_factors is None:
-                self.norm_factors = 1.0
-            else:
-                self.norm_factors = norm_factors
             self._plot(it)
         except Exception as e:
             logging.info('Exception in plot routine', e)
@@ -100,10 +96,10 @@ class plot_iteration():
         """
         self.it = it
 
-        D = it.Data.D / self.norm_factors
+        D = it.Data.D
         M = it.Model.convert_to_M(it.m)
         # renormalize here? why do we compute the forward solution again?
-        F = it.Model.F(M) / self.norm_factors
+        F = it.Model.F(M)
         extra_size = int(
             np.sum([x[1][1] for x in it.Data.extra_dims.items()]))
         self.nr_spectra = max(1, extra_size)
