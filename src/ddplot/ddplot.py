@@ -20,19 +20,17 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 # from memory_profiler import *
-import json
-from multiprocessing import Pool
-import shutil
 from optparse import OptionParser
 import os
-import glob
 import numpy as np
 from NDimInv.plot_helper import *
 import NDimInv.elem as elem
-import dd_single
+# import dd_single
 import NDimInv
-import lib_dd.plot as lDDp
+# import lib_dd.plot as lDDp
 import sip_formats.convert as SC
+import matplotlib.pylab as plt
+import matplotlib as mpl
 
 
 def handle_cmd_options():
@@ -154,7 +152,6 @@ def load_ascii_data(directory):
     data['d_rre'] = rmag
     data['d_rim'] = rpha
 
-
     f_format = open(
         directory + os.sep + 'f_format.dat', 'r').readline().strip()
     subdata = np.loadtxt(directory + os.sep + 'f.dat')
@@ -254,7 +251,7 @@ def plot_data(data, options):
         ax.yaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
         # self._mark_tau_parameters_f(nr, ax, it)
 
-        ## real and imaginary parts
+        # real and imaginary parts
         ax = axes[2]
         ax.semilogx(frequencies, data['d_rre'][index, :], '.', color='k')
         ax.semilogx(frequencies, data['f_rre'][index, :], '-', color='k')
