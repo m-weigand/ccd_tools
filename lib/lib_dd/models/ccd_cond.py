@@ -3,7 +3,6 @@
 import numpy as np
 
 import NDimInv.plot_helper
-plt, mpl = NDimInv.plot_helper.setup()
 import NDimInv.model_template as mt
 import lib_dd.base_class as base_class
 import lib_dd.starting_parameters as starting_parameters
@@ -11,6 +10,8 @@ import lib_dd.plot_stats as plot_stats
 
 # import conductivity formulation
 import sip_models.cond.cc as cc_cond
+
+plt, mpl = NDimInv.plot_helper.setup()
 
 
 class decomposition_conductivity(
@@ -165,3 +166,60 @@ class decomposition_conductivity(
             0: ['rho0_mi', self.tau.size + 1]
         }
         return M_base_dims
+
+    def compute_par_stats(self, pars):
+        r"""For a given parameter set (i.e. a fit result), compute relevant
+        statistical values such as :math:`m_{tot}`, :math:`m_{tot}^n`,
+        :math:`\tau_{50}`, :math:`\tau_{mean}`, :math:`\tau_{peak}`
+
+        This is the way to compute any secondary results based on the fit
+        results.
+
+        Store in self.stat_pars = dict()
+
+        """
+        base_class.integrated_parameters.compute_par_stats(self, pars)
+
+        # self.stat_pars = {}
+        # the statistical parameters as computed above relate to the
+        # resistivity formulation. We must correct some of them and add a few
+        # parameters.
+        self.stat_pars['sigma_infty'] = self.stat_pars['rho0'].copy()
+
+        def sigma0_linear(pars, tau, s, stat_pars):
+            r"""Compute :math:`sigma0` using math:`\sigma_\infty` and
+            :math:`m_{tot}`:
+
+            .. math::
+
+                \sigma_0 = \sigma_\infty \cdot (1 - m_{tot})
+
+            """
+            sigma0 = 10 ** stat_pars['sigma_infty'] *\
+                (1 - 10 ** stat_pars['m_tot'])
+            return sigma0
+
+        def sigma0(pars, tau, s, stat_pars):
+            return np.log10(sigma0_linear(pars, tau, s, stat_pars))
+
+        self.stat_pars['sigma0'] = sigma0(pars, self.tau, self.s,
+                                          self.stat_pars)
+
+        # rho0 is stored in log10, change sign for 1/rho0
+        self.stat_pars['rho0'] = self.stat_pars['sigma0'] * -1
+
+        def mtotn(pars, tau, s, stat_pars):
+            r"""
+            Compute the conductivity mtotn:
+
+            .. math::
+
+                m_{tot}^n = \frac{m_{tot}}{\sigma_0}
+
+            """
+            mtotn = stat_pars['m_tot'] - stat_pars['rho0']
+            return mtotn
+
+        self.stat_pars['m_tot_n'] = mtotn(pars, self.tau, self.s,
+                                          self.stat_pars)
+        return self.stat_pars
