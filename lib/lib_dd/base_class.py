@@ -393,7 +393,7 @@ class starting_pars_3():
             x = np.array(scales)[indices]
             y = np.array(rms_list)[indices]
 
-            A = np.zeros((3, 3), dtype=np.float)
+            A = np.zeros((3, 3), dtype=np.float64)
             A[:, 0] = x ** 2
             A[:, 1] = x
             A[:, 2] = 1
