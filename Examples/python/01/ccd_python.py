@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # *-* coding: utf-8 *-*
 # simple example for using the ccd_single module directly with Python
+import os
 import lib_dd.decomposition.ccd_single as ccd_single
 import lib_dd.config.cfg_single as cfg_single
 import numpy as np
@@ -12,10 +13,9 @@ data = np.loadtxt('data/data.dat')
 config = cfg_single.cfg_single()
 config['frequency_file'] = frequencies
 config['data_file'] = data
-config['fixed_lambda'] = 10
+config['fixed_lambda'] = 1
 
 # also, some options can only be set using environment variables
-import os
 os.environ['DD_C'] = '0.5'  # uses a Warburg-Kernel
 
 # generate a ccd object
@@ -37,8 +37,8 @@ ccd_obj.save_to_directory()
 # you need to supply a filename to directly save the figure to file
 # Note that at the moment filenames sometimes will be handled wrong.
 # For now we suggest to use the method below
-last_it.plot(filename='plot.png')
+last_it.plot(filename='plot')
 # if you do not supply a filename, a figure object will be returned
 fig = last_it.plot()
-fig.savefig('plot_v2.png', dpi=300)
+fig.savefig('results/plot_v2.jpg', dpi=300)
 # you could also use the figure object to modify the whole figure
