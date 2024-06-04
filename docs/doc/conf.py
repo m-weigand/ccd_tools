@@ -42,7 +42,8 @@ extensions = [
     'sphinxcontrib.blockdiag',
     'sphinxcontrib.programoutput',
     'alabaster',
-    'sphinxcontrib.napoleon',
+    # 'sphinxcontrib.napoleon',
+    'sphinx.ext.napoleon',
 ]
 
 numpydoc_show_class_members = False
