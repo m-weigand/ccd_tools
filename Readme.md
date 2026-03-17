@@ -1,7 +1,5 @@
 ### Status
 
-[![Join the chat at https://gitter.im/ccd_tools/Lobby](https://badges.gitter.im/ccd_tools/Lobby.svg)](https://gitter.im/ccd_tools/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/m-weigand/ccd_tools.svg?branch=master)](https://travis-ci.org/m-weigand/ccd_tools)
 [![DOI](https://zenodo.org/badge/68698547.svg)](https://zenodo.org/badge/latestdoi/68698547)
 [Try ccd_tools on binder](https://mybinder.org/v2/gh/m-weigand/try-ccd-tools/master?filepath=ccd_test.ipynb)
 
